@@ -1,0 +1,102 @@
+{
+    "version": "0.0.0",
+    "name": "config",
+    "docs": [
+        "Unlike the other programs, the Config program does not define any individual instructions.",
+        "It has just one implicit instruction, a \"store\" instruction.",
+        "Its instruction data is a set of keys that gate access to the account, and the data to store in it."
+    ],
+    "instructions": [
+    {
+        "name": "create_account",
+        "docs": [
+            "Create a new, empty configuration account"
+        ],
+        "accounts": [],
+        "args": [
+        {
+            "name": "from_account_pubkey",
+            "type": "publicKey",
+            "docs": []
+        },
+        {
+            "name": "config_account_pubkey",
+            "type": "publicKey",
+            "docs": []
+        },
+        {
+            "name": "lamports",
+            "type": "u64",
+            "docs": []
+        },
+        {
+            "name": "keys",
+            "type":
+            {
+                "vec": {"defined":"PubkeyBoolTuple"}
+            },
+            "docs": []
+        }]
+    },
+    {
+        "name": "config_account_pubkey",
+        "docs": [
+            "Store new data in a configuration account."
+        ],
+        "accounts": [],
+        "args": [
+        {
+            "name": "config_account_pubkey",
+            "type": "publicKey",
+            "docs": []
+        },
+        {
+            "name": "is_config_signer",
+            "type": "bool",
+            "docs": []
+        },
+        {
+            "name": "keys",
+            "type":
+            {
+                "vec": "bool"
+            },
+            "docs": []
+        },
+        {
+            "name": "data",
+            "type":
+            {
+                "vec": "bytes"
+            },
+            "docs": []
+        }]
+    }],
+    "accounts": [],
+    "state":
+    {},
+    "types": [
+      {
+        "name": "PubkeyBoolTuple",
+        "type": {
+          "kind": "struct",
+          "fields": [
+            {
+              "name": "key",
+              "type": "publicKey"
+            },
+            {
+              "name": "val",
+              "type": "bool"
+            }
+          ]
+        }
+      }
+    ],
+    "events": [],
+    "errors": [],
+    "metadata":
+    {
+        "address": "Config1111111111111111111111111111111111111"
+    }
+}

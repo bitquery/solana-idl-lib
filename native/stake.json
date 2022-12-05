@@ -1,0 +1,861 @@
+{
+    "version": "0.0.0",
+    "name": "stake",
+    "docs": [
+        "Create and manage accounts representing stake and rewards for delegations to validators."
+    ],
+    "instructions": [
+        {
+            "name": "Initialize",
+            "docs": [
+                "Initialize a stake with lockup and authorization information."
+            ],
+            "accounts": [
+                {
+                    "name": "StakeAccount",
+                    "isMut": true,
+                    "isSigner": false,
+                    "docs": [
+                        "Uninitialized stake account."
+                    ]
+                },
+                {
+                    "name": "$(SysVarRentPubkey)",
+                    "isMut": false,
+                    "isSigner": false,
+                    "docs": [
+                        "Rent sysvar"
+                    ]
+                }
+
+            ],
+            "args": [
+                {
+                    "name": "Authorized",
+                    "type":
+                    {
+                        "defined": "Authorized"
+                    },
+                    "docs": [
+                        "Authorized carries pubkeys that must sign staker transactions and withdrawer transactions."
+                    ]
+                },
+                {
+                    "name": "Lockup",
+                    "type":
+                    {
+                        "defined": "Lockup"
+                    },
+                    "docs": [
+                        "Lockup carries information about withdrawal restrictions."
+                    ]
+                }
+
+            ]
+        },
+        {
+            "name": "Authorize",
+            "docs": [
+                "Authorize a key to manage stake or withdrawal."
+            ],
+            "accounts": [
+                {
+                    "name": "StakeAccount",
+                    "isMut": true,
+                    "isSigner": false,
+                    "docs": [
+                        "Stake account to be updated."
+                    ]
+                },
+                {
+                    "name": "$(SysVarClockPubkey)",
+                    "isMut": false,
+                    "isSigner": false,
+                    "docs": [
+                        "Clock sysvar"
+                    ]
+                },
+                {
+                    "name": "Authority",
+                    "isMut": false,
+                    "isSigner": true,
+                    "docs": [
+                        "The stake or withdraw authority."
+                    ]
+                },
+                {
+                    "name": "LockupAuthority",
+                    "isMut": false,
+                    "isSigner": true,
+                    "docs": [
+                        "Optional: [SIGNER] Lockup authority, if updating StakeAuthorize::Withdrawer before lockup expiration."
+                    ]
+                }
+
+            ],
+            "args": [
+                {
+                    "name": "Pubkey",
+                    "type": "publicKey",
+                    "docs": [
+                        "The Pubkey parameter specifies the entity authorized to execute nonce instruction on the account.",
+                        "No signatures are required to execute this instruction, enabling derived nonce account addresses."
+                    ]
+                },
+                {
+                    "name": "StakeAuthorize",
+                    "type":
+                    {
+                        "defined": "StakeAuthorize"
+                    },
+                    "docs": []
+                }
+
+            ]
+        },
+        {
+            "name": "DelegateStake",
+            "docs": [
+                "Delegate a stake to a particular vote account.",
+                "The entire balance of the staking account is staked.",
+                "DelegateStake can be called multiple times, but re-delegation is delayed by one epoch."
+            ],
+            "accounts": [
+                {
+                    "name": "StakeAccount",
+                    "isMut": true,
+                    "isSigner": false,
+                    "docs": [
+                        "Initialized stake account to be delegated."
+                    ]
+                },
+                {
+                    "name": "VoteAccount",
+                    "isMut": false,
+                    "isSigner": false,
+                    "docs": [
+                        "Vote account to which this stake will be delegated."
+                    ]
+                },
+                {
+                    "name": "$(SysVarClockPubkey)",
+                    "isMut": false,
+                    "isSigner": false,
+                    "docs": [
+                        "Clock sysvar"
+                    ]
+                },
+                {
+                    "name": "$(SysVarStakeHistoryPubkey)",
+                    "isMut": false,
+                    "isSigner": false,
+                    "docs": [
+                        "Stake history sysvar that carries stake warmup/cooldown history"
+                    ]
+                },
+                {
+                    "name": "ConfigAccount",
+                    "isMut": false,
+                    "isSigner": false,
+                    "docs": [
+                        "Address of config account that carries stake config."
+                    ]
+                },
+                {
+                    "name": "StakeAuthority",
+                    "isMut": false,
+                    "isSigner": true,
+                    "docs": [
+                        "Stake authority."
+                    ]
+                }
+
+            ],
+            "args": []
+        },
+        {
+            "name": "Split",
+            "docs": [
+                "Split u64 tokens and stake off a stake account into another stake account."
+            ],
+            "accounts": [
+                {
+                    "name": "StakeAccount",
+                    "isMut": true,
+                    "isSigner": false,
+                    "docs": [
+                        "Initialized stake account to be delegated."
+                    ]
+                },
+                {
+                    "name": "UninitializedStakeAccount",
+                    "isMut": true,
+                    "isSigner": false,
+                    "docs": [
+                        "Uninitialized stake account that will take the split-off amount."
+                    ]
+                },
+                {
+                    "name": "StakeAuthority",
+                    "isMut": false,
+                    "isSigner": true,
+                    "docs": [
+                        "Stake authority."
+                    ]
+                }
+
+            ],
+            "args": [
+            {
+                "name": "amount",
+                "type": "u64",
+                "docs": []
+            }]
+        },
+        {
+            "name": "Withdraw",
+            "docs": [
+                "Withdraw unstaked lamports from the stake account.",
+                "The u64 is the portion of the stake account balance to be withdrawn,",
+                "must be <= StakeAccount.lamports - staked_lamports."
+            ],
+            "accounts": [
+                {
+                    "name": "StakeAccount",
+                    "isMut": true,
+                    "isSigner": false,
+                    "docs": [
+                        "Stake account from which to withdraw."
+                    ]
+                },
+                {
+                    "name": "RecipientAccount",
+                    "isMut": true,
+                    "isSigner": false,
+                    "docs": [
+                        "Recipient account."
+                    ]
+                },
+                {
+                    "name": "$(SysVarClockPubkey)",
+                    "isMut": false,
+                    "isSigner": false,
+                    "docs": [
+                        "Clock sysvar"
+                    ]
+                },
+                {
+                    "name": "$(SysVarStakeHistoryPubkey)",
+                    "isMut": false,
+                    "isSigner": false,
+                    "docs": [
+                        "Stake history sysvar that carries stake warmup/cooldown history"
+                    ]
+                },
+                {
+                    "name": "WithdrawAuthority",
+                    "isMut": false,
+                    "isSigner": true,
+                    "docs": [
+                        "Withdraw authority."
+                    ]
+                },
+                {
+                    "name": "LockupAuthority",
+                    "isMut": false,
+                    "isSigner": true,
+                    "docs": [
+                        "Optional: [SIGNER] Lockup authority, if before lockup expiration."
+                    ]
+                }
+
+            ],
+            "args": [
+            {
+                "name": "amount",
+                "type": "u64",
+                "docs": []
+            }]
+        },
+        {
+            "name": "Deactivate",
+            "docs": [
+                "Deactivates the stake in the account."
+            ],
+            "accounts": [
+                {
+                    "name": "StakeAccount",
+                    "isMut": true,
+                    "isSigner": false,
+                    "docs": [
+                        "Delegated stake account."
+                    ]
+                },
+                {
+                    "name": "$(SysVarClockPubkey)",
+                    "isMut": false,
+                    "isSigner": false,
+                    "docs": [
+                        "Clock sysvar"
+                    ]
+                },
+                {
+                    "name": "StakeAuthority",
+                    "isMut": false,
+                    "isSigner": true,
+                    "docs": [
+                        "Stake authority."
+                    ]
+                }
+
+            ],
+            "args": [
+
+            ]
+        },
+        {
+            "name": "SetLockup",
+            "docs": [
+                "Set stake lockup.",
+                "If a lockup is not active, the withdraw authority may set a new lockup If a lockup is active,",
+                "the lockup custodian may update the lockup parameters."
+            ],
+            "accounts": [
+                {
+                    "name": "StakeAccount",
+                    "isMut": true,
+                    "isSigner": false,
+                    "docs": [
+                        "Initialized stake account."
+                    ]
+                },
+                {
+                    "name": "Authority",
+                    "isMut": false,
+                    "isSigner": true,
+                    "docs": [
+                        "Lockup authority or withdraw authority."
+                    ]
+                }
+
+            ],
+            "args": [
+                {
+                    "name": "LockupArgs",
+                    "type":
+                    {
+                        "defined": "LockupArgs"
+                    },
+                    "docs": []
+                }
+
+            ]
+        },
+        {
+            "name": "Merge",
+            "docs": [
+                "Merge two stake accounts.",
+                "Both accounts must have identical lockup and authority keys.",
+                "A merge is possible between two stakes in the following states with no additional conditions:",
+                " - two deactivated stakes",
+                " - an inactive stake into an activating stake during its activation epoch.",
+                "For the following cases, the voter pubkey and vote credits observed must match:",
+                " - two activated stakes",
+                " - two activating accounts that share an activation epoch, during the activation epoch",
+                "All other combinations of stake states will fail to merge, including all “transient” states,",
+                "where a stake is activating or deactivating with a non-zero effective stake."
+            ],
+            "accounts": [
+            {
+                "name": "DestinationAccount",
+                "isMut": true,
+                "isSigner": false,
+                "docs": [
+                    "Destination stake account for the merge."
+                ]
+            },
+            {
+                "name": "SourceAccount",
+                "isMut": true,
+                "isSigner": false,
+                "docs": [
+                    "Source stake account for to merge. This account will be drained."
+                ]
+            },
+            {
+                "name": "$(SysVarClockPubkey)",
+                "isMut": false,
+                "isSigner": false,
+                "docs": [
+                    "Clock sysvar"
+                ]
+            },
+            {
+                "name": "$(SysVarStakeHistoryPubkey)",
+                "isMut": false,
+                "isSigner": false,
+                "docs": [
+                    "Stake history sysvar that carries stake warmup/cooldown history"
+                ]
+            },
+            {
+                "name": "StakeAuthority",
+                "isMut": false,
+                "isSigner": true,
+                "docs": [
+                    "Stake authority."
+                ]
+            }],
+            "args": []
+        },
+        {
+            "name": "AuthorizeWithSeed",
+            "docs": [
+                "Authorize a key to manage stake or withdrawal with a derived key."
+            ],
+            "accounts": [
+                {
+                    "name": "StakeAccount",
+                    "isMut": true,
+                    "isSigner": false,
+                    "docs": [
+                        "Stake account to be updated."
+                    ]
+                },
+                {
+                    "name": "Base",
+                    "isMut": false,
+                    "isSigner": true,
+                    "docs": [
+                        "Base key of stake or withdraw authority."
+                    ]
+                },
+                {
+                    "name": "$(SysVarClockPubkey)",
+                    "isMut": false,
+                    "isSigner": false,
+                    "docs": [
+                        "Clock sysvar"
+                    ]
+                },
+                {
+                    "name": "LockupAuthority",
+                    "isMut": false,
+                    "isSigner": true,
+                    "docs": [
+                        "Optional: [SIGNER] Lockup authority, if updating StakeAuthorize::Withdrawer before lockup expiration."
+                    ]
+                }
+
+            ],
+            "args": [
+            {
+                "name": "AuthorizeWithSeedArgs",
+                "type":
+                {
+                    "defined": "AuthorizeWithSeedArgs"
+                },
+                "docs": []
+            }]
+        },
+        {
+            "name": "InitializeChecked",
+            "docs": [
+                "Initialize a stake with authorization information.",
+                "This instruction is similar to Initialize except that",
+                "the withdraw authority must be a signer, and no lockup is applied to the account."
+            ],
+            "accounts": [
+                {
+                    "name": "StakeAccount",
+                    "isMut": true,
+                    "isSigner": false,
+                    "docs": [
+                        "Uninitialized stake account."
+                    ]
+                },
+                {
+                    "name": "$(SysVarRentPubkey)",
+                    "isMut": false,
+                    "isSigner": false,
+                    "docs": [
+                        "Rent sysvar"
+                    ]
+                },
+                {
+                    "name": "StakeAuthority",
+                    "isMut": false,
+                    "isSigner": false,
+                    "docs": [
+                        "The stake authority."
+                    ]
+                },
+                {
+                    "name": "WithdrawAuthority",
+                    "isMut": false,
+                    "isSigner": false,
+                    "docs": [
+                        "The withdraw authority."
+                    ]
+                }
+
+            ],
+            "args": []
+        },
+        {
+            "name": "AuthorizeChecked",
+            "docs": [
+                "Authorize a key to manage stake or withdrawal.",
+                "This instruction behaves like Authorize with",
+                "the additional requirement that the new stake or withdraw authority must also be a signer."
+            ],
+            "accounts": [
+                {
+                    "name": "StakeAccount",
+                    "isMut": true,
+                    "isSigner": false,
+                    "docs": [
+                        "Stake account to be updated."
+                    ]
+                },
+                {
+                    "name": "$(SysVarClockPubkey)",
+                    "isMut": false,
+                    "isSigner": false,
+                    "docs": [
+                        "Clock sysvar"
+                    ]
+                },
+                {
+                    "name": "Authority",
+                    "isMut": false,
+                    "isSigner": true,
+                    "docs": [
+                        "The stake or withdraw authority."
+                    ]
+                },
+                {
+                    "name": "NewAuthority",
+                    "isMut": false,
+                    "isSigner": true,
+                    "docs": [
+                        "The new stake or withdraw authority."
+                    ]
+                },
+                {
+                    "name": "LockupAuthority",
+                    "isMut": false,
+                    "isSigner": true,
+                    "docs": [
+                        "Optional: [SIGNER] Lockup authority, if updating StakeAuthorize::Withdrawer before lockup expiration."
+                    ]
+                }
+
+            ],
+            "args": [
+            {
+                "name": "StakeAuthorize",
+                "type":
+                {
+                    "defined": "StakeAuthorize"
+                },
+                "docs": []
+            }]
+        },
+        {
+            "name": "AuthorizeCheckedWithSeed",
+            "docs": [
+                "Authorize a key to manage stake or withdrawal with a derived key.",
+                "This instruction behaves like AuthorizeWithSeed with the additional",
+                "requirement that the new stake or withdraw authority must also be a signer."
+            ],
+            "accounts": [
+                {
+                    "name": "StakeAccount",
+                    "isMut": true,
+                    "isSigner": false,
+                    "docs": [
+                        "Stake account to be updated."
+                    ]
+                },
+                {
+                    "name": "Base",
+                    "isMut": false,
+                    "isSigner": true,
+                    "docs": [
+                        "Base key of stake or withdraw authority."
+                    ]
+                },
+                {
+                    "name": "$(SysVarClockPubkey)",
+                    "isMut": false,
+                    "isSigner": false,
+                    "docs": [
+                        "Clock sysvar"
+                    ]
+                },
+                {
+                    "name": "NewAuthority",
+                    "isMut": false,
+                    "isSigner": true,
+                    "docs": [
+                        "The new stake or withdraw authority."
+                    ]
+                },
+                {
+                    "name": "LockupAuthority",
+                    "isMut": false,
+                    "isSigner": true,
+                    "docs": [
+                        "Optional: [SIGNER] Lockup authority, if updating StakeAuthorize::Withdrawer before lockup expiration."
+                    ]
+                }
+
+            ],
+            "args": [
+            {
+                "name": "args",
+                "type":
+                {
+                    "defined": "AuthorizeCheckedWithSeedArgs"
+                },
+                "docs": []
+            }]
+        },
+        {
+            "name": "SetLockupChecked",
+            "docs": [
+                "Set stake lockup.",
+                "This instruction behaves like `SetLockup` with the additional",
+                "requirement that the new lockup authority also be a signer.",
+                "If a lockup is not active, the withdraw authority may set a new lockup",
+                "If a lockup is active, the lockup custodian may update the lockup parameters."
+            ],
+            "accounts": [
+                {
+                    "name": "StakeAccount",
+                    "isMut": true,
+                    "isSigner": false,
+                    "docs": [
+                        "Initialized stake account."
+                    ]
+                },
+                {
+                    "name": "Authority",
+                    "isMut": false,
+                    "isSigner": true,
+                    "docs": [
+                        "Lockup authority or withdraw authority."
+                    ]
+                },
+                {
+                    "name": "NewLockupAuthority",
+                    "isMut": false,
+                    "isSigner": true,
+                    "docs": [
+                        "Optional: [SIGNER] New lockup authority."
+                    ]
+                }
+
+            ],
+            "args": [
+            {
+                "name": "args",
+                "type":
+                {
+                    "defined": "LockupCheckedArgs"
+                },
+                "docs": []
+            }]
+        }
+
+    ],
+    "accounts": [],
+    "state":
+    {},
+    "types": [
+        {
+            "name": "Authorized",
+            "type":
+            {
+                "kind": "struct",
+                "fields": [
+                {
+                    "name": "staker",
+                    "type": "publicKey"
+                },
+                {
+                    "name": "withdrawer",
+                    "type": "publicKey"
+                }]
+            }
+        },
+        {
+            "name": "Lockup",
+            "type":
+            {
+                "kind": "struct",
+                "fields": [
+                {
+                    "name": "unix_timestamp",
+                    "type": "i64",
+                    "docs": [
+                        "UnixTimestamp at which this stake will allow withdrawal, unless the transaction is signed by the custodian."
+                    ]
+                },
+                {
+                    "name": "epoch",
+                    "type": "i64",
+                    "docs": [
+                        "epoch height at which this stake will allow withdrawal, unless the transaction is signed by the custodian."
+                    ]
+                },
+                {
+                    "name": "custodian",
+                    "type": "publicKey",
+                    "docs": [
+                        "custodian signature on a transaction exempts the operation from lockup constraints."
+                    ]
+                }]
+            }
+        },
+        {
+            "name": "StakeAuthorize",
+            "type":
+            {
+                "kind": "enum",
+                "variants": [
+                {
+                    "name": "Staker"
+                },
+                {
+                    "name": "Withdrawer"
+                }]
+            }
+        },
+        {
+            "name": "LockupArgs",
+            "type":
+            {
+                "kind": "struct",
+                "fields": [
+                    {
+                        "name": "unix_timestamp",
+                        "type":
+                        {
+                            "option": "i64"
+                        }
+                    },
+                    {
+                        "name": "epoch",
+                        "type":
+                        {
+                            "option": "i64"
+                        }
+                    },
+                    {
+                        "name": "custodian",
+                        "type":
+                        {
+                            "option": "publicKey"
+                        }
+                    }
+
+                ]
+            }
+        },
+        {
+            "name": "AuthorizeWithSeedArgs",
+            "type":
+            {
+                "kind": "struct",
+                "fields": [
+                    {
+                        "name": "new_authorized_pubkey",
+                        "type":
+                        {
+                            "option": "publicKey"
+                        }
+                    },
+                    {
+                        "name": "stake_authorize",
+                        "type":
+                        {
+                            "defined": "StakeAuthorize"
+                        }
+                    },
+                    {
+                        "name": "authority_seed",
+                        "type": "string"
+                    },
+                    {
+                        "name": "authority_owner",
+                        "type":
+                        {
+                            "option": "publicKey"
+                        }
+                    }
+
+                ]
+            }
+        },
+        {
+            "name": "AuthorizeCheckedWithSeedArgs",
+            "type":
+            {
+                "kind": "struct",
+                "fields": [
+                    {
+                        "name": "stake_authorize",
+                        "type":
+                        {
+                            "defined": "StakeAuthorize"
+                        }
+                    },
+                    {
+                        "name": "authority_seed",
+                        "type": "string"
+                    },
+                    {
+                        "name": "authority_owner",
+                        "type":
+                        {
+                            "option": "publicKey"
+                        }
+                    }
+
+                ]
+            }
+        },
+        {
+            "name": "LockupCheckedArgs",
+            "type":
+            {
+                "kind": "struct",
+                "fields": [
+                    {
+                        "name": "unix_timestamp",
+                        "type":
+                        {
+                            "option": "i64"
+                        }
+                    },
+                    {
+                        "name": "epoch",
+                        "type":
+                        {
+                            "option": "i64"
+                        }
+                    }
+                ]
+            }
+        }
+
+    ],
+    "events": [],
+    "errors": [],
+    "metadata":
+    {
+        "address": "Stake11111111111111111111111111111111111111"
+    }
+}
