@@ -1,0 +1,1362 @@
+{
+    "version": "0.0.0",
+    "name": "token-vault",
+    "docs": [],
+    "ref": "https://github.com/metaplex-foundation/metaplex-program-library/blob/821e5aac0780fe45525dae72b9ad6f8dc2ba8e5b/token-vault/program/src/instruction.rs",
+    "instructions": [
+        {
+            "name": "InitVault",
+            "docs": [
+                "Initialize a token vault, starts inactivate. Add tokens in subsequent instructions, then activate."
+            ],
+            "accounts": [
+            {
+                "name": "initializedFractionalShareMint",
+                "isMut": true,
+                "isSigner": false,
+                "docs": [
+                    "Initialized fractional share mint with 0 tokens in supply, authority on mint must be pda of program with seed [prefix, programid]"
+                ]
+            },
+            {
+                "name": "initializedRedeemTreasuryTokenAccount",
+                "isMut": true,
+                "isSigner": false,
+                "docs": [
+                    "Initialized redeem treasury token account with 0 tokens in supply, owner of account must be pda of program like above"
+                ]
+            },
+            {
+                "name": "initializedFractionTreasuryTokenAccount",
+                "isMut": true,
+                "isSigner": false,
+                "docs": [
+                    "Initialized fraction treasury token account with 0 tokens in supply, owner of account must be pda of program like above"
+                ]
+            },
+            {
+                "name": "uninitializedVault",
+                "isMut": true,
+                "isSigner": false,
+                "docs": [
+                    "Uninitialized vault account"
+                ]
+            },
+            {
+                "name": "vaultAuthority",
+                "isMut": false,
+                "isSigner": false,
+                "docs": [
+                    "Authority on the vault"
+                ]
+            },
+            {
+                "name": "pricingLookupAddress",
+                "isMut": false,
+                "isSigner": false,
+                "docs": [
+                    "Pricing Lookup Address"
+                ]
+            },
+            {
+                "name": "tokenProgram",
+                "isMut": false,
+                "isSigner": false,
+                "docs": [
+                    "Token program"
+                ]
+            },
+            {
+                "name": "rentSysvar",
+                "isMut": false,
+                "isSigner": false,
+                "docs": [
+                    "Rent sysvar"
+                ]
+            }],
+            "args": [
+            {
+                "name": "args",
+                "type":
+                {
+                    "defined": "InitVaultArgs"
+                },
+                "docs": []
+            }]
+        },
+        {
+            "name": "AddTokenToInactiveVault",
+            "docs": [
+                "Add a token to a inactive token vault"
+            ],
+            "accounts": [
+            {
+                "name": "uninitializedSafetyDepositBoxAccount",
+                "isMut": true,
+                "isSigner": false,
+                "docs": [
+                    "Uninitialized safety deposit box account address (will be created and allocated by this endpoint)",
+                    "Address should be pda with seed of [PREFIX, vault_address, token_mint_address]"
+                ]
+            },
+            {
+                "name": "initializedToken",
+                "isMut": true,
+                "isSigner": false,
+                "docs": [
+                    "Initialized Token account"
+                ]
+            },
+            {
+                "name": "initializedTokenStore",
+                "isMut": true,
+                "isSigner": false,
+                "docs": [
+                    "Initialized Token store account with authority of this program, this will get set on the safety deposit box"
+                ]
+            },
+            {
+                "name": "initializedInactiveFractionalizedTokenVault",
+                "isMut": true,
+                "isSigner": false,
+                "docs": [
+                    "Initialized inactive fractionalized token vault"
+                ]
+            },
+            {
+                "name": "vaultAuthority",
+                "isMut": false,
+                "isSigner": true,
+                "docs": [
+                    "Authority on the vault"
+                ]
+            },
+            {
+                "name": "payer",
+                "isMut": false,
+                "isSigner": true,
+                "docs": [
+                    "Payer"
+                ]
+            },
+            {
+                "name": "transferAuthority",
+                "isMut": false,
+                "isSigner": true,
+                "docs": [
+                    "Transfer Authority to move desired token amount from token account to safety deposit"
+                ]
+            },
+            {
+                "name": "tokenProgram",
+                "isMut": false,
+                "isSigner": false,
+                "docs": [
+                    "Token program"
+                ]
+            },
+            {
+                "name": "rentSysvar",
+                "isMut": false,
+                "isSigner": false,
+                "docs": [
+                    "Rent sysvar"
+                ]
+            },
+            {
+                "name": "systemAccountSysvar",
+                "isMut": false,
+                "isSigner": false,
+                "docs": [
+                    "System account sysvar"
+                ]
+            }],
+            "args": [
+            {
+                "name": "args",
+                "type":
+                {
+                    "defined": "AmountArgs"
+                },
+                "docs": []
+            }]
+        },
+        {
+            "name": "ActivateVault",
+            "docs": [
+                "Activates the vault, distributing initial shares into the fraction treasury.",
+                "Tokens can no longer be removed in this state until Combination."
+            ],
+            "accounts": [
+            {
+                "name": "initializedInactivatedFractionalizedTokenVault",
+                "isMut": true,
+                "isSigner": false,
+                "docs": [
+                    "Initialized inactivated fractionalized token vault"
+                ]
+            },
+            {
+                "name": "fractionMint",
+                "isMut": true,
+                "isSigner": false,
+                "docs": [
+                    "Fraction mint"
+                ]
+            },
+            {
+                "name": "fractionTreasury",
+                "isMut": true,
+                "isSigner": false,
+                "docs": [
+                    "Fraction treasury"
+                ]
+            },
+            {
+                "name": "fractionMintAuthority",
+                "isMut": false,
+                "isSigner": false,
+                "docs": [
+                    "Fraction mint authority for the program - seed of [PREFIX, program_id]"
+                ]
+            },
+            {
+                "name": "vaultAuthority",
+                "isMut": false,
+                "isSigner": true,
+                "docs": [
+                    "Authority on the vault"
+                ]
+            },
+            {
+                "name": "tokenProgram",
+                "isMut": false,
+                "isSigner": false,
+                "docs": [
+                    "Token program"
+                ]
+            }],
+            "args": [
+            {
+                "name": "args",
+                "type":
+                {
+                    "defined": "NumberOfShareArgs"
+                },
+                "docs": []
+            }]
+        },
+        {
+            "name": "CombineVault",
+            "docs": [
+                "This act checks the external pricing oracle for permission to combine and the price of the circulating market cap to do so.",
+                "If you can afford it, this amount is charged and placed into the redeem treasury for shareholders to redeem at a later time.",
+                "The treasury then unlocks into Combine state and you can remove the tokens."
+            ],
+            "accounts": [
+            {
+                "name": "initializedActivatedTokenVault",
+                "isMut": true,
+                "isSigner": false,
+                "docs": [
+                    "Initialized activated token vault"
+                ]
+            },
+            {
+                "name": "tokenAccount",
+                "isMut": true,
+                "isSigner": false,
+                "docs": [
+                    "Token account containing your portion of the outstanding fraction shares"
+                ]
+            },
+            {
+                "name": "redeemTreasuryMintTypeTokenAccount",
+                "isMut": true,
+                "isSigner": false,
+                "docs": [
+                    "Token account of the redeem_treasury mint type that you will pay with"
+                ]
+            },
+            {
+                "name": "fractionMint",
+                "isMut": true,
+                "isSigner": false,
+                "docs": [
+                    "Fraction mint"
+                ]
+            },
+            {
+                "name": "fractionTreasury",
+                "isMut": true,
+                "isSigner": false,
+                "docs": [
+                    "Fraction treasury account"
+                ]
+            },
+            {
+                "name": "redeemTreasury",
+                "isMut": true,
+                "isSigner": false,
+                "docs": [
+                    "Redeem treasury account"
+                ]
+            },
+            {
+                "name": "newAuthorityOnTheVault",
+                "isMut": false,
+                "isSigner": false,
+                "docs": [
+                    "New authority on the vault going forward - can be same authority if you want"
+                ]
+            },
+            {
+                "name": "vaultAuthority",
+                "isMut": false,
+                "isSigner": true,
+                "docs": [
+                    "Authority on the vault"
+                ]
+            },
+            {
+                "name": "transferAuthority",
+                "isMut": false,
+                "isSigner": true,
+                "docs": [
+                    "Transfer authority for the token account and outstanding fractional shares account you're transferring from"
+                ]
+            },
+            {
+                "name": "pdaBasedBurnAuthority",
+                "isMut": false,
+                "isSigner": false,
+                "docs": [
+                    "PDA-based Burn authority for the fraction treasury account containing the uncirculated shares seed [PREFIX, program_id]"
+                ]
+            },
+            {
+                "name": "externalPricingLookupAddress",
+                "isMut": false,
+                "isSigner": false,
+                "docs": [
+                    "External pricing lookup address"
+                ]
+            },
+            {
+                "name": "tokenProgram",
+                "isMut": false,
+                "isSigner": false,
+                "docs": [
+                    "Token program"
+                ]
+            }],
+            "args": []
+        },
+        {
+            "name": "RedeemShares",
+            "docs": [
+                "If in the combine state, shareholders can hit this endpoint to burn shares in exchange for monies from the treasury.",
+                "Once fractional supply is zero and all tokens have been removed this action will take vault to Deactivated"
+            ],
+            "accounts": [
+            {
+                "name": "initializedToken",
+                "isMut": true,
+                "isSigner": false,
+                "docs": [
+                    "Initialized Token account containing your fractional shares"
+                ]
+            },
+            {
+                "name": "initializedDestinationToken",
+                "isMut": true,
+                "isSigner": false,
+                "docs": [
+                    "Initialized Destination token account where you wish your proceeds to arrive"
+                ]
+            },
+            {
+                "name": "fractionMint",
+                "isMut": true,
+                "isSigner": false,
+                "docs": [
+                    "Fraction mint"
+                ]
+            },
+            {
+                "name": "redeemTreasury",
+                "isMut": true,
+                "isSigner": false,
+                "docs": [
+                    "Redeem treasury account"
+                ]
+            },
+            {
+                "name": "pdaBasedTransferAuthority",
+                "isMut": false,
+                "isSigner": false,
+                "docs": [
+                    "PDA-based Transfer authority for the transfer of proceeds from redeem treasury to destination seed [PREFIX, program_id]"
+                ]
+            },
+            {
+                "name": "burnAuthority",
+                "isMut": false,
+                "isSigner": true,
+                "docs": [
+                    "Burn authority for the burning of your shares"
+                ]
+            },
+            {
+                "name": "combinedTokenVault",
+                "isMut": false,
+                "isSigner": false,
+                "docs": [
+                    "Combined token vault"
+                ]
+            },
+            {
+                "name": "tokenProgram",
+                "isMut": false,
+                "isSigner": false,
+                "docs": [
+                    "Token program"
+                ]
+            },
+            {
+                "name": "rentSysvar",
+                "isMut": false,
+                "isSigner": false,
+                "docs": [
+                    "Rent sysvar"
+                ]
+            }],
+            "args": []
+        },
+        {
+            "name": "WithdrawTokenFromSafetyDepositBox",
+            "docs": [
+                "If in combine state, authority on vault can hit this to withdrawal some of a token type from a safety deposit box.",
+                "Once fractional supply is zero and all tokens have been removed this action will take vault to Deactivated"
+            ],
+            "accounts": [
+            {
+                "name": "initializedDestination",
+                "isMut": true,
+                "isSigner": false,
+                "docs": [
+                    "Initialized Destination account for the tokens being withdrawn"
+                ]
+            },
+            {
+                "name": "safetyDepositBox",
+                "isMut": true,
+                "isSigner": false,
+                "docs": [
+                    "The safety deposit box account key for the tokens"
+                ]
+            },
+            {
+                "name": "storeKey",
+                "isMut": true,
+                "isSigner": false,
+                "docs": [
+                    "The store key on the safety deposit box account"
+                ]
+            },
+            {
+                "name": "initializedCombinedTokenVault",
+                "isMut": true,
+                "isSigner": false,
+                "docs": [
+                    "The initialized combined token vault"
+                ]
+            },
+            {
+                "name": "fractionMint",
+                "isMut": false,
+                "isSigner": false,
+                "docs": [
+                    "Fraction mint"
+                ]
+            },
+            {
+                "name": "vaultAuthority",
+                "isMut": false,
+                "isSigner": true,
+                "docs": [
+                    "Authority of vault"
+                ]
+            },
+            {
+                "name": "pdaBasedTransferAuthority",
+                "isMut": false,
+                "isSigner": false,
+                "docs": [
+                    "PDA-based Transfer authority to move the tokens from the store to the destination seed [PREFIX, program_id]"
+                ]
+            },
+            {
+                "name": "tokenProgram",
+                "isMut": false,
+                "isSigner": false,
+                "docs": [
+                    "Token program"
+                ]
+            },
+            {
+                "name": "rentSysvar",
+                "isMut": false,
+                "isSigner": false,
+                "docs": [
+                    "Rent sysvar"
+                ]
+            }],
+            "args": [
+            {
+                "name": "args",
+                "type":
+                {
+                    "defined": "AmountArgs"
+                },
+                "docs": []
+            }]
+        },
+        {
+            "name": "MintFractionalShares",
+            "docs": [
+                "Self explanatory - mint more fractional shares if the vault is configured to allow such."
+            ],
+            "accounts": [
+            {
+                "name": "fractionTreasury",
+                "isMut": true,
+                "isSigner": false,
+                "docs": [
+                    "Fraction treasury"
+                ]
+            },
+            {
+                "name": "fractionMint",
+                "isMut": true,
+                "isSigner": false,
+                "docs": [
+                    "Fraction mint"
+                ]
+            },
+            {
+                "name": "initializedActiveTokenVault",
+                "isMut": false,
+                "isSigner": false,
+                "docs": [
+                    "The initialized active token vault"
+                ]
+            },
+            {
+                "name": "pdaBasedMintAuthority",
+                "isMut": false,
+                "isSigner": false,
+                "docs": [
+                    "PDA-based Mint authority to mint tokens to treasury[PREFIX, program_id]"
+                ]
+            },
+            {
+                "name": "vaultAuthority",
+                "isMut": false,
+                "isSigner": true,
+                "docs": [
+                    "Authority of vault"
+                ]
+            },
+            {
+                "name": "tokenProgram",
+                "isMut": false,
+                "isSigner": false,
+                "docs": [
+                    "Token program"
+                ]
+            }],
+            "args": [
+            {
+                "name": "args",
+                "type":
+                {
+                    "defined": "NumberOfShareArgs"
+                },
+                "docs": []
+            }]
+        },
+        {
+            "name": "WithdrawSharesFromTreasury",
+            "docs": [
+                "Withdraws shares from the treasury to a desired account."
+            ],
+            "accounts": [
+            {
+                "name": "initializedDestination",
+                "isMut": true,
+                "isSigner": false,
+                "docs": [
+                    "Initialized Destination account for the shares being withdrawn"
+                ]
+            },
+            {
+                "name": "fractionTreasury",
+                "isMut": true,
+                "isSigner": false,
+                "docs": [
+                    "Fraction treasury"
+                ]
+            },
+            {
+                "name": "initializedActiveTokenVault",
+                "isMut": false,
+                "isSigner": false,
+                "docs": [
+                    "The initialized active token vault"
+                ]
+            },
+            {
+                "name": "pdaBasedTransferAuthority",
+                "isMut": false,
+                "isSigner": false,
+                "docs": [
+                    "PDA-based Transfer authority to move tokens from treasury to your destination[PREFIX, program_id]"
+                ]
+            },
+            {
+                "name": "vaultAuthority",
+                "isMut": false,
+                "isSigner": true,
+                "docs": [
+                    "Authority of vault"
+                ]
+            },
+            {
+                "name": "tokenProgram",
+                "isMut": false,
+                "isSigner": false,
+                "docs": [
+                    "Token program"
+                ]
+            },
+            {
+                "name": "rentSysvar",
+                "isMut": false,
+                "isSigner": false,
+                "docs": [
+                    "Rent sysvar"
+                ]
+            }],
+            "args": [
+            {
+                "name": "args",
+                "type":
+                {
+                    "defined": "NumberOfShareArgs"
+                },
+                "docs": []
+            }]
+        },
+        {
+            "name": "AddSharesToTreasury",
+            "docs": [
+                "Returns shares to the vault if you wish to remove them from circulation."
+            ],
+            "accounts": [
+            {
+                "name": "initializedSourceAccount",
+                "isMut": true,
+                "isSigner": false,
+                "docs": [
+                    "Initialized account from which shares will be withdrawn"
+                ]
+            },
+            {
+                "name": "fractionTreasury",
+                "isMut": true,
+                "isSigner": false,
+                "docs": [
+                    "Fraction treasury"
+                ]
+            },
+            {
+                "name": "initializedActiveTokenVault",
+                "isMut": false,
+                "isSigner": false,
+                "docs": [
+                    "The initialized active token vault"
+                ]
+            },
+            {
+                "name": "transferAuthority",
+                "isMut": false,
+                "isSigner": true,
+                "docs": [
+                    "Transfer authority to move tokens from your account to treasury"
+                ]
+            },
+            {
+                "name": "vaultAuthority",
+                "isMut": false,
+                "isSigner": true,
+                "docs": [
+                    "Authority of vault"
+                ]
+            },
+            {
+                "name": "tokenProgram",
+                "isMut": false,
+                "isSigner": false,
+                "docs": [
+                    "Token program"
+                ]
+            }],
+            "args": [
+            {
+                "name": "args",
+                "type":
+                {
+                    "defined": "NumberOfShareArgs"
+                },
+                "docs": []
+            }]
+        },
+        {
+            "name": "UpdateExternalPriceAccount",
+            "docs": [
+                "Helpful method that isn't necessary to use for main users of the app, but allows one to create/update",
+                "existing external price account fields if they are signers of this account.",
+                "Useful for testing purposes, and the CLI makes use of it as well so that you can verify logic."
+            ],
+            "accounts": [
+            {
+                "name": "externalPrice",
+                "isMut": true,
+                "isSigner": false,
+                "docs": [
+                    "External price account"
+                ]
+            }],
+            "args": [
+            {
+                "name": "args",
+                "type":
+                {
+                    "defined": "ExternalPriceAccount"
+                },
+                "docs": []
+            }]
+        },
+        {
+            "name": "SetAuthority",
+            "docs": [
+                "Sets the authority of the vault to a new authority."
+            ],
+            "accounts": [
+            {
+                "name": "vault",
+                "isMut": true,
+                "isSigner": false,
+                "docs": [
+                    "Vault"
+                ]
+            },
+            {
+                "name": "vaultAuthority",
+                "isMut": false,
+                "isSigner": true,
+                "docs": [
+                    "Vault authority"
+                ]
+            },
+            {
+                "name": "newAuthority",
+                "isMut": false,
+                "isSigner": false,
+                "docs": [
+                    "New authority"
+                ]
+            }],
+            "args": []
+        }
+
+
+    ],
+    "accounts": [
+        {
+            "name": "Key",
+            "type":
+            {
+                "kind": "enum",
+                "variants": [
+                    {
+                        "name": "Uninitialized",
+                        "docs": []
+                    },
+                    {
+                        "name": "SafetyDepositBoxV1",
+                        "docs": []
+                    },
+                    {
+                        "name": "ExternalAccountKeyV1",
+                        "docs": []
+                    },
+                    {
+                        "name": "VaultV1",
+                        "docs": []
+                    }
+
+                ]
+            }
+        },
+        {
+            "name": "VaultState",
+            "type":
+            {
+                "kind": "enum",
+                "variants": [
+                {
+                    "name": "Inactive"
+                },
+                {
+                    "name": "Active"
+                },
+                {
+                    "name": "Combined"
+                },
+                {
+                    "name": "Deactivated"
+                }]
+            },
+            "docs": []
+        },
+        {
+            "name": "Vault",
+            "type":
+            {
+                "kind": "struct",
+                "fields": [
+                {
+                    "name": "key",
+                    "type":
+                    {
+                        "defined": "Key"
+                    },
+                    "docs": []
+                },
+                {
+                    "name": "token_program",
+                    "type": "publicKey",
+                    "docs": [
+                        "Store token program used"
+                    ]
+                },
+                {
+                    "name": "fraction_mint",
+                    "type": "publicKey",
+                    "docs": [
+                        "Mint that produces the fractional shares"
+                    ]
+                },
+                {
+                    "name": "authority",
+                    "type": "publicKey",
+                    "docs": [
+                        "Authority who can make changes to the vault"
+                    ]
+                },
+                {
+                    "name": "fraction_treasury",
+                    "type": "publicKey",
+                    "docs": [
+                        "treasury where fractional shares are held for redemption by authority"
+                    ]
+                },
+                {
+                    "name": "redeem_treasury",
+                    "type": "publicKey",
+                    "docs": [
+                        "treasury where monies are held for fractional share holders to redeem(burn) shares once buyout is made"
+                    ]
+                },
+                {
+                    "name": "allow_further_share_creation",
+                    "type": "bool",
+                    "docs": [
+                        "Can authority mint more shares from fraction_mint after activation"
+                    ]
+                },
+                {
+                    "name": "pricing_lookup_address",
+                    "type": "publicKey",
+                    "docs": [
+                        "Must point at an ExternalPriceAccount, which gives permission and price for buyout."
+                    ]
+                },
+                {
+                    "name": "token_type_count",
+                    "type": "u8",
+                    "docs": [
+                        "In inactive state, we use this to set the order key on Safety Deposit Boxes being added and",
+                        "then we increment it and save so the next safety deposit box gets the next number.",
+                        "In the Combined state during token redemption by authority, we use it as a decrementing counter each time",
+                        "The authority of the vault withdrawals a Safety Deposit contents to count down how many",
+                        "are left to be opened and closed down. Once this hits zero, and the fraction mint has zero shares,",
+                        "then we can deactivate the vault."
+                    ]
+                },
+                {
+                    "name": "state",
+                    "type":
+                    {
+                        "defined": "VaultState"
+                    },
+                    "docs": []
+                },
+                {
+                    "name": "locked_price_per_share",
+                    "type": "u64",
+                    "docs": [
+                        "Once combination happens, we copy price per share to vault so that if something nefarious happens",
+                        "to external price account, like price change, we still have the math 'saved' for use in our calcs"
+                    ]
+                }]
+            },
+            "docs": []
+        },
+        {
+            "name": "SafetyDepositBox",
+            "type":
+            {
+                "kind": "struct",
+                "fields": [
+                {
+                    "name": "key",
+                    "type":
+                    {
+                        "defined": "Key"
+                    },
+                    "docs": [
+                        "Each token type in a vault has it's own box that contains it's mint and a look-back"
+                    ]
+                },
+                {
+                    "name": "vault",
+                    "type": "publicKey",
+                    "docs": [
+                        "Key pointing to the parent vault"
+                    ]
+                },
+                {
+                    "name": "token_mint",
+                    "type": "publicKey",
+                    "docs": [
+                        "This particular token's mint"
+                    ]
+                },
+                {
+                    "name": "store",
+                    "type": "publicKey",
+                    "docs": [
+                        "Account that stores the tokens under management"
+                    ]
+                },
+                {
+                    "name": "order",
+                    "type": "u8",
+                    "docs": [
+                        "the order in the array of registries"
+                    ]
+                }]
+            },
+            "docs": []
+        },
+        {
+            "name": "ExternalPriceAccount",
+            "type":
+            {
+                "kind": "struct",
+                "fields": [
+                    {
+                        "name": "key",
+                        "type":
+                        {
+                            "defined": "Key"
+                        },
+                        "docs": []
+                    },
+                    {
+                        "name": "price_per_share",
+                        "type": "u64",
+                        "docs": []
+                    },
+                    {
+                        "name": "price_mint",
+                        "type": "publicKey",
+                        "docs": [
+                            "Mint of the currency we are pricing the shares against, should be same as redeem_treasury.",
+                            "Most likely will be USDC mint most of the time."
+                        ]
+                    },
+                    {
+                        "name": "allowed_to_combine",
+                        "type": "bool",
+                        "docs": [
+                            "Whether or not combination has been allowed for this vault."
+                        ]
+                    }
+
+                ]
+            }
+        }
+
+    ],
+    "types": [
+        {
+            "name": "InitVaultArgs",
+            "type":
+            {
+                "kind": "struct",
+                "fields": [
+                    {
+                        "name": "allow_further_share_creation",
+                        "type": "bool",
+                        "docs": []
+                    }
+
+                ]
+            }
+        },
+        {
+            "name": "AmountArgs",
+            "type":
+            {
+                "kind": "struct",
+                "fields": [
+                    {
+                        "name": "amount",
+                        "type": "u64",
+                        "docs": []
+                    }
+
+                ]
+            }
+        },
+        {
+            "name": "NumberOfShareArgs",
+            "type":
+            {
+                "kind": "struct",
+                "fields": [
+                    {
+                        "name": "number_of_shares",
+                        "type": "u64",
+                        "docs": []
+                    }
+
+                ]
+            }
+        },
+        {
+            "name": "MintEditionProxyArgs",
+            "type":
+            {
+                "kind": "struct",
+                "fields": [
+                    {
+                        "name": "edition",
+                        "type": "u64",
+                        "docs": []
+                    }
+
+                ]
+            }
+        }
+
+
+
+
+    ],
+    "events": [],
+    "errors": [
+    {
+        "msg": "Failed to unpack instruction data",
+        "name": "InstructionUnpackError",
+        "code": 0
+    },
+    {
+        "msg": "Lamport balance below rent-exempt threshold",
+        "name": "NotRentExempt",
+        "code": 1
+    },
+    {
+        "msg": "Already initialized",
+        "name": "AlreadyInitialized",
+        "code": 2
+    },
+    {
+        "msg": "Uninitialized",
+        "name": "Uninitialized",
+        "code": 3
+    },
+    {
+        "msg": "Account does not have correct owner",
+        "name": "IncorrectOwner",
+        "code": 4
+    },
+    {
+        "msg": "NumericalOverflowError",
+        "name": "NumericalOverflowError",
+        "code": 5
+    },
+    {
+        "msg": "Provided token account contains no tokens",
+        "name": "TokenAccountContainsNoTokens",
+        "code": 6
+    },
+    {
+        "msg": "Provided token account cannot provide amount specified",
+        "name": "TokenAccountAmountLessThanAmountSpecified",
+        "code": 7
+    },
+    {
+        "msg": "Provided vault account contains is not empty",
+        "name": "VaultAccountIsNotEmpty",
+        "code": 8
+    },
+    {
+        "msg": "Provided vault account is not owned by program derived address with seed of prefix and program id",
+        "name": "VaultAccountIsNotOwnedByProgram",
+        "code": 9
+    },
+    {
+        "msg": "The provided safety deposit account address does not match the expected program derived address",
+        "name": "SafetyDepositAddressInvalid",
+        "code": 10
+    },
+    {
+        "msg": "Token transfer failed",
+        "name": "TokenTransferFailed",
+        "code": 11
+    },
+    {
+        "msg": "Token mint to failed",
+        "name": "TokenMintToFailed",
+        "code": 12
+    },
+    {
+        "msg": "Token burn failed",
+        "name": "TokenBurnFailed",
+        "code": 13
+    },
+    {
+        "msg": "Vault mint not empty on init",
+        "name": "VaultMintNotEmpty",
+        "code": 14
+    },
+    {
+        "msg": "Vault mint's authority not set to program PDA with seed of prefix and program id",
+        "name": "VaultAuthorityNotProgram",
+        "code": 15
+    },
+    {
+        "msg": "Vault treasury not empty on init",
+        "name": "TreasuryNotEmpty",
+        "code": 16
+    },
+    {
+        "msg": "Vault treasury's owner not set to program pda with seed of prefix and program id",
+        "name": "TreasuryOwnerNotProgram",
+        "code": 17
+    },
+    {
+        "msg": "Vault should be inactive",
+        "name": "VaultShouldBeInactive",
+        "code": 18
+    },
+    {
+        "msg": "Vault should be active",
+        "name": "VaultShouldBeActive",
+        "code": 19
+    },
+    {
+        "msg": "Vault should be combined",
+        "name": "VaultShouldBeCombined",
+        "code": 20
+    },
+    {
+        "msg": "Vault treasury needs to match fraction mint",
+        "name": "VaultTreasuryMintDoesNotMatchVaultMint",
+        "code": 21
+    },
+    {
+        "msg": "Redeem Treasury cannot be same mint as fraction",
+        "name": "RedeemTreasuryCantShareSameMintAsFraction",
+        "code": 22
+    },
+    {
+        "msg": "Invalid program authority provided",
+        "name": "InvalidAuthority",
+        "code": 23
+    },
+    {
+        "msg": "Redeem treasury mint must match lookup mint",
+        "name": "RedeemTreasuryMintMustMatchLookupMint",
+        "code": 24
+    },
+    {
+        "msg": "You must pay with the same mint as the external pricing oracle",
+        "name": "PaymentMintShouldMatchPricingMint",
+        "code": 25
+    },
+    {
+        "msg": "Your share account should match the mint of the fractional mint",
+        "name": "ShareMintShouldMatchFractionalMint",
+        "code": 26
+    },
+    {
+        "msg": "Vault mint provided does not match that on the token vault",
+        "name": "VaultMintNeedsToMatchVault",
+        "code": 27
+    },
+    {
+        "msg": "Redeem treasury provided does not match that on the token vault",
+        "name": "RedeemTreasuryNeedsToMatchVault",
+        "code": 28
+    },
+    {
+        "msg": "Fraction treasury provided does not match that on the token vault",
+        "name": "FractionTreasuryNeedsToMatchVault",
+        "code": 29
+    },
+    {
+        "msg": "Not allowed to combine at this time",
+        "name": "NotAllowedToCombine",
+        "code": 30
+    },
+    {
+        "msg": "You cannot afford to combine this vault",
+        "name": "CannotAffordToCombineThisVault",
+        "code": 31
+    },
+    {
+        "msg": "You have no shares to redeem",
+        "name": "NoShares",
+        "code": 32
+    },
+    {
+        "msg": "Your outstanding share account is the incorrect mint",
+        "name": "OutstandingShareAccountNeedsToMatchFractionalMint",
+        "code": 33
+    },
+    {
+        "msg": "Your destination account is the incorrect mint",
+        "name": "DestinationAccountNeedsToMatchRedeemMint",
+        "code": 34
+    },
+    {
+        "msg": "Fractional mint is empty",
+        "name": "FractionSupplyEmpty",
+        "code": 35
+    },
+    {
+        "msg": "Token Program Provided Needs To Match Vault",
+        "name": "TokenProgramProvidedDoesNotMatchVault",
+        "code": 36
+    },
+    {
+        "msg": "Authority of vault needs to be signer for this action",
+        "name": "AuthorityIsNotSigner",
+        "code": 37
+    },
+    {
+        "msg": "Authority of vault does not match authority provided",
+        "name": "AuthorityDoesNotMatch",
+        "code": 38
+    },
+    {
+        "msg": "This safety deposit box does not belong to this vault!",
+        "name": "SafetyDepositBoxVaultMismatch",
+        "code": 39
+    },
+    {
+        "msg": "The store provided does not match the store key on the safety deposit box!",
+        "name": "StoreDoesNotMatchSafetyDepositBox",
+        "code": 40
+    },
+    {
+        "msg": "This safety deposit box is empty!",
+        "name": "StoreEmpty",
+        "code": 41
+    },
+    {
+        "msg": "The destination account to receive your token needs to be the same mint as the token's mint",
+        "name": "DestinationAccountNeedsToMatchTokenMint",
+        "code": 42
+    },
+    {
+        "msg": "The destination account to receive your shares needs to be the same mint as the vault's fraction mint",
+        "name": "DestinationAccountNeedsToMatchFractionMint",
+        "code": 43
+    },
+    {
+        "msg": "The source account to send your shares from needs to be the same mint as the vault's fraction mint",
+        "name": "SourceAccountNeedsToMatchFractionMint",
+        "code": 44
+    },
+    {
+        "msg": "This vault does not allow the minting of new shares!",
+        "name": "VaultDoesNotAllowNewShareMinting",
+        "code": 45
+    },
+    {
+        "msg": "There are not enough shares",
+        "name": "NotEnoughShares",
+        "code": 46
+    },
+    {
+        "msg": "External price account must be signer",
+        "name": "ExternalPriceAccountMustBeSigner",
+        "code": 47
+    },
+    {
+        "msg": "Very bad, someone changed external account's price mint after vault creation!",
+        "name": "RedeemTreasuryMintShouldMatchPricingMint",
+        "code": 48
+    },
+    {
+        "msg": "Store has less than amount desired",
+        "name": "StoreLessThanAmount",
+        "code": 49
+    },
+    {
+        "msg": "Invalid token program",
+        "name": "InvalidTokenProgram",
+        "code": 50
+    },
+    {
+        "msg": "Data type mismatch",
+        "name": "DataTypeMismatch",
+        "code": 51
+    },
+    {
+        "msg": "Accept payment delegate should be none",
+        "name": "DelegateShouldBeNone",
+        "code": 52
+    },
+    {
+        "msg": "Accept payment close authority should be none",
+        "name": "CloseAuthorityShouldBeNone",
+        "code": 53
+    },
+    {
+        "msg": "Derived key invalid",
+        "name": "DerivedKeyInvalid",
+        "code": 54
+    }],
+    "metadata":
+    {
+        "address": "vau1zxA2LbssAUEF7Gpw91zMM1LvXrvpzJtmZ58rPsn"
+    }
+}

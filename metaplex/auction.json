@@ -1,0 +1,1511 @@
+{
+    "version": "0.0.0",
+    "name": "auction",
+    "docs": [],
+    "ref": "https://github.com/metaplex-foundation/metaplex-program-library/blob/821e5aac0780fe45525dae72b9ad6f8dc2ba8e5b/auction/program/src/instruction.rs",
+    "instructions": [
+        {
+            "name": "CancelBid",
+            "docs": [
+                "Cancel a bid on a running auction."
+            ],
+            "accounts": [
+            {
+                "name": "biddersPrimaryAccount",
+                "isMut": false,
+                "isSigner": true,
+                "docs": [
+                    "The bidders primary account, for PDA calculation/transit auth."
+                ]
+            },
+            {
+                "name": "biddersTokenAccount",
+                "isMut": true,
+                "isSigner": false,
+                "docs": [
+                    "The bidders token account they'll receive refund with"
+                ]
+            },
+            {
+                "name": "pot",
+                "isMut": true,
+                "isSigner": false,
+                "docs": [
+                    "The pot, containing a reference to the stored SPL token account."
+                ]
+            },
+            {
+                "name": "potSPLAccount",
+                "isMut": true,
+                "isSigner": false,
+                "docs": [
+                    "The pot SPL account, where the tokens will be deposited."
+                ]
+            },
+            {
+                "name": "metadataAccount",
+                "isMut": true,
+                "isSigner": false,
+                "docs": [
+                    "The metadata account, storing information about the bidders actions."
+                ]
+            },
+            {
+                "name": "auctionAccount",
+                "isMut": true,
+                "isSigner": false,
+                "docs": [
+                    "Auction account, containing data about the auction and item being bid on."
+                ]
+            },
+            {
+                "name": "tokenMint",
+                "isMut": true,
+                "isSigner": false,
+                "docs": [
+                    "Token mint, for transfer instructions and verification."
+                ]
+            },
+            {
+                "name": "clockSysvar",
+                "isMut": false,
+                "isSigner": false,
+                "docs": [
+                    "Clock sysvar"
+                ]
+            },
+            {
+                "name": "rentSysvar",
+                "isMut": false,
+                "isSigner": false,
+                "docs": [
+                    "Rent sysvar"
+                ]
+            },
+            {
+                "name": "systemProgram",
+                "isMut": false,
+                "isSigner": false,
+                "docs": [
+                    "System program"
+                ]
+            },
+            {
+                "name": "splTokenProgram",
+                "isMut": false,
+                "isSigner": false,
+                "docs": [
+                    "SPL Token Program"
+                ]
+            }],
+            "args": [
+            {
+                "name": "args",
+                "type":
+                {
+                    "defined": "CancelBidArgs"
+                },
+                "docs": []
+            }]
+        },
+        {
+            "name": "CreateAuction",
+            "docs": [
+                "Create a new auction account bound to a resource, initially in a pending state."
+            ],
+            "accounts": [
+            {
+                "name": "creator",
+                "isMut": false,
+                "isSigner": true,
+                "docs": [
+                    "The account creating the auction, which is authorised to make changes."
+                ]
+            },
+            {
+                "name": "uninitializedAuctionAccount",
+                "isMut": true,
+                "isSigner": false,
+                "docs": [
+                    "Uninitialized auction account."
+                ]
+            },
+            {
+                "name": "auctionExtendedData",
+                "isMut": true,
+                "isSigner": false,
+                "docs": [
+                    "Auction extended data account (pda relative to auction of ['auction', program id, vault key, 'extended'])."
+                ]
+            },
+            {
+                "name": "rentSysvar",
+                "isMut": false,
+                "isSigner": false,
+                "docs": [
+                    "Rent sysvar"
+                ]
+            },
+            {
+                "name": "systemAccount",
+                "isMut": false,
+                "isSigner": false,
+                "docs": [
+                    "System account"
+                ]
+            }],
+            "args": [
+            {
+                "name": "args",
+                "type":
+                {
+                    "defined": "CreateAuctionArgs"
+                },
+                "docs": []
+            }]
+        },
+        {
+            "name": "ClaimBid",
+            "docs": [
+                "Move SPL tokens from winning bid to the destination account."
+            ],
+            "accounts": [
+            {
+                "name": "destinationAccount",
+                "isMut": true,
+                "isSigner": false,
+                "docs": [
+                    "The destination account"
+                ]
+            },
+            {
+                "name": "bidderPotTokenAccount",
+                "isMut": true,
+                "isSigner": false,
+                "docs": [
+                    "The bidder pot token account"
+                ]
+            },
+            {
+                "name": "bidderPotPDAAccount",
+                "isMut": false,
+                "isSigner": false,
+                "docs": [
+                    "The bidder pot pda account [seed of ['auction', program_id, auction key, bidder key]]"
+                ]
+            },
+            {
+                "name": "authorityOnTheAuction",
+                "isMut": false,
+                "isSigner": true,
+                "docs": [
+                    "The authority on the auction"
+                ]
+            },
+            {
+                "name": "auction",
+                "isMut": false,
+                "isSigner": false,
+                "docs": [
+                    "The auction"
+                ]
+            },
+            {
+                "name": "bidderWallet",
+                "isMut": false,
+                "isSigner": false,
+                "docs": [
+                    "The bidder wallet"
+                ]
+            },
+            {
+                "name": "tokenMintOfTheAuction",
+                "isMut": false,
+                "isSigner": false,
+                "docs": [
+                    "Token mint of the auction"
+                ]
+            },
+            {
+                "name": "clockSysvar",
+                "isMut": false,
+                "isSigner": false,
+                "docs": [
+                    "Clock sysvar"
+                ]
+            },
+            {
+                "name": "tokenProgram",
+                "isMut": false,
+                "isSigner": false,
+                "docs": [
+                    "Token program"
+                ]
+            },
+            {
+                "name": "auctionExtendedPDA",
+                "isMut": false,
+                "isSigner": false,
+                "docs": [
+                    "Auction extended (pda relative to auction of ['auction', program id, vault key, 'extended'])"
+                ]
+            }],
+            "args": [
+            {
+                "name": "args",
+                "type":
+                {
+                    "defined": "ClaimBidArgs"
+                },
+                "docs": []
+            }]
+        },
+        {
+            "name": "EndAuction",
+            "docs": [
+                "Ends an auction, regardless of end timing conditions"
+            ],
+            "accounts": [
+            {
+                "name": "auctionAuthority",
+                "isMut": true,
+                "isSigner": true,
+                "docs": [
+                    "Auction authority"
+                ]
+            },
+            {
+                "name": "auction",
+                "isMut": true,
+                "isSigner": false,
+                "docs": [
+                    "Auction"
+                ]
+            },
+            {
+                "name": "clockSysvar",
+                "isMut": false,
+                "isSigner": false,
+                "docs": [
+                    "Clock sysvar"
+                ]
+            }],
+            "args": [
+            {
+                "name": "args",
+                "type":
+                {
+                    "defined": "EndAuctionArgs"
+                },
+                "docs": []
+            }]
+        },
+        {
+            "name": "StartAuction",
+            "docs": [
+                "Start an inactive auction."
+            ],
+            "accounts": [
+            {
+                "name": "creatorAccount",
+                "isMut": false,
+                "isSigner": true,
+                "docs": [
+                    "The creator/authorised account."
+                ]
+            },
+            {
+                "name": "initializedAuctionAccount",
+                "isMut": true,
+                "isSigner": false,
+                "docs": [
+                    "Initialized auction account."
+                ]
+            },
+            {
+                "name": "clockSysvar",
+                "isMut": false,
+                "isSigner": false,
+                "docs": [
+                    "Clock sysvar"
+                ]
+            }],
+            "args": [
+            {
+                "name": "args",
+                "type":
+                {
+                    "defined": "StartAuctionArgs"
+                },
+                "docs": []
+            }]
+        },
+        {
+            "name": "SetAuthority",
+            "docs": [
+                "Update the authority for an auction account."
+            ],
+            "accounts": [
+            {
+                "name": "auction",
+                "isMut": true,
+                "isSigner": false,
+                "docs": [
+                    "auction (pda of ['auction', program id, resource id])"
+                ]
+            },
+            {
+                "name": "authority",
+                "isMut": false,
+                "isSigner": true,
+                "docs": [
+                    "authority"
+                ]
+            },
+            {
+                "name": "newAuthority",
+                "isMut": false,
+                "isSigner": false,
+                "docs": [
+                    "newAuthority"
+                ]
+            }],
+            "args": []
+        },
+        {
+            "name": "PlaceBid",
+            "docs": [
+                "Place a bid on a running auction."
+            ],
+            "accounts": [
+            {
+                "name": "biddersPrimaryAccount",
+                "isMut": false,
+                "isSigner": true,
+                "docs": [
+                    "The bidders primary account, for PDA calculation/transit auth."
+                ]
+            },
+            {
+                "name": "biddersTokenAccount",
+                "isMut": true,
+                "isSigner": false,
+                "docs": [
+                    "The bidders token account they'll pay with"
+                ]
+            },
+            {
+                "name": "pot",
+                "isMut": true,
+                "isSigner": false,
+                "docs": [
+                    "The pot, containing a reference to the stored SPL token account."
+                ]
+            },
+            {
+                "name": "potSPLAccount",
+                "isMut": true,
+                "isSigner": false,
+                "docs": [
+                    "The pot SPL account, where the tokens will be deposited."
+                ]
+            },
+            {
+                "name": "metadataAccount",
+                "isMut": true,
+                "isSigner": false,
+                "docs": [
+                    "The metadata account, storing information about the bidders actions."
+                ]
+            },
+            {
+                "name": "auctionAccount",
+                "isMut": true,
+                "isSigner": false,
+                "docs": [
+                    "Auction account, containing data about the auction and item being bid on."
+                ]
+            },
+            {
+                "name": "tokenMint",
+                "isMut": true,
+                "isSigner": false,
+                "docs": [
+                    "Token mint, for transfer instructions and verification."
+                ]
+            },
+            {
+                "name": "transferAuthority",
+                "isMut": false,
+                "isSigner": true,
+                "docs": [
+                    "Transfer authority, for moving tokens into the bid pot."
+                ]
+            },
+            {
+                "name": "payer",
+                "isMut": false,
+                "isSigner": true,
+                "docs": [
+                    "Payer"
+                ]
+            },
+            {
+                "name": "clockSysvar",
+                "isMut": false,
+                "isSigner": false,
+                "docs": [
+                    "Clock sysvar"
+                ]
+            },
+            {
+                "name": "rentSysvar",
+                "isMut": false,
+                "isSigner": false,
+                "docs": [
+                    "Rent sysvar"
+                ]
+            },
+            {
+                "name": "systemProgram",
+                "isMut": false,
+                "isSigner": false,
+                "docs": [
+                    "System program"
+                ]
+            },
+            {
+                "name": "splTokenProgram",
+                "isMut": false,
+                "isSigner": false,
+                "docs": [
+                    "SPL Token Program"
+                ]
+            }],
+            "args": [
+            {
+                "name": "args",
+                "type":
+                {
+                    "defined": "PlaceBidArgs"
+                },
+                "docs": []
+            }]
+        },
+        {
+            "name": "CreateAuctionV2",
+            "docs": [
+                "Create a new auction account bound to a resource, initially in a pending state.",
+                "The only one difference with above instruction it's additional parameters in CreateAuctionArgsV2"
+            ],
+            "accounts": [
+            {
+                "name": "creator",
+                "isMut": false,
+                "isSigner": true,
+                "docs": [
+                    "The account creating the auction, which is authorised to make changes."
+                ]
+            },
+            {
+                "name": "uninitializedAuction",
+                "isMut": true,
+                "isSigner": false,
+                "docs": [
+                    "Uninitialized auction account."
+                ]
+            },
+            {
+                "name": "auctionExtended",
+                "isMut": true,
+                "isSigner": false,
+                "docs": [
+                    "Auction extended data account (pda relative to auction of ['auction', program id, vault key, 'extended'])."
+                ]
+            },
+            {
+                "name": "rentSysvar",
+                "isMut": false,
+                "isSigner": false,
+                "docs": [
+                    "Rent sysvar"
+                ]
+            },
+            {
+                "name": "system",
+                "isMut": false,
+                "isSigner": false,
+                "docs": [
+                    "System account"
+                ]
+            }],
+            "args": [
+            {
+                "name": "args",
+                "type":
+                {
+                    "defined": "CreateAuctionArgsV2"
+                },
+                "docs": []
+            }]
+        }
+
+
+    ],
+    "accounts": [
+        {
+            "name": "PriceFloor",
+            "docs": [
+                "Structure with pricing floor data."
+            ],
+            "type":
+            {
+                "kind": "enum",
+                "variants": [
+                    {
+                        "name": "None",
+                        "fields": [
+                        {
+                            "name": "v",
+                            "type":
+                            {
+                                "array": [
+                                    "u8",
+                                    32
+                                ]
+                            },
+                            "docs": [
+                                "No price floor, any bid is valid."
+                            ]
+                        }]
+                    },
+                    {
+                        "name": "MinimumPrice",
+                        "fields": [
+                        {
+                            "name": "v",
+                            "type":
+                            {
+                                "array": [
+                                    "u64",
+                                    4
+                                ]
+                            },
+                            "docs": [
+                                "Explicit minimum price, any bid below this is rejected."
+                            ]
+                        }]
+                    },
+                    {
+                        "name": "BlindedPrice",
+                        "fields": [
+                        {
+                            "name": "v",
+                            "type": "hash",
+                            "docs": [
+                                "Hidden minimum price, revealed at the end of the auction."
+                            ]
+                        }]
+                    }
+
+                ]
+            }
+        },
+        {
+            "name": "BidState",
+            "docs": [
+                "BidState tracks the running state of an auction, each variant represents a different kind of",
+                "auction being run."
+            ],
+            "type":
+            {
+                "kind": "enum",
+                "variants": [
+                    {
+                        "name": "EnglishAuction",
+                        "fields": [
+                            {
+                                "name": "bids",
+                                "type":
+                                {
+                                    "vec":
+                                    {
+                                        "defined": "Bid"
+                                    }
+                                },
+                                "docs": []
+                            },
+                            {
+                                "name": "max",
+                                "type": "u8",
+                                "docs": []
+                            }
+
+                        ]
+                    },
+                    {
+                        "name": "OpenEdition",
+                        "fields": [
+                            {
+                                "name": "bids",
+                                "type":
+                                {
+                                    "vec":
+                                    {
+                                        "defined": "Bid"
+                                    }
+                                },
+                                "docs": []
+                            },
+                            {
+                                "name": "max",
+                                "type": "u8",
+                                "docs": []
+                            }
+
+                        ]
+                    }
+
+                ]
+            }
+        },
+        {
+            "name": "AuctionData",
+            "type":
+            {
+                "kind": "struct",
+                "fields": [
+                    {
+                        "name": "authority",
+                        "type": "publicKey",
+                        "docs": [
+                            "Pubkey of the authority with permission to modify this auction."
+                        ]
+                    },
+                    {
+                        "name": "token_mint",
+                        "type": "publicKey",
+                        "docs": [
+                            "Token mint for the SPL token being used to bid"
+                        ]
+                    },
+                    {
+                        "name": "last_bid",
+                        "type":
+                        {
+                            "option": "unixTimestamp"
+                        },
+                        "docs": [
+                            "The time the last bid was placed, used to keep track of auction timing."
+                        ]
+                    },
+                    {
+                        "name": "ended_at",
+                        "type":
+                        {
+                            "option": "unixTimestamp"
+                        },
+                        "docs": [
+                            "Slot time the auction was officially ended by."
+                        ]
+                    },
+                    {
+                        "name": "end_auction_at",
+                        "type":
+                        {
+                            "option": "unixTimestamp"
+                        },
+                        "docs": [
+                            "End time is the cut-off point that the auction is forced to end by."
+                        ]
+                    },
+                    {
+                        "name": "end_auction_gap",
+                        "type":
+                        {
+                            "option": "duration"
+                        },
+                        "docs": [
+                            "Gap time is the amount of time in slots after the previous bid at which the auction ends."
+                        ]
+                    },
+                    {
+                        "name": "price_floor",
+                        "type":
+                        {
+                            "defined": "PriceFloor"
+                        },
+                        "docs": [
+                            "Minimum price for any bid to meet."
+                        ]
+                    },
+                    {
+                        "name": "state",
+                        "type":
+                        {
+                            "defined": "AuctionState"
+                        },
+                        "docs": [
+                            "The state the auction is in, whether it has started or ended."
+                        ]
+                    },
+                    {
+                        "name": "bid_state",
+                        "type":
+                        {
+                            "defined": "BidState"
+                        },
+                        "docs": [
+                            "Auction Bids, each user may have one bid open at a time."
+                        ]
+                    }
+
+                ]
+            }
+        },
+        {
+            "name": "BidderMetadata",
+            "docs": [
+                "Models a set of metadata for a bidder, meant to be stored in a PDA. This allows looking up",
+                "information about a bidder regardless of if they have won, lost or cancelled."
+            ],
+            "type":
+            {
+                "kind": "struct",
+                "fields": [
+                    {
+                        "name": "bidder_pubkey",
+                        "type": "publicKey",
+                        "docs": [
+                            "Relationship with the bidder who's metadata this covers."
+                        ]
+                    },
+                    {
+                        "name": "auction_pubkey",
+                        "type": "publicKey",
+                        "docs": [
+                            "Relationship with the auction this bid was placed on."
+                        ]
+                    },
+                    {
+                        "name": "last_bid",
+                        "type": "u64",
+                        "docs": [
+                            "Amount that the user bid."
+                        ]
+                    },
+                    {
+                        "name": "last_bid_timestamp",
+                        "type": "unixTimestamp",
+                        "docs": [
+                            "Tracks the last time this user bid."
+                        ]
+                    },
+                    {
+                        "name": "cancelled",
+                        "type": "bool",
+                        "docs": [
+                            "Whether the last bid the user made was cancelled. This should also be enough to know if the",
+                            "user is a winner, as if cancelled it implies previous bids were also cancelled."
+                        ]
+                    }
+
+                ]
+            }
+        },
+        {
+            "name": "BidderPot",
+            "docs": [],
+            "type":
+            {
+                "kind": "struct",
+                "fields": [
+                    {
+                        "name": "bidder_pot",
+                        "type": "publicKey",
+                        "docs": [
+                            "Points at actual pot that is a token account"
+                        ]
+                    },
+                    {
+                        "name": "bidder_act",
+                        "type": "publicKey",
+                        "docs": [
+                            "Originating bidder account"
+                        ]
+                    },
+                    {
+                        "name": "auction_act",
+                        "type": "publicKey",
+                        "docs": [
+                            "Auction account"
+                        ]
+                    },
+                    {
+                        "name": "emptied",
+                        "type": "bool",
+                        "docs": [
+                            "emptied or not"
+                        ]
+                    }
+
+                ]
+            }
+        }
+
+    ],
+    "types": [
+        {
+            "name": "CancelBidArgs",
+            "type":
+            {
+                "kind": "struct",
+                "fields": [
+                    {
+                        "name": "resource",
+                        "type": "publicKey",
+                        "docs": []
+                    }
+
+                ]
+            }
+        },
+        {
+            "name": "ClaimBidArgs",
+            "type":
+            {
+                "kind": "struct",
+                "fields": [
+                    {
+                        "name": "resource",
+                        "type": "publicKey",
+                        "docs": []
+                    }
+
+                ]
+            }
+        },
+        {
+            "name": "WinnerLimit",
+            "type":
+            {
+                "kind": "enum",
+                "variants": [
+                    {
+                        "name": "Unlimited",
+                        "fields": [
+                            {
+                                "name": "n",
+                                "type": "u64",
+                                "docs": []
+                            }
+
+                        ]
+                    },
+                    {
+                        "name": "Capped",
+                        "fields": [
+                            {
+                                "name": "limit",
+                                "type": "u64",
+                                "docs": []
+                            }
+
+                        ]
+                    }
+
+                ]
+            }
+        },
+        {
+            "name": "CreateAuctionArgs",
+            "type":
+            {
+                "kind": "struct",
+                "fields": [
+                    {
+                        "name": "winners",
+                        "type":
+                        {
+                            "defined": "WinnerLimit"
+                        },
+                        "docs": [
+                            "How many winners are allowed for this auction. See AuctionData."
+                        ]
+                    },
+                    {
+                        "name": "end_auction_at",
+                        "type":
+                        {
+                            "option": "unixTimestamp"
+                        },
+                        "docs": [
+                            "End time is the cut-off point that the auction is forced to end by. See AuctionData."
+                        ]
+                    },
+                    {
+                        "name": "end_auction_gap",
+                        "type":
+                        {
+                            "option": "duration"
+                        },
+                        "docs": [
+                            "Gap time is how much time after the previous bid where the auction ends. See AuctionData."
+                        ]
+                    },
+                    {
+                        "name": "token_mint",
+                        "type": "publicKey",
+                        "docs": [
+                            "Token mint for the SPL token used for bidding."
+                        ]
+                    },
+                    {
+                        "name": "authority",
+                        "type": "publicKey",
+                        "docs": [
+                            "Authority"
+                        ]
+                    },
+                    {
+                        "name": "resource",
+                        "type": "publicKey",
+                        "docs": [
+                            "The resource being auctioned. See AuctionData."
+                        ]
+                    },
+                    {
+                        "name": "price_floor",
+                        "type":
+                        {
+                            "defined": "PriceFloor"
+                        },
+                        "docs": [
+                            "Set a price floor."
+                        ]
+                    },
+                    {
+                        "name": "tick_size",
+                        "type":
+                        {
+                            "option": "u64"
+                        },
+                        "docs": [
+                            "Add a tick size increment"
+                        ]
+                    },
+                    {
+                        "name": "gap_tick_size_percentage",
+                        "type":
+                        {
+                            "option": "u8"
+                        },
+                        "docs": [
+                            "Add a minimum percentage increase each bid must meet."
+                        ]
+                    }
+
+                ]
+            }
+        },
+        {
+            "name": "CreateAuctionArgsV2",
+            "type":
+            {
+                "kind": "struct",
+                "fields": [
+                {
+                    "name": "winners",
+                    "type":
+                    {
+                        "defined": "WinnerLimit"
+                    },
+                    "docs": [
+                        "How many winners are allowed for this auction. See AuctionData."
+                    ]
+                },
+                {
+                    "name": "end_auction_at",
+                    "type":
+                    {
+                        "option": "unixTimestamp"
+                    },
+                    "docs": [
+                        "End time is the cut-off point that the auction is forced to end by. See AuctionData."
+                    ]
+                },
+                {
+                    "name": "end_auction_gap",
+                    "type":
+                    {
+                        "option": "duration"
+                    },
+                    "docs": [
+                        "Gap time is how much time after the previous bid where the auction ends. See AuctionData."
+                    ]
+                },
+                {
+                    "name": "token_mint",
+                    "type": "publicKey",
+                    "docs": [
+                        "Token mint for the SPL token used for bidding."
+                    ]
+                },
+                {
+                    "name": "authority",
+                    "type": "publicKey",
+                    "docs": [
+                        "Authority"
+                    ]
+                },
+                {
+                    "name": "resource",
+                    "type": "publicKey",
+                    "docs": [
+                        "The resource being auctioned. See AuctionData."
+                    ]
+                },
+                {
+                    "name": "price_floor",
+                    "type":
+                    {
+                        "defined": "PriceFloor"
+                    },
+                    "docs": [
+                        "Set a price floor."
+                    ]
+                },
+                {
+                    "name": "tick_size",
+                    "type":
+                    {
+                        "option": "u64"
+                    },
+                    "docs": [
+                        "Add a tick size increment"
+                    ]
+                },
+                {
+                    "name": "gap_tick_size_percentage",
+                    "type":
+                    {
+                        "option": "u8"
+                    },
+                    "docs": [
+                        "Add a minimum percentage increase each bid must meet."
+                    ]
+                },
+                {
+                    "name": "instant_sale_price",
+                    "type":
+                    {
+                        "option": "u64"
+                    },
+                    "docs": [
+                        "Add a instant sale price."
+                    ]
+                },
+                {
+                    "name": "name",
+                    "type":
+                    {
+                        "option":
+                        {
+                            "defined": "AuctionName"
+                        }
+                    },
+                    "docs": [
+                        "Auction name"
+                    ]
+                }]
+            },
+            "docs": []
+        },
+        {
+            "name": "EndAuctionArgs",
+            "type":
+            {
+                "kind": "struct",
+                "fields": [
+                    {
+                        "name": "resource",
+                        "type": "publicKey",
+                        "docs": [
+                            "The resource being auctioned. See AuctionData."
+                        ]
+                    },
+                    {
+                        "name": "reveal",
+                        "type":
+                        {
+                            "option":
+                            {
+                                "defined": "Revealer"
+                            }
+                        },
+                        "docs": [
+                            "If the auction was blinded, a revealing price must be specified to release the auction",
+                            "winnings."
+                        ]
+                    }
+
+                ]
+            }
+        },
+        {
+            "name": "PlaceBidArgs",
+            "type":
+            {
+                "kind": "struct",
+                "fields": [
+                    {
+                        "name": "amount",
+                        "type": "u64",
+                        "docs": [
+                            "Size of the bid being placed. The user must have enough SOL to satisfy this amount."
+                        ]
+                    },
+                    {
+                        "name": "resource",
+                        "type": "publicKey",
+                        "docs": [
+                            "Resource being bid on."
+                        ]
+                    }
+
+                ]
+            }
+        },
+        {
+            "name": "StartAuctionArgs",
+            "type":
+            {
+                "kind": "struct",
+                "fields": [
+                    {
+                        "name": "resource",
+                        "type": "publicKey",
+                        "docs": [
+                            "The resource being auctioned. See AuctionData."
+                        ]
+                    }
+
+                ]
+            }
+        },
+        {
+            "name": "Revealer",
+            "type":
+            {
+                "kind": "struct",
+                "fields": [
+                    {
+                        "name": "Price",
+                        "type": "u64",
+                        "docs": []
+                    },
+                    {
+                        "name": "Salt",
+                        "type": "u64",
+                        "docs": []
+                    }
+
+                ]
+            }
+        },
+        {
+            "name": "AuctionState",
+            "docs": [
+                "Define valid auction state transitions."
+            ],
+            "type":
+            {
+                "kind": "enum",
+                "variants": [
+                    {
+                        "name": "Created"
+                    },
+                    {
+                        "name": "Started"
+                    },
+                    {
+                        "name": "Ended"
+                    }
+
+                ]
+            }
+        },
+        {
+            "name": "Bid",
+            "docs": [
+                "Bids associate a bidding key with an amount bid."
+            ],
+            "type":
+            {
+                "kind": "struct",
+                "fields": [
+                    {
+                        "name": "key",
+                        "type": "publicKey",
+                        "docs": []
+                    },
+                    {
+                        "name": "amount",
+                        "type": "u64",
+                        "docs": []
+                    }
+
+                ]
+            }
+        },
+        {
+            "name": "AuctionDataExtended",
+            "docs": [
+                "Further storage for more fields. Would like to store more on the main data but due",
+                "to a borsh issue that causes more added fields to inflict \"Access violation\" errors",
+                "during redemption in main Metaplex app for no reason, we had to add this nasty PDA."
+            ],
+            "type":
+            {
+                "kind": "struct",
+                "fields": [
+                    {
+                        "name": "total_uncancelled_bids",
+                        "type": "u64",
+                        "docs": [
+                            "Total uncancelled bids"
+                        ]
+                    },
+                    {
+                        "name": "tick_size",
+                        "type":
+                        {
+                            "option": "u64"
+                        },
+                        "docs": [
+                            "Tick size"
+                        ]
+                    },
+                    {
+                        "name": "gap_tick_size_percentage",
+                        "type":
+                        {
+                            "option": "u8"
+                        },
+                        "docs": [
+                            "gap_tick_size_percentage - two decimal points"
+                        ]
+                    },
+                    {
+                        "name": "instant_sale_price",
+                        "type":
+                        {
+                            "option": "u64"
+                        },
+                        "docs": [
+                            "Instant sale price"
+                        ]
+                    },
+                    {
+                        "name": "name",
+                        "type":
+                        {
+                            "option":
+                            {
+                                "defined": "AuctionName"
+                            }
+                        },
+                        "docs": [
+                            "Auction name"
+                        ]
+                    }
+
+                ]
+            }
+        },
+        {
+            "name": "AuctionName",
+            "type":
+            {
+                "kind": "struct",
+                "fields": [
+                {
+                    "name": "name",
+                    "type":
+                    {
+                        "array": [
+                            "u8",
+                            32
+                        ]
+                    },
+                    "docs": []
+                }]
+            },
+            "docs": []
+        }
+
+
+
+    ],
+    "events": [],
+    "errors": [
+    {
+        "msg": "Account does not have correct owner",
+        "name": "IncorrectOwner",
+        "code": 0
+    },
+    {
+        "msg": "Lamport balance below rent-exempt threshold",
+        "name": "NotRentExempt",
+        "code": 1
+    },
+    {
+        "msg": "Bid account provided does not match the derived address.",
+        "name": "InvalidBidAccount",
+        "code": 2
+    },
+    {
+        "msg": "Auction account specified is invalid.",
+        "name": "InvalidAuctionAccount",
+        "code": 3
+    },
+    {
+        "msg": "Balance too low to make bid.",
+        "name": "BalanceTooLow",
+        "code": 4
+    },
+    {
+        "msg": "Auction is not currently running.",
+        "name": "InvalidState",
+        "code": 5
+    },
+    {
+        "msg": "Bid is too small.",
+        "name": "BidTooSmall",
+        "code": 6
+    },
+    {
+        "msg": "Invalid auction state transition.",
+        "name": "AuctionTransitionInvalid",
+        "code": 7
+    },
+    {
+        "msg": "Failed to derive an account from seeds.",
+        "name": "DerivedKeyInvalid",
+        "code": 8
+    },
+    {
+        "msg": "Token transfer failed",
+        "name": "TokenTransferFailed",
+        "code": 9
+    },
+    {
+        "msg": "Token mint to failed",
+        "name": "TokenMintToFailed",
+        "code": 10
+    },
+    {
+        "msg": "Token burn failed",
+        "name": "TokenBurnFailed",
+        "code": 11
+    },
+    {
+        "msg": "Invalid authority",
+        "name": "InvalidAuthority",
+        "code": 12
+    },
+    {
+        "msg": "Authority not signer",
+        "name": "AuthorityNotSigner",
+        "code": 13
+    },
+    {
+        "msg": "Numerical overflow",
+        "name": "NumericalOverflowError",
+        "code": 14
+    },
+    {
+        "msg": "Bidder pot token account does not match",
+        "name": "BidderPotTokenAccountOwnerMismatch",
+        "code": 15
+    },
+    {
+        "msg": "Uninitialized",
+        "name": "Uninitialized",
+        "code": 16
+    },
+    {
+        "msg": "Metadata account is missing or invalid.",
+        "name": "MetadataInvalid",
+        "code": 17
+    },
+    {
+        "msg": "Bidder pot is missing, and required for SPL trades.",
+        "name": "BidderPotDoesNotExist",
+        "code": 18
+    },
+    {
+        "msg": "Existing Bid is already active.",
+        "name": "BidAlreadyActive",
+        "code": 19
+    },
+    {
+        "msg": "Incorrect mint specified, must match auction.",
+        "name": "IncorrectMint",
+        "code": 20
+    },
+    {
+        "msg": "Must reveal price when ending a blinded auction.",
+        "name": "MustReveal",
+        "code": 21
+    },
+    {
+        "msg": "The revealing hash is invalid.",
+        "name": "InvalidReveal",
+        "code": 22
+    },
+    {
+        "msg": "The pot for this bid is already empty.",
+        "name": "BidderPotEmpty",
+        "code": 23
+    },
+    {
+        "msg": " This is not a valid token program",
+        "name": "InvalidTokenProgram",
+        "code": 24
+    },
+    {
+        "msg": "Accept payment delegate should be none",
+        "name": "DelegateShouldBeNone",
+        "code": 25
+    },
+    {
+        "msg": "Accept payment close authority should be none",
+        "name": "CloseAuthorityShouldBeNone",
+        "code": 26
+    },
+    {
+        "msg": "Data type mismatch",
+        "name": "DataTypeMismatch",
+        "code": 27
+    },
+    {
+        "msg": "Bid must be multiple of tick size",
+        "name": "BidMustBeMultipleOfTickSize",
+        "code": 28
+    },
+    {
+        "msg": "During the gap window, gap between next lowest bid must be of a certain percentage",
+        "name": "GapBetweenBidsTooSmall",
+        "code": 29
+    },
+    {
+        "msg": "Gap tick size percentage must be between 0 and 100",
+        "name": "InvalidGapTickSizePercentage",
+        "code": 30
+    }],
+    "metadata":
+    {
+        "address": "auctxRXPeJoc4817jDhf4HbjnhEcr1cCXenosMhK5R8"
+    }
+}

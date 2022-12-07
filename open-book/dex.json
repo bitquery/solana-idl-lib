@@ -1,6 +1,6 @@
 {
     "version": "0.0.0",
-    "name": "Serum Dex",
+    "name": "OpenBook Dex",
     "instructions": [
         {
             "name": "InitializeMarket",
@@ -992,14 +992,6 @@
                     "isSigner": false,
                     "docs": [
                         "spl token program"
-                    ]
-                },
-                {
-                    "name": "vaultSigner",
-                    "isMut": false,
-                    "isSigner": false,
-                    "docs": [
-                        "vault signer"
                     ]
                 },
                 {

@@ -1,0 +1,242 @@
+{
+    "version": "0.1.0",
+    "name": "chainlink_dfeed",
+    "instructions": [
+        {
+            "name": "createFeed",
+            "accounts": [
+                {
+                    "name": "authority",
+                    "isMut": true,
+                    "isSigner": true
+                },
+                {
+                    "name": "feed",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "systemProgram",
+                    "isMut": false,
+                    "isSigner": false
+                }
+            ],
+            "args": [
+                {
+                    "name": "derivationPath",
+                    "type": "bytes"
+                },
+                {
+                    "name": "liveLength",
+                    "type": "u8"
+                },
+                {
+                    "name": "historyLength",
+                    "type": "u8"
+                },
+                {
+                    "name": "description",
+                    "type": "string"
+                },
+                {
+                    "name": "decimals",
+                    "type": "u8"
+                },
+                {
+                    "name": "granularity",
+                    "type": "u8"
+                }
+            ]
+        },
+        {
+            "name": "submitFeed",
+            "accounts": [
+                {
+                    "name": "authority",
+                    "isMut": false,
+                    "isSigner": true
+                },
+                {
+                    "name": "feed",
+                    "isMut": true,
+                    "isSigner": false
+                }
+            ],
+            "args": [
+                {
+                    "name": "timestamp",
+                    "type": "i64"
+                },
+                {
+                    "name": "answer",
+                    "type": "i128"
+                }
+            ]
+        },
+        {
+            "name": "query",
+            "accounts": [
+                {
+                    "name": "feed",
+                    "isMut": false,
+                    "isSigner": false
+                }
+            ],
+            "args": [
+                {
+                    "name": "scope",
+                    "type": {
+                        "defined": "Scope"
+                    }
+                }
+            ]
+        }
+    ],
+    "accounts": [
+        {
+            "name": "Transmissions",
+            "type": {
+                "kind": "struct",
+                "fields": [
+                    {
+                        "name": "version",
+                        "type": "u8"
+                    },
+                    {
+                        "name": "state",
+                        "type": "u8"
+                    },
+                    {
+                        "name": "owner",
+                        "type": "publicKey"
+                    },
+                    {
+                        "name": "proposedOwner",
+                        "type": "publicKey"
+                    },
+                    {
+                        "name": "writer",
+                        "type": "publicKey"
+                    },
+                    {
+                        "name": "description",
+                        "type": {
+                            "array": [
+                                "u8",
+                                32
+                            ]
+                        }
+                    },
+                    {
+                        "name": "decimals",
+                        "type": "u8"
+                    },
+                    {
+                        "name": "flaggingThreshold",
+                        "type": "u32"
+                    },
+                    {
+                        "name": "latestRoundId",
+                        "type": "u32"
+                    },
+                    {
+                        "name": "granularity",
+                        "type": "u8"
+                    },
+                    {
+                        "name": "liveLength",
+                        "type": "u32"
+                    },
+                    {
+                        "name": "liveCursor",
+                        "type": "u32"
+                    },
+                    {
+                        "name": "historicalCursor",
+                        "type": "u32"
+                    }
+                ]
+            }
+        }
+    ],
+    "types": [
+        {
+            "name": "Round",
+            "type": {
+                "kind": "struct",
+                "fields": [
+                    {
+                        "name": "roundId",
+                        "type": "u32"
+                    },
+                    {
+                        "name": "slot",
+                        "type": "u64"
+                    },
+                    {
+                        "name": "timestamp",
+                        "type": "u32"
+                    },
+                    {
+                        "name": "answer",
+                        "type": "i128"
+                    }
+                ]
+            }
+        },
+        {
+            "name": "Scope",
+            "type": {
+                "kind": "enum",
+                "variants": [
+                    {
+                        "name": "Version"
+                    },
+                    {
+                        "name": "Decimals"
+                    },
+                    {
+                        "name": "Description"
+                    },
+                    {
+                        "name": "RoundData",
+                        "fields": [
+                            {
+                                "name": "round_id",
+                                "type": "u32"
+                            }
+                        ]
+                    },
+                    {
+                        "name": "LatestRoundData"
+                    },
+                    {
+                        "name": "Aggregator"
+                    }
+                ]
+            }
+        }
+    ],
+    "errors": [
+        {
+            "code": 6000,
+            "name": "InvalidInput",
+            "msg": "Invalid input."
+        },
+        {
+            "code": 6001,
+            "name": "InvalidVersion",
+            "msg": "Invalid version."
+        },
+        {
+            "code": 6002,
+            "name": "NotFound",
+            "msg": "Not found."
+        },
+        {
+            "code": 6003,
+            "name": "Unauthorized",
+            "msg": "Unauthorized."
+        }
+    ]
+}
