@@ -1,0 +1,1303 @@
+{
+    "version": "1.1.0",
+    "name": "mm_farming_pool_v1",
+    "instructions": [
+        {
+            "name": "initialize",
+            "accounts": [
+                {
+                    "name": "pool",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "poolMint",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "lpTokenFreezeVault",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "baseTokenVault",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "quoteTokenVault",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "poolSigner",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "initializer",
+                    "isMut": false,
+                    "isSigner": true
+                },
+                {
+                    "name": "poolAuthority",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "feeBaseAccount",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "feeQuoteAccount",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "feePoolTokenAccount",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "tokenProgram",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "rent",
+                    "isMut": false,
+                    "isSigner": false
+                }
+            ],
+            "args": [
+                {
+                    "name": "signerNonce",
+                    "type": "u8"
+                }
+            ]
+        },
+        {
+            "name": "getCreationBasket",
+            "accounts": [
+                {
+                    "name": "pool",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "baseTokenVault",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "quoteTokenVault",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "poolMint",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "retbufAccount",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "retbufProgram",
+                    "isMut": false,
+                    "isSigner": false
+                }
+            ],
+            "args": [
+                {
+                    "name": "tokensRequested",
+                    "type": "u64"
+                }
+            ]
+        },
+        {
+            "name": "getRedemptionBasket",
+            "accounts": [
+                {
+                    "name": "pool",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "baseTokenVault",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "quoteTokenVault",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "poolMint",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "retbufAccount",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "retbufProgram",
+                    "isMut": false,
+                    "isSigner": false
+                }
+            ],
+            "args": [
+                {
+                    "name": "tokensRequested",
+                    "type": "u64"
+                }
+            ]
+        },
+        {
+            "name": "createBasket",
+            "accounts": [
+                {
+                    "name": "pool",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "poolMint",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "poolSigner",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "userBaseTokenAccount",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "userQuoteTokenAccount",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "baseTokenVault",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "quoteTokenVault",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "userPoolTokenAccount",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "walletAuthority",
+                    "isMut": false,
+                    "isSigner": true
+                },
+                {
+                    "name": "tokenProgram",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "clock",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "rent",
+                    "isMut": false,
+                    "isSigner": false
+                }
+            ],
+            "args": [
+                {
+                    "name": "creationSize",
+                    "type": "u64"
+                },
+                {
+                    "name": "baseTokenUsedMax",
+                    "type": "u64"
+                },
+                {
+                    "name": "quoteTokenUsedMax",
+                    "type": "u64"
+                }
+            ]
+        },
+        {
+            "name": "redeemBasket",
+            "accounts": [
+                {
+                    "name": "pool",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "poolMint",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "baseTokenVault",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "quoteTokenVault",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "poolSigner",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "userPoolTokenAccount",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "userBaseTokenAccount",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "userQuoteTokenAccount",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "walletAuthority",
+                    "isMut": false,
+                    "isSigner": true
+                },
+                {
+                    "name": "userSolAccount",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "tokenProgram",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "feeBaseAccount",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "feeQuoteAccount",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "clock",
+                    "isMut": false,
+                    "isSigner": false
+                }
+            ],
+            "args": [
+                {
+                    "name": "redemptionSize",
+                    "type": "u64"
+                },
+                {
+                    "name": "baseTokenReturnedMin",
+                    "type": "u64"
+                },
+                {
+                    "name": "quoteTokenReturnedMin",
+                    "type": "u64"
+                }
+            ]
+        },
+        {
+            "name": "swap",
+            "accounts": [
+                {
+                    "name": "pool",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "poolSigner",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "poolMint",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "baseTokenVault",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "quoteTokenVault",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "feePoolTokenAccount",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "walletAuthority",
+                    "isMut": false,
+                    "isSigner": true
+                },
+                {
+                    "name": "userBaseTokenAccount",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "userQuoteTokenAccount",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "tokenProgram",
+                    "isMut": false,
+                    "isSigner": false
+                }
+            ],
+            "args": [
+                {
+                    "name": "tokens",
+                    "type": "u64"
+                },
+                {
+                    "name": "minTokens",
+                    "type": "u64"
+                },
+                {
+                    "name": "side",
+                    "type": {
+                        "defined": "Side"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "initializeFarming",
+            "accounts": [
+                {
+                    "name": "pool",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "farmingState",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "snapshots",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "farmingTokenVault",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "farmingAuthority",
+                    "isMut": false,
+                    "isSigner": true
+                },
+                {
+                    "name": "walletAuthority",
+                    "isMut": false,
+                    "isSigner": true
+                },
+                {
+                    "name": "farmingTokenAccount",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "tokenProgram",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "clock",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "rent",
+                    "isMut": false,
+                    "isSigner": false
+                }
+            ],
+            "args": [
+                {
+                    "name": "tokenAmount",
+                    "type": "u64"
+                },
+                {
+                    "name": "tokensPerPeriod",
+                    "type": "u64"
+                },
+                {
+                    "name": "periodLength",
+                    "type": "u64"
+                },
+                {
+                    "name": "noWithdrawPeriodSeconds",
+                    "type": "i64"
+                },
+                {
+                    "name": "vestingPeriodSeconds",
+                    "type": "i64"
+                }
+            ]
+        },
+        {
+            "name": "startFarming",
+            "accounts": [
+                {
+                    "name": "pool",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "farmingState",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "farmingTicket",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "lpTokenFreezeVault",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "userLpTokenAccount",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "walletAuthority",
+                    "isMut": false,
+                    "isSigner": true
+                },
+                {
+                    "name": "userKey",
+                    "isMut": false,
+                    "isSigner": true
+                },
+                {
+                    "name": "tokenProgram",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "clock",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "rent",
+                    "isMut": false,
+                    "isSigner": false
+                }
+            ],
+            "args": [
+                {
+                    "name": "poolTokenAmount",
+                    "type": "u64"
+                }
+            ]
+        },
+        {
+            "name": "initializeFarmingCalc",
+            "accounts": [
+                {
+                    "name": "farmingCalc",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "farmingTicket",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "userKey",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "farmingState",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "initializer",
+                    "isMut": false,
+                    "isSigner": true
+                },
+                {
+                    "name": "rent",
+                    "isMut": false,
+                    "isSigner": false
+                }
+            ],
+            "args": []
+        },
+        {
+            "name": "closeFarmingCalc",
+            "accounts": [
+                {
+                    "name": "farmingCalc",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "farmingTicket",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "signer",
+                    "isMut": false,
+                    "isSigner": true
+                },
+                {
+                    "name": "initializer",
+                    "isMut": true,
+                    "isSigner": false
+                }
+            ],
+            "args": []
+        },
+        {
+            "name": "calculateFarmed",
+            "accounts": [
+                {
+                    "name": "pool",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "farmingState",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "farmingSnapshots",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "farmingCalc",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "farmingTicket",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "clock",
+                    "isMut": false,
+                    "isSigner": false
+                }
+            ],
+            "args": [
+                {
+                    "name": "maxSnapshots",
+                    "type": "u64"
+                }
+            ]
+        },
+        {
+            "name": "withdrawFarmed",
+            "accounts": [
+                {
+                    "name": "pool",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "farmingState",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "farmingCalc",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "farmingTokenVault",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "poolSigner",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "userFarmingTokenAccount",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "userKey",
+                    "isMut": false,
+                    "isSigner": true
+                },
+                {
+                    "name": "tokenProgram",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "clock",
+                    "isMut": false,
+                    "isSigner": false
+                }
+            ],
+            "args": []
+        },
+        {
+            "name": "checkFarmed",
+            "accounts": [
+                {
+                    "name": "pool",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "farmingState",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "farmingSnapshots",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "farmingTicket",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "farmingTokenVault",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "poolSigner",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "clock",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "rent",
+                    "isMut": false,
+                    "isSigner": false
+                }
+            ],
+            "args": [
+                {
+                    "name": "maxSnapshots",
+                    "type": "u64"
+                }
+            ]
+        },
+        {
+            "name": "endFarming",
+            "accounts": [
+                {
+                    "name": "pool",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "farmingState",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "farmingSnapshots",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "farmingTicket",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "lpTokenFreezeVault",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "poolSigner",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "userPoolTokenAccount",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "userKey",
+                    "isMut": false,
+                    "isSigner": true
+                },
+                {
+                    "name": "tokenProgram",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "clock",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "rent",
+                    "isMut": false,
+                    "isSigner": false
+                }
+            ],
+            "args": []
+        },
+        {
+            "name": "takeFarmingSnapshot",
+            "accounts": [
+                {
+                    "name": "pool",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "farmingState",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "farmingSnapshots",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "lpTokenFreezeVault",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "authority",
+                    "isMut": false,
+                    "isSigner": true
+                },
+                {
+                    "name": "tokenProgram",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "clock",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "rent",
+                    "isMut": false,
+                    "isSigner": false
+                }
+            ],
+            "args": []
+        },
+        {
+            "name": "increaseFarmingTotal",
+            "accounts": [
+                {
+                    "name": "pool",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "farmingState",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "farmingTokenVault",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "farmingTokenAccount",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "walletAuthority",
+                    "isMut": false,
+                    "isSigner": true
+                },
+                {
+                    "name": "initializerAccount",
+                    "isMut": false,
+                    "isSigner": true
+                },
+                {
+                    "name": "tokenProgram",
+                    "isMut": false,
+                    "isSigner": false
+                }
+            ],
+            "args": [
+                {
+                    "name": "increaseAmount",
+                    "type": "u64"
+                }
+            ]
+        }
+    ],
+    "accounts": [
+        {
+            "name": "Pool",
+            "type": {
+                "kind": "struct",
+                "fields": [
+                    {
+                        "name": "lpTokenFreezeVault",
+                        "type": "publicKey"
+                    },
+                    {
+                        "name": "poolMint",
+                        "type": "publicKey"
+                    },
+                    {
+                        "name": "baseTokenVault",
+                        "type": "publicKey"
+                    },
+                    {
+                        "name": "baseTokenMint",
+                        "type": "publicKey"
+                    },
+                    {
+                        "name": "quoteTokenVault",
+                        "type": "publicKey"
+                    },
+                    {
+                        "name": "quoteTokenMint",
+                        "type": "publicKey"
+                    },
+                    {
+                        "name": "poolSigner",
+                        "type": "publicKey"
+                    },
+                    {
+                        "name": "poolSignerNonce",
+                        "type": "u8"
+                    },
+                    {
+                        "name": "authority",
+                        "type": "publicKey"
+                    },
+                    {
+                        "name": "initializerAccount",
+                        "type": "publicKey"
+                    },
+                    {
+                        "name": "feeBaseAccount",
+                        "type": "publicKey"
+                    },
+                    {
+                        "name": "feeQuoteAccount",
+                        "type": "publicKey"
+                    },
+                    {
+                        "name": "feePoolTokenAccount",
+                        "type": "publicKey"
+                    },
+                    {
+                        "name": "fees",
+                        "type": {
+                            "defined": "Fees"
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "name": "FarmingState",
+            "type": {
+                "kind": "struct",
+                "fields": [
+                    {
+                        "name": "tokensUnlocked",
+                        "type": "u64"
+                    },
+                    {
+                        "name": "tokensPerPeriod",
+                        "type": "u64"
+                    },
+                    {
+                        "name": "tokensTotal",
+                        "type": "u64"
+                    },
+                    {
+                        "name": "periodLength",
+                        "type": "u64"
+                    },
+                    {
+                        "name": "noWithdrawalTime",
+                        "type": "i64"
+                    },
+                    {
+                        "name": "vestingType",
+                        "type": "u8"
+                    },
+                    {
+                        "name": "vestingPeriod",
+                        "type": "i64"
+                    },
+                    {
+                        "name": "startTime",
+                        "type": "i64"
+                    },
+                    {
+                        "name": "currentTime",
+                        "type": "i64"
+                    },
+                    {
+                        "name": "pool",
+                        "type": "publicKey"
+                    },
+                    {
+                        "name": "farmingTokenVault",
+                        "type": "publicKey"
+                    },
+                    {
+                        "name": "farmingSnapshots",
+                        "type": "publicKey"
+                    }
+                ]
+            }
+        },
+        {
+            "name": "FarmingTicket",
+            "type": {
+                "kind": "struct",
+                "fields": [
+                    {
+                        "name": "tokensFrozen",
+                        "type": "u64"
+                    },
+                    {
+                        "name": "startTime",
+                        "type": "i64"
+                    },
+                    {
+                        "name": "endTime",
+                        "type": "i64"
+                    },
+                    {
+                        "name": "userKey",
+                        "type": "publicKey"
+                    },
+                    {
+                        "name": "pool",
+                        "type": "publicKey"
+                    },
+                    {
+                        "name": "nextAttached",
+                        "type": "u64"
+                    },
+                    {
+                        "name": "statesAttached",
+                        "type": {
+                            "array": [
+                                {
+                                    "defined": "AttachedFarmingState"
+                                },
+                                10
+                            ]
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "name": "SnapshotQueue",
+            "type": {
+                "kind": "struct",
+                "fields": [
+                    {
+                        "name": "nextIndex",
+                        "type": "u64"
+                    },
+                    {
+                        "name": "snapshots",
+                        "type": {
+                            "array": [
+                                {
+                                    "defined": "Snapshot"
+                                },
+                                1500
+                            ]
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "name": "FarmingCalc",
+            "type": {
+                "kind": "struct",
+                "fields": [
+                    {
+                        "name": "farmingState",
+                        "type": "publicKey"
+                    },
+                    {
+                        "name": "userKey",
+                        "type": "publicKey"
+                    },
+                    {
+                        "name": "initializer",
+                        "type": "publicKey"
+                    },
+                    {
+                        "name": "tokenAmount",
+                        "type": "u64"
+                    }
+                ]
+            }
+        }
+    ],
+    "types": [
+        {
+            "name": "Side",
+            "type": {
+                "kind": "enum",
+                "variants": [
+                    {
+                        "name": "Bid"
+                    },
+                    {
+                        "name": "Ask"
+                    }
+                ]
+            }
+        },
+        {
+            "name": "Fees",
+            "type": {
+                "kind": "struct",
+                "fields": [
+                    {
+                        "name": "tradeFeeNumerator",
+                        "type": "u64"
+                    },
+                    {
+                        "name": "tradeFeeDenominator",
+                        "type": "u64"
+                    },
+                    {
+                        "name": "ownerTradeFeeNumerator",
+                        "type": "u64"
+                    },
+                    {
+                        "name": "ownerTradeFeeDenominator",
+                        "type": "u64"
+                    },
+                    {
+                        "name": "ownerWithdrawFeeNumerator",
+                        "type": "u64"
+                    },
+                    {
+                        "name": "ownerWithdrawFeeDenominator",
+                        "type": "u64"
+                    }
+                ]
+            }
+        },
+        {
+            "name": "AttachedFarmingState",
+            "type": {
+                "kind": "struct",
+                "fields": [
+                    {
+                        "name": "farmingState",
+                        "type": "publicKey"
+                    },
+                    {
+                        "name": "lastWithdrawTime",
+                        "type": "i64"
+                    },
+                    {
+                        "name": "lastVestedWithdrawTime",
+                        "type": "i64"
+                    }
+                ]
+            }
+        },
+        {
+            "name": "Snapshot",
+            "type": {
+                "kind": "struct",
+                "fields": [
+                    {
+                        "name": "isInitialized",
+                        "type": "bool"
+                    },
+                    {
+                        "name": "tokensFrozen",
+                        "type": "u64"
+                    },
+                    {
+                        "name": "farmingTokens",
+                        "type": "u64"
+                    },
+                    {
+                        "name": "time",
+                        "type": "i64"
+                    }
+                ]
+            }
+        }
+    ],
+    "errors": [
+        {
+            "code": 300,
+            "name": "SlippageExceeded"
+        },
+        {
+            "code": 301,
+            "name": "TokenLimitExceeded"
+        },
+        {
+            "code": 302,
+            "name": "CalculationError"
+        },
+        {
+            "code": 303,
+            "name": "ZeroResultingTokens"
+        },
+        {
+            "code": 304,
+            "name": "WithdrawingMoreThanTicketAllows"
+        },
+        {
+            "code": 305,
+            "name": "PoolIsEmpty"
+        },
+        {
+            "code": 306,
+            "name": "ConversionFailure"
+        },
+        {
+            "code": 307,
+            "name": "BasketSerializationError"
+        },
+        {
+            "code": 308,
+            "name": "InvalidFee"
+        },
+        {
+            "code": 309,
+            "name": "TokensAlreadyUnfrozen"
+        },
+        {
+            "code": 310,
+            "name": "NotAuthorized"
+        },
+        {
+            "code": 311,
+            "name": "TicketFarmsLimitReached"
+        },
+        {
+            "code": 312,
+            "name": "SnapshotLimitReached"
+        },
+        {
+            "code": 313,
+            "name": "MinimumWithdrawalTimeNotPassed",
+            "msg": "Cannot withdraw before the minimum withdrawal time has passed"
+        },
+        {
+            "code": 314,
+            "name": "MinimumUnfreezeTimeNotPassed",
+            "msg": "Cannot unfreeze before one period from the last action with ticket passed"
+        },
+        {
+            "code": 315,
+            "name": "NoTokensToWithdraw",
+            "msg": "Got no farming tokens ready for withdrawal"
+        },
+        {
+            "code": 316,
+            "name": "FarmingTokenCalculationError",
+            "msg": "Got an error from Farming token calculation"
+        },
+        {
+            "code": 317,
+            "name": "CannotSnapshotNoTokensToUnlock",
+            "msg": "No tokens to unlock"
+        },
+        {
+            "code": 318,
+            "name": "CannotSnapshotNoTokensFrozen",
+            "msg": "No tokens frozen"
+        },
+        {
+            "code": 319,
+            "name": "AttachedStatesLimitReached"
+        },
+        {
+            "code": 320,
+            "name": "NonZeroOutstandingBalance",
+            "msg": "Cannot close farming calc while it's not empty"
+        },
+        {
+            "code": 321,
+            "name": "NoNewSnapshotsProcessed",
+            "msg": "No new snapshots can be processed for this ticket for this farming"
+        }
+    ]
+}
