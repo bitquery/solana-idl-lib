@@ -1,5 +1,8 @@
 {
   "version": "1.13.5",
   "name": "solana_compute_budget_program",
-  "instructions": []
+  "instructions": [],
+  "metadata": {
+    "instruction_selector_type": "single-instuction"
+  }
 }
