@@ -2343,5 +2343,8 @@
         }
     ],
     "events": [],
-    "errors": []
+    "errors": [],
+    "metadata": {
+        "instruction_selector_type": "serum-fork"
+    }
 }
