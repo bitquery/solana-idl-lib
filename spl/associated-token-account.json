@@ -50,5 +50,8 @@
       "name": "InvalidOwner",
       "msg": "Associated token account owner does not match address derivation"
     }
-  ]
+  ],
+  "metadata": {
+    "instruction_selector_type": "index"
+  }
 }

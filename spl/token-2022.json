@@ -1168,5 +1168,8 @@
       "name": "NonConfidentialTransfersDisabled",
       "msg": "Non-confidential transfers disabled"
     }
-  ]
+  ],
+  "metadata": {
+    "instruction_selector_type": "index"
+  }
 }

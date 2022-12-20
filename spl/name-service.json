@@ -137,5 +137,8 @@
       "name": "OutOfSpace",
       "msg": "Out of space"
     }
-  ]
+  ],
+  "metadata": {
+    "instruction_selector_type": "index"
+  }
 }

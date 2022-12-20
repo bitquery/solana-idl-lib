@@ -1322,5 +1322,8 @@
       "name": "ExceededSlippage",
       "msg": "Amount smaller than desired slippage limit"
     }
-  ]
+  ],
+  "metadata": {
+    "instruction_selector_type": "index"
+  }
 }

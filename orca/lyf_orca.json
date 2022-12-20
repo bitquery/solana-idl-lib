@@ -1,0 +1,3388 @@
+{
+    "version": "0.0.0",
+    "name": "lyf_orca",
+    "instructions": [
+        {
+            "name": "initializeStrategy",
+            "accounts": [
+                {
+                    "name": "admin",
+                    "isMut": false,
+                    "isSigner": true
+                },
+                {
+                    "name": "strategyState",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "strategyAuthority",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "strategyFeeAccount",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "strategyTknAccount0",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "strategyTknAccount1",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "strategyLpTknAccount",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "strategyRewardsTknAccount",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "strategyFarmTknAccount",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "lendingProgramId",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "lendingPoolAccount0",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "strategyCreditAccount0",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "lendingPoolAccount1",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "strategyCreditAccount1",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "ammProgramId",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "swapPoolId",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "rewardsSwapPoolId",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "stakeProgramId",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "stakePoolFarmInfo",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "strategyFarmInfo",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "clock",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "systemProgram",
+                    "isMut": false,
+                    "isSigner": false
+                }
+            ],
+            "args": [
+                {
+                    "name": "version",
+                    "type": {
+                        "defined": "ProtocolVerison"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "setDoubleDipStakePool",
+            "accounts": [
+                {
+                    "name": "admin",
+                    "isMut": false,
+                    "isSigner": true
+                },
+                {
+                    "name": "strategyState",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "strategyAuthority",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "tokenProgramId",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "stakeProgramId",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "doubleDipStrategyFarmTknAccount",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "doubleDipStakePoolFarmInfo",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "doubleDipStrategyFarmInfo",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "doubleDipRewardsSwapPoolId",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "doubleDipStrategyRewardsTknAccount",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "systemProgram",
+                    "isMut": false,
+                    "isSigner": false
+                }
+            ],
+            "args": []
+        },
+        {
+            "name": "setPlatformRewardsTkn",
+            "accounts": [
+                {
+                    "name": "admin",
+                    "isMut": false,
+                    "isSigner": true
+                },
+                {
+                    "name": "strategyState",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "strategyFranciumRewardsTkn",
+                    "isMut": true,
+                    "isSigner": false
+                }
+            ],
+            "args": []
+        },
+        {
+            "name": "updatePlatformRewards",
+            "accounts": [
+                {
+                    "name": "admin",
+                    "isMut": false,
+                    "isSigner": true
+                },
+                {
+                    "name": "strategyState",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "strategyFranciumRewardsTkn",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "adminFranciumRewardsTkn",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "tokenProgramId",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "clock",
+                    "isMut": false,
+                    "isSigner": false
+                }
+            ],
+            "args": [
+                {
+                    "name": "rewardsPerSlot",
+                    "type": "u64"
+                },
+                {
+                    "name": "rewardsStartSlot",
+                    "type": "u64"
+                },
+                {
+                    "name": "rewardsEndSlot",
+                    "type": "u64"
+                }
+            ]
+        },
+        {
+            "name": "initializeUser",
+            "accounts": [
+                {
+                    "name": "userMainAccount",
+                    "isMut": false,
+                    "isSigner": true
+                },
+                {
+                    "name": "userInfoAccount",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "strategyState",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "systemProgram",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "clock",
+                    "isMut": false,
+                    "isSigner": false
+                }
+            ],
+            "args": []
+        },
+        {
+            "name": "initializeUserWithNonce",
+            "accounts": [
+                {
+                    "name": "userMainAccount",
+                    "isMut": false,
+                    "isSigner": true
+                },
+                {
+                    "name": "userInfoAccount",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "strategyState",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "systemProgram",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "clock",
+                    "isMut": false,
+                    "isSigner": false
+                }
+            ],
+            "args": [
+                {
+                    "name": "nonce",
+                    "type": "u32"
+                },
+                {
+                    "name": "bumpSeed",
+                    "type": "u8"
+                }
+            ]
+        },
+        {
+            "name": "closeEmptyAccount",
+            "accounts": [
+                {
+                    "name": "userMainAccount",
+                    "isMut": true,
+                    "isSigner": true
+                },
+                {
+                    "name": "userInfoAccount",
+                    "isMut": true,
+                    "isSigner": false
+                }
+            ],
+            "args": []
+        },
+        {
+            "name": "setPositionStopLoss",
+            "accounts": [
+                {
+                    "name": "userMainAccount",
+                    "isMut": false,
+                    "isSigner": true
+                },
+                {
+                    "name": "userInfoAccount",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "strategyState",
+                    "isMut": false,
+                    "isSigner": false
+                }
+            ],
+            "args": [
+                {
+                    "name": "stopLossType",
+                    "type": "u8"
+                },
+                {
+                    "name": "stopLossRatio",
+                    "type": "u8"
+                }
+            ]
+        },
+        {
+            "name": "setPositionRangeStop",
+            "accounts": [
+                {
+                    "name": "userMainAccount",
+                    "isMut": false,
+                    "isSigner": true
+                },
+                {
+                    "name": "userInfoAccount",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "strategyState",
+                    "isMut": false,
+                    "isSigner": false
+                }
+            ],
+            "args": [
+                {
+                    "name": "rangeStopType",
+                    "type": "u8"
+                },
+                {
+                    "name": "priceRange0",
+                    "type": "u128"
+                },
+                {
+                    "name": "priceRange1",
+                    "type": "u128"
+                }
+            ]
+        },
+        {
+            "name": "transfer",
+            "accounts": [
+                {
+                    "name": "userMainAccount",
+                    "isMut": false,
+                    "isSigner": true
+                },
+                {
+                    "name": "userInfoAccount",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "userTknAccount0",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "userTknAccount1",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "strategyState",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "strategyAuthority",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "strategyTknAccount0",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "strategyTknAccount1",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "tokenProgramId",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "clock",
+                    "isMut": false,
+                    "isSigner": false
+                }
+            ],
+            "args": [
+                {
+                    "name": "param",
+                    "type": {
+                        "defined": "TransferForInvestParam"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "borrow",
+            "accounts": [
+                {
+                    "name": "userMainAccount",
+                    "isMut": false,
+                    "isSigner": true
+                },
+                {
+                    "name": "userInfoAccount",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "strategyState",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "strategyAuthority",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "strategyTknAccount0",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "strategyTknAccount1",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "lendingMarketAccount",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "lendingMarketAuthorityInfo",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "lendingPoolProgramId",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "lendingPoolInfoAccount0",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "lendingPoolTknAccount0",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "lendingPoolCreditAccount0",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "strategyCreditAccount0",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "lendingPoolInfoAccount1",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "lendingPoolTknAccount1",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "lendingPoolCreditAccount1",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "strategyCreditAccount1",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "tokenProgramId",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "clock",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "swapPoolId",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "swapPoolTknAccount0",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "swapPoolTknAccount1",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "lpMint",
+                    "isMut": true,
+                    "isSigner": false
+                }
+            ],
+            "args": [
+                {
+                    "name": "param",
+                    "type": {
+                        "defined": "BorrowParam"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "swap",
+            "accounts": [
+                {
+                    "name": "userMainAccount",
+                    "isMut": false,
+                    "isSigner": true
+                },
+                {
+                    "name": "userInfo",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "strategyState",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "strategyAuthority",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "strategyTknAccount0",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "strategyTknAccount1",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "strategyLpTknAccount",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "tokenProgramId",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "ammProgramId",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "swapPoolId",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "swapPoolAuthority",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "swapPoolTknAccount0",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "swapPoolTknAccount1",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "lpMint",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "swapPoolFeeTkn",
+                    "isMut": true,
+                    "isSigner": false
+                }
+            ],
+            "args": []
+        },
+        {
+            "name": "addLiquidity",
+            "accounts": [
+                {
+                    "name": "userMainAccount",
+                    "isMut": false,
+                    "isSigner": true
+                },
+                {
+                    "name": "userInfo",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "strategyState",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "strategyAuthority",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "strategyTknAccount0",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "strategyTknAccount1",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "strategyLpTknAccount",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "tokenProgramId",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "ammProgramId",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "swapPoolId",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "swapPoolAuthority",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "swapPoolTknAccount0",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "swapPoolTknAccount1",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "lpMint",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "userFranciumRewardsTkn",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "strategyFranciumRewardsTkn",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "clock",
+                    "isMut": false,
+                    "isSigner": false
+                }
+            ],
+            "args": []
+        },
+        {
+            "name": "addLiquiditySigleSide",
+            "accounts": [
+                {
+                    "name": "userMainAccount",
+                    "isMut": false,
+                    "isSigner": true
+                },
+                {
+                    "name": "userInfo",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "strategyState",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "strategyAuthority",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "strategyTknAccount0",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "strategyTknAccount1",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "strategyLpTknAccount",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "tokenProgramId",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "ammProgramId",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "swapPoolId",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "swapPoolAuthority",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "swapPoolTknAccount0",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "swapPoolTknAccount1",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "lpMint",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "userFranciumRewardsTkn",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "strategyFranciumRewardsTkn",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "clock",
+                    "isMut": false,
+                    "isSigner": false
+                }
+            ],
+            "args": []
+        },
+        {
+            "name": "stakeLp",
+            "accounts": [
+                {
+                    "name": "strategyState",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "strategyAuthority",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "strategyLpTknAccount",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "stakeProgramId",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "stakePoolLpTknValut",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "stakeFarmTknMint",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "strategyFarmTknAccount",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "stakePoolFarmInfo",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "strategyFarmInfo",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "stakePoolRewardTknVault",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "strategyRewardsTknAccount",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "stakePoolAuthority",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "tokenProgramId",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "clock",
+                    "isMut": false,
+                    "isSigner": false
+                }
+            ],
+            "args": []
+        },
+        {
+            "name": "doubleDipStakeFarmTkn",
+            "accounts": [
+                {
+                    "name": "strategyState",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "strategyAuthority",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "strategyFarmTknAccount",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "stakeProgramId",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "doubleDipStakePoolFarmTknValut",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "doubleDipStakeFarmTknMint",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "doubleDipStrategyFarmTknAccount",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "doubleDipStakePoolFarmInfo",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "doubleDipStrategyFarmInfo",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "doubleDipStakePoolRewardTknVault",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "doubleDipStrategyRewardsTknAccount",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "doubleDipStakePoolAuthority",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "tokenProgramId",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "clock",
+                    "isMut": false,
+                    "isSigner": false
+                }
+            ],
+            "args": []
+        },
+        {
+            "name": "doubleDipUnstakeFarmTkn",
+            "accounts": [
+                {
+                    "name": "strategyState",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "strategyAuthority",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "strategyFarmTknAccount",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "stakeProgramId",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "doubleDipStakePoolFarmTknValut",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "doubleDipStakeFarmTknMint",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "doubleDipStrategyFarmTknAccount",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "doubleDipStakePoolFarmInfo",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "doubleDipStrategyFarmInfo",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "doubleDipStakePoolRewardTknVault",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "doubleDipStrategyRewardsTknAccount",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "doubleDipStakePoolAuthority",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "tokenProgramId",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "clock",
+                    "isMut": false,
+                    "isSigner": false
+                }
+            ],
+            "args": [
+                {
+                    "name": "amount",
+                    "type": "u64"
+                }
+            ]
+        },
+        {
+            "name": "unstakeLp",
+            "accounts": [
+                {
+                    "name": "userMainAccount",
+                    "isMut": false,
+                    "isSigner": true
+                },
+                {
+                    "name": "userInfo",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "strategyState",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "strategyAuthority",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "strategyLpTknAccount",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "strategyFarmTknAccount",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "strategyRewardsTknAccount",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "strategyFarmInfo",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "stakeProgramId",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "stakePoolLpTkn",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "stakeFarmTknMint",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "stakePoolFarmInfo",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "stakePoolRewardTknVault",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "stakePoolAuthority",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "tokenProgramId",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "clock",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "lendingPoolInfoAccount0",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "lendingPoolInfoAccount1",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "userFranciumRewardsTknAccount",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "strategyFranciumRewardsTknAccount",
+                    "isMut": true,
+                    "isSigner": false
+                }
+            ],
+            "args": [
+                {
+                    "name": "param",
+                    "type": {
+                        "defined": "UnstakeLpParam"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "unstakeLpWithType",
+            "accounts": [
+                {
+                    "name": "userMainAccount",
+                    "isMut": false,
+                    "isSigner": true
+                },
+                {
+                    "name": "userInfo",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "strategyState",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "strategyAuthority",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "strategyLpTknAccount",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "strategyFarmTknAccount",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "strategyRewardsTknAccount",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "strategyFarmInfo",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "stakeProgramId",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "stakePoolLpTkn",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "stakeFarmTknMint",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "stakePoolFarmInfo",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "stakePoolRewardTknVault",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "stakePoolAuthority",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "tokenProgramId",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "clock",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "lendingPoolInfoAccount0",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "lendingPoolInfoAccount1",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "userFranciumRewardsTknAccount",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "strategyFranciumRewardsTknAccount",
+                    "isMut": true,
+                    "isSigner": false
+                }
+            ],
+            "args": [
+                {
+                    "name": "param",
+                    "type": {
+                        "defined": "WithdrawParam"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "removeLiquidity",
+            "accounts": [
+                {
+                    "name": "userMainAccount",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "userInfo",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "strategyState",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "strategyAuthority",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "strategyTknAccount0",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "strategyTknAccount1",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "strategyLpTknAccount",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "tokenProgramId",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "ammProgramId",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "swapPoolId",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "swapPoolAuthority",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "swapPoolTkn0",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "swapPoolTkn1",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "swapPoolFeeTkn",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "lpMint",
+                    "isMut": true,
+                    "isSigner": false
+                }
+            ],
+            "args": []
+        },
+        {
+            "name": "swapAndWithdraw",
+            "accounts": [
+                {
+                    "name": "userMainAccount",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "userInfo",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "userTknAccount0",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "userTknAccount1",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "strategyState",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "strategyAuthority",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "strategyTknAccount0",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "strategyTknAccount1",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "strategyLpTknAccount",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "tokenProgramId",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "ammProgramId",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "swapPoolId",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "swapPoolAuthority",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "swapPoolTkn0",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "swapPoolTkn1",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "swapPoolFeeTkn",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "lpMint",
+                    "isMut": true,
+                    "isSigner": false
+                }
+            ],
+            "args": [
+                {
+                    "name": "param",
+                    "type": {
+                        "defined": "SwapAndWithdrawParam"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "beforeStableWithdraw",
+            "accounts": [
+                {
+                    "name": "userMainAccount",
+                    "isMut": false,
+                    "isSigner": true
+                },
+                {
+                    "name": "userInfoAccount",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "strategyState",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "tokenProgramId",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "ammProgramId",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "swapPoolId",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "swapPoolAuthority",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "swapPoolTkn0",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "swapPoolTkn1",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "swapPoolFeeTkn",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "lpMint",
+                    "isMut": true,
+                    "isSigner": false
+                }
+            ],
+            "args": [
+                {
+                    "name": "param",
+                    "type": {
+                        "defined": "SwapAndWithdrawParam"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "stableSwap",
+            "accounts": [
+                {
+                    "name": "userMainAccount",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "userInfo",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "userTknAccount0",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "userTknAccount1",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "strategyState",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "strategyAuthority",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "strategyTknAccount0",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "strategyTknAccount1",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "strategyLpTknAccount",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "tokenProgramId",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "ammProgramId",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "swapPoolId",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "swapPoolAuthority",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "swapPoolTkn0",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "swapPoolTkn1",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "swapPoolFeeTkn",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "lpMint",
+                    "isMut": true,
+                    "isSigner": false
+                }
+            ],
+            "args": [
+                {
+                    "name": "param",
+                    "type": {
+                        "defined": "SwapAndWithdrawParam"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "stableWithdraw",
+            "accounts": [
+                {
+                    "name": "userMainAccount",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "userInfo",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "userTknAccount0",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "userTknAccount1",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "strategyState",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "strategyAuthority",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "strategyTknAccount0",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "strategyTknAccount1",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "strategyLpTknAccount",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "tokenProgramId",
+                    "isMut": false,
+                    "isSigner": false
+                }
+            ],
+            "args": []
+        },
+        {
+            "name": "userRepay",
+            "accounts": [
+                {
+                    "name": "userMainAccount",
+                    "isMut": false,
+                    "isSigner": true
+                },
+                {
+                    "name": "userInfoAccount",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "userTknAccount0",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "userTknAccount1",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "strategyState",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "strategyTknAccount0",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "strategyTknAccount1",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "lendingPoolInfoAccount0",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "lendingPoolInfoAccount1",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "tokenProgramId",
+                    "isMut": false,
+                    "isSigner": false
+                }
+            ],
+            "args": [
+                {
+                    "name": "param",
+                    "type": {
+                        "defined": "UserRepayParam"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "repayBorrowedPc",
+            "accounts": [
+                {
+                    "name": "userMainAccount",
+                    "isMut": false,
+                    "isSigner": true
+                },
+                {
+                    "name": "strategyState",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "strategyAuthority",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "strategyTknAccount0",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "strategyTknAccount1",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "lendingMarketAccount",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "lendingMarketAuthorityInfo",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "lendingPoolProgramId",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "lendingPoolInfoAccount0",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "lendingPoolTknAccount0",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "lendingPoolCreditMint0",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "lendingPoolCreditAccount0",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "strategyCreditAccount0",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "lendingPoolInfoAccount1",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "lendingPoolTknAccount1",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "lendingPoolCreditMint1",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "lendingPoolCreditAccount1",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "strategyCreditAccount1",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "tokenProgramId",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "clock",
+                    "isMut": false,
+                    "isSigner": false
+                }
+            ],
+            "args": []
+        },
+        {
+            "name": "repayBorrowedCoin",
+            "accounts": [
+                {
+                    "name": "userMainAccount",
+                    "isMut": false,
+                    "isSigner": true
+                },
+                {
+                    "name": "strategyState",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "strategyAuthority",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "strategyTknAccount0",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "strategyTknAccount1",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "lendingMarketAccount",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "lendingMarketAuthorityInfo",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "lendingPoolProgramId",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "lendingPoolInfoAccount0",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "lendingPoolTknAccount0",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "lendingPoolCreditMint0",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "lendingPoolCreditAccount0",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "strategyCreditAccount0",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "lendingPoolInfoAccount1",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "lendingPoolTknAccount1",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "lendingPoolCreditMint1",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "lendingPoolCreditAccount1",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "strategyCreditAccount1",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "tokenProgramId",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "clock",
+                    "isMut": false,
+                    "isSigner": false
+                }
+            ],
+            "args": []
+        },
+        {
+            "name": "liquidateUnstakeLp",
+            "accounts": [
+                {
+                    "name": "liquidator",
+                    "isMut": false,
+                    "isSigner": true
+                },
+                {
+                    "name": "liquidatorLpTknAccount",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "userInfo",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "strategyState",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "strategyAuthority",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "strategyLpTknAccount",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "strategyFarmInfo",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "lpMint",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "swapPoolTkn0",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "swapPoolTkn1",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "stakeProgramId",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "stakePoolLpTknAccount",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "stakeFarmTknMint",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "strategyFarmTknAccount",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "stakePoolFarmInfo",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "stakePoolRewardTknVault",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "strategyRewardsTknAccount",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "stakePoolAuthority",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "tokenProgramId",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "clock",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "lendingPoolInfoAccount0",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "lendingPoolInfoAccount1",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "userFranciumRewardsTknAccount",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "strategyFranciumRewardsTknAccount",
+                    "isMut": true,
+                    "isSigner": false
+                }
+            ],
+            "args": [
+                {
+                    "name": "liquidateType",
+                    "type": "u8"
+                }
+            ]
+        },
+        {
+            "name": "swapRewardsToTarget",
+            "accounts": [
+                {
+                    "name": "userMainAccount",
+                    "isMut": false,
+                    "isSigner": true
+                },
+                {
+                    "name": "strategyState",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "strategyAuthority",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "strategyTargetTkn",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "strategyRewardsTknAccount",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "tokenProgramId",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "ammProgramId",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "rewardsSwapPoolId",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "rewardsSwapPoolAuthority",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "swapPoolTargetTkn",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "swapPoolRewardsTkn",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "swapPoolRewardsFeeTkn",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "rewardsTargetLpMint",
+                    "isMut": true,
+                    "isSigner": false
+                }
+            ],
+            "args": []
+        },
+        {
+            "name": "swapRewardsForBalance",
+            "accounts": [
+                {
+                    "name": "userMainAccount",
+                    "isMut": false,
+                    "isSigner": true
+                },
+                {
+                    "name": "strategyState",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "strategyAuthority",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "strategyTknAccount0",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "strategyTknAccount1",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "tokenProgramId",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "ammProgramId",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "swapPoolId",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "swapPoolAuthority",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "swapPoolTkn0",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "swapPoolTkn1",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "lpMint",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "swapPoolFeeTkn",
+                    "isMut": true,
+                    "isSigner": false
+                }
+            ],
+            "args": []
+        },
+        {
+            "name": "harvestRewards",
+            "accounts": [
+                {
+                    "name": "userMainAccount",
+                    "isMut": false,
+                    "isSigner": true
+                },
+                {
+                    "name": "strategyState",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "strategyAuthority",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "strategyLpTknAccount",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "strategyFarmTknAccount",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "strategyRewardsTknAccount",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "strategyFarmInfo",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "tokenProgramId",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "stakeProgramId",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "stakePoolAuthority",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "stakePoolFarmInfo",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "stakePoolLpTknVault",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "stakePoolRewardTknVault",
+                    "isMut": true,
+                    "isSigner": false
+                }
+            ],
+            "args": []
+        },
+        {
+            "name": "addRewardsToLiquidity",
+            "accounts": [
+                {
+                    "name": "userMainAccount",
+                    "isMut": false,
+                    "isSigner": true
+                },
+                {
+                    "name": "userLpAccount",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "strategyState",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "strategyAuthority",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "strategyTknAccount0",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "strategyTknAccount1",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "strategyLpAccount",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "tokenProgramId",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "ammProgramId",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "swapPoolId",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "swapPoolAuthority",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "swapPoolTkn0",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "swapPoolTkn1",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "lpMint",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "userFranciumRewardsTkn",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "strategyFranciumRewardsTkn",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "clock",
+                    "isMut": false,
+                    "isSigner": false
+                }
+            ],
+            "args": []
+        },
+        {
+            "name": "addRewardsToLiquiditySingleSide",
+            "accounts": [
+                {
+                    "name": "userMainAccount",
+                    "isMut": false,
+                    "isSigner": true
+                },
+                {
+                    "name": "userLpAccount",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "strategyState",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "strategyAuthority",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "strategyTknAccount0",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "strategyTknAccount1",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "strategyLpAccount",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "tokenProgramId",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "ammProgramId",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "swapPoolId",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "swapPoolAuthority",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "swapPoolTkn0",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "swapPoolTkn1",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "lpMint",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "userFranciumRewardsTkn",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "strategyFranciumRewardsTkn",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "clock",
+                    "isMut": false,
+                    "isSigner": false
+                }
+            ],
+            "args": []
+        },
+        {
+            "name": "adminUpdateMaxLeverage",
+            "accounts": [
+                {
+                    "name": "admin",
+                    "isMut": false,
+                    "isSigner": true
+                },
+                {
+                    "name": "strategyState",
+                    "isMut": true,
+                    "isSigner": false
+                }
+            ],
+            "args": [
+                {
+                    "name": "newLeverage",
+                    "type": "u8"
+                }
+            ]
+        },
+        {
+            "name": "adminUpdateLiquidateLine",
+            "accounts": [
+                {
+                    "name": "admin",
+                    "isMut": false,
+                    "isSigner": true
+                },
+                {
+                    "name": "strategyState",
+                    "isMut": true,
+                    "isSigner": false
+                }
+            ],
+            "args": [
+                {
+                    "name": "newLiquidateLine",
+                    "type": "u8"
+                }
+            ]
+        },
+        {
+            "name": "adminUpdateCompoundRewardsRate",
+            "accounts": [
+                {
+                    "name": "admin",
+                    "isMut": false,
+                    "isSigner": true
+                },
+                {
+                    "name": "strategyState",
+                    "isMut": true,
+                    "isSigner": false
+                }
+            ],
+            "args": [
+                {
+                    "name": "compoundRewardsRate",
+                    "type": "u8"
+                }
+            ]
+        },
+        {
+            "name": "adminCloseEmptyAccount",
+            "accounts": [
+                {
+                    "name": "admin",
+                    "isMut": false,
+                    "isSigner": true
+                },
+                {
+                    "name": "userInfoAccount",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "strategyState",
+                    "isMut": true,
+                    "isSigner": false
+                }
+            ],
+            "args": []
+        },
+        {
+            "name": "adminClearWithdrawFlag",
+            "accounts": [
+                {
+                    "name": "admin",
+                    "isMut": false,
+                    "isSigner": true
+                },
+                {
+                    "name": "userInfo",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "strategyState",
+                    "isMut": false,
+                    "isSigner": false
+                }
+            ],
+            "args": []
+        },
+        {
+            "name": "adminRepayBadDebts",
+            "accounts": [
+                {
+                    "name": "admin",
+                    "isMut": false,
+                    "isSigner": true
+                },
+                {
+                    "name": "strategyState",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "strategyAuthority",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "adminTknAccount0",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "adminTknAccount1",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "strategyTknAccount0",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "strategyTknAccount1",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "tokenProgramId",
+                    "isMut": false,
+                    "isSigner": false
+                }
+            ],
+            "args": [
+                {
+                    "name": "tknRepay0",
+                    "type": "u64"
+                },
+                {
+                    "name": "tknRepay1",
+                    "type": "u64"
+                }
+            ]
+        },
+        {
+            "name": "adminBurnBorrowCredit",
+            "accounts": [
+                {
+                    "name": "admin",
+                    "isMut": false,
+                    "isSigner": true
+                },
+                {
+                    "name": "strategyState",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "strategyAuthority",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "creditMint0",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "strategyCreditAccount0",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "creditMint1",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "strategyCreditAccount1",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "tokenProgramId",
+                    "isMut": false,
+                    "isSigner": false
+                }
+            ],
+            "args": []
+        },
+        {
+            "name": "adminSetFeeAccount",
+            "accounts": [
+                {
+                    "name": "admin",
+                    "isMut": false,
+                    "isSigner": true
+                },
+                {
+                    "name": "strategyState",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "strategyLpAccount",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "strategyFeeAccount",
+                    "isMut": true,
+                    "isSigner": false
+                }
+            ],
+            "args": []
+        }
+    ],
+    "accounts": [
+        {
+            "name": "StrategyState",
+            "type": {
+                "kind": "struct",
+                "fields": [
+                    {
+                        "name": "protocolVersion",
+                        "type": "u8"
+                    },
+                    {
+                        "name": "protocolSubVersion",
+                        "type": "u8"
+                    },
+                    {
+                        "name": "lastUpdateSlot",
+                        "type": "u64"
+                    },
+                    {
+                        "name": "totalLp",
+                        "type": "u64"
+                    },
+                    {
+                        "name": "totalShares",
+                        "type": "u64"
+                    },
+                    {
+                        "name": "totalBorrowed0",
+                        "type": "u64"
+                    },
+                    {
+                        "name": "totalBorrowed1",
+                        "type": "u64"
+                    },
+                    {
+                        "name": "pendingTkn0",
+                        "type": "u64"
+                    },
+                    {
+                        "name": "pendingTkn1",
+                        "type": "u64"
+                    },
+                    {
+                        "name": "pendingWithdrawLp",
+                        "type": "u64"
+                    },
+                    {
+                        "name": "pendingRepay0",
+                        "type": "u64"
+                    },
+                    {
+                        "name": "pendingRepay1",
+                        "type": "u64"
+                    },
+                    {
+                        "name": "cumulatedBorrowRate0",
+                        "type": "u128"
+                    },
+                    {
+                        "name": "cumulatedBorrowRate1",
+                        "type": "u128"
+                    },
+                    {
+                        "name": "maxLeverage",
+                        "type": "u8"
+                    },
+                    {
+                        "name": "liquidateLine",
+                        "type": "u8"
+                    },
+                    {
+                        "name": "compoundRewardsRate",
+                        "type": "u8"
+                    },
+                    {
+                        "name": "admin",
+                        "type": "publicKey"
+                    },
+                    {
+                        "name": "authority",
+                        "type": "publicKey"
+                    },
+                    {
+                        "name": "authorityNonce",
+                        "type": "u8"
+                    },
+                    {
+                        "name": "franciumRewardsEnable",
+                        "type": "u8"
+                    },
+                    {
+                        "name": "franciumRewardsStartSlot",
+                        "type": "u64"
+                    },
+                    {
+                        "name": "franciumRewardsEndSlot",
+                        "type": "u64"
+                    },
+                    {
+                        "name": "franciumRewardsPerSlot",
+                        "type": "u64"
+                    },
+                    {
+                        "name": "franciumAccumulatedRewardsPerShare",
+                        "type": "u128"
+                    },
+                    {
+                        "name": "franciumRewardsTknAccount",
+                        "type": "publicKey"
+                    },
+                    {
+                        "name": "lendingProgramId",
+                        "type": "publicKey"
+                    },
+                    {
+                        "name": "ammProgramId",
+                        "type": "publicKey"
+                    },
+                    {
+                        "name": "stakeProgramId",
+                        "type": "publicKey"
+                    },
+                    {
+                        "name": "tknAccount0",
+                        "type": "publicKey"
+                    },
+                    {
+                        "name": "tknAccount1",
+                        "type": "publicKey"
+                    },
+                    {
+                        "name": "lpTknAccount",
+                        "type": "publicKey"
+                    },
+                    {
+                        "name": "rewardsTknAccount",
+                        "type": "publicKey"
+                    },
+                    {
+                        "name": "farmTknAccount",
+                        "type": "publicKey"
+                    },
+                    {
+                        "name": "lendingPool0",
+                        "type": "publicKey"
+                    },
+                    {
+                        "name": "strategyLendingCreditAccount0",
+                        "type": "publicKey"
+                    },
+                    {
+                        "name": "lendingPool1",
+                        "type": "publicKey"
+                    },
+                    {
+                        "name": "strategyLendingCreditAccount1",
+                        "type": "publicKey"
+                    },
+                    {
+                        "name": "doubleDipRewardsSwapPoolId",
+                        "type": "publicKey"
+                    },
+                    {
+                        "name": "doubleDipStrategyRewardsTknAccount",
+                        "type": "publicKey"
+                    },
+                    {
+                        "name": "swapPoolId",
+                        "type": "publicKey"
+                    },
+                    {
+                        "name": "rewardsSwapPoolId",
+                        "type": "publicKey"
+                    },
+                    {
+                        "name": "stakePoolFarmInfo",
+                        "type": "publicKey"
+                    },
+                    {
+                        "name": "strategyFarmInfo",
+                        "type": "publicKey"
+                    },
+                    {
+                        "name": "doubleDipFarmTknAccount",
+                        "type": "publicKey"
+                    },
+                    {
+                        "name": "doubleDipStakePoolFarmInfo",
+                        "type": "publicKey"
+                    },
+                    {
+                        "name": "doubleDipStrategyFarmInfo",
+                        "type": "publicKey"
+                    },
+                    {
+                        "name": "feeAccount",
+                        "type": "publicKey"
+                    }
+                ]
+            }
+        },
+        {
+            "name": "UserInfo",
+            "type": {
+                "kind": "struct",
+                "fields": [
+                    {
+                        "name": "version",
+                        "type": "u8"
+                    },
+                    {
+                        "name": "lastUpdateSlot",
+                        "type": "u64"
+                    },
+                    {
+                        "name": "strategyStateAccount",
+                        "type": "publicKey"
+                    },
+                    {
+                        "name": "userMainAccount",
+                        "type": "publicKey"
+                    },
+                    {
+                        "name": "pending0",
+                        "type": "u8"
+                    },
+                    {
+                        "name": "pendingInvestFlag",
+                        "type": "u8"
+                    },
+                    {
+                        "name": "stopLoss",
+                        "type": "u8"
+                    },
+                    {
+                        "name": "tkn0",
+                        "type": "u64"
+                    },
+                    {
+                        "name": "tkn1",
+                        "type": "u64"
+                    },
+                    {
+                        "name": "borrowed0",
+                        "type": "u64"
+                    },
+                    {
+                        "name": "borrowed1",
+                        "type": "u64"
+                    },
+                    {
+                        "name": "principle0",
+                        "type": "u64"
+                    },
+                    {
+                        "name": "principle1",
+                        "type": "u64"
+                    },
+                    {
+                        "name": "investedLp",
+                        "type": "u64"
+                    },
+                    {
+                        "name": "lpShares",
+                        "type": "u64"
+                    },
+                    {
+                        "name": "pendingWithdrawLp",
+                        "type": "u64"
+                    },
+                    {
+                        "name": "pendingRepay0",
+                        "type": "u64"
+                    },
+                    {
+                        "name": "pendingRepay1",
+                        "type": "u64"
+                    },
+                    {
+                        "name": "cumulatedBorrowRate0",
+                        "type": "u128"
+                    },
+                    {
+                        "name": "cumulatedBorrowRate1",
+                        "type": "u128"
+                    },
+                    {
+                        "name": "platformRewardsDebt",
+                        "type": "u128"
+                    },
+                    {
+                        "name": "pendingWithdrawFlag",
+                        "type": "u8"
+                    },
+                    {
+                        "name": "takeProfitLine",
+                        "type": "u16"
+                    },
+                    {
+                        "name": "stableSwapComputeFlag",
+                        "type": "u8"
+                    },
+                    {
+                        "name": "stableSwapDirection",
+                        "type": "u8"
+                    },
+                    {
+                        "name": "stableSwapAmount",
+                        "type": "u64"
+                    },
+                    {
+                        "name": "stopPositionType",
+                        "type": "u8"
+                    },
+                    {
+                        "name": "priceRange0",
+                        "type": "u128"
+                    },
+                    {
+                        "name": "priceRange1",
+                        "type": "u128"
+                    },
+                    {
+                        "name": "padding2",
+                        "type": {
+                            "array": [
+                                "u8",
+                                13
+                            ]
+                        }
+                    },
+                    {
+                        "name": "accountNonce",
+                        "type": "u32"
+                    },
+                    {
+                        "name": "isEmpty",
+                        "type": "u8"
+                    }
+                ]
+            }
+        }
+    ],
+    "types": [
+        {
+            "name": "ProtocolVerison",
+            "type": {
+                "kind": "struct",
+                "fields": [
+                    {
+                        "name": "protocolVersion",
+                        "type": "u8"
+                    },
+                    {
+                        "name": "subVersion",
+                        "type": "u8"
+                    }
+                ]
+            }
+        },
+        {
+            "name": "PositionStopParam",
+            "type": {
+                "kind": "struct",
+                "fields": [
+                    {
+                        "name": "liquidateType",
+                        "type": "u8"
+                    },
+                    {
+                        "name": "stopLossType",
+                        "type": "u8"
+                    },
+                    {
+                        "name": "stopLossRatio",
+                        "type": "u8"
+                    },
+                    {
+                        "name": "takeProfitType",
+                        "type": "u8"
+                    },
+                    {
+                        "name": "takeProfitRatio",
+                        "type": "u16"
+                    },
+                    {
+                        "name": "rangeStopType",
+                        "type": "u8"
+                    },
+                    {
+                        "name": "priceRange0",
+                        "type": "u128"
+                    },
+                    {
+                        "name": "priceRange1",
+                        "type": "u128"
+                    }
+                ]
+            }
+        },
+        {
+            "name": "TransferForInvestParam",
+            "type": {
+                "kind": "struct",
+                "fields": [
+                    {
+                        "name": "stopLoss",
+                        "type": "u8"
+                    },
+                    {
+                        "name": "amount0",
+                        "type": "u64"
+                    },
+                    {
+                        "name": "amount1",
+                        "type": "u64"
+                    }
+                ]
+            }
+        },
+        {
+            "name": "BorrowParam",
+            "type": {
+                "kind": "struct",
+                "fields": [
+                    {
+                        "name": "borrow0",
+                        "type": "u64"
+                    },
+                    {
+                        "name": "borrow1",
+                        "type": "u64"
+                    }
+                ]
+            }
+        },
+        {
+            "name": "UnstakeLpParam",
+            "type": {
+                "kind": "struct",
+                "fields": [
+                    {
+                        "name": "sharesAmount",
+                        "type": "u64"
+                    }
+                ]
+            }
+        },
+        {
+            "name": "WithdrawParam",
+            "type": {
+                "kind": "struct",
+                "fields": [
+                    {
+                        "name": "withdrawType",
+                        "type": "u8"
+                    },
+                    {
+                        "name": "sharesAmount",
+                        "type": "u64"
+                    }
+                ]
+            }
+        },
+        {
+            "name": "SwapAndWithdrawParam",
+            "type": {
+                "kind": "struct",
+                "fields": [
+                    {
+                        "name": "withdrawType",
+                        "type": "u8"
+                    }
+                ]
+            }
+        },
+        {
+            "name": "UserRepayParam",
+            "type": {
+                "kind": "struct",
+                "fields": [
+                    {
+                        "name": "repaySide",
+                        "type": "u8"
+                    },
+                    {
+                        "name": "repayAmount",
+                        "type": "u64"
+                    }
+                ]
+            }
+        }
+    ],
+    "errors": [
+        {
+            "code": 1300,
+            "name": "MathOverflow",
+            "msg": "Math Overflow"
+        },
+        {
+            "code": 1301,
+            "name": "InvalidInstruction",
+            "msg": "Invalid Instruction"
+        },
+        {
+            "code": 1302,
+            "name": "InvalidProgramAddress",
+            "msg": "Invalid program derivated address or nonce"
+        },
+        {
+            "code": 1303,
+            "name": "InvalidProtocolVersion",
+            "msg": "Invalid Protocol Version"
+        },
+        {
+            "code": 1304,
+            "name": "InvalidData",
+            "msg": "Invalid data"
+        },
+        {
+            "code": 1305,
+            "name": "AlreadyInUse",
+            "msg": "Already in use"
+        },
+        {
+            "code": 1306,
+            "name": "InvalidTokenMint",
+            "msg": "Invalid token mint"
+        },
+        {
+            "code": 1307,
+            "name": "InsufficientBalance",
+            "msg": "Insufficient balance"
+        },
+        {
+            "code": 1308,
+            "name": "UnexpectedError",
+            "msg": "UnexpectedError"
+        },
+        {
+            "code": 1309,
+            "name": "InvalidStrategyAccount",
+            "msg": "Invalid Strategy Account"
+        },
+        {
+            "code": 1310,
+            "name": "InvalidStrategyAuthority",
+            "msg": "Invalid Strategy Authority"
+        },
+        {
+            "code": 1311,
+            "name": "InvalidUserInfoAccount",
+            "msg": "Invalid UserInfo Account"
+        },
+        {
+            "code": 1312,
+            "name": "InvalidStrategyFarmInfoAccount",
+            "msg": "Invalid StrategyFarmInfo Account"
+        },
+        {
+            "code": 1313,
+            "name": "InvalidTokenAccount",
+            "msg": "Invalid Token Account"
+        },
+        {
+            "code": 1314,
+            "name": "InvalidTokenAccountOwner",
+            "msg": "Invalid Token Account Owner"
+        },
+        {
+            "code": 1315,
+            "name": "InvalidStrategyState",
+            "msg": "Invalid Strategy state"
+        },
+        {
+            "code": 1316,
+            "name": "InvalidLendingPool",
+            "msg": "Invalid lending pool"
+        },
+        {
+            "code": 1317,
+            "name": "UnsupportedFeature",
+            "msg": "Unsupported Feature"
+        },
+        {
+            "code": 1318,
+            "name": "NeedAdminPermission",
+            "msg": "Need Admin Permission"
+        },
+        {
+            "code": 1319,
+            "name": "AlreadyInLiquidationOrWithdraw",
+            "msg": "Already in liquidation or withdraw"
+        },
+        {
+            "code": 1320,
+            "name": "InvalidLiquidator",
+            "msg": "Invalid Liquidator"
+        },
+        {
+            "code": 1321,
+            "name": "InvalidBorrowAmount",
+            "msg": "Invalid Borrow Amount"
+        },
+        {
+            "code": 1322,
+            "name": "AmountTooLarge",
+            "msg": "Amount Too Large"
+        },
+        {
+            "code": 1323,
+            "name": "NotEnougToRepay",
+            "msg": "Not Enough to repay"
+        },
+        {
+            "code": 1324,
+            "name": "BeforeStableWithdrawUnfinished",
+            "msg": "Unfinish BeforeStableWithdraw"
+        },
+        {
+            "code": 1325,
+            "name": "AccountNotEmpty",
+            "msg": "Account Not Empty"
+        },
+        {
+            "code": 1326,
+            "name": "LeverageTooHigh",
+            "msg": "Leverage Too High"
+        }
+    ]
+}

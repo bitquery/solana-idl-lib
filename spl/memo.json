@@ -1,5 +1,8 @@
 {
   "version": "3.0.1",
   "name": "spl_memo",
-  "instructions": []
+  "instructions": [],
+  "metadata": {
+    "instruction_selector_type": "single-instuction"
+  }
 }

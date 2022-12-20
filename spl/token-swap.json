@@ -789,5 +789,8 @@
       "name": "InvalidFeeAccount",
       "msg": "The pool fee account is invalid"
     }
-  ]
+  ],
+  "metadata": {
+    "instruction_selector_type": "index"
+  }
 }
