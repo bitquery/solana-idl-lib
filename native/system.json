@@ -520,6 +520,7 @@
     "errors": [],
     "metadata":
     {
-        "address": "11111111111111111111111111111111"
+        "address": "11111111111111111111111111111111",
+        "instruction_selector_type": "index"
     }
 }

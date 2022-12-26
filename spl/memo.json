@@ -3,6 +3,6 @@
   "name": "spl_memo",
   "instructions": [],
   "metadata": {
-    "instruction_selector_type": "single-instuction"
+    "instruction_selector_type": "single-instruction"
   }
 }

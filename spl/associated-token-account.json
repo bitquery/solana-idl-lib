@@ -52,6 +52,6 @@
     }
   ],
   "metadata": {
-    "instruction_selector_type": "index"
+    "instruction_selector_type": "single-instruction"
   }
 }

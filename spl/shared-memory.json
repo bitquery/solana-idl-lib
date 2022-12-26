@@ -3,6 +3,6 @@
   "name": "spl_shared_memory",
   "instructions": [],
   "metadata": {
-    "instruction_selector_type": "single-instuction"
+    "instruction_selector_type": "single-instruction"
   }
 }

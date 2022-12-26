@@ -3,6 +3,6 @@
   "name": "solana_compute_budget_program",
   "instructions": [],
   "metadata": {
-    "instruction_selector_type": "single-instuction"
+    "instruction_selector_type": "single-instruction"
   }
 }
