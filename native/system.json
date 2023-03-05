@@ -521,6 +521,7 @@
     "metadata":
     {
         "address": "11111111111111111111111111111111",
-        "instruction_selector_type": "index"
+        "instruction_selector_type": "index",
+        "index_size_bytes": 4
     }
 }
