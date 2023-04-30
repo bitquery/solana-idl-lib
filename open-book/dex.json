@@ -2302,6 +2302,90 @@
     ],
     "types": [
         {
+            "name": "Side",
+            "type": {
+                "kind": "enum",
+                "variants": [
+                    {
+                        "name": "Bid"
+                    },
+                    {
+                        "name": "Ask"
+                    }
+                ]
+            },
+            "docs": []
+        },
+        {
+            "name": "FeeTier",
+            "type": {
+                "kind": "enum",
+                "variants": [
+                    {
+                        "name": "Base"
+                    },
+                    {
+                        "name": "SRM2"
+                    },
+                    {
+                        "name": "SRM3"
+                    },
+                    {
+                        "name": "SRM4"
+                    },
+                    {
+                        "name": "SRM5"
+                    },
+                    {
+                        "name": "SRM6"
+                    },
+                    {
+                        "name": "MSRM"
+                    },
+                    {
+                        "name": "Stable"
+                    }
+                ]
+            },
+            "docs": []
+        },
+        {
+            "name": "SelfTradeBehavior",
+            "type": {
+                "kind": "enum",
+                "variants": [
+                    {
+                        "name": "DecrementTake"
+                    },
+                    {
+                        "name": "CancelProvide"
+                    },
+                    {
+                        "name": "AbortTransaction"
+                    }
+                ]
+            },
+            "docs": []
+        },
+        {
+            "name": "OrderType",
+            "type": {
+                "kind": "enum",
+                "variants": [
+                    {
+                        "name": "Limit"
+                    },
+                    {
+                        "name": "ImmediateOrCancel"
+                    },
+                    {
+                        "name": "PostOnly"
+                    }
+                ]
+            },
+            "docs": []
+        },
+        {
             "name": "InitializeMarketInstruction",
             "type": {
                 "kind": "struct",
@@ -2544,90 +2628,6 @@
                         "name": "limit",
                         "type": "u16",
                         "docs": []
-                    }
-                ]
-            },
-            "docs": []
-        },
-        {
-            "name": "Side",
-            "type": {
-                "kind": "enum",
-                "variants": [
-                    {
-                        "name": "Bid"
-                    },
-                    {
-                        "name": "Ask"
-                    }
-                ]
-            },
-            "docs": []
-        },
-        {
-            "name": "OrderType",
-            "type": {
-                "kind": "enum",
-                "variants": [
-                    {
-                        "name": "Limit"
-                    },
-                    {
-                        "name": "ImmediateOrCancel"
-                    },
-                    {
-                        "name": "PostOnly"
-                    }
-                ]
-            },
-            "docs": []
-        },
-        {
-            "name": "SelfTradeBehavior",
-            "type": {
-                "kind": "enum",
-                "variants": [
-                    {
-                        "name": "DecrementTake"
-                    },
-                    {
-                        "name": "CancelProvide"
-                    },
-                    {
-                        "name": "AbortTransaction"
-                    }
-                ]
-            },
-            "docs": []
-        },
-        {
-            "name": "FeeTier",
-            "type": {
-                "kind": "enum",
-                "variants": [
-                    {
-                        "name": "Base"
-                    },
-                    {
-                        "name": "SRM2"
-                    },
-                    {
-                        "name": "SRM3"
-                    },
-                    {
-                        "name": "SRM4"
-                    },
-                    {
-                        "name": "SRM5"
-                    },
-                    {
-                        "name": "SRM6"
-                    },
-                    {
-                        "name": "MSRM"
-                    },
-                    {
-                        "name": "Stable"
                     }
                 ]
             },
