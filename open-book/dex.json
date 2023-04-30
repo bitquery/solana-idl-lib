@@ -1322,12 +1322,13 @@
             ],
             "args": [
                 {
-                    // "name": "limit",
-                    // "type": "u16",
+                    "name": "client_ids",
+                    "type": {
+                        "array": ["u64", 8]
+                    },
                     "docs": []
                 }
             ]
-        },
         }
     ],
     "accounts": [
