@@ -1224,6 +1224,68 @@
                     ]
                 },
                 {
+                    "name": "bids",
+                    "isMut": true,
+                    "isSigner": false,
+                    "docs": [
+                        "bids"
+                    ]
+                },
+                {
+                    "name": "asks",
+                    "isMut": true,
+                    "isSigner": false,
+                    "docs": [
+                        "asks"
+                    ]
+                },
+                {
+                    "name": "openOrders",
+                    "isMut": true,
+                    "isSigner": false,
+                    "doc": [
+                        "OpenOrders"
+                    ]
+                },
+                {
+                    "name": "owner",
+                    "isMut": true,
+                    "isSigner": true,
+                    "docs": [
+                        "owner of the OpenOrders account"
+                    ]
+                },
+                {
+                    "name": "eventQueue",
+                    "isMut": true,
+                    "isSigner": false,
+                    "docs": [
+                        "event_q"
+                    ]
+                }
+            ],
+            "args": [
+                {
+                    "name": "client_ids",
+                    "type": {
+                        "array": ["u64", 8]
+                    },
+                    "docs": []
+                }
+            ]
+        },
+        {
+            "name": "ReplaceOrderByClientId",
+            "accounts": [
+                {
+                    "name": "market",
+                    "isMut": true,
+                    "isSigner": false,
+                    "docs": [
+                        "the market"
+                    ]
+                },
+                {
                     "name": "openOrders",
                     "isMut": true,
                     "isSigner": false,
@@ -1322,9 +1384,129 @@
             ],
             "args": [
                 {
-                    "name": "client_ids",
+                    "name": "args",
                     "type": {
-                        "array": ["u64", 8]
+                        "defined": "NewOrderInstructionV3"
+                    },
+                    "docs": []
+                }
+            ]
+        },
+        {   
+            "name": "ReplaceOrdersByClientIds",
+            "accounts": [
+                {
+                    "name": "market",
+                    "isMut": true,
+                    "isSigner": false,
+                    "docs": [
+                        "the market"
+                    ]
+                },
+                {
+                    "name": "openOrders",
+                    "isMut": true,
+                    "isSigner": false,
+                    "docs": [
+                        "the OpenOrders account to use"
+                    ]
+                },
+                {
+                    "name": "requestQueue",
+                    "isMut": true,
+                    "isSigner": false,
+                    "docs": [
+                        "the request queue"
+                    ]
+                },
+                {
+                    "name": "eventQueue",
+                    "isMut": true,
+                    "isSigner": false,
+                    "docs": [
+                        "the event queue"
+                    ]
+                },
+                {
+                    "name": "bids",
+                    "isMut": true,
+                    "isSigner": false,
+                    "docs": [
+                        "bids"
+                    ]
+                },
+                {
+                    "name": "asks",
+                    "isMut": true,
+                    "isSigner": false,
+                    "docs": [
+                        "asks"
+                    ]
+                },
+                {
+                    "name": "orderPayer",
+                    "isMut": true,
+                    "isSigner": false,
+                    "docs": [
+                        "the (coin or price currency) account paying for the order"
+                    ]
+                },
+                {
+                    "name": "owner",
+                    "isMut": true,
+                    "isSigner": true,
+                    "docs": [
+                        "owner of the OpenOrders account"
+                    ]
+                },
+                {
+                    "name": "coinVault",
+                    "isMut": true,
+                    "isSigner": false,
+                    "docs": [
+                        "coin vault"
+                    ]
+                },
+                {
+                    "name": "pcVault",
+                    "isMut": true,
+                    "isSigner": false,
+                    "docs": [
+                        "pc vault"
+                    ]
+                },
+                {
+                    "name": "splTokenProgram",
+                    "isMut": false,
+                    "isSigner": false,
+                    "docs": [
+                        "spl token program"
+                    ]
+                },
+                {
+                    "name": "rentSysvar",
+                    "isMut": false,
+                    "isSigner": false,
+                    "docs": [
+                        "the rent sysvar"
+                    ]
+                },
+                {
+                    "name": "feeDiscounts",
+                    "isMut": false,
+                    "isSigner": false,
+                    "docs": [
+                        "the (M)SRM account used for fee discounts"
+                    ]
+                }
+            ],
+            "args": [
+                {
+                    "name": "args",
+                    "type": {
+                        "vec": {
+                            "defined": "NewOrderInstructionV3"
+                        }
                     },
                     "docs": []
                 }
