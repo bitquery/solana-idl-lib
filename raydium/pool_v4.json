@@ -1,6 +1,6 @@
 {
-    "version": "0.1.0",
-    "name": "lyf_raydium",
+    "version": "4.0.0",
+    "name": "Raydium Liquidity Pool V4",
     "instructions": [
         {
             "name": "initializeStrategy",
@@ -644,124 +644,99 @@
             "name": "swap",
             "accounts": [
                 {
-                    "name": "userMainAccount",
+                    "name": "TokenProgram",
                     "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "AmmId",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "AmmAuthority",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "AmmOpenOrders",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "AmmTargetOrders",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "PoolCoinTokenAccount",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "PoolPcTokenAccount",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "OpenBookProgramId",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "OpenBookMarket",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "OpenBookBids",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "OpenBookAsks",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "OpenBookQueue",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "OpenBookVaultAccount",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "OpenBookPcVaultAccount",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "OpenBookVaultSigner",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "UserSourceTokenAccount",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "UserDestTokenAccount",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "UserOwner",
+                    "isMut": true,
                     "isSigner": true
                 },
                 {
-                    "name": "userInfo",
+                    "name": "UserOwner",
                     "isMut": true,
-                    "isSigner": false
-                },
-                {
-                    "name": "strategyState",
-                    "isMut": true,
-                    "isSigner": false
-                },
-                {
-                    "name": "strategyAuthority",
-                    "isMut": false,
-                    "isSigner": false
-                },
-                {
-                    "name": "strategyTknAccount0",
-                    "isMut": true,
-                    "isSigner": false
-                },
-                {
-                    "name": "strategyTknAccount1",
-                    "isMut": true,
-                    "isSigner": false
-                },
-                {
-                    "name": "strategyLpAccount",
-                    "isMut": true,
-                    "isSigner": false
-                },
-                {
-                    "name": "tokenProgramId",
-                    "isMut": false,
-                    "isSigner": false
-                },
-                {
-                    "name": "raydiumAmmProgramId",
-                    "isMut": false,
-                    "isSigner": false
-                },
-                {
-                    "name": "ammId",
-                    "isMut": true,
-                    "isSigner": false
-                },
-                {
-                    "name": "ammAuthority",
-                    "isMut": true,
-                    "isSigner": false
-                },
-                {
-                    "name": "ammOpenOrders",
-                    "isMut": true,
-                    "isSigner": false
-                },
-                {
-                    "name": "ammTargetOrders",
-                    "isMut": true,
-                    "isSigner": false
-                },
-                {
-                    "name": "ammTknAccount0",
-                    "isMut": true,
-                    "isSigner": false
-                },
-                {
-                    "name": "ammTknAccount1",
-                    "isMut": true,
-                    "isSigner": false
-                },
-                {
-                    "name": "lpMintAccount",
-                    "isMut": true,
-                    "isSigner": false
-                },
-                {
-                    "name": "serumProgramId",
-                    "isMut": false,
-                    "isSigner": false
-                },
-                {
-                    "name": "serumMarketId",
-                    "isMut": true,
-                    "isSigner": false
-                },
-                {
-                    "name": "serumBids",
-                    "isMut": true,
-                    "isSigner": false
-                },
-                {
-                    "name": "serumAsks",
-                    "isMut": true,
-                    "isSigner": false
-                },
-                {
-                    "name": "serumEventQueue",
-                    "isMut": true,
-                    "isSigner": false
-                },
-                {
-                    "name": "serumTknVault0",
-                    "isMut": true,
-                    "isSigner": false
-                },
-                {
-                    "name": "serumTknVault1",
-                    "isMut": true,
-                    "isSigner": false
-                },
-                {
-                    "name": "serumVaultSinger",
-                    "isMut": false,
-                    "isSigner": false
+                    "isSigner": true
                 }
             ],
             "args": [
