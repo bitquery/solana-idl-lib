@@ -732,11 +732,6 @@
                     "name": "UserOwner",
                     "isMut": true,
                     "isSigner": true
-                },
-                {
-                    "name": "UserOwner",
-                    "isMut": true,
-                    "isSigner": true
                 }
             ],
             "args": [
