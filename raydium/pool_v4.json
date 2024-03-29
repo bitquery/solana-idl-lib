@@ -664,6 +664,11 @@
                     "isSigner": false
                 },
                 {
+                    "name": "AmmTargetOrders",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
                     "name": "PoolCoinTokenAccount",
                     "isMut": true,
                     "isSigner": false
