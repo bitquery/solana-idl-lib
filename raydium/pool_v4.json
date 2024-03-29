@@ -666,6 +666,7 @@
                 {
                     "name": "AmmTargetOrders",
                     "isMut": true,
+                    "optional": true,
                     "isSigner": false
                 },
                 {
