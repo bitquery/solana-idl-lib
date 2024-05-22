@@ -1,0 +1,92 @@
+{
+  "version": "0.0.0",
+  "name": "Lifinity",
+  "instructions": [
+    {
+      "name": "Swap",
+      "accounts": [
+        {
+          "name": "Authority",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "Amm",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "UserTransferAuthority",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "SourceInfo",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "DestinationInfo",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "SwapSource",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "SwapDestination",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "PoolMint",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "FeeAccount",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "TokenProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "OracleMainAccount",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "OracleSubAccount",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "OraclePcAccount",
+          "isMut": true,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "amountIn",
+          "type": "u64"
+        },
+        {
+          "name": "minAmountOut",
+          "type": "u64"
+        }
+      ]
+    }
+  ],
+  "accounts": [],
+  "types": [],
+  "errors": [],
+  "metadata": {
+    "instruction_selector_type": "default"
+  }
+}
