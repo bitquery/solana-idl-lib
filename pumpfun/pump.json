@@ -107,6 +107,7 @@
       ],
       "accounts": [
         { "name": "global", "isMut": false, "isSigner": false },
+        { "name": "lastWithdraw", "isMut": true, "isSigner": false },
         { "name": "mint", "isMut": false, "isSigner": false },
         { "name": "bondingCurve", "isMut": true, "isSigner": false },
         { "name": "associatedBondingCurve", "isMut": true, "isSigner": false },
@@ -149,6 +150,15 @@
           { "name": "realSolReserves", "type": "u64" },
           { "name": "tokenTotalSupply", "type": "u64" },
           { "name": "complete", "type": "bool" }
+        ]
+      }
+    },
+    {
+      "name": "LastWithdraw",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          { "name": "lastWithdrawTimestamp", "type": "i64" }
         ]
       }
     }
