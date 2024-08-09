@@ -522,12 +522,12 @@
           "isSigner": false
         },
         {
-          "name": "uerCoinTokenAccount",
+          "name": "userCoinTokenAccount",
           "isMut": true,
           "isSigner": false
         },
         {
-          "name": "uerPcTokenAccount",
+          "name": "userPcTokenAccount",
           "isMut": true,
           "isSigner": false
         },
