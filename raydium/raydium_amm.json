@@ -1008,12 +1008,12 @@
           "isSigner": false
         },
         {
-          "name": "uerSourceTokenAccount",
+          "name": "userSourceTokenAccount",
           "isMut": true,
           "isSigner": false
         },
         {
-          "name": "uerDestinationTokenAccount",
+          "name": "userDestinationTokenAccount",
           "isMut": true,
           "isSigner": false
         },
@@ -1194,12 +1194,12 @@
           "isSigner": false
         },
         {
-          "name": "uerSourceTokenAccount",
+          "name": "userSourceTokenAccount",
           "isMut": true,
           "isSigner": false
         },
         {
-          "name": "uerDestinationTokenAccount",
+          "name": "userDestinationTokenAccount",
           "isMut": true,
           "isSigner": false
         },
