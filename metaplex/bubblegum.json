@@ -1,0 +1,1984 @@
+{
+    "version": "0.12.0",
+    "name": "bubblegum",
+    "instructions": [
+        {
+            "name": "burn",
+            "accounts": [
+                {
+                    "name": "treeAuthority",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "leafOwner",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "leafDelegate",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "merkleTree",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "logWrapper",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "compressionProgram",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "systemProgram",
+                    "isMut": false,
+                    "isSigner": false
+                }
+            ],
+            "args": [
+                {
+                    "name": "root",
+                    "type": {
+                        "array": [
+                            "u8",
+                            32
+                        ]
+                    }
+                },
+                {
+                    "name": "dataHash",
+                    "type": {
+                        "array": [
+                            "u8",
+                            32
+                        ]
+                    }
+                },
+                {
+                    "name": "creatorHash",
+                    "type": {
+                        "array": [
+                            "u8",
+                            32
+                        ]
+                    }
+                },
+                {
+                    "name": "nonce",
+                    "type": "u64"
+                },
+                {
+                    "name": "index",
+                    "type": "u32"
+                }
+            ]
+        },
+        {
+            "name": "cancelRedeem",
+            "accounts": [
+                {
+                    "name": "treeAuthority",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "leafOwner",
+                    "isMut": true,
+                    "isSigner": true
+                },
+                {
+                    "name": "merkleTree",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "voucher",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "logWrapper",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "compressionProgram",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "systemProgram",
+                    "isMut": false,
+                    "isSigner": false
+                }
+            ],
+            "args": [
+                {
+                    "name": "root",
+                    "type": {
+                        "array": [
+                            "u8",
+                            32
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "name": "createTree",
+            "accounts": [
+                {
+                    "name": "treeAuthority",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "merkleTree",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "payer",
+                    "isMut": true,
+                    "isSigner": true
+                },
+                {
+                    "name": "treeCreator",
+                    "isMut": false,
+                    "isSigner": true
+                },
+                {
+                    "name": "logWrapper",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "compressionProgram",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "systemProgram",
+                    "isMut": false,
+                    "isSigner": false
+                }
+            ],
+            "args": [
+                {
+                    "name": "maxDepth",
+                    "type": "u32"
+                },
+                {
+                    "name": "maxBufferSize",
+                    "type": "u32"
+                },
+                {
+                    "name": "public",
+                    "type": {
+                        "option": "bool"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "decompressV1",
+            "accounts": [
+                {
+                    "name": "voucher",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "leafOwner",
+                    "isMut": true,
+                    "isSigner": true
+                },
+                {
+                    "name": "tokenAccount",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "mint",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "mintAuthority",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "metadata",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "masterEdition",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "systemProgram",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "sysvarRent",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "tokenMetadataProgram",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "tokenProgram",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "associatedTokenProgram",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "logWrapper",
+                    "isMut": false,
+                    "isSigner": false
+                }
+            ],
+            "args": [
+                {
+                    "name": "metadata",
+                    "type": {
+                        "defined": "MetadataArgs"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "delegate",
+            "accounts": [
+                {
+                    "name": "treeAuthority",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "leafOwner",
+                    "isMut": false,
+                    "isSigner": true
+                },
+                {
+                    "name": "previousLeafDelegate",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "newLeafDelegate",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "merkleTree",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "logWrapper",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "compressionProgram",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "systemProgram",
+                    "isMut": false,
+                    "isSigner": false
+                }
+            ],
+            "args": [
+                {
+                    "name": "root",
+                    "type": {
+                        "array": [
+                            "u8",
+                            32
+                        ]
+                    }
+                },
+                {
+                    "name": "dataHash",
+                    "type": {
+                        "array": [
+                            "u8",
+                            32
+                        ]
+                    }
+                },
+                {
+                    "name": "creatorHash",
+                    "type": {
+                        "array": [
+                            "u8",
+                            32
+                        ]
+                    }
+                },
+                {
+                    "name": "nonce",
+                    "type": "u64"
+                },
+                {
+                    "name": "index",
+                    "type": "u32"
+                }
+            ]
+        },
+        {
+            "name": "mintToCollectionV1",
+            "accounts": [
+                {
+                    "name": "treeAuthority",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "leafOwner",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "leafDelegate",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "merkleTree",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "payer",
+                    "isMut": false,
+                    "isSigner": true
+                },
+                {
+                    "name": "treeDelegate",
+                    "isMut": false,
+                    "isSigner": true
+                },
+                {
+                    "name": "collectionAuthority",
+                    "isMut": false,
+                    "isSigner": true
+                },
+                {
+                    "name": "collectionAuthorityRecordPda",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "collectionMint",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "collectionMetadata",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "editionAccount",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "bubblegumSigner",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "logWrapper",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "compressionProgram",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "tokenMetadataProgram",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "systemProgram",
+                    "isMut": false,
+                    "isSigner": false
+                }
+            ],
+            "args": [
+                {
+                    "name": "metadataArgs",
+                    "type": {
+                        "defined": "MetadataArgs"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "mintV1",
+            "accounts": [
+                {
+                    "name": "treeAuthority",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "leafOwner",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "leafDelegate",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "merkleTree",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "payer",
+                    "isMut": false,
+                    "isSigner": true
+                },
+                {
+                    "name": "treeDelegate",
+                    "isMut": false,
+                    "isSigner": true
+                },
+                {
+                    "name": "logWrapper",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "compressionProgram",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "systemProgram",
+                    "isMut": false,
+                    "isSigner": false
+                }
+            ],
+            "args": [
+                {
+                    "name": "message",
+                    "type": {
+                        "defined": "MetadataArgs"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "redeem",
+            "accounts": [
+                {
+                    "name": "treeAuthority",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "leafOwner",
+                    "isMut": true,
+                    "isSigner": true
+                },
+                {
+                    "name": "leafDelegate",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "merkleTree",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "voucher",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "logWrapper",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "compressionProgram",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "systemProgram",
+                    "isMut": false,
+                    "isSigner": false
+                }
+            ],
+            "args": [
+                {
+                    "name": "root",
+                    "type": {
+                        "array": [
+                            "u8",
+                            32
+                        ]
+                    }
+                },
+                {
+                    "name": "dataHash",
+                    "type": {
+                        "array": [
+                            "u8",
+                            32
+                        ]
+                    }
+                },
+                {
+                    "name": "creatorHash",
+                    "type": {
+                        "array": [
+                            "u8",
+                            32
+                        ]
+                    }
+                },
+                {
+                    "name": "nonce",
+                    "type": "u64"
+                },
+                {
+                    "name": "index",
+                    "type": "u32"
+                }
+            ]
+        },
+        {
+            "name": "setAndVerifyCollection",
+            "accounts": [
+                {
+                    "name": "treeAuthority",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "leafOwner",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "leafDelegate",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "merkleTree",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "payer",
+                    "isMut": false,
+                    "isSigner": true
+                },
+                {
+                    "name": "treeDelegate",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "collectionAuthority",
+                    "isMut": false,
+                    "isSigner": true
+                },
+                {
+                    "name": "collectionAuthorityRecordPda",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "collectionMint",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "collectionMetadata",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "editionAccount",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "bubblegumSigner",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "logWrapper",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "compressionProgram",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "tokenMetadataProgram",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "systemProgram",
+                    "isMut": false,
+                    "isSigner": false
+                }
+            ],
+            "args": [
+                {
+                    "name": "root",
+                    "type": {
+                        "array": [
+                            "u8",
+                            32
+                        ]
+                    }
+                },
+                {
+                    "name": "dataHash",
+                    "type": {
+                        "array": [
+                            "u8",
+                            32
+                        ]
+                    }
+                },
+                {
+                    "name": "creatorHash",
+                    "type": {
+                        "array": [
+                            "u8",
+                            32
+                        ]
+                    }
+                },
+                {
+                    "name": "nonce",
+                    "type": "u64"
+                },
+                {
+                    "name": "index",
+                    "type": "u32"
+                },
+                {
+                    "name": "message",
+                    "type": {
+                        "defined": "MetadataArgs"
+                    }
+                },
+                {
+                    "name": "collection",
+                    "type": "publicKey"
+                }
+            ]
+        },
+        {
+            "name": "setDecompressibleState",
+            "accounts": [
+                {
+                    "name": "treeAuthority",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "treeCreator",
+                    "isMut": false,
+                    "isSigner": true
+                }
+            ],
+            "args": [
+                {
+                    "name": "decompressableState",
+                    "type": {
+                        "defined": "DecompressibleState"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "setTreeDelegate",
+            "accounts": [
+                {
+                    "name": "treeAuthority",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "treeCreator",
+                    "isMut": false,
+                    "isSigner": true
+                },
+                {
+                    "name": "newTreeDelegate",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "merkleTree",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "systemProgram",
+                    "isMut": false,
+                    "isSigner": false
+                }
+            ],
+            "args": []
+        },
+        {
+            "name": "transfer",
+            "accounts": [
+                {
+                    "name": "treeAuthority",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "leafOwner",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "leafDelegate",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "newLeafOwner",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "merkleTree",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "logWrapper",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "compressionProgram",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "systemProgram",
+                    "isMut": false,
+                    "isSigner": false
+                }
+            ],
+            "args": [
+                {
+                    "name": "root",
+                    "type": {
+                        "array": [
+                            "u8",
+                            32
+                        ]
+                    }
+                },
+                {
+                    "name": "dataHash",
+                    "type": {
+                        "array": [
+                            "u8",
+                            32
+                        ]
+                    }
+                },
+                {
+                    "name": "creatorHash",
+                    "type": {
+                        "array": [
+                            "u8",
+                            32
+                        ]
+                    }
+                },
+                {
+                    "name": "nonce",
+                    "type": "u64"
+                },
+                {
+                    "name": "index",
+                    "type": "u32"
+                }
+            ]
+        },
+        {
+            "name": "unverifyCollection",
+            "accounts": [
+                {
+                    "name": "treeAuthority",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "leafOwner",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "leafDelegate",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "merkleTree",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "payer",
+                    "isMut": false,
+                    "isSigner": true
+                },
+                {
+                    "name": "treeDelegate",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "collectionAuthority",
+                    "isMut": false,
+                    "isSigner": true
+                },
+                {
+                    "name": "collectionAuthorityRecordPda",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "collectionMint",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "collectionMetadata",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "editionAccount",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "bubblegumSigner",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "logWrapper",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "compressionProgram",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "tokenMetadataProgram",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "systemProgram",
+                    "isMut": false,
+                    "isSigner": false
+                }
+            ],
+            "args": [
+                {
+                    "name": "root",
+                    "type": {
+                        "array": [
+                            "u8",
+                            32
+                        ]
+                    }
+                },
+                {
+                    "name": "dataHash",
+                    "type": {
+                        "array": [
+                            "u8",
+                            32
+                        ]
+                    }
+                },
+                {
+                    "name": "creatorHash",
+                    "type": {
+                        "array": [
+                            "u8",
+                            32
+                        ]
+                    }
+                },
+                {
+                    "name": "nonce",
+                    "type": "u64"
+                },
+                {
+                    "name": "index",
+                    "type": "u32"
+                },
+                {
+                    "name": "message",
+                    "type": {
+                        "defined": "MetadataArgs"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "unverifyCreator",
+            "accounts": [
+                {
+                    "name": "treeAuthority",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "leafOwner",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "leafDelegate",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "merkleTree",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "payer",
+                    "isMut": false,
+                    "isSigner": true
+                },
+                {
+                    "name": "creator",
+                    "isMut": false,
+                    "isSigner": true
+                },
+                {
+                    "name": "logWrapper",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "compressionProgram",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "systemProgram",
+                    "isMut": false,
+                    "isSigner": false
+                }
+            ],
+            "args": [
+                {
+                    "name": "root",
+                    "type": {
+                        "array": [
+                            "u8",
+                            32
+                        ]
+                    }
+                },
+                {
+                    "name": "dataHash",
+                    "type": {
+                        "array": [
+                            "u8",
+                            32
+                        ]
+                    }
+                },
+                {
+                    "name": "creatorHash",
+                    "type": {
+                        "array": [
+                            "u8",
+                            32
+                        ]
+                    }
+                },
+                {
+                    "name": "nonce",
+                    "type": "u64"
+                },
+                {
+                    "name": "index",
+                    "type": "u32"
+                },
+                {
+                    "name": "message",
+                    "type": {
+                        "defined": "MetadataArgs"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "verifyCollection",
+            "accounts": [
+                {
+                    "name": "treeAuthority",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "leafOwner",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "leafDelegate",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "merkleTree",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "payer",
+                    "isMut": false,
+                    "isSigner": true
+                },
+                {
+                    "name": "treeDelegate",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "collectionAuthority",
+                    "isMut": false,
+                    "isSigner": true
+                },
+                {
+                    "name": "collectionAuthorityRecordPda",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "collectionMint",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "collectionMetadata",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "editionAccount",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "bubblegumSigner",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "logWrapper",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "compressionProgram",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "tokenMetadataProgram",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "systemProgram",
+                    "isMut": false,
+                    "isSigner": false
+                }
+            ],
+            "args": [
+                {
+                    "name": "root",
+                    "type": {
+                        "array": [
+                            "u8",
+                            32
+                        ]
+                    }
+                },
+                {
+                    "name": "dataHash",
+                    "type": {
+                        "array": [
+                            "u8",
+                            32
+                        ]
+                    }
+                },
+                {
+                    "name": "creatorHash",
+                    "type": {
+                        "array": [
+                            "u8",
+                            32
+                        ]
+                    }
+                },
+                {
+                    "name": "nonce",
+                    "type": "u64"
+                },
+                {
+                    "name": "index",
+                    "type": "u32"
+                },
+                {
+                    "name": "message",
+                    "type": {
+                        "defined": "MetadataArgs"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "verifyCreator",
+            "accounts": [
+                {
+                    "name": "treeAuthority",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "leafOwner",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "leafDelegate",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "merkleTree",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "payer",
+                    "isMut": false,
+                    "isSigner": true
+                },
+                {
+                    "name": "creator",
+                    "isMut": false,
+                    "isSigner": true
+                },
+                {
+                    "name": "logWrapper",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "compressionProgram",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "systemProgram",
+                    "isMut": false,
+                    "isSigner": false
+                }
+            ],
+            "args": [
+                {
+                    "name": "root",
+                    "type": {
+                        "array": [
+                            "u8",
+                            32
+                        ]
+                    }
+                },
+                {
+                    "name": "dataHash",
+                    "type": {
+                        "array": [
+                            "u8",
+                            32
+                        ]
+                    }
+                },
+                {
+                    "name": "creatorHash",
+                    "type": {
+                        "array": [
+                            "u8",
+                            32
+                        ]
+                    }
+                },
+                {
+                    "name": "nonce",
+                    "type": "u64"
+                },
+                {
+                    "name": "index",
+                    "type": "u32"
+                },
+                {
+                    "name": "message",
+                    "type": {
+                        "defined": "MetadataArgs"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "updateMetadata",
+            "accounts": [
+                {
+                    "name": "treeAuthority",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "authority",
+                    "isMut": false,
+                    "isSigner": true
+                },
+                {
+                    "name": "collectionMint",
+                    "isMut": false,
+                    "isSigner": false,
+                    "isOptional": true
+                },
+                {
+                    "name": "collectionMetadata",
+                    "isMut": false,
+                    "isSigner": false,
+                    "isOptional": true
+                },
+                {
+                    "name": "collectionAuthorityRecordPda",
+                    "isMut": false,
+                    "isSigner": false,
+                    "isOptional": true
+                },
+                {
+                    "name": "leafOwner",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "leafDelegate",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "payer",
+                    "isMut": false,
+                    "isSigner": true
+                },
+                {
+                    "name": "merkleTree",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "logWrapper",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "compressionProgram",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "tokenMetadataProgram",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "systemProgram",
+                    "isMut": false,
+                    "isSigner": false
+                }
+            ],
+            "args": [
+                {
+                    "name": "root",
+                    "type": {
+                        "array": [
+                            "u8",
+                            32
+                        ]
+                    }
+                },
+                {
+                    "name": "nonce",
+                    "type": "u64"
+                },
+                {
+                    "name": "index",
+                    "type": "u32"
+                },
+                {
+                    "name": "currentMetadata",
+                    "type": {
+                        "defined": "MetadataArgs"
+                    }
+                },
+                {
+                    "name": "updateArgs",
+                    "type": {
+                        "defined": "UpdateArgs"
+                    }
+                }
+            ]
+        }
+    ],
+    "accounts": [
+        {
+            "name": "TreeConfig",
+            "type": {
+                "kind": "struct",
+                "fields": [
+                    {
+                        "name": "treeCreator",
+                        "type": "publicKey"
+                    },
+                    {
+                        "name": "treeDelegate",
+                        "type": "publicKey"
+                    },
+                    {
+                        "name": "totalMintCapacity",
+                        "type": "u64"
+                    },
+                    {
+                        "name": "numMinted",
+                        "type": "u64"
+                    },
+                    {
+                        "name": "isPublic",
+                        "type": "bool"
+                    },
+                    {
+                        "name": "isDecompressible",
+                        "type": {
+                            "defined": "DecompressibleState"
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "name": "Voucher",
+            "type": {
+                "kind": "struct",
+                "fields": [
+                    {
+                        "name": "leafSchema",
+                        "type": {
+                            "defined": "LeafSchema"
+                        }
+                    },
+                    {
+                        "name": "index",
+                        "type": "u32"
+                    },
+                    {
+                        "name": "merkleTree",
+                        "type": "publicKey"
+                    }
+                ]
+            }
+        }
+    ],
+    "types": [
+        {
+            "name": "Creator",
+            "type": {
+                "kind": "struct",
+                "fields": [
+                    {
+                        "name": "address",
+                        "type": "publicKey"
+                    },
+                    {
+                        "name": "verified",
+                        "type": "bool"
+                    },
+                    {
+                        "name": "share",
+                        "type": "u8"
+                    }
+                ]
+            }
+        },
+        {
+            "name": "Uses",
+            "type": {
+                "kind": "struct",
+                "fields": [
+                    {
+                        "name": "useMethod",
+                        "type": {
+                            "defined": "UseMethod"
+                        }
+                    },
+                    {
+                        "name": "remaining",
+                        "type": "u64"
+                    },
+                    {
+                        "name": "total",
+                        "type": "u64"
+                    }
+                ]
+            }
+        },
+        {
+            "name": "Collection",
+            "type": {
+                "kind": "struct",
+                "fields": [
+                    {
+                        "name": "verified",
+                        "type": "bool"
+                    },
+                    {
+                        "name": "key",
+                        "type": "publicKey"
+                    }
+                ]
+            }
+        },
+        {
+            "name": "MetadataArgs",
+            "type": {
+                "kind": "struct",
+                "fields": [
+                    {
+                        "name": "name",
+                        "type": "string"
+                    },
+                    {
+                        "name": "symbol",
+                        "type": "string"
+                    },
+                    {
+                        "name": "uri",
+                        "type": "string"
+                    },
+                    {
+                        "name": "sellerFeeBasisPoints",
+                        "type": "u16"
+                    },
+                    {
+                        "name": "primarySaleHappened",
+                        "type": "bool"
+                    },
+                    {
+                        "name": "isMutable",
+                        "type": "bool"
+                    },
+                    {
+                        "name": "editionNonce",
+                        "type": {
+                            "option": "u8"
+                        }
+                    },
+                    {
+                        "name": "tokenStandard",
+                        "type": {
+                            "option": {
+                                "defined": "TokenStandard"
+                            }
+                        }
+                    },
+                    {
+                        "name": "collection",
+                        "type": {
+                            "option": {
+                                "defined": "Collection"
+                            }
+                        }
+                    },
+                    {
+                        "name": "uses",
+                        "type": {
+                            "option": {
+                                "defined": "Uses"
+                            }
+                        }
+                    },
+                    {
+                        "name": "tokenProgramVersion",
+                        "type": {
+                            "defined": "TokenProgramVersion"
+                        }
+                    },
+                    {
+                        "name": "creators",
+                        "type": {
+                            "vec": {
+                                "defined": "Creator"
+                            }
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "name": "UpdateArgs",
+            "type": {
+                "kind": "struct",
+                "fields": [
+                    {
+                        "name": "name",
+                        "type": {
+                            "option": "string"
+                        }
+                    },
+                    {
+                        "name": "symbol",
+                        "type": {
+                            "option": "string"
+                        }
+                    },
+                    {
+                        "name": "uri",
+                        "type": {
+                            "option": "string"
+                        }
+                    },
+                    {
+                        "name": "creators",
+                        "type": {
+                            "option": {
+                                "vec": {
+                                    "defined": "Creator"
+                                }
+                            }
+                        }
+                    },
+                    {
+                        "name": "sellerFeeBasisPoints",
+                        "type": {
+                            "option": "u16"
+                        }
+                    },
+                    {
+                        "name": "primarySaleHappened",
+                        "type": {
+                            "option": "bool"
+                        }
+                    },
+                    {
+                        "name": "isMutable",
+                        "type": {
+                            "option": "bool"
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "name": "Version",
+            "type": {
+                "kind": "enum",
+                "variants": [
+                    {
+                        "name": "V1"
+                    }
+                ]
+            }
+        },
+        {
+            "name": "LeafSchema",
+            "type": {
+                "kind": "enum",
+                "variants": [
+                    {
+                        "name": "V1",
+                        "fields": [
+                            {
+                                "name": "id",
+                                "type": "publicKey"
+                            },
+                            {
+                                "name": "owner",
+                                "type": "publicKey"
+                            },
+                            {
+                                "name": "delegate",
+                                "type": "publicKey"
+                            },
+                            {
+                                "name": "nonce",
+                                "type": "u64"
+                            },
+                            {
+                                "name": "data_hash",
+                                "type": {
+                                    "array": [
+                                        "u8",
+                                        32
+                                    ]
+                                }
+                            },
+                            {
+                                "name": "creator_hash",
+                                "type": {
+                                    "array": [
+                                        "u8",
+                                        32
+                                    ]
+                                }
+                            }
+                        ]
+                    }
+                ]
+            }
+        },
+        {
+            "name": "TokenProgramVersion",
+            "type": {
+                "kind": "enum",
+                "variants": [
+                    {
+                        "name": "Original"
+                    },
+                    {
+                        "name": "Token2022"
+                    }
+                ]
+            }
+        },
+        {
+            "name": "TokenStandard",
+            "type": {
+                "kind": "enum",
+                "variants": [
+                    {
+                        "name": "NonFungible"
+                    },
+                    {
+                        "name": "FungibleAsset"
+                    },
+                    {
+                        "name": "Fungible"
+                    },
+                    {
+                        "name": "NonFungibleEdition"
+                    }
+                ]
+            }
+        },
+        {
+            "name": "UseMethod",
+            "type": {
+                "kind": "enum",
+                "variants": [
+                    {
+                        "name": "Burn"
+                    },
+                    {
+                        "name": "Multiple"
+                    },
+                    {
+                        "name": "Single"
+                    }
+                ]
+            }
+        },
+        {
+            "name": "BubblegumEventType",
+            "type": {
+                "kind": "enum",
+                "variants": [
+                    {
+                        "name": "Uninitialized"
+                    },
+                    {
+                        "name": "LeafSchemaEvent"
+                    }
+                ]
+            }
+        },
+        {
+            "name": "DecompressibleState",
+            "type": {
+                "kind": "enum",
+                "variants": [
+                    {
+                        "name": "Enabled"
+                    },
+                    {
+                        "name": "Disabled"
+                    }
+                ]
+            }
+        }
+    ],
+    "errors": [
+        {
+            "code": 6000,
+            "name": "AssetOwnerMismatch",
+            "msg": ""
+        },
+        {
+            "code": 6001,
+            "name": "PublicKeyMismatch",
+            "msg": ""
+        },
+        {
+            "code": 6002,
+            "name": "HashingMismatch",
+            "msg": ""
+        },
+        {
+            "code": 6003,
+            "name": "UnsupportedSchemaVersion",
+            "msg": ""
+        },
+        {
+            "code": 6004,
+            "name": "CreatorShareTotalMustBe100",
+            "msg": ""
+        },
+        {
+            "code": 6005,
+            "name": "DuplicateCreatorAddress",
+            "msg": ""
+        },
+        {
+            "code": 6006,
+            "name": "CreatorDidNotVerify",
+            "msg": "Creator did not verify the metadata"
+        },
+        {
+            "code": 6007,
+            "name": "CreatorNotFound",
+            "msg": ""
+        },
+        {
+            "code": 6008,
+            "name": "NoCreatorsPresent",
+            "msg": "No creators in creator Vec"
+        },
+        {
+            "code": 6009,
+            "name": "CreatorHashMismatch",
+            "msg": "Provided creator Vec must result in provided creator hash"
+        },
+        {
+            "code": 6010,
+            "name": "DataHashMismatch",
+            "msg": "Provided metadata must result in provided data hash"
+        },
+        {
+            "code": 6011,
+            "name": "CreatorsTooLong",
+            "msg": "Creators list too long"
+        },
+        {
+            "code": 6012,
+            "name": "MetadataNameTooLong",
+            "msg": ""
+        },
+        {
+            "code": 6013,
+            "name": "MetadataSymbolTooLong",
+            "msg": ""
+        },
+        {
+            "code": 6014,
+            "name": "MetadataUriTooLong",
+            "msg": ""
+        },
+        {
+            "code": 6015,
+            "name": "MetadataBasisPointsTooHigh",
+            "msg": "Basis points cannot exceed 10000"
+        },
+        {
+            "code": 6016,
+            "name": "TreeAuthorityIncorrect",
+            "msg": "Tree creator or tree delegate must sign."
+        },
+        {
+            "code": 6017,
+            "name": "InsufficientMintCapacity",
+            "msg": "Not enough unapproved mints left"
+        },
+        {
+            "code": 6018,
+            "name": "NumericalOverflowError",
+            "msg": ""
+        },
+        {
+            "code": 6019,
+            "name": "IncorrectOwner",
+            "msg": "r"
+        },
+        {
+            "code": 6020,
+            "name": "CollectionCannotBeVerifiedInThisInstruction",
+            "msg": ""
+        },
+        {
+            "code": 6021,
+            "name": "CollectionNotFound",
+            "msg": "Collection Not Found on Metadata"
+        },
+        {
+            "code": 6022,
+            "name": "AlreadyVerified",
+            "msg": ""
+        },
+        {
+            "code": 6023,
+            "name": "AlreadyUnverified",
+            "msg": ""
+        },
+        {
+            "code": 6024,
+            "name": "UpdateAuthorityIncorrect",
+            "msg": "Incorrect leaf metadata update authority."
+        },
+        {
+            "code": 6025,
+            "name": "LeafAuthorityMustSign",
+            "msg": "Tx must be signed by leaf owner or leaf delegate"
+        },
+        {
+            "code": 6026,
+            "name": "CollectionMustBeSized",
+            "msg": ""
+        },
+        {
+            "code": 6027,
+            "name": "MetadataMintMismatch",
+            "msg": "Metadata mint does not match collection mint"
+        },
+        {
+            "code": 6028,
+            "name": "InvalidCollectionAuthority",
+            "msg": ""
+        },
+        {
+            "code": 6029,
+            "name": "InvalidDelegateRecord",
+            "msg": ""
+        },
+        {
+            "code": 6030,
+            "name": "CollectionMasterEditionAccountInvalid",
+            "msg": "Edition account doesnt match collection"
+        },
+        {
+            "code": 6031,
+            "name": "CollectionMustBeAUniqueMasterEdition",
+            "msg": "Collection Must Be a Unique Master Edition v2"
+        },
+        {
+            "code": 6032,
+            "name": "UnknownExternalError",
+            "msg": "Could not convert to BubblegumError"
+        },
+        {
+            "code": 6033,
+            "name": "DecompressionDisabled",
+            "msg": "Decompression disabled for this tree."
+        },
+        {
+            "code": 6034,
+            "name": "MissingCollectionMintAccount",
+            "msg": "Missing collection mint account"
+        },
+        {
+            "code": 6035,
+            "name": "MissingCollectionMetadataAccount",
+            "msg": "Missing collection metadata account"
+        },
+        {
+            "code": 6036,
+            "name": "CollectionMismatch",
+            "msg": "Collection mismatch"
+        },
+        {
+            "code": 6037,
+            "name": "MetadataImmutable",
+            "msg": "Metadata not mutable"
+        },
+        {
+            "code": 6038,
+            "name": "PrimarySaleCanOnlyBeFlippedToTrue",
+            "msg": "Can only update primary sale to true"
+        },
+        {
+            "code": 6039,
+            "name": "CreatorDidNotUnverify",
+            "msg": "Creator did not unverify the metadata"
+        }
+    ]
+}
