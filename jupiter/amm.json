@@ -1249,9 +1249,7 @@
               {
                 "name": "side",
                 "type": {
-                  "defined": {
-                    "name": "Side"
-                  }
+                  "defined": "Side"
                 }
               }
             ]
