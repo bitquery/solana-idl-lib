@@ -1236,7 +1236,39 @@
                 "type": "bool"
               }
             ]
+          },
+          {
+            "name": "SolayerDelegateNoInit"
+          },
+          {
+            "name": "SolayerUndelegateNoInit"
+          },
+          {
+            "name": "TokenMill",
+            "fields": [
+              {
+                "name": "side",
+                "type": {
+                  "defined": {
+                    "name": "Side"
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "name": "DaoFunBuy"
+          },
+          {
+            "name": "DaoFunSell"
+          },
+          {
+            "name": "ZeroFi"
+          },
+          {
+            "name": "WooFi"
           }
+
         ]
       }
     },
