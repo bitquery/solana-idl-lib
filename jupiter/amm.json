@@ -20,17 +20,17 @@
         },
         {
           "name": "userSourceTokenAccount",
-          "isMut": false,
+          "isMut": true,
           "isSigner": false
         },
         {
           "name": "userDestinationTokenAccount",
-          "isMut": false,
+          "isMut": true,
           "isSigner": false
         },
         {
           "name": "destinationTokenAccount",
-          "isMut": false,
+          "isMut": true,
           "isSigner": false,
           "isOptional": true
         },
@@ -44,16 +44,6 @@
           "isMut": true,
           "isSigner": false,
           "isOptional": true
-        },
-        {
-          "name": "eventAuthority",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "program",
-          "isMut": false,
-          "isSigner": false
         }
       ],
       "args": [
@@ -99,17 +89,17 @@
         },
         {
           "name": "userSourceTokenAccount",
-          "isMut": false,
+          "isMut": true,
           "isSigner": false
         },
         {
           "name": "userDestinationTokenAccount",
-          "isMut": false,
+          "isMut": true,
           "isSigner": false
         },
         {
           "name": "destinationTokenAccount",
-          "isMut": false,
+          "isMut": true,
           "isSigner": false,
           "isOptional": true
         },
@@ -128,16 +118,6 @@
           "name": "tokenLedger",
           "isMut": false,
           "isSigner": false
-        },
-        {
-          "name": "eventAuthority",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "program",
-          "isMut": false,
-          "isSigner": false
         }
       ],
       "args": [
@@ -151,96 +131,6 @@
         },
         {
           "name": "quotedOutAmount",
-          "type": "u64"
-        },
-        {
-          "name": "slippageBps",
-          "type": "u16"
-        },
-        {
-          "name": "platformFeeBps",
-          "type": "u8"
-        }
-      ],
-      "returns": "u64"
-    },
-    {
-      "name": "exactOutRoute",
-      "accounts": [
-        {
-          "name": "tokenProgram",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "userTransferAuthority",
-          "isMut": false,
-          "isSigner": true
-        },
-        {
-          "name": "userSourceTokenAccount",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "userDestinationTokenAccount",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "destinationTokenAccount",
-          "isMut": false,
-          "isSigner": false,
-          "isOptional": true
-        },
-        {
-          "name": "sourceMint",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "destinationMint",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "platformFeeAccount",
-          "isMut": true,
-          "isSigner": false,
-          "isOptional": true
-        },
-        {
-          "name": "token2022Program",
-          "isMut": false,
-          "isSigner": false,
-          "isOptional": true
-        },
-        {
-          "name": "eventAuthority",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "program",
-          "isMut": false,
-          "isSigner": false
-        }
-      ],
-      "args": [
-        {
-          "name": "routePlan",
-          "type": {
-            "vec": {
-              "defined": "RoutePlanStep"
-            }
-          }
-        },
-        {
-          "name": "outAmount",
-          "type": "u64"
-        },
-        {
-          "name": "quotedInAmount",
           "type": "u64"
         },
         {
@@ -316,16 +206,6 @@
           "isMut": false,
           "isSigner": false,
           "isOptional": true
-        },
-        {
-          "name": "eventAuthority",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "program",
-          "isMut": false,
-          "isSigner": false
         }
       ],
       "args": [
@@ -424,16 +304,6 @@
           "name": "tokenLedger",
           "isMut": false,
           "isSigner": false
-        },
-        {
-          "name": "eventAuthority",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "program",
-          "isMut": false,
-          "isSigner": false
         }
       ],
       "args": [
@@ -451,6 +321,86 @@
         },
         {
           "name": "quotedOutAmount",
+          "type": "u64"
+        },
+        {
+          "name": "slippageBps",
+          "type": "u16"
+        },
+        {
+          "name": "platformFeeBps",
+          "type": "u8"
+        }
+      ],
+      "returns": "u64"
+    },
+    {
+      "name": "exactOutRoute",
+      "accounts": [
+        {
+          "name": "tokenProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "userTransferAuthority",
+          "isMut": false,
+          "isSigner": true
+        },
+        {
+          "name": "userSourceTokenAccount",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "userDestinationTokenAccount",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "destinationTokenAccount",
+          "isMut": true,
+          "isSigner": false,
+          "isOptional": true
+        },
+        {
+          "name": "sourceMint",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "destinationMint",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "platformFeeAccount",
+          "isMut": true,
+          "isSigner": false,
+          "isOptional": true
+        },
+        {
+          "name": "token2022Program",
+          "isMut": false,
+          "isSigner": false,
+          "isOptional": true
+        }
+      ],
+      "args": [
+        {
+          "name": "routePlan",
+          "type": {
+            "vec": {
+              "defined": "RoutePlanStep"
+            }
+          }
+        },
+        {
+          "name": "outAmount",
+          "type": "u64"
+        },
+        {
+          "name": "quotedInAmount",
           "type": "u64"
         },
         {
@@ -526,16 +476,6 @@
           "isMut": false,
           "isSigner": false,
           "isOptional": true
-        },
-        {
-          "name": "eventAuthority",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "program",
-          "isMut": false,
-          "isSigner": false
         }
       ],
       "args": [
@@ -621,6 +561,42 @@
         }
       ],
       "args": []
+    },
+    {
+      "name": "createTokenAccount",
+      "accounts": [
+        {
+          "name": "tokenAccount",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "user",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "mint",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "tokenProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "bump",
+          "type": "u8"
+        }
+      ]
     },
     {
       "name": "createProgramOpenOrders",
@@ -772,2731 +748,6 @@
         }
       ],
       "args": []
-    },
-    {
-      "name": "mercurialSwap",
-      "accounts": [
-        {
-          "name": "swapProgram",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "swapState",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "tokenProgram",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "poolAuthority",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "userTransferAuthority",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "sourceTokenAccount",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "destinationTokenAccount",
-          "isMut": true,
-          "isSigner": false
-        }
-      ],
-      "args": []
-    },
-    {
-      "name": "cykuraSwap",
-      "accounts": [
-        {
-          "name": "swapProgram",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "signer",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "factoryState",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "poolState",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "inputTokenAccount",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "outputTokenAccount",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "inputVault",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "outputVault",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "lastObservationState",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "coreProgram",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "tokenProgram",
-          "isMut": false,
-          "isSigner": false
-        }
-      ],
-      "args": []
-    },
-    {
-      "name": "serumSwap",
-      "accounts": [
-        {
-          "name": "market",
-          "accounts": [
-            {
-              "name": "market",
-              "isMut": true,
-              "isSigner": false
-            },
-            {
-              "name": "openOrders",
-              "isMut": true,
-              "isSigner": false
-            },
-            {
-              "name": "requestQueue",
-              "isMut": true,
-              "isSigner": false
-            },
-            {
-              "name": "eventQueue",
-              "isMut": true,
-              "isSigner": false
-            },
-            {
-              "name": "bids",
-              "isMut": true,
-              "isSigner": false
-            },
-            {
-              "name": "asks",
-              "isMut": true,
-              "isSigner": false
-            },
-            {
-              "name": "coinVault",
-              "isMut": true,
-              "isSigner": false
-            },
-            {
-              "name": "pcVault",
-              "isMut": true,
-              "isSigner": false
-            },
-            {
-              "name": "vaultSigner",
-              "isMut": false,
-              "isSigner": false
-            }
-          ]
-        },
-        {
-          "name": "authority",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "orderPayerTokenAccount",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "coinWallet",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "pcWallet",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "dexProgram",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "tokenProgram",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "rent",
-          "isMut": false,
-          "isSigner": false
-        }
-      ],
-      "args": []
-    },
-    {
-      "name": "saberSwap",
-      "accounts": [
-        {
-          "name": "swapProgram",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "tokenProgram",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "swap",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "swapAuthority",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "userAuthority",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "inputUserAccount",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "inputTokenAccount",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "outputUserAccount",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "outputTokenAccount",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "feesTokenAccount",
-          "isMut": true,
-          "isSigner": false
-        }
-      ],
-      "args": []
-    },
-    {
-      "name": "saberAddDecimals",
-      "accounts": [
-        {
-          "name": "addDecimalsProgram",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "wrapper",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "wrapperMint",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "wrapperUnderlyingTokens",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "owner",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "userUnderlyingTokens",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "userWrappedTokens",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "tokenProgram",
-          "isMut": false,
-          "isSigner": false
-        }
-      ],
-      "args": []
-    },
-    {
-      "name": "tokenSwap",
-      "accounts": [
-        {
-          "name": "tokenSwapProgram",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "tokenProgram",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "swap",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "authority",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "userTransferAuthority",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "source",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "swapSource",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "swapDestination",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "destination",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "poolMint",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "poolFee",
-          "isMut": true,
-          "isSigner": false
-        }
-      ],
-      "args": []
-    },
-    {
-      "name": "tokenSwapV2",
-      "accounts": [
-        {
-          "name": "swapProgram",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "swap",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "authority",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "userTransferAuthority",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "source",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "swapSource",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "swapDestination",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "destination",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "poolMint",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "poolFee",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "sourceMint",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "destinationMint",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "sourceTokenProgram",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "destinationTokenProgram",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "poolTokenProgram",
-          "isMut": false,
-          "isSigner": false
-        }
-      ],
-      "args": []
-    },
-    {
-      "name": "senchaSwap",
-      "accounts": [
-        {
-          "name": "swapProgram",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "tokenProgram",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "swap",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "userAuthority",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "inputUserAccount",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "inputTokenAccount",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "inputFeesAccount",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "outputUserAccount",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "outputTokenAccount",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "outputFeesAccount",
-          "isMut": true,
-          "isSigner": false
-        }
-      ],
-      "args": []
-    },
-    {
-      "name": "stepSwap",
-      "accounts": [
-        {
-          "name": "tokenSwapProgram",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "tokenProgram",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "swap",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "authority",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "userTransferAuthority",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "source",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "swapSource",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "swapDestination",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "destination",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "poolMint",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "poolFee",
-          "isMut": true,
-          "isSigner": false
-        }
-      ],
-      "args": []
-    },
-    {
-      "name": "cropperSwap",
-      "accounts": [
-        {
-          "name": "tokenSwapProgram",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "tokenProgram",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "swap",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "swapState",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "authority",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "userTransferAuthority",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "source",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "swapSource",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "swapDestination",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "destination",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "poolMint",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "poolFee",
-          "isMut": true,
-          "isSigner": false
-        }
-      ],
-      "args": []
-    },
-    {
-      "name": "raydiumSwap",
-      "accounts": [
-        {
-          "name": "swapProgram",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "tokenProgram",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "ammId",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "ammAuthority",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "ammOpenOrders",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "poolCoinTokenAccount",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "poolPcTokenAccount",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "serumProgramId",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "serumMarket",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "serumBids",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "serumAsks",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "serumEventQueue",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "serumCoinVaultAccount",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "serumPcVaultAccount",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "serumVaultSigner",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "userSourceTokenAccount",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "userDestinationTokenAccount",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "userSourceOwner",
-          "isMut": false,
-          "isSigner": false
-        }
-      ],
-      "args": []
-    },
-    {
-      "name": "cremaSwap",
-      "accounts": [
-        {
-          "name": "swapProgram",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "clmmConfig",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "clmmpool",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "tokenA",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "tokenB",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "accountA",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "accountB",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "tokenAVault",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "tokenBVault",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "tickArrayMap",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "owner",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "partner",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "partnerAtaA",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "partnerAtaB",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "tokenProgram",
-          "isMut": false,
-          "isSigner": false
-        }
-      ],
-      "args": []
-    },
-    {
-      "name": "lifinitySwap",
-      "accounts": [
-        {
-          "name": "swapProgram",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "authority",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "amm",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "userTransferAuthority",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "sourceInfo",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "destinationInfo",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "swapSource",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "swapDestination",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "poolMint",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "feeAccount",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "tokenProgram",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "pythAccount",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "pythPcAccount",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "configAccount",
-          "isMut": true,
-          "isSigner": false
-        }
-      ],
-      "args": []
-    },
-    {
-      "name": "marinadeDeposit",
-      "accounts": [
-        {
-          "name": "marinadeFinanceProgram",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "state",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "msolMint",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "liqPoolSolLegPda",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "liqPoolMsolLeg",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "liqPoolMsolLegAuthority",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "reservePda",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "transferFrom",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "mintTo",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "msolMintAuthority",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "systemProgram",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "tokenProgram",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "userWsolTokenAccount",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "tempWsolTokenAccount",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "userTransferAuthority",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "payer",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "wsolMint",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "rent",
-          "isMut": false,
-          "isSigner": false
-        }
-      ],
-      "args": []
-    },
-    {
-      "name": "marinadeUnstake",
-      "accounts": [
-        {
-          "name": "marinadeFinanceProgram",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "state",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "msolMint",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "liqPoolSolLegPda",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "liqPoolMsolLeg",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "treasuryMsolAccount",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "getMsolFrom",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "getMsolFromAuthority",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "transferSolTo",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "systemProgram",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "tokenProgram",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "userWsolTokenAccount",
-          "isMut": true,
-          "isSigner": false
-        }
-      ],
-      "args": []
-    },
-    {
-      "name": "aldrinSwap",
-      "accounts": [
-        {
-          "name": "swapProgram",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "pool",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "poolSigner",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "poolMint",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "baseTokenVault",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "quoteTokenVault",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "feePoolTokenAccount",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "walletAuthority",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "userBaseTokenAccount",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "userQuoteTokenAccount",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "tokenProgram",
-          "isMut": false,
-          "isSigner": false
-        }
-      ],
-      "args": []
-    },
-    {
-      "name": "aldrinV2Swap",
-      "accounts": [
-        {
-          "name": "swapProgram",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "pool",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "poolSigner",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "poolMint",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "baseTokenVault",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "quoteTokenVault",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "feePoolTokenAccount",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "walletAuthority",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "userBaseTokenAccount",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "userQuoteTokenAccount",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "curve",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "tokenProgram",
-          "isMut": false,
-          "isSigner": false
-        }
-      ],
-      "args": []
-    },
-    {
-      "name": "whirlpoolSwap",
-      "accounts": [
-        {
-          "name": "swapProgram",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "tokenProgram",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "tokenAuthority",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "whirlpool",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "tokenOwnerAccountA",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "tokenVaultA",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "tokenOwnerAccountB",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "tokenVaultB",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "tickArray0",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "tickArray1",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "tickArray2",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "oracle",
-          "isMut": false,
-          "isSigner": false,
-          "docs": [
-            "Oracle is currently unused and will be enabled on subsequent updates"
-          ]
-        }
-      ],
-      "args": []
-    },
-    {
-      "name": "invariantSwap",
-      "accounts": [
-        {
-          "name": "swapProgram",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "state",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "pool",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "tickmap",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "accountX",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "accountY",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "reserveX",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "reserveY",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "owner",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "programAuthority",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "tokenProgram",
-          "isMut": false,
-          "isSigner": false
-        }
-      ],
-      "args": []
-    },
-    {
-      "name": "meteoraSwap",
-      "accounts": [
-        {
-          "name": "swapProgram",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "pool",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "userSourceToken",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "userDestinationToken",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "aVault",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "bVault",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "aTokenVault",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "bTokenVault",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "aVaultLpMint",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "bVaultLpMint",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "aVaultLp",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "bVaultLp",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "adminTokenFee",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "user",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "vaultProgram",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "tokenProgram",
-          "isMut": false,
-          "isSigner": false
-        }
-      ],
-      "args": []
-    },
-    {
-      "name": "goosefxSwap",
-      "accounts": [
-        {
-          "name": "swapProgram",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "controller",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "pair",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "sslIn",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "sslOut",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "liabilityVaultIn",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "swappedLiabilityVaultIn",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "liabilityVaultOut",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "swappedLiabilityVaultOut",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "userInAta",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "userOutAta",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "feeCollectorAta",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "userWallet",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "feeCollector",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "tokenProgram",
-          "isMut": false,
-          "isSigner": false
-        }
-      ],
-      "args": []
-    },
-    {
-      "name": "deltafiSwap",
-      "accounts": [
-        {
-          "name": "swapProgram",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "marketConfig",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "swapInfo",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "userSourceToken",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "userDestinationToken",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "swapSourceToken",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "swapDestinationToken",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "deltafiUser",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "adminDestinationToken",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "pythPriceBase",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "pythPriceQuote",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "userAuthority",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "tokenProgram",
-          "isMut": false,
-          "isSigner": false
-        }
-      ],
-      "args": []
-    },
-    {
-      "name": "balansolSwap",
-      "accounts": [
-        {
-          "name": "swapProgram",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "authority",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "pool",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "taxMan",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "bidMint",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "treasurer",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "srcTreasury",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "srcAssociatedTokenAccount",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "askMint",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "dstTreasury",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "dstAssociatedTokenAccount",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "dstTokenAccountTaxman",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "systemProgram",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "tokenProgram",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "associatedTokenProgram",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "rent",
-          "isMut": false,
-          "isSigner": false
-        }
-      ],
-      "args": []
-    },
-    {
-      "name": "marcoPoloSwap",
-      "accounts": [
-        {
-          "name": "swapProgram",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "state",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "pool",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "tokenX",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "tokenY",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "poolXAccount",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "poolYAccount",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "swapperXAccount",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "swapperYAccount",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "swapper",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "referrerXAccount",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "referrerYAccount",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "referrer",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "programAuthority",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "systemProgram",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "tokenProgram",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "associatedTokenProgram",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "rent",
-          "isMut": false,
-          "isSigner": false
-        }
-      ],
-      "args": []
-    },
-    {
-      "name": "dradexSwap",
-      "accounts": [
-        {
-          "name": "swapProgram",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "pair",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "market",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "eventQueue",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "dexUser",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "marketUser",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "bids",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "asks",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "t0Vault",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "t1Vault",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "t0User",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "t1User",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "master",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "signer",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "systemProgram",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "tokenProgram",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "logger",
-          "isMut": false,
-          "isSigner": false
-        }
-      ],
-      "args": []
-    },
-    {
-      "name": "lifinityV2Swap",
-      "accounts": [
-        {
-          "name": "swapProgram",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "authority",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "amm",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "userTransferAuthority",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "sourceInfo",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "destinationInfo",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "swapSource",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "swapDestination",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "poolMint",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "feeAccount",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "tokenProgram",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "oracleMainAccount",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "oracleSubAccount",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "oraclePcAccount",
-          "isMut": false,
-          "isSigner": false
-        }
-      ],
-      "args": []
-    },
-    {
-      "name": "raydiumClmmSwap",
-      "accounts": [
-        {
-          "name": "swapProgram",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "payer",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "ammConfig",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "poolState",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "inputTokenAccount",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "outputTokenAccount",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "inputVault",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "outputVault",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "observationState",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "tokenProgram",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "tickArray",
-          "isMut": true,
-          "isSigner": false
-        }
-      ],
-      "args": []
-    },
-    {
-      "name": "raydiumClmmSwapV2",
-      "accounts": [
-        {
-          "name": "swapProgram",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "payer",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "ammConfig",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "poolState",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "inputTokenAccount",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "outputTokenAccount",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "inputVault",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "outputVault",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "observationState",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "tokenProgram",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "tokenProgram2022",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "memoProgram",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "inputVaultMint",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "outputVaultMint",
-          "isMut": false,
-          "isSigner": false
-        }
-      ],
-      "args": []
-    },
-    {
-      "name": "phoenixSwap",
-      "accounts": [
-        {
-          "name": "swapProgram",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "logAuthority",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "market",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "trader",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "baseAccount",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "quoteAccount",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "baseVault",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "quoteVault",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "tokenProgram",
-          "isMut": false,
-          "isSigner": false
-        }
-      ],
-      "args": []
-    },
-    {
-      "name": "symmetrySwap",
-      "accounts": [
-        {
-          "name": "swapProgram",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "buyer",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "fundState",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "pdaAccount",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "pdaFromTokenAccount",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "buyerFromTokenAccount",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "pdaToTokenAccount",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "buyerToTokenAccount",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "swapFeeAccount",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "hostFeeAccount",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "managerFeeAccount",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "tokenList",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "prismData",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "tokenProgram",
-          "isMut": false,
-          "isSigner": false
-        }
-      ],
-      "args": []
-    },
-    {
-      "name": "heliumTreasuryManagementRedeemV0",
-      "accounts": [
-        {
-          "name": "swapProgram",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "treasuryManagement",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "treasuryMint",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "supplyMint",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "treasury",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "circuitBreaker",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "from",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "to",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "owner",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "circuitBreakerProgram",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "tokenProgram",
-          "isMut": false,
-          "isSigner": false
-        }
-      ],
-      "args": []
-    },
-    {
-      "name": "goosefxV2Swap",
-      "accounts": [
-        {
-          "name": "swapProgram",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "pair",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "poolRegistry",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "userWallet",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "sslPoolInSigner",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "sslPoolOutSigner",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "userAtaIn",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "userAtaOut",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "sslOutMainVault",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "sslOutSecondaryVault",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "sslInMainVault",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "sslInSecondaryVault",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "sslOutFeeVault",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "feeDestination",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "outputTokenPriceHistory",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "outputTokenOracle",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "inputTokenPriceHistory",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "inputTokenOracle",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "eventEmitter",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "tokenProgram",
-          "isMut": false,
-          "isSigner": false
-        }
-      ],
-      "args": []
-    },
-    {
-      "name": "perpsSwap",
-      "accounts": [
-        {
-          "name": "swapProgram",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "owner",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "fundingAccount",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "receivingAccount",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "transferAuthority",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "perpetuals",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "pool",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "receivingCustody",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "receivingCustodyOracleAccount",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "receivingCustodyTokenAccount",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "dispensingCustody",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "dispensingCustodyOracleAccount",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "dispensingCustodyTokenAccount",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "tokenProgram",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "eventAuthority",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "program",
-          "isMut": false,
-          "isSigner": false
-        }
-      ],
-      "args": []
-    },
-    {
-      "name": "perpsAddLiquidity",
-      "accounts": [
-        {
-          "name": "swapProgram",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "owner",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "fundingOrReceivingAccount",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "lpTokenAccount",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "transferAuthority",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "perpetuals",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "pool",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "custody",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "custodyOracleAccount",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "custodyTokenAccount",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "lpTokenMint",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "tokenProgram",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "eventAuthority",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "program",
-          "isMut": false,
-          "isSigner": false
-        }
-      ],
-      "args": []
-    },
-    {
-      "name": "perpsRemoveLiquidity",
-      "accounts": [
-        {
-          "name": "swapProgram",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "owner",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "fundingOrReceivingAccount",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "lpTokenAccount",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "transferAuthority",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "perpetuals",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "pool",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "custody",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "custodyOracleAccount",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "custodyTokenAccount",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "lpTokenMint",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "tokenProgram",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "eventAuthority",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "program",
-          "isMut": false,
-          "isSigner": false
-        }
-      ],
-      "args": []
-    },
-    {
-      "name": "meteoraDlmmSwap",
-      "accounts": [
-        {
-          "name": "swapProgram",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "lbPair",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "binArrayBitmapExtension",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "reserveX",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "reserveY",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "userTokenIn",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "userTokenOut",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "tokenXMint",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "tokenYMint",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "oracle",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "hostFeeIn",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "user",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "tokenXProgram",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "tokenYProgram",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "eventAuthority",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "program",
-          "isMut": false,
-          "isSigner": false
-        }
-      ],
-      "args": []
-    },
-    {
-      "name": "openBookV2Swap",
-      "accounts": [
-        {
-          "name": "swapProgram",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "signer",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "penaltyPayer",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "market",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "marketAuthority",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "bids",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "asks",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "marketBaseVault",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "marketQuoteVault",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "eventHeap",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "userBaseAccount",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "userQuoteAccount",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "oracleA",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "oracleB",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "tokenProgram",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "systemProgram",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "openOrdersAdmin",
-          "isMut": false,
-          "isSigner": false
-        }
-      ],
-      "args": []
     }
   ],
   "accounts": [
@@ -3556,6 +807,35 @@
           {
             "name": "outputIndex",
             "type": "u8"
+          }
+        ]
+      }
+    },
+    {
+      "name": "PlatformFeeType",
+      "type": {
+        "kind": "enum",
+        "variants": [
+          {
+            "name": "SourceMint",
+            "fields": [
+              {
+                "name": "mint",
+                "type": "publicKey"
+              }
+            ]
+          },
+          {
+            "name": "DestinationMint",
+            "fields": [
+              {
+                "name": "mint",
+                "type": "publicKey"
+              }
+            ]
+          },
+          {
+            "name": "Zero"
           }
         ]
       }
@@ -3803,6 +1083,207 @@
           },
           {
             "name": "RaydiumClmmV2"
+          },
+          {
+            "name": "StakeDexPrefundWithdrawStakeAndDepositStake",
+            "fields": [
+              {
+                "name": "bridgeStakeSeed",
+                "type": "u32"
+              }
+            ]
+          },
+          {
+            "name": "Clone",
+            "fields": [
+              {
+                "name": "poolIndex",
+                "type": "u8"
+              },
+              {
+                "name": "quantityIsInput",
+                "type": "bool"
+              },
+              {
+                "name": "quantityIsCollateral",
+                "type": "bool"
+              }
+            ]
+          },
+          {
+            "name": "SanctumS",
+            "fields": [
+              {
+                "name": "srcLstValueCalcAccs",
+                "type": "u8"
+              },
+              {
+                "name": "dstLstValueCalcAccs",
+                "type": "u8"
+              },
+              {
+                "name": "srcLstIndex",
+                "type": "u32"
+              },
+              {
+                "name": "dstLstIndex",
+                "type": "u32"
+              }
+            ]
+          },
+          {
+            "name": "SanctumSAddLiquidity",
+            "fields": [
+              {
+                "name": "lstValueCalcAccs",
+                "type": "u8"
+              },
+              {
+                "name": "lstIndex",
+                "type": "u32"
+              }
+            ]
+          },
+          {
+            "name": "SanctumSRemoveLiquidity",
+            "fields": [
+              {
+                "name": "lstValueCalcAccs",
+                "type": "u8"
+              },
+              {
+                "name": "lstIndex",
+                "type": "u32"
+              }
+            ]
+          },
+          {
+            "name": "RaydiumCP"
+          },
+          {
+            "name": "WhirlpoolSwapV2",
+            "fields": [
+              {
+                "name": "aToB",
+                "type": "bool"
+              },
+              {
+                "name": "remainingAccountsInfo",
+                "type": {
+                  "option": {
+                    "defined": "RemainingAccountsInfo"
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "name": "OneIntro"
+          },
+          {
+            "name": "PumpdotfunWrappedBuy"
+          },
+          {
+            "name": "PumpdotfunWrappedSell"
+          },
+          {
+            "name": "PerpsV2"
+          },
+          {
+            "name": "PerpsV2AddLiquidity"
+          },
+          {
+            "name": "PerpsV2RemoveLiquidity"
+          },
+          {
+            "name": "MoonshotWrappedBuy"
+          },
+          {
+            "name": "MoonshotWrappedSell"
+          },
+          {
+            "name": "StabbleStableSwap"
+          },
+          {
+            "name": "StabbleWeightedSwap"
+          },
+          {
+            "name": "Obric",
+            "fields": [
+              {
+                "name": "xToY",
+                "type": "bool"
+              }
+            ]
+          },
+          {
+            "name": "FoxBuyFromEstimatedCost"
+          },
+          {
+            "name": "FoxClaimPartial",
+            "fields": [
+              {
+                "name": "isY",
+                "type": "bool"
+              }
+            ]
+          },
+          {
+            "name": "SolFi",
+            "fields": [
+              {
+                "name": "isQuoteToBase",
+                "type": "bool"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "RemainingAccountsSlice",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "accountsType",
+            "type": {
+              "defined": "AccountsType"
+            }
+          },
+          {
+            "name": "length",
+            "type": "u8"
+          }
+        ]
+      }
+    },
+    {
+      "name": "RemainingAccountsInfo",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "slices",
+            "type": {
+              "vec": {
+                "defined": "RemainingAccountsSlice"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "AccountsType",
+      "type": {
+        "kind": "enum",
+        "variants": [
+          {
+            "name": "TransferHookA"
+          },
+          {
+            "name": "TransferHookB"
           }
         ]
       }
@@ -3950,6 +1431,11 @@
       "code": 6017,
       "name": "ExactOutAmountNotMatched",
       "msg": "Exact out amount doesn't match"
+    },
+    {
+      "code": 6018,
+      "name": "SourceAndDestinationMintCannotBeTheSame",
+      "msg": "Source mint and destination mint cannot the same"
     }
   ]
 }
