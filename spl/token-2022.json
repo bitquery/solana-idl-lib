@@ -542,14 +542,6 @@
         }
       ],
       "args": [
-        {
-          "name": "extensionTypes",
-          "type": {
-            "vec": {
-              "defined": "ExtensionType"
-            }
-          }
-        }
       ]
     },
     {
@@ -640,14 +632,6 @@
         }
       ],
       "args": [
-        {
-          "name": "extensionTypes",
-          "type": {
-            "vec": {
-              "defined": "ExtensionType"
-            }
-          }
-        }
       ]
     },
     {
