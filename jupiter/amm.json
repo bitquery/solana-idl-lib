@@ -1264,9 +1264,14 @@
             "name": "ZeroFi"
           },
           {
-            "name": "WooFi"
+            "name": "StakeDexWithdrawWrappedSol"
+          },
+          {
+            "name": "VirtualsBuy"
+          },
+          {
+            "name": "VirtualsSell"
           }
-
         ]
       }
     },
