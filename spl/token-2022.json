@@ -28,7 +28,7 @@
         {
           "name": "freezeAuthority",
           "type": {
-            "defined": "COption<Pubkey>"
+            "option": "publicKey"
           }
         }
       ]
@@ -177,7 +177,7 @@
         {
           "name": "newAuthority",
           "type": {
-            "defined": "COption<Pubkey>"
+            "option": "publicKey"
           }
         }
       ]
@@ -527,7 +527,7 @@
         {
           "name": "freezeAuthority",
           "type": {
-            "defined": "COption<Pubkey>"
+            "option": "publicKey"
           }
         }
       ]
@@ -602,7 +602,7 @@
         {
           "name": "closeAuthority",
           "type": {
-            "defined": "COption<Pubkey>"
+            "option": "publicKey"
           }
         }
       ]
@@ -692,7 +692,7 @@
           {
             "name": "mintAuthority",
             "type": {
-              "defined": "COption<Pubkey>"
+              "option": "publicKey"
             }
           },
           {
@@ -710,7 +710,7 @@
           {
             "name": "freezeAuthority",
             "type": {
-              "defined": "COption<Pubkey>"
+              "option": "publicKey"
             }
           }
         ]
@@ -736,7 +736,7 @@
           {
             "name": "delegate",
             "type": {
-              "defined": "COption<Pubkey>"
+              "option": "publicKey"
             }
           },
           {
@@ -748,7 +748,7 @@
           {
             "name": "isNative",
             "type": {
-              "defined": "COption<u64>"
+              "option": "u64"
             }
           },
           {
@@ -758,7 +758,7 @@
           {
             "name": "closeAuthority",
             "type": {
-              "defined": "COption<Pubkey>"
+              "option": "publicKey"
             }
           }
         ]
