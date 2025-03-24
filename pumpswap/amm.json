@@ -352,7 +352,7 @@
     {"name": "Pool"        , "discriminator": [241, 154, 109,   4,  17, 177, 109, 188]}
   ],
   "events": [
-    {"name": "BuyEvent"            , "discriminator": [228, 69, 165, 46, 81, 203, 154, 29]},
+    {"name": "BuyEvent"            , "discriminator": [103, 244,  82,  31,  44, 245, 119, 119]},
     {"name": "CreateConfigEvent"   , "discriminator": [107,  52,  89, 129,  55, 226,  81,  22]},
     {"name": "CreatePoolEvent"     , "discriminator": [177,  49,  12, 210, 160, 118, 167, 116]},
     {"name": "DepositEvent"        , "discriminator": [120, 248,  61,  83,  31, 142, 107, 144]},
