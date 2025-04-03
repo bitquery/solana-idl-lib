@@ -1300,9 +1300,7 @@
               {
                 "name": "remaining_accounts_info",
                 "type": {
-                  "defined": {
-                    "name": "RemainingAccountsInfo"
-                  }
+                  "defined": "RemainingAccountsInfo"
                 }
               }
             ]
