@@ -1271,6 +1271,41 @@
           },
           {
             "name": "VirtualsSell"
+          },
+          {
+            "name": "Perena",
+            "fields": [
+              {
+                "name": "in_index",
+                "type": "u8"
+              },
+              {
+                "name": "out_index",
+                "type": "u8"
+              }
+            ]
+          },
+          {
+            "name": "PumpdotfunAmmBuy"
+          },
+          {
+            "name": "PumpdotfunAmmSell"
+          },
+          {
+            "name": "Gamma"
+          },
+          {
+            "name": "MeteoraDlmmSwapV2",
+            "fields": [
+              {
+                "name": "remaining_accounts_info",
+                "type": {
+                  "defined": {
+                    "name": "RemainingAccountsInfo"
+                  }
+                }
+              }
+            ]
           }
         ]
       }
