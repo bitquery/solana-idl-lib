@@ -1304,7 +1304,10 @@
                 }
               }
             ]
-          }
+          },
+          {"name":"Woofi"},
+          {"name":"MeteoraDammV2"},
+          {"name":"MeteoraVirtualCurveSwap"}
         ]
       }
     },
