@@ -1307,7 +1307,12 @@
           },
           {"name":"Woofi"},
           {"name":"MeteoraDammV2"},
-          {"name":"MeteoraVirtualCurveSwap"}
+          {"name":"MeteoraDynamicBondingCurveSwap"},
+          {"name":"StabbleStableSwapV2"},
+          {"name":"StabbleWeightedSwapV2"},
+          {"name":"RaydiumLaunchlabBuy","fields":[{"name":"share_fee_rate","type":"u64"}]},
+          {"name":"RaydiumLaunchlabSell","fields":[{"name":"share_fee_rate","type":"u64"}]}]}},
+          {"name":"SwapEvent","type":{"kind":"struct","fields":[{"name":"amm","type":"pubkey"},{"name":"input_mint","type":"pubkey"}
         ]
       }
     },
