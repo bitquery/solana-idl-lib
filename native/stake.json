@@ -27,13 +27,11 @@
                         "Rent sysvar"
                     ]
                 }
-
             ],
             "args": [
                 {
                     "name": "Authorized",
-                    "type":
-                    {
+                    "type": {
                         "defined": "Authorized"
                     },
                     "docs": [
@@ -42,15 +40,13 @@
                 },
                 {
                     "name": "Lockup",
-                    "type":
-                    {
+                    "type": {
                         "defined": "Lockup"
                     },
                     "docs": [
                         "Lockup carries information about withdrawal restrictions."
                     ]
                 }
-
             ]
         },
         {
@@ -91,7 +87,6 @@
                         "Optional: [SIGNER] Lockup authority, if updating StakeAuthorize::Withdrawer before lockup expiration."
                     ]
                 }
-
             ],
             "args": [
                 {
@@ -104,13 +99,11 @@
                 },
                 {
                     "name": "StakeAuthorize",
-                    "type":
-                    {
+                    "type": {
                         "defined": "StakeAuthorize"
                     },
                     "docs": []
                 }
-
             ]
         },
         {
@@ -169,7 +162,6 @@
                         "Stake authority."
                     ]
                 }
-
             ],
             "args": []
         },
@@ -203,14 +195,14 @@
                         "Stake authority."
                     ]
                 }
-
             ],
             "args": [
-            {
-                "name": "amount",
-                "type": "u64",
-                "docs": []
-            }]
+                {
+                    "name": "amount",
+                    "type": "u64",
+                    "docs": []
+                }
+            ]
         },
         {
             "name": "Withdraw",
@@ -268,14 +260,14 @@
                         "Optional: [SIGNER] Lockup authority, if before lockup expiration."
                     ]
                 }
-
             ],
             "args": [
-            {
-                "name": "amount",
-                "type": "u64",
-                "docs": []
-            }]
+                {
+                    "name": "amount",
+                    "type": "u64",
+                    "docs": []
+                }
+            ]
         },
         {
             "name": "Deactivate",
@@ -307,11 +299,8 @@
                         "Stake authority."
                     ]
                 }
-
             ],
-            "args": [
-
-            ]
+            "args": []
         },
         {
             "name": "SetLockup",
@@ -337,18 +326,15 @@
                         "Lockup authority or withdraw authority."
                     ]
                 }
-
             ],
             "args": [
                 {
                     "name": "LockupArgs",
-                    "type":
-                    {
+                    "type": {
                         "defined": "LockupArgs"
                     },
                     "docs": []
                 }
-
             ]
         },
         {
@@ -366,46 +352,47 @@
                 "where a stake is activating or deactivating with a non-zero effective stake."
             ],
             "accounts": [
-            {
-                "name": "DestinationAccount",
-                "isMut": true,
-                "isSigner": false,
-                "docs": [
-                    "Destination stake account for the merge."
-                ]
-            },
-            {
-                "name": "SourceAccount",
-                "isMut": true,
-                "isSigner": false,
-                "docs": [
-                    "Source stake account for to merge. This account will be drained."
-                ]
-            },
-            {
-                "name": "$(SysVarClockPubkey)",
-                "isMut": false,
-                "isSigner": false,
-                "docs": [
-                    "Clock sysvar"
-                ]
-            },
-            {
-                "name": "$(SysVarStakeHistoryPubkey)",
-                "isMut": false,
-                "isSigner": false,
-                "docs": [
-                    "Stake history sysvar that carries stake warmup/cooldown history"
-                ]
-            },
-            {
-                "name": "StakeAuthority",
-                "isMut": false,
-                "isSigner": true,
-                "docs": [
-                    "Stake authority."
-                ]
-            }],
+                {
+                    "name": "DestinationAccount",
+                    "isMut": true,
+                    "isSigner": false,
+                    "docs": [
+                        "Destination stake account for the merge."
+                    ]
+                },
+                {
+                    "name": "SourceAccount",
+                    "isMut": true,
+                    "isSigner": false,
+                    "docs": [
+                        "Source stake account for to merge. This account will be drained."
+                    ]
+                },
+                {
+                    "name": "$(SysVarClockPubkey)",
+                    "isMut": false,
+                    "isSigner": false,
+                    "docs": [
+                        "Clock sysvar"
+                    ]
+                },
+                {
+                    "name": "$(SysVarStakeHistoryPubkey)",
+                    "isMut": false,
+                    "isSigner": false,
+                    "docs": [
+                        "Stake history sysvar that carries stake warmup/cooldown history"
+                    ]
+                },
+                {
+                    "name": "StakeAuthority",
+                    "isMut": false,
+                    "isSigner": true,
+                    "docs": [
+                        "Stake authority."
+                    ]
+                }
+            ],
             "args": []
         },
         {
@@ -446,17 +433,16 @@
                         "Optional: [SIGNER] Lockup authority, if updating StakeAuthorize::Withdrawer before lockup expiration."
                     ]
                 }
-
             ],
             "args": [
-            {
-                "name": "AuthorizeWithSeedArgs",
-                "type":
                 {
-                    "defined": "AuthorizeWithSeedArgs"
-                },
-                "docs": []
-            }]
+                    "name": "AuthorizeWithSeedArgs",
+                    "type": {
+                        "defined": "AuthorizeWithSeedArgs"
+                    },
+                    "docs": []
+                }
+            ]
         },
         {
             "name": "InitializeChecked",
@@ -498,7 +484,6 @@
                         "The withdraw authority."
                     ]
                 }
-
             ],
             "args": []
         },
@@ -550,17 +535,16 @@
                         "Optional: [SIGNER] Lockup authority, if updating StakeAuthorize::Withdrawer before lockup expiration."
                     ]
                 }
-
             ],
             "args": [
-            {
-                "name": "StakeAuthorize",
-                "type":
                 {
-                    "defined": "StakeAuthorize"
-                },
-                "docs": []
-            }]
+                    "name": "StakeAuthorize",
+                    "type": {
+                        "defined": "StakeAuthorize"
+                    },
+                    "docs": []
+                }
+            ]
         },
         {
             "name": "AuthorizeCheckedWithSeed",
@@ -610,17 +594,16 @@
                         "Optional: [SIGNER] Lockup authority, if updating StakeAuthorize::Withdrawer before lockup expiration."
                     ]
                 }
-
             ],
             "args": [
-            {
-                "name": "args",
-                "type":
                 {
-                    "defined": "AuthorizeCheckedWithSeedArgs"
-                },
-                "docs": []
-            }]
+                    "name": "args",
+                    "type": {
+                        "defined": "AuthorizeCheckedWithSeedArgs"
+                    },
+                    "docs": []
+                }
+            ]
         },
         {
             "name": "SetLockupChecked",
@@ -656,131 +639,120 @@
                         "Optional: [SIGNER] New lockup authority."
                     ]
                 }
-
             ],
             "args": [
-            {
-                "name": "args",
-                "type":
                 {
-                    "defined": "LockupCheckedArgs"
-                },
-                "docs": []
-            }]
+                    "name": "args",
+                    "type": {
+                        "defined": "LockupCheckedArgs"
+                    },
+                    "docs": []
+                }
+            ]
         }
-
     ],
     "accounts": [],
-    "state":
-    {},
+    "state": {},
     "types": [
         {
             "name": "Authorized",
-            "type":
-            {
+            "type": {
                 "kind": "struct",
                 "fields": [
-                {
-                    "name": "staker",
-                    "type": "publicKey"
-                },
-                {
-                    "name": "withdrawer",
-                    "type": "publicKey"
-                }]
+                    {
+                        "name": "staker",
+                        "type": "publicKey"
+                    },
+                    {
+                        "name": "withdrawer",
+                        "type": "publicKey"
+                    }
+                ]
             }
         },
         {
             "name": "Lockup",
-            "type":
-            {
-                "kind": "struct",
-                "fields": [
-                {
-                    "name": "unix_timestamp",
-                    "type": "i64",
-                    "docs": [
-                        "UnixTimestamp at which this stake will allow withdrawal, unless the transaction is signed by the custodian."
-                    ]
-                },
-                {
-                    "name": "epoch",
-                    "type": "i64",
-                    "docs": [
-                        "epoch height at which this stake will allow withdrawal, unless the transaction is signed by the custodian."
-                    ]
-                },
-                {
-                    "name": "custodian",
-                    "type": "publicKey",
-                    "docs": [
-                        "custodian signature on a transaction exempts the operation from lockup constraints."
-                    ]
-                }]
-            }
-        },
-        {
-            "name": "StakeAuthorize",
-            "type":
-            {
-                "kind": "enum",
-                "variants": [
-                {
-                    "name": "Staker"
-                },
-                {
-                    "name": "Withdrawer"
-                }]
-            }
-        },
-        {
-            "name": "LockupArgs",
-            "type":
-            {
+            "type": {
                 "kind": "struct",
                 "fields": [
                     {
                         "name": "unix_timestamp",
-                        "type":
-                        {
+                        "type": "i64",
+                        "docs": [
+                            "UnixTimestamp at which this stake will allow withdrawal, unless the transaction is signed by the custodian."
+                        ]
+                    },
+                    {
+                        "name": "epoch",
+                        "type": "i64",
+                        "docs": [
+                            "epoch height at which this stake will allow withdrawal, unless the transaction is signed by the custodian."
+                        ]
+                    },
+                    {
+                        "name": "custodian",
+                        "type": "publicKey",
+                        "docs": [
+                            "custodian signature on a transaction exempts the operation from lockup constraints."
+                        ]
+                    }
+                ]
+            }
+        },
+        {
+            "name": "StakeAuthorize",
+            "type": {
+                "kind": "enum",
+                "variants": [
+                    {
+                        "name": "Staker"
+                    },
+                    {
+                        "name": "Withdrawer"
+                    }
+                ]
+            }
+        },
+        {
+            "name": "LockupArgs",
+            "type": {
+                "kind": "struct",
+                "fields": [
+                    {
+                        "name": "unix_timestamp",
+                        "type": {
                             "option": "i64"
                         }
                     },
                     {
                         "name": "epoch",
-                        "type":
-                        {
+                        "type": {
                             "option": "i64"
                         }
                     },
                     {
                         "name": "custodian",
-                        "type":
-                        {
+                        "type": {
                             "option": "publicKey"
                         }
                     }
-
                 ]
             }
         },
         {
             "name": "AuthorizeWithSeedArgs",
-            "type":
-            {
+            "type": {
                 "kind": "struct",
                 "fields": [
                     {
                         "name": "new_authorized_pubkey",
-                        "type":
-                        {
+                        "type": {
                             "option": "publicKey"
                         }
                     },
                     {
                         "name": "stake_authorize",
-                        "type":
-                        {
+                        "type": {
                             "defined": "StakeAuthorize"
                         }
                     },
@@ -790,25 +762,21 @@
                     },
                     {
                         "name": "authority_owner",
-                        "type":
-                        {
+                        "type": {
                             "option": "publicKey"
                         }
                     }
-
                 ]
             }
         },
         {
             "name": "AuthorizeCheckedWithSeedArgs",
-            "type":
-            {
+            "type": {
                 "kind": "struct",
                 "fields": [
                     {
                         "name": "stake_authorize",
-                        "type":
-                        {
+                        "type": {
                             "defined": "StakeAuthorize"
                         }
                     },
@@ -818,44 +786,38 @@
                     },
                     {
                         "name": "authority_owner",
-                        "type":
-                        {
+                        "type": {
                             "option": "publicKey"
                         }
                     }
-
                 ]
             }
         },
         {
             "name": "LockupCheckedArgs",
-            "type":
-            {
+            "type": {
                 "kind": "struct",
                 "fields": [
                     {
                         "name": "unix_timestamp",
-                        "type":
-                        {
+                        "type": {
                             "option": "i64"
                         }
                     },
                     {
                         "name": "epoch",
-                        "type":
-                        {
+                        "type": {
                             "option": "i64"
                         }
                     }
                 ]
             }
         }
-
     ],
     "events": [],
     "errors": [],
-    "metadata":
-    {
-        "address": "Stake11111111111111111111111111111111111111"
+    "metadata": {
+        "address": "Stake11111111111111111111111111111111111111",
+        "instruction_selector_type": "index"
     }
 }
