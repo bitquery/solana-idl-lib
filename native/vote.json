@@ -1,0 +1,860 @@
+{
+  "version": "0.0.1",
+  "name": "vote",
+  "instructions": [
+    {
+      "name": "Initialize",
+      "accounts": [
+        {
+          "name": "VoteAccount",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "RentSysvar",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "ClockSysvar",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "NodePubkey",
+          "isMut": false,
+          "isSigner": true
+        }
+      ],
+      "args": [
+        {
+          "name": "voteInit",
+          "type": {
+            "defined": "VoteInit"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Authorize",
+      "accounts": [
+        {
+          "name": "VoteAccount",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "ClockSysvar",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "Authority",
+          "isMut": false,
+          "isSigner": true
+        }
+      ],
+      "args": [
+        {
+          "name": "newAuthorizedPubkey",
+          "type": "publicKey"
+        },
+        {
+          "name": "voteAuthorizeType",
+          "type": {
+            "defined": "VoteAuthorize"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Vote",
+      "accounts": [
+        {
+          "name": "VoteAccount",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "SlotHashesSysvar",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "ClockSysvar",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "Authority",
+          "isMut": false,
+          "isSigner": true
+        }
+      ],
+      "args": [
+        {
+          "name": "vote",
+          "type": {
+            "defined": "Vote"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Withdraw",
+      "accounts": [
+        {
+          "name": "VoteAccount",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "RecipientAccount",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "WithdrawAuthority",
+          "isMut": false,
+          "isSigner": true
+        }
+      ],
+      "args": [
+        {
+          "name": "withdrawAmount",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "UpdateValidatorIdentity",
+      "accounts": [
+        {
+          "name": "VoteAccount",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "NewValidatorIdentity",
+          "isMut": false,
+          "isSigner": true
+        },
+        {
+          "name": "WithdrawAuthority",
+          "isMut": false,
+          "isSigner": true
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "UpdateCommission",
+      "accounts": [
+        {
+          "name": "VoteAccount",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "WithdrawAuthority",
+          "isMut": false,
+          "isSigner": true
+        }
+      ],
+      "args": [
+        {
+          "name": "commissionAmount",
+          "type": "u8"
+        }
+      ]
+    },
+    {
+      "name": "VoteSwitch",
+      "accounts": [
+        {
+          "name": "VoteAccount",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "SlotHashesSysvar",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "ClockSysvar",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "VoteAuthority",
+          "isMut": false,
+          "isSigner": true
+        }
+      ],
+      "args": [
+        {
+          "name": "vote",
+          "type": {
+            "defined": "Vote"
+          }
+        },
+        {
+          "name": "hash",
+          "type": "publicKey"
+        }
+      ]
+    },
+    {
+      "name": "AuthorizeChecked",
+      "accounts": [
+        {
+          "name": "VoteAccount",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "ClockSysvar",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "Authority",
+          "isMut": false,
+          "isSigner": true
+        },
+        {
+          "name": "NewAuthority",
+          "isMut": false,
+          "isSigner": true
+        }
+      ],
+      "args": [
+        {
+          "name": "voteAuthorize",
+          "type": {
+            "defined": "VoteAuthorize"
+          }
+        }
+      ]
+    },
+    {
+      "name": "UpdateVoteState",
+      "accounts": [
+        {
+          "name": "VoteAccount",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "VoteAuthority",
+          "isMut": false,
+          "isSigner": true
+        }
+      ],
+      "args": [
+        {
+          "name": "voteStateUpdate",
+          "type": {
+            "defined": "VoteStateUpdate"
+          }
+        }
+      ]
+    },
+    {
+      "name": "UpdateVoteStateSwitch",
+      "accounts": [
+        {
+          "name": "VoteAccount",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "VoteAuthority",
+          "isMut": false,
+          "isSigner": true
+        }
+      ],
+      "args": [
+        {
+          "name": "voteStateUpdate",
+          "type": {
+            "defined": "VoteStateUpdate"
+          }
+        },
+        {
+          "name": "hash",
+          "type": "publicKey"
+        }
+      ]
+    },
+    {
+      "name": "AuthorizeWithSeed",
+      "accounts": [
+        {
+          "name": "VoteAccount",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "ClockSysvar",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "AuthorityBaseKey",
+          "isMut": false,
+          "isSigner": true
+        }
+      ],
+      "args": [
+        {
+          "name": "voteAuthorizeWithSeed",
+          "type": {
+            "defined": "VoteAuthorizeWithSeed"
+          }
+        }
+      ]
+    },
+    {
+      "name": "AuthorizeCheckedWithSeed",
+      "accounts": [
+        {
+          "name": "VoteAccount",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "ClockSysvar",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "CurrentAuthorityBaseKey",
+          "isMut": false,
+          "isSigner": true
+        },
+        {
+          "name": "NewAuthority",
+          "isMut": false,
+          "isSigner": true
+        }
+      ],
+      "args": [
+        {
+          "name": "voteAuthorizeCheckedWithSeed",
+          "type": {
+            "defined": "VoteAuthorizeCheckedWithSeed"
+          }
+        }
+      ]
+    },
+    {
+      "name": "CompactUpdateVoteState",
+      "accounts": [
+        {
+          "name": "VoteAccount",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "VoteAuthority",
+          "isMut": false,
+          "isSigner": true
+        }
+      ],
+      "args": [
+        {
+          "name": "compactVoteState",
+          "type": {
+            "defined": "CompactVoteState"
+          }
+        }
+      ]
+    },
+    {
+      "name": "CompactUpdateVoteStateSwitch",
+      "accounts": [
+        {
+          "name": "VoteAccount",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "VoteAuthority",
+          "isMut": false,
+          "isSigner": true
+        }
+      ],
+      "args": [
+        {
+          "name": "compactVoteState",
+          "type": {
+            "defined": "CompactVoteState"
+          }
+        },
+        {
+          "name": "hash",
+          "type": "publicKey"
+        }
+      ]
+    }
+  ],
+  "accounts": [
+    {
+      "name": "Uninitialized",
+      "type": {
+        "kind": "struct",
+        "fields": []
+      }
+    },
+    {
+      "name": "VoteState",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "node_pubkey",
+            "type": "publicKey"
+          },
+          {
+            "name": "authorized_withdrawer",
+            "type": "publicKey"
+          },
+          {
+            "name": "commission",
+            "type": "u8"
+          },
+          {
+            "name": "votes",
+            "type": {
+              "vec": {
+                "defined": "Lockout"
+              }
+            }
+          },
+          {
+            "name": "root_slot",
+            "type": {
+              "option": "u64"
+            }
+          },
+          {
+            "name": "authorized_voters",
+            "type": {
+              "bTreeMap": ["u64", "publicKey"],
+              "size": "u64"
+            }
+          },
+          {
+            "name": "prior_voters",
+            "type": {
+              "defined": "PriorVoters"
+            }
+          },
+          {
+            "name": "epoch_credits",
+            "type": {
+              "vec": {
+                "tuple": [
+                  {
+                    "defined": "Epoch"
+                  },
+                  {
+                    "defined": "Credits"
+                  },
+                  {
+                    "defined": "PrevCredits"
+                  }
+                ]
+              }
+            }
+          },
+          {
+            "name": "last_timestamp",
+            "type": {
+              "defined": "BlockTimestamp"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "VoteStateWithLatency",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "node_pubkey",
+            "type": "publicKey"
+          },
+          {
+            "name": "authorized_withdrawer",
+            "type": "publicKey"
+          },
+          {
+            "name": "commission",
+            "type": "u8"
+          },
+          {
+            "name": "votes",
+            "type": {
+              "vec": {
+                "defined": "LandedVote"
+              }
+            }
+          },
+          {
+            "name": "root_slot",
+            "type": {
+              "option": "u64"
+            }
+          },
+          {
+            "name": "authorized_voters",
+            "type": {
+              "bTreeMap": ["u64", "publicKey"],
+              "size": "u64"
+            }
+          },
+          {
+            "name": "prior_voters",
+            "type": {
+              "defined": "PriorVoters"
+            }
+          },
+          {
+            "name": "epoch_credits",
+            "type": {
+              "vec": {
+                "tuple": [
+                  {
+                    "defined": "Epoch"
+                  },
+                  {
+                    "defined": "Credits"
+                  },
+                  {
+                    "defined": "PrevCredits"
+                  }
+                ]
+              }
+            }
+          },
+          {
+            "name": "last_timestamp",
+            "type": {
+              "defined": "BlockTimestamp"
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "types": [
+    {
+      "name": "ShortLockout",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "offset",
+            "type": "u8"
+          },
+          {
+            "name": "confirmationCount",
+            "type": "u8"
+          }
+        ]
+      }
+    },
+    {
+      "name": "CompactVoteState",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "root",
+            "type": "u64"
+          },
+          {
+            "name": "lockoutOffsets",
+            "type": {
+              "vec": {
+                "defined": "ShortLockout"
+              }
+            }
+          },
+          {
+            "name": "hash",
+            "type": "publicKey"
+          },
+          {
+            "name": "timestamp",
+            "type": {
+              "option": "i64"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "VoteAuthorizeCheckedWithSeed",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "authorizationType",
+            "type": {
+              "defined": "VoteAuthorize"
+            }
+          },
+          {
+            "name": "currentAuthorityDerivedKeyOwner",
+            "type": "publicKey"
+          },
+          {
+            "name": "currentAuthorityDerivedKeySeed",
+            "type": "string"
+          }
+        ]
+      }
+    },
+    {
+      "name": "VoteAuthorizeWithSeed",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "authorizationType",
+            "type": {
+              "defined": "VoteAuthorize"
+            }
+          },
+          {
+            "name": "currentAuthorityDerivedKeyOwner",
+            "type": "publicKey"
+          },
+          {
+            "name": "currentAuthorityDerivedKeySeed",
+            "type": "string"
+          },
+          {
+            "name": "newAuthority",
+            "type": "publicKey"
+          }
+        ]
+      }
+    },
+    {
+      "name": "VoteStateUpdate",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "lockouts",
+            "type": {
+              "vec": {
+                "defined": "Lockout"
+              }
+            }
+          },
+          {
+            "name": "root",
+            "type": {
+              "option": "u64"
+            }
+          },
+          {
+            "name": "hash",
+            "type": "publicKey"
+          },
+          {
+            "name": "timestamp",
+            "type": {
+              "option": "i64"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "Vote",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "slots",
+            "type": {
+              "vec": "u64"
+            }
+          },
+          {
+            "name": "hash",
+            "type": "publicKey"
+          },
+          {
+            "name": "timestamp",
+            "type": {
+              "option": "i64"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "VoteAuthorize",
+      "type": {
+        "kind": "enum",
+        "variants": [
+          {
+            "name": "Voter"
+          },
+          { "name": "Withdrawer" }
+        ],
+        "size": "u32"
+      }
+    },
+    {
+      "name": "VoteInit",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "nodePubkey",
+            "type": "publicKey"
+          },
+          {
+            "name": "authorizedVoter",
+            "type": "publicKey"
+          },
+          {
+            "name": "authorizedWithdrawer",
+            "type": "publicKey"
+          },
+          {
+            "name": "commission",
+            "type": "u8"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Epoch",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "epoch",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Credits",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "credits",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "PrevCredits",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "prevCredits",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "PriorVoters",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "buf",
+            "type": {
+              "array": [
+                {
+                  "tuple": ["publicKey", "u64", "u64"]
+                },
+                32
+              ]
+            }
+          },
+          {
+            "name": "idx",
+            "type": "u64"
+          },
+          {
+            "name": "is_empty",
+            "type": "bool"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Lockout",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "slot",
+            "type": "u64"
+          },
+          {
+            "name": "confirmation_count",
+            "type": "u32"
+          }
+        ]
+      }
+    },
+    {
+      "name": "BlockTimestamp",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "slot",
+            "type": "u64"
+          },
+          {
+            "name": "timestamp",
+            "type": "i64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "LandedVote",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "latency",
+            "type": "u8"
+          },
+          {
+            "name": "lockout",
+            "type": {
+              "defined": "Lockout"
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "metadata": {
+    "address": "Vote111111111111111111111111111111111111111",
+    "instruction_selector_type": "index"
+  }
+}
