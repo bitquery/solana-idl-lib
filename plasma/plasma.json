@@ -1,0 +1,1590 @@
+{
+  "version": "0.1.0",
+  "name": "plasma",
+  "instructions": [
+    {
+      "name": "Swap",
+      "accounts": [
+        {
+          "name": "plasmaProgram",
+          "isMut": false,
+          "isSigner": false,
+          "docs": [
+            "Plasma program"
+          ]
+        },
+        {
+          "name": "logAuthority",
+          "isMut": false,
+          "isSigner": false,
+          "docs": [
+            "Plasma log authority"
+          ]
+        },
+        {
+          "name": "pool",
+          "isMut": true,
+          "isSigner": false,
+          "docs": [
+            "This account holds the pool state"
+          ]
+        },
+        {
+          "name": "trader",
+          "isMut": false,
+          "isSigner": true
+        },
+        {
+          "name": "baseAccount",
+          "isMut": true,
+          "isSigner": false,
+          "docs": [
+            "Trader base token account"
+          ]
+        },
+        {
+          "name": "quoteAccount",
+          "isMut": true,
+          "isSigner": false,
+          "docs": [
+            "Trader quote token account"
+          ]
+        },
+        {
+          "name": "baseVault",
+          "isMut": true,
+          "isSigner": false,
+          "docs": [
+            "Base vault PDA, seeds are [b'vault', pool_address, base_mint_address]"
+          ]
+        },
+        {
+          "name": "quoteVault",
+          "isMut": true,
+          "isSigner": false,
+          "docs": [
+            "Quote vault PDA, seeds are [b'vault', pool_address, quote_mint_address]"
+          ]
+        },
+        {
+          "name": "tokenProgram",
+          "isMut": false,
+          "isSigner": false,
+          "docs": [
+            "Token program"
+          ]
+        }
+      ],
+      "args": [
+        {
+          "name": "params",
+          "type": {
+            "defined": "SwapIxParams"
+          }
+        }
+      ],
+      "discriminant": {
+        "type": "u8",
+        "value": 0
+      }
+    },
+    {
+      "name": "AddLiquidity",
+      "accounts": [
+        {
+          "name": "plasmaProgram",
+          "isMut": false,
+          "isSigner": false,
+          "docs": [
+            "Plasma program"
+          ]
+        },
+        {
+          "name": "logAuthority",
+          "isMut": false,
+          "isSigner": false,
+          "docs": [
+            "Plasma log authority"
+          ]
+        },
+        {
+          "name": "pool",
+          "isMut": true,
+          "isSigner": false,
+          "docs": [
+            "This account holds the pool state"
+          ]
+        },
+        {
+          "name": "trader",
+          "isMut": false,
+          "isSigner": true
+        },
+        {
+          "name": "lpPosition",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "baseAccount",
+          "isMut": true,
+          "isSigner": false,
+          "docs": [
+            "Trader base token account"
+          ]
+        },
+        {
+          "name": "quoteAccount",
+          "isMut": true,
+          "isSigner": false,
+          "docs": [
+            "Trader quote token account"
+          ]
+        },
+        {
+          "name": "baseVault",
+          "isMut": true,
+          "isSigner": false,
+          "docs": [
+            "Base vault PDA, seeds are [b'vault', pool_address, base_mint_address]"
+          ]
+        },
+        {
+          "name": "quoteVault",
+          "isMut": true,
+          "isSigner": false,
+          "docs": [
+            "Quote vault PDA, seeds are [b'vault', pool_address, quote_mint_address]"
+          ]
+        },
+        {
+          "name": "tokenProgram",
+          "isMut": false,
+          "isSigner": false,
+          "docs": [
+            "Token program"
+          ]
+        }
+      ],
+      "args": [
+        {
+          "name": "params",
+          "type": {
+            "defined": "AddLiquidityIxParams"
+          }
+        }
+      ],
+      "discriminant": {
+        "type": "u8",
+        "value": 1
+      }
+    },
+    {
+      "name": "RemoveLiquidity",
+      "accounts": [
+        {
+          "name": "plasmaProgram",
+          "isMut": false,
+          "isSigner": false,
+          "docs": [
+            "Plasma program"
+          ]
+        },
+        {
+          "name": "logAuthority",
+          "isMut": false,
+          "isSigner": false,
+          "docs": [
+            "Plasma log authority"
+          ]
+        },
+        {
+          "name": "pool",
+          "isMut": true,
+          "isSigner": false,
+          "docs": [
+            "This account holds the pool state"
+          ]
+        },
+        {
+          "name": "trader",
+          "isMut": false,
+          "isSigner": true
+        },
+        {
+          "name": "lpPosition",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "baseAccount",
+          "isMut": true,
+          "isSigner": false,
+          "docs": [
+            "Trader base token account"
+          ]
+        },
+        {
+          "name": "quoteAccount",
+          "isMut": true,
+          "isSigner": false,
+          "docs": [
+            "Trader quote token account"
+          ]
+        },
+        {
+          "name": "baseVault",
+          "isMut": true,
+          "isSigner": false,
+          "docs": [
+            "Base vault PDA, seeds are [b'vault', pool_address, base_mint_address]"
+          ]
+        },
+        {
+          "name": "quoteVault",
+          "isMut": true,
+          "isSigner": false,
+          "docs": [
+            "Quote vault PDA, seeds are [b'vault', pool_address, quote_mint_address]"
+          ]
+        },
+        {
+          "name": "tokenProgram",
+          "isMut": false,
+          "isSigner": false,
+          "docs": [
+            "Token program"
+          ]
+        }
+      ],
+      "args": [
+        {
+          "name": "params",
+          "type": {
+            "defined": "RemoveLiquidityIxParams"
+          }
+        }
+      ],
+      "discriminant": {
+        "type": "u8",
+        "value": 2
+      }
+    },
+    {
+      "name": "RenounceLiquidity",
+      "accounts": [
+        {
+          "name": "plasmaProgram",
+          "isMut": false,
+          "isSigner": false,
+          "docs": [
+            "Plasma program"
+          ]
+        },
+        {
+          "name": "logAuthority",
+          "isMut": false,
+          "isSigner": false,
+          "docs": [
+            "Plasma log authority"
+          ]
+        },
+        {
+          "name": "pool",
+          "isMut": true,
+          "isSigner": false,
+          "docs": [
+            "This account holds the pool state"
+          ]
+        },
+        {
+          "name": "trader",
+          "isMut": false,
+          "isSigner": true
+        },
+        {
+          "name": "lpPosition",
+          "isMut": true,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "params",
+          "type": {
+            "defined": "RenounceLiquidityIxParams"
+          }
+        }
+      ],
+      "discriminant": {
+        "type": "u8",
+        "value": 3
+      }
+    },
+    {
+      "name": "WithdrawLpFees",
+      "accounts": [
+        {
+          "name": "plasmaProgram",
+          "isMut": false,
+          "isSigner": false,
+          "docs": [
+            "Plasma program"
+          ]
+        },
+        {
+          "name": "logAuthority",
+          "isMut": false,
+          "isSigner": false,
+          "docs": [
+            "Plasma log authority"
+          ]
+        },
+        {
+          "name": "pool",
+          "isMut": true,
+          "isSigner": false,
+          "docs": [
+            "This account holds the pool state"
+          ]
+        },
+        {
+          "name": "trader",
+          "isMut": false,
+          "isSigner": true
+        },
+        {
+          "name": "lpPositionOwner",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "lpPosition",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "quoteAccount",
+          "isMut": true,
+          "isSigner": false,
+          "docs": [
+            "Trader quote token account"
+          ]
+        },
+        {
+          "name": "quoteVault",
+          "isMut": true,
+          "isSigner": false,
+          "docs": [
+            "Quote vault PDA, seeds are [b'vault', pool_address, quote_mint_address]"
+          ]
+        },
+        {
+          "name": "tokenProgram",
+          "isMut": false,
+          "isSigner": false,
+          "docs": [
+            "Token program"
+          ]
+        }
+      ],
+      "args": [],
+      "discriminant": {
+        "type": "u8",
+        "value": 4
+      }
+    },
+    {
+      "name": "InitializeLpPosition",
+      "accounts": [
+        {
+          "name": "plasmaProgram",
+          "isMut": false,
+          "isSigner": false,
+          "docs": [
+            "Plasma program"
+          ]
+        },
+        {
+          "name": "logAuthority",
+          "isMut": false,
+          "isSigner": false,
+          "docs": [
+            "Plasma log authority"
+          ]
+        },
+        {
+          "name": "pool",
+          "isMut": true,
+          "isSigner": false,
+          "docs": [
+            "This account holds the pool state"
+          ]
+        },
+        {
+          "name": "payer",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "lpPositionOwner",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "lpPosition",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false,
+          "docs": [
+            "System program"
+          ]
+        }
+      ],
+      "args": [],
+      "discriminant": {
+        "type": "u8",
+        "value": 5
+      }
+    },
+    {
+      "name": "InitializePool",
+      "accounts": [
+        {
+          "name": "plasmaProgram",
+          "isMut": false,
+          "isSigner": false,
+          "docs": [
+            "Plasma program"
+          ]
+        },
+        {
+          "name": "logAuthority",
+          "isMut": false,
+          "isSigner": false,
+          "docs": [
+            "Plasma log authority"
+          ]
+        },
+        {
+          "name": "pool",
+          "isMut": true,
+          "isSigner": false,
+          "docs": [
+            "This account holds the pool state"
+          ]
+        },
+        {
+          "name": "poolCreator",
+          "isMut": true,
+          "isSigner": true,
+          "docs": [
+            "The pool_creator account must sign for the creation of new vaults"
+          ]
+        },
+        {
+          "name": "baseMint",
+          "isMut": false,
+          "isSigner": false,
+          "docs": [
+            "Base mint account"
+          ]
+        },
+        {
+          "name": "quoteMint",
+          "isMut": false,
+          "isSigner": false,
+          "docs": [
+            "Quote mint account"
+          ]
+        },
+        {
+          "name": "baseVault",
+          "isMut": true,
+          "isSigner": false,
+          "docs": [
+            "Base vault PDA, seeds are [b'vault', pool_address, base_mint_address]"
+          ]
+        },
+        {
+          "name": "quoteVault",
+          "isMut": true,
+          "isSigner": false,
+          "docs": [
+            "Quote vault PDA, seeds are [b'vault', pool_address, quote_mint_address]"
+          ]
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false,
+          "docs": [
+            "System program"
+          ]
+        },
+        {
+          "name": "tokenProgram",
+          "isMut": false,
+          "isSigner": false,
+          "docs": [
+            "Token program"
+          ]
+        }
+      ],
+      "args": [
+        {
+          "name": "params",
+          "type": {
+            "defined": "InitializePoolIxParams"
+          }
+        }
+      ],
+      "discriminant": {
+        "type": "u8",
+        "value": 6
+      }
+    },
+    {
+      "name": "WithdrawProtocolFees",
+      "accounts": [
+        {
+          "name": "plasmaProgram",
+          "isMut": false,
+          "isSigner": false,
+          "docs": [
+            "Plasma program"
+          ]
+        },
+        {
+          "name": "logAuthority",
+          "isMut": false,
+          "isSigner": false,
+          "docs": [
+            "Plasma log authority"
+          ]
+        },
+        {
+          "name": "pool",
+          "isMut": true,
+          "isSigner": false,
+          "docs": [
+            "This account holds the pool state"
+          ]
+        },
+        {
+          "name": "protocolFeeRecipient",
+          "isMut": false,
+          "isSigner": true,
+          "docs": [
+            "Recipient of protocol fees"
+          ]
+        },
+        {
+          "name": "quoteAccount",
+          "isMut": true,
+          "isSigner": false,
+          "docs": [
+            "Trader quote token account"
+          ]
+        },
+        {
+          "name": "quoteVault",
+          "isMut": true,
+          "isSigner": false,
+          "docs": [
+            "Quote vault PDA, seeds are [b'vault', pool_address, quote_mint_address]"
+          ]
+        },
+        {
+          "name": "tokenProgram",
+          "isMut": false,
+          "isSigner": false,
+          "docs": [
+            "Token program"
+          ]
+        }
+      ],
+      "args": [],
+      "discriminant": {
+        "type": "u8",
+        "value": 7
+      }
+    },
+    {
+      "name": "Log",
+      "accounts": [
+        {
+          "name": "logAuthority",
+          "isMut": false,
+          "isSigner": true,
+          "docs": [
+            "Log authority"
+          ]
+        }
+      ],
+      "args": [],
+      "discriminant": {
+        "type": "u8",
+        "value": 8
+      }
+    },
+    {
+      "name": "TransferLiquidity",
+      "accounts": [
+        {
+          "name": "plasmaProgram",
+          "isMut": false,
+          "isSigner": false,
+          "docs": [
+            "Plasma program"
+          ]
+        },
+        {
+          "name": "logAuthority",
+          "isMut": false,
+          "isSigner": false,
+          "docs": [
+            "Plasma log authority"
+          ]
+        },
+        {
+          "name": "pool",
+          "isMut": true,
+          "isSigner": false,
+          "docs": [
+            "This account holds the pool state"
+          ]
+        },
+        {
+          "name": "trader",
+          "isMut": false,
+          "isSigner": true
+        },
+        {
+          "name": "srcLpPosition",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "dstLpPosition",
+          "isMut": true,
+          "isSigner": false
+        }
+      ],
+      "args": [],
+      "discriminant": {
+        "type": "u8",
+        "value": 9
+      }
+    }
+  ],
+  "types": [
+    {
+      "name": "SwapResult",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "side",
+            "type": {
+              "defined": "Side"
+            }
+          },
+          {
+            "name": "baseMatched",
+            "type": "u64"
+          },
+          {
+            "name": "quoteMatched",
+            "type": "u64"
+          },
+          {
+            "name": "baseMatchedAsLimitOrder",
+            "type": "u64"
+          },
+          {
+            "name": "quoteMatchedAsLimitOrder",
+            "type": "u64"
+          },
+          {
+            "name": "baseMatchedAsSwap",
+            "type": "u64"
+          },
+          {
+            "name": "quoteMatchedAsSwap",
+            "type": "u64"
+          },
+          {
+            "name": "feeInQuote",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "TokenParams",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "decimals",
+            "type": "u32"
+          },
+          {
+            "name": "vaultBump",
+            "type": "u32"
+          },
+          {
+            "name": "mintKey",
+            "type": "publicKey"
+          },
+          {
+            "name": "vaultKey",
+            "type": "publicKey"
+          }
+        ]
+      }
+    },
+    {
+      "name": "ProtocolFeeRecipient",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "recipient",
+            "type": "publicKey"
+          },
+          {
+            "name": "shares",
+            "type": "u64"
+          },
+          {
+            "name": "totalAccumulatedQuoteFees",
+            "type": "u64"
+          },
+          {
+            "name": "collectedQuoteFees",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "ProtocolFeeRecipients",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "recipients",
+            "type": {
+              "array": [
+                {
+                  "defined": "ProtocolFeeRecipient"
+                },
+                3
+              ]
+            }
+          },
+          {
+            "name": "padding",
+            "type": {
+              "array": [
+                "u64",
+                12
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "PoolHeader",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "sequenceNumber",
+            "type": "u64"
+          },
+          {
+            "name": "baseParams",
+            "type": {
+              "defined": "TokenParams"
+            }
+          },
+          {
+            "name": "quoteParams",
+            "type": {
+              "defined": "TokenParams"
+            }
+          },
+          {
+            "name": "feeRecipients",
+            "type": {
+              "defined": "ProtocolFeeRecipients"
+            }
+          },
+          {
+            "name": "swapSequenceNumber",
+            "type": "u64"
+          },
+          {
+            "name": "padding",
+            "type": {
+              "array": [
+                "u64",
+                12
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "Amm",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "feeInBps",
+            "type": "u32"
+          },
+          {
+            "name": "protocolAllocationInPct",
+            "type": "u32"
+          },
+          {
+            "name": "lpVestingWindow",
+            "type": "u64"
+          },
+          {
+            "name": "rewardFactor",
+            "type": "u128"
+          },
+          {
+            "name": "totalLpShares",
+            "type": "u64"
+          },
+          {
+            "name": "slotSnapshot",
+            "type": "u64"
+          },
+          {
+            "name": "baseReservesSnapshot",
+            "type": "u64"
+          },
+          {
+            "name": "quoteReservesSnapshot",
+            "type": "u64"
+          },
+          {
+            "name": "baseReserves",
+            "type": "u64"
+          },
+          {
+            "name": "quoteReserves",
+            "type": "u64"
+          },
+          {
+            "name": "cumulativeQuoteLpFees",
+            "type": "u64"
+          },
+          {
+            "name": "cumulativeQuoteProtocolFees",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "LpPosition",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "rewardFactorSnapshot",
+            "type": "u128"
+          },
+          {
+            "name": "lpShares",
+            "type": "u64"
+          },
+          {
+            "name": "withdrawableLpShares",
+            "type": "u64"
+          },
+          {
+            "name": "uncollectedFees",
+            "type": "u64"
+          },
+          {
+            "name": "collectedFees",
+            "type": "u64"
+          },
+          {
+            "name": "pendingSharesToVest",
+            "type": {
+              "defined": "PendingSharesToVest"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "PendingSharesToVest",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "depositSlot",
+            "type": "u64"
+          },
+          {
+            "name": "lpSharesToVest",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "InitializePoolIxParams",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "lpFeeInBps",
+            "type": "u64"
+          },
+          {
+            "name": "protocolLpFeeAllocationInPct",
+            "type": "u64"
+          },
+          {
+            "name": "feeRecipientsParams",
+            "type": {
+              "array": [
+                {
+                  "defined": "ProtocolFeeRecipientParams"
+                },
+                3
+              ]
+            }
+          },
+          {
+            "name": "numSlotsToVestLpShares",
+            "type": {
+              "option": "u64"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "AddLiquidityIxParams",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "desiredBaseAmountIn",
+            "type": "u64"
+          },
+          {
+            "name": "desiredQuoteAmountIn",
+            "type": "u64"
+          },
+          {
+            "name": "initialLpShares",
+            "type": {
+              "option": "u64"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "RemoveLiquidityIxParams",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "lpShares",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "SwapIxParams",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "side",
+            "type": {
+              "defined": "Side"
+            }
+          },
+          {
+            "name": "swapType",
+            "type": {
+              "defined": "SwapType"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "RenounceLiquidityIxParams",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "allowFeeWithdrawal",
+            "type": "bool"
+          }
+        ]
+      }
+    },
+    {
+      "name": "PlasmaEventHeader",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "sequenceNumber",
+            "type": "u64"
+          },
+          {
+            "name": "slot",
+            "type": "u64"
+          },
+          {
+            "name": "timestamp",
+            "type": "i64"
+          },
+          {
+            "name": "pool",
+            "type": "publicKey"
+          },
+          {
+            "name": "signer",
+            "type": "publicKey"
+          },
+          {
+            "name": "baseDecimals",
+            "type": "u8"
+          },
+          {
+            "name": "quoteDecimals",
+            "type": "u8"
+          }
+        ]
+      }
+    },
+    {
+      "name": "SwapEvent",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "swapSequenceNumber",
+            "type": "u64"
+          },
+          {
+            "name": "preBaseLiquidity",
+            "type": "u64"
+          },
+          {
+            "name": "preQuoteLiquidity",
+            "type": "u64"
+          },
+          {
+            "name": "postBaseLiquidity",
+            "type": "u64"
+          },
+          {
+            "name": "postQuoteLiquidity",
+            "type": "u64"
+          },
+          {
+            "name": "snapshotBaseLiquidity",
+            "type": "u64"
+          },
+          {
+            "name": "snapshotQuoteLiquidity",
+            "type": "u64"
+          },
+          {
+            "name": "swapResult",
+            "type": {
+              "defined": "SwapResult"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "AddLiquidityEvent",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "poolTotalLpShares",
+            "type": "u64"
+          },
+          {
+            "name": "poolTotalBaseLiquidity",
+            "type": "u64"
+          },
+          {
+            "name": "poolTotalQuoteLiquitidy",
+            "type": "u64"
+          },
+          {
+            "name": "snapshotBaseLiquidity",
+            "type": "u64"
+          },
+          {
+            "name": "snapshotQuoteLiquidity",
+            "type": "u64"
+          },
+          {
+            "name": "userLpSharesReceived",
+            "type": "u64"
+          },
+          {
+            "name": "userLpSharesAvailable",
+            "type": "u64"
+          },
+          {
+            "name": "userLpSharesLocked",
+            "type": "u64"
+          },
+          {
+            "name": "userLpSharesUnlockedForWithdrawal",
+            "type": "u64"
+          },
+          {
+            "name": "userBaseDeposited",
+            "type": "u64"
+          },
+          {
+            "name": "userQuoteDeposited",
+            "type": "u64"
+          },
+          {
+            "name": "userTotalWithdrawableBase",
+            "type": "u64"
+          },
+          {
+            "name": "userTotalWithdrawableQuote",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "RemoveLiquidityEvent",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "poolTotalLpShares",
+            "type": "u64"
+          },
+          {
+            "name": "poolTotalBaseLiquidity",
+            "type": "u64"
+          },
+          {
+            "name": "poolTotalQuoteLiquitidy",
+            "type": "u64"
+          },
+          {
+            "name": "snapshotBaseLiquidity",
+            "type": "u64"
+          },
+          {
+            "name": "snapshotQuoteLiquidity",
+            "type": "u64"
+          },
+          {
+            "name": "userLpSharesBurned",
+            "type": "u64"
+          },
+          {
+            "name": "userLpSharesAvailable",
+            "type": "u64"
+          },
+          {
+            "name": "userLpSharesLocked",
+            "type": "u64"
+          },
+          {
+            "name": "userLpSharesUnlockedForWithdrawal",
+            "type": "u64"
+          },
+          {
+            "name": "userBaseWithdrawn",
+            "type": "u64"
+          },
+          {
+            "name": "userQuoteWithdrawn",
+            "type": "u64"
+          },
+          {
+            "name": "userTotalWithdrawableBase",
+            "type": "u64"
+          },
+          {
+            "name": "userTotalWithdrawableQuote",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "RenounceLiquidityEvent",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "allowFeeWithdrawal",
+            "type": "bool"
+          }
+        ]
+      }
+    },
+    {
+      "name": "InitializeLpPositionEvent",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "owner",
+            "type": "publicKey"
+          }
+        ]
+      }
+    },
+    {
+      "name": "ProtocolFeeRecipientParams",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "recipient",
+            "type": "publicKey"
+          },
+          {
+            "name": "shares",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "InitializePoolEvent",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "lpFeeInBps",
+            "type": "u64"
+          },
+          {
+            "name": "protocolFeeInPct",
+            "type": "u64"
+          },
+          {
+            "name": "feeRecipientParams",
+            "type": {
+              "array": [
+                {
+                  "defined": "ProtocolFeeRecipientParams"
+                },
+                3
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "WithdrawLpFeesEvent",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "feesWithdrawn",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "WithdrawProtocolFeesEvent",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "protocolFeeRecipient",
+            "type": "publicKey"
+          },
+          {
+            "name": "feesWithdrawn",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Side",
+      "type": {
+        "kind": "enum",
+        "variants": [
+          {
+            "name": "Buy"
+          },
+          {
+            "name": "Sell"
+          }
+        ]
+      }
+    },
+    {
+      "name": "SwapType",
+      "type": {
+        "kind": "enum",
+        "variants": [
+          {
+            "name": "ExactIn",
+            "fields": [
+              {
+                "name": "amount_in",
+                "type": "u64"
+              },
+              {
+                "name": "min_amount_out",
+                "type": "u64"
+              }
+            ]
+          },
+          {
+            "name": "ExactOut",
+            "fields": [
+              {
+                "name": "amount_out",
+                "type": "u64"
+              },
+              {
+                "name": "max_amount_in",
+                "type": "u64"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "PlasmaEvent",
+      "type": {
+        "kind": "enum",
+        "variants": [
+          {
+            "name": "Swap",
+            "fields": [
+              {
+                "name": "header",
+                "type": {
+                  "defined": "PlasmaEventHeader"
+                }
+              },
+              {
+                "name": "event",
+                "type": {
+                  "defined": "SwapEvent"
+                }
+              }
+            ]
+          },
+          {
+            "name": "AddLiquidity",
+            "fields": [
+              {
+                "name": "header",
+                "type": {
+                  "defined": "PlasmaEventHeader"
+                }
+              },
+              {
+                "name": "event",
+                "type": {
+                  "defined": "AddLiquidityEvent"
+                }
+              }
+            ]
+          },
+          {
+            "name": "RemoveLiquidity",
+            "fields": [
+              {
+                "name": "header",
+                "type": {
+                  "defined": "PlasmaEventHeader"
+                }
+              },
+              {
+                "name": "event",
+                "type": {
+                  "defined": "RemoveLiquidityEvent"
+                }
+              }
+            ]
+          },
+          {
+            "name": "RenounceLiquidity",
+            "fields": [
+              {
+                "name": "header",
+                "type": {
+                  "defined": "PlasmaEventHeader"
+                }
+              },
+              {
+                "name": "event",
+                "type": {
+                  "defined": "RenounceLiquidityEvent"
+                }
+              }
+            ]
+          },
+          {
+            "name": "WithdrawLpFees",
+            "fields": [
+              {
+                "name": "header",
+                "type": {
+                  "defined": "PlasmaEventHeader"
+                }
+              },
+              {
+                "name": "event",
+                "type": {
+                  "defined": "WithdrawLpFeesEvent"
+                }
+              }
+            ]
+          },
+          {
+            "name": "InitializeLpPosition",
+            "fields": [
+              {
+                "name": "header",
+                "type": {
+                  "defined": "PlasmaEventHeader"
+                }
+              },
+              {
+                "name": "event",
+                "type": {
+                  "defined": "InitializeLpPositionEvent"
+                }
+              }
+            ]
+          },
+          {
+            "name": "InitializePool",
+            "fields": [
+              {
+                "name": "header",
+                "type": {
+                  "defined": "PlasmaEventHeader"
+                }
+              },
+              {
+                "name": "event",
+                "type": {
+                  "defined": "InitializePoolEvent"
+                }
+              }
+            ]
+          },
+          {
+            "name": "WithdrawProtocolFees",
+            "fields": [
+              {
+                "name": "header",
+                "type": {
+                  "defined": "PlasmaEventHeader"
+                }
+              },
+              {
+                "name": "event",
+                "type": {
+                  "defined": "WithdrawProtocolFeesEvent"
+                }
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "metadata": {
+    "origin": "shank",
+    "address": "srAMMzfVHVAtgSJc8iH6CfKzuWuUTzLHVCE81QU1rgi"
+  },
+  "accounts": [
+    {
+      "name": "PoolAccount",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "poolHeader",
+            "type": {
+              "defined": "PoolHeader"
+            }
+          },
+          {
+            "name": "amm",
+            "type": {
+              "defined": "Amm"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "LpPositionAccount",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "authority",
+            "type": "publicKey"
+          },
+          {
+            "name": "pool",
+            "type": "publicKey"
+          },
+          {
+            "name": "status",
+            "type": "u64"
+          },
+          {
+            "name": "lpPosition",
+            "type": {
+              "defined": "LpPosition"
+            }
+          }
+        ]
+      }
+    }
+  ]
+}
