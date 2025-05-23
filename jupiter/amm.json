@@ -1,594 +1,407 @@
 {
-  "version": "0.1.0",
-  "name": "jupiter",
+  "address": "JUP6LkbZbjS1jKKwapdHNy74zcZ3tLUZoi5QNyVTaV4",
+  "metadata": {
+    "name": "jupiter",
+    "version": "0.1.0",
+    "spec": "0.1.0",
+    "description": "Jupiter aggregator program"
+  },
   "instructions": [
     {
-      "name": "route",
-      "docs": [
-        "route_plan Topologically sorted trade DAG"
+      "name": "claim",
+      "discriminator": [
+        62,
+        198,
+        214,
+        193,
+        213,
+        159,
+        108,
+        210
       ],
       "accounts": [
         {
-          "name": "tokenProgram",
-          "isMut": false,
-          "isSigner": false
+          "name": "wallet",
+          "writable": true,
+          "address": "J434EKW6KDmnJHxVty1axHT6kjszKKFEyesKqxdQ7y64"
         },
         {
-          "name": "userTransferAuthority",
-          "isMut": false,
-          "isSigner": true
+          "name": "program_authority",
+          "writable": true
         },
         {
-          "name": "userSourceTokenAccount",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "userDestinationTokenAccount",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "destinationTokenAccount",
-          "isMut": true,
-          "isSigner": false,
-          "isOptional": true
-        },
-        {
-          "name": "destinationMint",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "platformFeeAccount",
-          "isMut": true,
-          "isSigner": false,
-          "isOptional": true
-        }
-      ],
-      "args": [
-        {
-          "name": "routePlan",
-          "type": {
-            "vec": {
-              "defined": "RoutePlanStep"
-            }
-          }
-        },
-        {
-          "name": "inAmount",
-          "type": "u64"
-        },
-        {
-          "name": "quotedOutAmount",
-          "type": "u64"
-        },
-        {
-          "name": "slippageBps",
-          "type": "u16"
-        },
-        {
-          "name": "platformFeeBps",
-          "type": "u8"
-        }
-      ],
-      "returns": "u64"
-    },
-    {
-      "name": "routeWithTokenLedger",
-      "accounts": [
-        {
-          "name": "tokenProgram",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "userTransferAuthority",
-          "isMut": false,
-          "isSigner": true
-        },
-        {
-          "name": "userSourceTokenAccount",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "userDestinationTokenAccount",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "destinationTokenAccount",
-          "isMut": true,
-          "isSigner": false,
-          "isOptional": true
-        },
-        {
-          "name": "destinationMint",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "platformFeeAccount",
-          "isMut": true,
-          "isSigner": false,
-          "isOptional": true
-        },
-        {
-          "name": "tokenLedger",
-          "isMut": false,
-          "isSigner": false
-        }
-      ],
-      "args": [
-        {
-          "name": "routePlan",
-          "type": {
-            "vec": {
-              "defined": "RoutePlanStep"
-            }
-          }
-        },
-        {
-          "name": "quotedOutAmount",
-          "type": "u64"
-        },
-        {
-          "name": "slippageBps",
-          "type": "u16"
-        },
-        {
-          "name": "platformFeeBps",
-          "type": "u8"
-        }
-      ],
-      "returns": "u64"
-    },
-    {
-      "name": "sharedAccountsRoute",
-      "docs": [
-        "Route by using program owned token accounts and open orders accounts."
-      ],
-      "accounts": [
-        {
-          "name": "tokenProgram",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "programAuthority",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "userTransferAuthority",
-          "isMut": false,
-          "isSigner": true
-        },
-        {
-          "name": "sourceTokenAccount",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "programSourceTokenAccount",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "programDestinationTokenAccount",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "destinationTokenAccount",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "sourceMint",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "destinationMint",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "platformFeeAccount",
-          "isMut": true,
-          "isSigner": false,
-          "isOptional": true
-        },
-        {
-          "name": "token2022Program",
-          "isMut": false,
-          "isSigner": false,
-          "isOptional": true
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
         }
       ],
       "args": [
         {
           "name": "id",
           "type": "u8"
-        },
-        {
-          "name": "routePlan",
-          "type": {
-            "vec": {
-              "defined": "RoutePlanStep"
-            }
-          }
-        },
-        {
-          "name": "inAmount",
-          "type": "u64"
-        },
-        {
-          "name": "quotedOutAmount",
-          "type": "u64"
-        },
-        {
-          "name": "slippageBps",
-          "type": "u16"
-        },
-        {
-          "name": "platformFeeBps",
-          "type": "u8"
         }
       ],
       "returns": "u64"
     },
     {
-      "name": "sharedAccountsRouteWithTokenLedger",
-      "accounts": [
-        {
-          "name": "tokenProgram",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "programAuthority",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "userTransferAuthority",
-          "isMut": false,
-          "isSigner": true
-        },
-        {
-          "name": "sourceTokenAccount",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "programSourceTokenAccount",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "programDestinationTokenAccount",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "destinationTokenAccount",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "sourceMint",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "destinationMint",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "platformFeeAccount",
-          "isMut": true,
-          "isSigner": false,
-          "isOptional": true
-        },
-        {
-          "name": "token2022Program",
-          "isMut": false,
-          "isSigner": false,
-          "isOptional": true
-        },
-        {
-          "name": "tokenLedger",
-          "isMut": false,
-          "isSigner": false
-        }
-      ],
-      "args": [
-        {
-          "name": "id",
-          "type": "u8"
-        },
-        {
-          "name": "routePlan",
-          "type": {
-            "vec": {
-              "defined": "RoutePlanStep"
-            }
-          }
-        },
-        {
-          "name": "quotedOutAmount",
-          "type": "u64"
-        },
-        {
-          "name": "slippageBps",
-          "type": "u16"
-        },
-        {
-          "name": "platformFeeBps",
-          "type": "u8"
-        }
-      ],
-      "returns": "u64"
-    },
-    {
-      "name": "exactOutRoute",
-      "accounts": [
-        {
-          "name": "tokenProgram",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "userTransferAuthority",
-          "isMut": false,
-          "isSigner": true
-        },
-        {
-          "name": "userSourceTokenAccount",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "userDestinationTokenAccount",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "destinationTokenAccount",
-          "isMut": true,
-          "isSigner": false,
-          "isOptional": true
-        },
-        {
-          "name": "sourceMint",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "destinationMint",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "platformFeeAccount",
-          "isMut": true,
-          "isSigner": false,
-          "isOptional": true
-        },
-        {
-          "name": "token2022Program",
-          "isMut": false,
-          "isSigner": false,
-          "isOptional": true
-        }
-      ],
-      "args": [
-        {
-          "name": "routePlan",
-          "type": {
-            "vec": {
-              "defined": "RoutePlanStep"
-            }
-          }
-        },
-        {
-          "name": "outAmount",
-          "type": "u64"
-        },
-        {
-          "name": "quotedInAmount",
-          "type": "u64"
-        },
-        {
-          "name": "slippageBps",
-          "type": "u16"
-        },
-        {
-          "name": "platformFeeBps",
-          "type": "u8"
-        }
-      ],
-      "returns": "u64"
-    },
-    {
-      "name": "sharedAccountsExactOutRoute",
-      "docs": [
-        "Route by using program owned token accounts and open orders accounts."
+      "name": "claim_token",
+      "discriminator": [
+        116,
+        206,
+        27,
+        191,
+        166,
+        19,
+        0,
+        73
       ],
       "accounts": [
-        {
-          "name": "tokenProgram",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "programAuthority",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "userTransferAuthority",
-          "isMut": false,
-          "isSigner": true
-        },
-        {
-          "name": "sourceTokenAccount",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "programSourceTokenAccount",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "programDestinationTokenAccount",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "destinationTokenAccount",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "sourceMint",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "destinationMint",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "platformFeeAccount",
-          "isMut": true,
-          "isSigner": false,
-          "isOptional": true
-        },
-        {
-          "name": "token2022Program",
-          "isMut": false,
-          "isSigner": false,
-          "isOptional": true
-        }
-      ],
-      "args": [
-        {
-          "name": "id",
-          "type": "u8"
-        },
-        {
-          "name": "routePlan",
-          "type": {
-            "vec": {
-              "defined": "RoutePlanStep"
-            }
-          }
-        },
-        {
-          "name": "outAmount",
-          "type": "u64"
-        },
-        {
-          "name": "quotedInAmount",
-          "type": "u64"
-        },
-        {
-          "name": "slippageBps",
-          "type": "u16"
-        },
-        {
-          "name": "platformFeeBps",
-          "type": "u8"
-        }
-      ],
-      "returns": "u64"
-    },
-    {
-      "name": "setTokenLedger",
-      "accounts": [
-        {
-          "name": "tokenLedger",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "tokenAccount",
-          "isMut": false,
-          "isSigner": false
-        }
-      ],
-      "args": []
-    },
-    {
-      "name": "createOpenOrders",
-      "accounts": [
-        {
-          "name": "openOrders",
-          "isMut": true,
-          "isSigner": false
-        },
         {
           "name": "payer",
-          "isMut": true,
-          "isSigner": true
+          "writable": true,
+          "signer": true
         },
         {
-          "name": "dexProgram",
-          "isMut": false,
-          "isSigner": false
+          "name": "wallet",
+          "address": "J434EKW6KDmnJHxVty1axHT6kjszKKFEyesKqxdQ7y64"
         },
         {
-          "name": "systemProgram",
-          "isMut": false,
-          "isSigner": false
+          "name": "program_authority"
         },
         {
-          "name": "rent",
-          "isMut": false,
-          "isSigner": false
+          "name": "program_token_account",
+          "writable": true
         },
         {
-          "name": "market",
-          "isMut": false,
-          "isSigner": false
+          "name": "destination_token_account",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "account",
+                "path": "wallet"
+              },
+              {
+                "kind": "account",
+                "path": "token_program"
+              },
+              {
+                "kind": "account",
+                "path": "mint"
+              }
+            ],
+            "program": {
+              "kind": "const",
+              "value": [
+                140,
+                151,
+                37,
+                143,
+                78,
+                36,
+                137,
+                241,
+                187,
+                61,
+                16,
+                41,
+                20,
+                142,
+                13,
+                131,
+                11,
+                90,
+                19,
+                153,
+                218,
+                255,
+                16,
+                132,
+                4,
+                142,
+                123,
+                216,
+                219,
+                233,
+                248,
+                89
+              ]
+            }
+          }
+        },
+        {
+          "name": "mint"
+        },
+        {
+          "name": "token_program"
+        },
+        {
+          "name": "associated_token_program",
+          "address": "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL"
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
         }
       ],
-      "args": []
+      "args": [
+        {
+          "name": "id",
+          "type": "u8"
+        }
+      ],
+      "returns": "u64"
     },
     {
-      "name": "createTokenAccount",
+      "name": "close_token",
+      "discriminator": [
+        26,
+        74,
+        236,
+        151,
+        104,
+        64,
+        183,
+        249
+      ],
       "accounts": [
         {
-          "name": "tokenAccount",
-          "isMut": true,
-          "isSigner": false
+          "name": "operator",
+          "signer": true
         },
         {
-          "name": "user",
-          "isMut": true,
-          "isSigner": true
+          "name": "wallet",
+          "writable": true,
+          "address": "J434EKW6KDmnJHxVty1axHT6kjszKKFEyesKqxdQ7y64"
+        },
+        {
+          "name": "program_authority"
+        },
+        {
+          "name": "program_token_account",
+          "writable": true
         },
         {
           "name": "mint",
-          "isMut": false,
-          "isSigner": false
+          "writable": true
         },
         {
-          "name": "tokenProgram",
-          "isMut": false,
-          "isSigner": false
+          "name": "token_program"
+        }
+      ],
+      "args": [
+        {
+          "name": "id",
+          "type": "u8"
         },
         {
-          "name": "systemProgram",
-          "isMut": false,
-          "isSigner": false
+          "name": "burn_all",
+          "type": "bool"
+        }
+      ]
+    },
+    {
+      "name": "create_open_orders",
+      "discriminator": [
+        229,
+        194,
+        212,
+        172,
+        8,
+        10,
+        134,
+        147
+      ],
+      "accounts": [
+        {
+          "name": "open_orders",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  111,
+                  112,
+                  101,
+                  110,
+                  95,
+                  111,
+                  114,
+                  100,
+                  101,
+                  114,
+                  115
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "market"
+              },
+              {
+                "kind": "account",
+                "path": "payer"
+              }
+            ]
+          }
+        },
+        {
+          "name": "payer",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "dex_program"
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        },
+        {
+          "name": "rent",
+          "address": "SysvarRent111111111111111111111111111111111"
+        },
+        {
+          "name": "market"
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "create_program_open_orders",
+      "discriminator": [
+        28,
+        226,
+        32,
+        148,
+        188,
+        136,
+        113,
+        171
+      ],
+      "accounts": [
+        {
+          "name": "open_orders",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  111,
+                  112,
+                  101,
+                  110,
+                  95,
+                  111,
+                  114,
+                  100,
+                  101,
+                  114,
+                  115
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "market"
+              },
+              {
+                "kind": "account",
+                "path": "program_authority"
+              }
+            ]
+          }
+        },
+        {
+          "name": "payer",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "program_authority"
+        },
+        {
+          "name": "dex_program"
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        },
+        {
+          "name": "rent",
+          "address": "SysvarRent111111111111111111111111111111111"
+        },
+        {
+          "name": "market"
+        }
+      ],
+      "args": [
+        {
+          "name": "id",
+          "type": "u8"
+        }
+      ]
+    },
+    {
+      "name": "create_token_ledger",
+      "discriminator": [
+        232,
+        242,
+        197,
+        253,
+        240,
+        143,
+        129,
+        52
+      ],
+      "accounts": [
+        {
+          "name": "token_ledger",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "payer",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "create_token_account",
+      "discriminator": [
+        147,
+        241,
+        123,
+        100,
+        244,
+        132,
+        174,
+        118
+      ],
+      "accounts": [
+        {
+          "name": "token_account",
+          "writable": true
+        },
+        {
+          "name": "user",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "mint"
+        },
+        {
+          "name": "token_program"
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
         }
       ],
       "args": [
@@ -599,774 +412,608 @@
       ]
     },
     {
-      "name": "createProgramOpenOrders",
+      "name": "exact_out_route",
+      "discriminator": [
+        208,
+        51,
+        239,
+        151,
+        123,
+        43,
+        237,
+        92
+      ],
       "accounts": [
         {
-          "name": "openOrders",
-          "isMut": true,
-          "isSigner": false
+          "name": "token_program"
         },
         {
-          "name": "payer",
-          "isMut": true,
-          "isSigner": true
+          "name": "user_transfer_authority",
+          "signer": true
         },
         {
-          "name": "programAuthority",
-          "isMut": false,
-          "isSigner": false
+          "name": "user_source_token_account",
+          "writable": true
         },
         {
-          "name": "dexProgram",
-          "isMut": false,
-          "isSigner": false
+          "name": "user_destination_token_account",
+          "writable": true
         },
         {
-          "name": "systemProgram",
-          "isMut": false,
-          "isSigner": false
+          "name": "destination_token_account",
+          "writable": true,
+          "optional": true
         },
         {
-          "name": "rent",
-          "isMut": false,
-          "isSigner": false
+          "name": "source_mint"
         },
         {
-          "name": "market",
-          "isMut": false,
-          "isSigner": false
+          "name": "destination_mint"
+        },
+        {
+          "name": "platform_fee_account",
+          "writable": true,
+          "optional": true
+        },
+        {
+          "name": "token_2022_program",
+          "optional": true
+        },
+        {
+          "name": "event_authority",
+          "address": "D8cy77BBepLMngZx6ZukaTff5hCt1HrWyKk3Hnd9oitf"
+        },
+        {
+          "name": "program"
         }
       ],
       "args": [
         {
-          "name": "id",
-          "type": "u8"
-        }
-      ]
-    },
-    {
-      "name": "claim",
-      "accounts": [
-        {
-          "name": "wallet",
-          "isMut": true,
-          "isSigner": false
+          "name": "route_plan",
+          "type": {
+            "vec": {
+              "defined": {
+                "name": "RoutePlanStep"
+              }
+            }
+          }
         },
         {
-          "name": "programAuthority",
-          "isMut": true,
-          "isSigner": false
+          "name": "out_amount",
+          "type": "u64"
         },
         {
-          "name": "systemProgram",
-          "isMut": false,
-          "isSigner": false
-        }
-      ],
-      "args": [
-        {
-          "name": "id",
-          "type": "u8"
-        }
-      ],
-      "returns": "u64"
-    },
-    {
-      "name": "claimToken",
-      "accounts": [
-        {
-          "name": "payer",
-          "isMut": true,
-          "isSigner": true
+          "name": "quoted_in_amount",
+          "type": "u64"
         },
         {
-          "name": "wallet",
-          "isMut": false,
-          "isSigner": false
+          "name": "slippage_bps",
+          "type": "u16"
         },
         {
-          "name": "programAuthority",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "programTokenAccount",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "destinationTokenAccount",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "mint",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "associatedTokenTokenProgram",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "associatedTokenProgram",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "systemProgram",
-          "isMut": false,
-          "isSigner": false
-        }
-      ],
-      "args": [
-        {
-          "name": "id",
+          "name": "platform_fee_bps",
           "type": "u8"
         }
       ],
       "returns": "u64"
     },
     {
-      "name": "createTokenLedger",
+      "name": "route",
+      "docs": [
+        "route_plan Topologically sorted trade DAG"
+      ],
+      "discriminator": [
+        229,
+        23,
+        203,
+        151,
+        122,
+        227,
+        173,
+        42
+      ],
       "accounts": [
         {
-          "name": "tokenLedger",
-          "isMut": true,
-          "isSigner": true
+          "name": "token_program"
         },
         {
-          "name": "payer",
-          "isMut": true,
-          "isSigner": true
+          "name": "user_transfer_authority",
+          "signer": true
         },
         {
-          "name": "systemProgram",
-          "isMut": false,
-          "isSigner": false
+          "name": "user_source_token_account",
+          "writable": true
+        },
+        {
+          "name": "user_destination_token_account",
+          "writable": true
+        },
+        {
+          "name": "destination_token_account",
+          "writable": true,
+          "optional": true
+        },
+        {
+          "name": "destination_mint"
+        },
+        {
+          "name": "platform_fee_account",
+          "writable": true,
+          "optional": true
+        },
+        {
+          "name": "event_authority",
+          "address": "D8cy77BBepLMngZx6ZukaTff5hCt1HrWyKk3Hnd9oitf"
+        },
+        {
+          "name": "program"
+        }
+      ],
+      "args": [
+        {
+          "name": "route_plan",
+          "type": {
+            "vec": {
+              "defined": {
+                "name": "RoutePlanStep"
+              }
+            }
+          }
+        },
+        {
+          "name": "in_amount",
+          "type": "u64"
+        },
+        {
+          "name": "quoted_out_amount",
+          "type": "u64"
+        },
+        {
+          "name": "slippage_bps",
+          "type": "u16"
+        },
+        {
+          "name": "platform_fee_bps",
+          "type": "u8"
+        }
+      ],
+      "returns": "u64"
+    },
+    {
+      "name": "route_with_token_ledger",
+      "discriminator": [
+        150,
+        86,
+        71,
+        116,
+        167,
+        93,
+        14,
+        104
+      ],
+      "accounts": [
+        {
+          "name": "token_program"
+        },
+        {
+          "name": "user_transfer_authority",
+          "signer": true
+        },
+        {
+          "name": "user_source_token_account",
+          "writable": true
+        },
+        {
+          "name": "user_destination_token_account",
+          "writable": true
+        },
+        {
+          "name": "destination_token_account",
+          "writable": true,
+          "optional": true
+        },
+        {
+          "name": "destination_mint"
+        },
+        {
+          "name": "platform_fee_account",
+          "writable": true,
+          "optional": true
+        },
+        {
+          "name": "token_ledger"
+        },
+        {
+          "name": "event_authority",
+          "address": "D8cy77BBepLMngZx6ZukaTff5hCt1HrWyKk3Hnd9oitf"
+        },
+        {
+          "name": "program"
+        }
+      ],
+      "args": [
+        {
+          "name": "route_plan",
+          "type": {
+            "vec": {
+              "defined": {
+                "name": "RoutePlanStep"
+              }
+            }
+          }
+        },
+        {
+          "name": "quoted_out_amount",
+          "type": "u64"
+        },
+        {
+          "name": "slippage_bps",
+          "type": "u16"
+        },
+        {
+          "name": "platform_fee_bps",
+          "type": "u8"
+        }
+      ],
+      "returns": "u64"
+    },
+    {
+      "name": "set_token_ledger",
+      "discriminator": [
+        228,
+        85,
+        185,
+        112,
+        78,
+        79,
+        77,
+        2
+      ],
+      "accounts": [
+        {
+          "name": "token_ledger",
+          "writable": true
+        },
+        {
+          "name": "token_account"
         }
       ],
       "args": []
+    },
+    {
+      "name": "shared_accounts_exact_out_route",
+      "docs": [
+        "Route by using program owned token accounts and open orders accounts."
+      ],
+      "discriminator": [
+        176,
+        209,
+        105,
+        168,
+        154,
+        125,
+        69,
+        62
+      ],
+      "accounts": [
+        {
+          "name": "token_program"
+        },
+        {
+          "name": "program_authority"
+        },
+        {
+          "name": "user_transfer_authority",
+          "signer": true
+        },
+        {
+          "name": "source_token_account",
+          "writable": true
+        },
+        {
+          "name": "program_source_token_account",
+          "writable": true
+        },
+        {
+          "name": "program_destination_token_account",
+          "writable": true
+        },
+        {
+          "name": "destination_token_account",
+          "writable": true
+        },
+        {
+          "name": "source_mint"
+        },
+        {
+          "name": "destination_mint"
+        },
+        {
+          "name": "platform_fee_account",
+          "writable": true,
+          "optional": true
+        },
+        {
+          "name": "token_2022_program",
+          "optional": true
+        },
+        {
+          "name": "event_authority",
+          "address": "D8cy77BBepLMngZx6ZukaTff5hCt1HrWyKk3Hnd9oitf"
+        },
+        {
+          "name": "program"
+        }
+      ],
+      "args": [
+        {
+          "name": "id",
+          "type": "u8"
+        },
+        {
+          "name": "route_plan",
+          "type": {
+            "vec": {
+              "defined": {
+                "name": "RoutePlanStep"
+              }
+            }
+          }
+        },
+        {
+          "name": "out_amount",
+          "type": "u64"
+        },
+        {
+          "name": "quoted_in_amount",
+          "type": "u64"
+        },
+        {
+          "name": "slippage_bps",
+          "type": "u16"
+        },
+        {
+          "name": "platform_fee_bps",
+          "type": "u8"
+        }
+      ],
+      "returns": "u64"
+    },
+    {
+      "name": "shared_accounts_route",
+      "docs": [
+        "Route by using program owned token accounts and open orders accounts."
+      ],
+      "discriminator": [
+        193,
+        32,
+        155,
+        51,
+        65,
+        214,
+        156,
+        129
+      ],
+      "accounts": [
+        {
+          "name": "token_program"
+        },
+        {
+          "name": "program_authority"
+        },
+        {
+          "name": "user_transfer_authority",
+          "signer": true
+        },
+        {
+          "name": "source_token_account",
+          "writable": true
+        },
+        {
+          "name": "program_source_token_account",
+          "writable": true
+        },
+        {
+          "name": "program_destination_token_account",
+          "writable": true
+        },
+        {
+          "name": "destination_token_account",
+          "writable": true
+        },
+        {
+          "name": "source_mint"
+        },
+        {
+          "name": "destination_mint"
+        },
+        {
+          "name": "platform_fee_account",
+          "writable": true,
+          "optional": true
+        },
+        {
+          "name": "token_2022_program",
+          "optional": true
+        },
+        {
+          "name": "event_authority",
+          "address": "D8cy77BBepLMngZx6ZukaTff5hCt1HrWyKk3Hnd9oitf"
+        },
+        {
+          "name": "program"
+        }
+      ],
+      "args": [
+        {
+          "name": "id",
+          "type": "u8"
+        },
+        {
+          "name": "route_plan",
+          "type": {
+            "vec": {
+              "defined": {
+                "name": "RoutePlanStep"
+              }
+            }
+          }
+        },
+        {
+          "name": "in_amount",
+          "type": "u64"
+        },
+        {
+          "name": "quoted_out_amount",
+          "type": "u64"
+        },
+        {
+          "name": "slippage_bps",
+          "type": "u16"
+        },
+        {
+          "name": "platform_fee_bps",
+          "type": "u8"
+        }
+      ],
+      "returns": "u64"
+    },
+    {
+      "name": "shared_accounts_route_with_token_ledger",
+      "discriminator": [
+        230,
+        121,
+        143,
+        80,
+        119,
+        159,
+        106,
+        170
+      ],
+      "accounts": [
+        {
+          "name": "token_program"
+        },
+        {
+          "name": "program_authority"
+        },
+        {
+          "name": "user_transfer_authority",
+          "signer": true
+        },
+        {
+          "name": "source_token_account",
+          "writable": true
+        },
+        {
+          "name": "program_source_token_account",
+          "writable": true
+        },
+        {
+          "name": "program_destination_token_account",
+          "writable": true
+        },
+        {
+          "name": "destination_token_account",
+          "writable": true
+        },
+        {
+          "name": "source_mint"
+        },
+        {
+          "name": "destination_mint"
+        },
+        {
+          "name": "platform_fee_account",
+          "writable": true,
+          "optional": true
+        },
+        {
+          "name": "token_2022_program",
+          "optional": true
+        },
+        {
+          "name": "token_ledger"
+        },
+        {
+          "name": "event_authority",
+          "address": "D8cy77BBepLMngZx6ZukaTff5hCt1HrWyKk3Hnd9oitf"
+        },
+        {
+          "name": "program"
+        }
+      ],
+      "args": [
+        {
+          "name": "id",
+          "type": "u8"
+        },
+        {
+          "name": "route_plan",
+          "type": {
+            "vec": {
+              "defined": {
+                "name": "RoutePlanStep"
+              }
+            }
+          }
+        },
+        {
+          "name": "quoted_out_amount",
+          "type": "u64"
+        },
+        {
+          "name": "slippage_bps",
+          "type": "u16"
+        },
+        {
+          "name": "platform_fee_bps",
+          "type": "u8"
+        }
+      ],
+      "returns": "u64"
     }
   ],
   "accounts": [
     {
       "name": "TokenLedger",
-      "type": {
-        "kind": "struct",
-        "fields": [
-          {
-            "name": "tokenAccount",
-            "type": "publicKey"
-          },
-          {
-            "name": "amount",
-            "type": "u64"
-          }
-        ]
-      }
-    }
-  ],
-  "types": [
-    {
-      "name": "AmountWithSlippage",
-      "type": {
-        "kind": "struct",
-        "fields": [
-          {
-            "name": "amount",
-            "type": "u64"
-          },
-          {
-            "name": "slippageBps",
-            "type": "u16"
-          }
-        ]
-      }
-    },
-    {
-      "name": "RoutePlanStep",
-      "type": {
-        "kind": "struct",
-        "fields": [
-          {
-            "name": "swap",
-            "type": {
-              "defined": "Swap"
-            }
-          },
-          {
-            "name": "percent",
-            "type": "u8"
-          },
-          {
-            "name": "inputIndex",
-            "type": "u8"
-          },
-          {
-            "name": "outputIndex",
-            "type": "u8"
-          }
-        ]
-      }
-    },
-    {
-      "name": "PlatformFeeType",
-      "type": {
-        "kind": "enum",
-        "variants": [
-          {
-            "name": "SourceMint",
-            "fields": [
-              {
-                "name": "mint",
-                "type": "publicKey"
-              }
-            ]
-          },
-          {
-            "name": "DestinationMint",
-            "fields": [
-              {
-                "name": "mint",
-                "type": "publicKey"
-              }
-            ]
-          },
-          {
-            "name": "Zero"
-          }
-        ]
-      }
-    },
-    {
-      "name": "Side",
-      "type": {
-        "kind": "enum",
-        "variants": [
-          {
-            "name": "Bid"
-          },
-          {
-            "name": "Ask"
-          }
-        ]
-      }
-    },
-    {
-      "name": "Swap",
-      "type": {
-        "kind": "enum",
-        "variants": [
-          {
-            "name": "Saber"
-          },
-          {
-            "name": "SaberAddDecimalsDeposit"
-          },
-          {
-            "name": "SaberAddDecimalsWithdraw"
-          },
-          {
-            "name": "TokenSwap"
-          },
-          {
-            "name": "Sencha"
-          },
-          {
-            "name": "Step"
-          },
-          {
-            "name": "Cropper"
-          },
-          {
-            "name": "Raydium"
-          },
-          {
-            "name": "Crema",
-            "fields": [
-              {
-                "name": "aToB",
-                "type": "bool"
-              }
-            ]
-          },
-          {
-            "name": "Lifinity"
-          },
-          {
-            "name": "Mercurial"
-          },
-          {
-            "name": "Cykura"
-          },
-          {
-            "name": "Serum",
-            "fields": [
-              {
-                "name": "side",
-                "type": {
-                  "defined": "Side"
-                }
-              }
-            ]
-          },
-          {
-            "name": "MarinadeDeposit"
-          },
-          {
-            "name": "MarinadeUnstake"
-          },
-          {
-            "name": "Aldrin",
-            "fields": [
-              {
-                "name": "side",
-                "type": {
-                  "defined": "Side"
-                }
-              }
-            ]
-          },
-          {
-            "name": "AldrinV2",
-            "fields": [
-              {
-                "name": "side",
-                "type": {
-                  "defined": "Side"
-                }
-              }
-            ]
-          },
-          {
-            "name": "Whirlpool",
-            "fields": [
-              {
-                "name": "aToB",
-                "type": "bool"
-              }
-            ]
-          },
-          {
-            "name": "Invariant",
-            "fields": [
-              {
-                "name": "xToY",
-                "type": "bool"
-              }
-            ]
-          },
-          {
-            "name": "Meteora"
-          },
-          {
-            "name": "GooseFX"
-          },
-          {
-            "name": "DeltaFi",
-            "fields": [
-              {
-                "name": "stable",
-                "type": "bool"
-              }
-            ]
-          },
-          {
-            "name": "Balansol"
-          },
-          {
-            "name": "MarcoPolo",
-            "fields": [
-              {
-                "name": "xToY",
-                "type": "bool"
-              }
-            ]
-          },
-          {
-            "name": "Dradex",
-            "fields": [
-              {
-                "name": "side",
-                "type": {
-                  "defined": "Side"
-                }
-              }
-            ]
-          },
-          {
-            "name": "LifinityV2"
-          },
-          {
-            "name": "RaydiumClmm"
-          },
-          {
-            "name": "Openbook",
-            "fields": [
-              {
-                "name": "side",
-                "type": {
-                  "defined": "Side"
-                }
-              }
-            ]
-          },
-          {
-            "name": "Phoenix",
-            "fields": [
-              {
-                "name": "side",
-                "type": {
-                  "defined": "Side"
-                }
-              }
-            ]
-          },
-          {
-            "name": "Symmetry",
-            "fields": [
-              {
-                "name": "fromTokenId",
-                "type": "u64"
-              },
-              {
-                "name": "toTokenId",
-                "type": "u64"
-              }
-            ]
-          },
-          {
-            "name": "TokenSwapV2"
-          },
-          {
-            "name": "HeliumTreasuryManagementRedeemV0"
-          },
-          {
-            "name": "StakeDexStakeWrappedSol"
-          },
-          {
-            "name": "StakeDexSwapViaStake",
-            "fields": [
-              {
-                "name": "bridgeStakeSeed",
-                "type": "u32"
-              }
-            ]
-          },
-          {
-            "name": "GooseFXV2"
-          },
-          {
-            "name": "Perps"
-          },
-          {
-            "name": "PerpsAddLiquidity"
-          },
-          {
-            "name": "PerpsRemoveLiquidity"
-          },
-          {
-            "name": "MeteoraDlmm"
-          },
-          {
-            "name": "OpenBookV2",
-            "fields": [
-              {
-                "name": "side",
-                "type": {
-                  "defined": "Side"
-                }
-              }
-            ]
-          },
-          {
-            "name": "RaydiumClmmV2"
-          },
-          {
-            "name": "StakeDexPrefundWithdrawStakeAndDepositStake",
-            "fields": [
-              {
-                "name": "bridgeStakeSeed",
-                "type": "u32"
-              }
-            ]
-          },
-          {
-            "name": "Clone",
-            "fields": [
-              {
-                "name": "poolIndex",
-                "type": "u8"
-              },
-              {
-                "name": "quantityIsInput",
-                "type": "bool"
-              },
-              {
-                "name": "quantityIsCollateral",
-                "type": "bool"
-              }
-            ]
-          },
-          {
-            "name": "SanctumS",
-            "fields": [
-              {
-                "name": "srcLstValueCalcAccs",
-                "type": "u8"
-              },
-              {
-                "name": "dstLstValueCalcAccs",
-                "type": "u8"
-              },
-              {
-                "name": "srcLstIndex",
-                "type": "u32"
-              },
-              {
-                "name": "dstLstIndex",
-                "type": "u32"
-              }
-            ]
-          },
-          {
-            "name": "SanctumSAddLiquidity",
-            "fields": [
-              {
-                "name": "lstValueCalcAccs",
-                "type": "u8"
-              },
-              {
-                "name": "lstIndex",
-                "type": "u32"
-              }
-            ]
-          },
-          {
-            "name": "SanctumSRemoveLiquidity",
-            "fields": [
-              {
-                "name": "lstValueCalcAccs",
-                "type": "u8"
-              },
-              {
-                "name": "lstIndex",
-                "type": "u32"
-              }
-            ]
-          },
-          {
-            "name": "RaydiumCP"
-          },
-          {
-            "name": "WhirlpoolSwapV2",
-            "fields": [
-              {
-                "name": "aToB",
-                "type": "bool"
-              },
-              {
-                "name": "remainingAccountsInfo",
-                "type": {
-                  "option": {
-                    "defined": "RemainingAccountsInfo"
-                  }
-                }
-              }
-            ]
-          },
-          {
-            "name": "OneIntro"
-          },
-          {
-            "name": "PumpdotfunWrappedBuy"
-          },
-          {
-            "name": "PumpdotfunWrappedSell"
-          },
-          {
-            "name": "PerpsV2"
-          },
-          {
-            "name": "PerpsV2AddLiquidity"
-          },
-          {
-            "name": "PerpsV2RemoveLiquidity"
-          },
-          {
-            "name": "MoonshotWrappedBuy"
-          },
-          {
-            "name": "MoonshotWrappedSell"
-          },
-          {
-            "name": "StabbleStableSwap"
-          },
-          {
-            "name": "StabbleWeightedSwap"
-          },
-          {
-            "name": "Obric",
-            "fields": [
-              {
-                "name": "xToY",
-                "type": "bool"
-              }
-            ]
-          },
-          {
-            "name": "FoxBuyFromEstimatedCost"
-          },
-          {
-            "name": "FoxClaimPartial",
-            "fields": [
-              {
-                "name": "isY",
-                "type": "bool"
-              }
-            ]
-          },
-          {
-            "name": "SolFi",
-            "fields": [
-              {
-                "name": "isQuoteToBase",
-                "type": "bool"
-              }
-            ]
-          },
-          {
-            "name": "SolayerDelegateNoInit"
-          },
-          {
-            "name": "SolayerUndelegateNoInit"
-          },
-          {
-            "name": "TokenMill",
-            "fields": [
-              {
-                "name": "side",
-                "type": {
-                  "defined": "Side"
-                }
-              }
-            ]
-          },
-          {
-            "name": "DaoFunBuy"
-          },
-          {
-            "name": "DaoFunSell"
-          },
-          {
-            "name": "ZeroFi"
-          },
-          {
-            "name": "StakeDexWithdrawWrappedSol"
-          },
-          {
-            "name": "VirtualsBuy"
-          },
-          {
-            "name": "VirtualsSell"
-          },
-          {
-            "name": "Perena",
-            "fields": [
-              {
-                "name": "in_index",
-                "type": "u8"
-              },
-              {
-                "name": "out_index",
-                "type": "u8"
-              }
-            ]
-          },
-          {
-            "name": "PumpdotfunAmmBuy"
-          },
-          {
-            "name": "PumpdotfunAmmSell"
-          },
-          {
-            "name": "Gamma"
-          },
-          {
-            "name": "MeteoraDlmmSwapV2",
-            "fields": [
-              {
-                "name": "remaining_accounts_info",
-                "type": {
-                  "defined": "RemainingAccountsInfo"
-                }
-              }
-            ]
-          },
-          {"name":"Woofi"},
-          {"name":"MeteoraDammV2"},
-          {"name":"MeteoraDynamicBondingCurveSwap"},
-          {"name":"StabbleStableSwapV2"},
-          {"name":"StabbleWeightedSwapV2"},
-          {"name":"RaydiumLaunchlabBuy","fields":[{"name":"share_fee_rate","type":"u64"}]},
-          {"name":"RaydiumLaunchlabSell","fields":[{"name":"share_fee_rate","type":"u64"}]},
-          {"name": "BoopdotfunWrappedBuy"},
-          {"name": "BoopdotfunWrappedSell"}
-        ]
-      }
+      "discriminator": [
+        156,
+        247,
+        9,
+        188,
+        54,
+        108,
+        85,
+        77
+      ]
     }
   ],
   "events": [
     {
-      "name": "SwapEvent",
-      "fields": [
-        {
-          "name": "amm",
-          "type": "publicKey",
-          "index": false
-        },
-        {
-          "name": "inputMint",
-          "type": "publicKey",
-          "index": false
-        },
-        {
-          "name": "inputAmount",
-          "type": "u64",
-          "index": false
-        },
-        {
-          "name": "outputMint",
-          "type": "publicKey",
-          "index": false
-        },
-        {
-          "name": "outputAmount",
-          "type": "u64",
-          "index": false
-        }
+      "name": "FeeEvent",
+      "discriminator": [
+        73,
+        79,
+        78,
+        127,
+        184,
+        213,
+        13,
+        220
       ]
     },
     {
-      "name": "FeeEvent",
-      "fields": [
-        {
-          "name": "account",
-          "type": "publicKey",
-          "index": false
-        },
-        {
-          "name": "mint",
-          "type": "publicKey",
-          "index": false
-        },
-        {
-          "name": "amount",
-          "type": "u64",
-          "index": false
-        }
+      "name": "SwapEvent",
+      "discriminator": [
+        64,
+        198,
+        205,
+        232,
+        38,
+        8,
+        113,
+        226
       ]
     }
   ],
@@ -1465,6 +1112,700 @@
       "code": 6018,
       "name": "SourceAndDestinationMintCannotBeTheSame",
       "msg": "Source mint and destination mint cannot the same"
+    }
+  ],
+  "types": [
+    {
+      "name": "AccountsType",
+      "type": {
+        "kind": "enum",
+        "variants": [
+          {
+            "name": "TransferHookA"
+          },
+          {
+            "name": "TransferHookB"
+          },
+          {
+            "name": "TransferHookReward"
+          },
+          {
+            "name": "TransferHookInput"
+          },
+          {
+            "name": "TransferHookIntermediate"
+          },
+          {
+            "name": "TransferHookOutput"
+          },
+          {
+            "name": "SupplementalTickArrays"
+          },
+          {
+            "name": "SupplementalTickArraysOne"
+          },
+          {
+            "name": "SupplementalTickArraysTwo"
+          }
+        ]
+      }
+    },
+    {
+      "name": "FeeEvent",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "account",
+            "type": "pubkey"
+          },
+          {
+            "name": "mint",
+            "type": "pubkey"
+          },
+          {
+            "name": "amount",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "RemainingAccountsInfo",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "slices",
+            "type": {
+              "vec": {
+                "defined": {
+                  "name": "RemainingAccountsSlice"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "RemainingAccountsSlice",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "accounts_type",
+            "type": {
+              "defined": {
+                "name": "AccountsType"
+              }
+            }
+          },
+          {
+            "name": "length",
+            "type": "u8"
+          }
+        ]
+      }
+    },
+    {
+      "name": "RoutePlanStep",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "swap",
+            "type": {
+              "defined": {
+                "name": "Swap"
+              }
+            }
+          },
+          {
+            "name": "percent",
+            "type": "u8"
+          },
+          {
+            "name": "input_index",
+            "type": "u8"
+          },
+          {
+            "name": "output_index",
+            "type": "u8"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Side",
+      "type": {
+        "kind": "enum",
+        "variants": [
+          {
+            "name": "Bid"
+          },
+          {
+            "name": "Ask"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Swap",
+      "type": {
+        "kind": "enum",
+        "variants": [
+          {
+            "name": "Saber"
+          },
+          {
+            "name": "SaberAddDecimalsDeposit"
+          },
+          {
+            "name": "SaberAddDecimalsWithdraw"
+          },
+          {
+            "name": "TokenSwap"
+          },
+          {
+            "name": "Sencha"
+          },
+          {
+            "name": "Step"
+          },
+          {
+            "name": "Cropper"
+          },
+          {
+            "name": "Raydium"
+          },
+          {
+            "name": "Crema",
+            "fields": [
+              {
+                "name": "a_to_b",
+                "type": "bool"
+              }
+            ]
+          },
+          {
+            "name": "Lifinity"
+          },
+          {
+            "name": "Mercurial"
+          },
+          {
+            "name": "Cykura"
+          },
+          {
+            "name": "Serum",
+            "fields": [
+              {
+                "name": "side",
+                "type": {
+                  "defined": {
+                    "name": "Side"
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "name": "MarinadeDeposit"
+          },
+          {
+            "name": "MarinadeUnstake"
+          },
+          {
+            "name": "Aldrin",
+            "fields": [
+              {
+                "name": "side",
+                "type": {
+                  "defined": {
+                    "name": "Side"
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "name": "AldrinV2",
+            "fields": [
+              {
+                "name": "side",
+                "type": {
+                  "defined": {
+                    "name": "Side"
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "name": "Whirlpool",
+            "fields": [
+              {
+                "name": "a_to_b",
+                "type": "bool"
+              }
+            ]
+          },
+          {
+            "name": "Invariant",
+            "fields": [
+              {
+                "name": "x_to_y",
+                "type": "bool"
+              }
+            ]
+          },
+          {
+            "name": "Meteora"
+          },
+          {
+            "name": "GooseFX"
+          },
+          {
+            "name": "DeltaFi",
+            "fields": [
+              {
+                "name": "stable",
+                "type": "bool"
+              }
+            ]
+          },
+          {
+            "name": "Balansol"
+          },
+          {
+            "name": "MarcoPolo",
+            "fields": [
+              {
+                "name": "x_to_y",
+                "type": "bool"
+              }
+            ]
+          },
+          {
+            "name": "Dradex",
+            "fields": [
+              {
+                "name": "side",
+                "type": {
+                  "defined": {
+                    "name": "Side"
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "name": "LifinityV2"
+          },
+          {
+            "name": "RaydiumClmm"
+          },
+          {
+            "name": "Openbook",
+            "fields": [
+              {
+                "name": "side",
+                "type": {
+                  "defined": {
+                    "name": "Side"
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "name": "Phoenix",
+            "fields": [
+              {
+                "name": "side",
+                "type": {
+                  "defined": {
+                    "name": "Side"
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "name": "Symmetry",
+            "fields": [
+              {
+                "name": "from_token_id",
+                "type": "u64"
+              },
+              {
+                "name": "to_token_id",
+                "type": "u64"
+              }
+            ]
+          },
+          {
+            "name": "TokenSwapV2"
+          },
+          {
+            "name": "HeliumTreasuryManagementRedeemV0"
+          },
+          {
+            "name": "StakeDexStakeWrappedSol"
+          },
+          {
+            "name": "StakeDexSwapViaStake",
+            "fields": [
+              {
+                "name": "bridge_stake_seed",
+                "type": "u32"
+              }
+            ]
+          },
+          {
+            "name": "GooseFXV2"
+          },
+          {
+            "name": "Perps"
+          },
+          {
+            "name": "PerpsAddLiquidity"
+          },
+          {
+            "name": "PerpsRemoveLiquidity"
+          },
+          {
+            "name": "MeteoraDlmm"
+          },
+          {
+            "name": "OpenBookV2",
+            "fields": [
+              {
+                "name": "side",
+                "type": {
+                  "defined": {
+                    "name": "Side"
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "name": "RaydiumClmmV2"
+          },
+          {
+            "name": "StakeDexPrefundWithdrawStakeAndDepositStake",
+            "fields": [
+              {
+                "name": "bridge_stake_seed",
+                "type": "u32"
+              }
+            ]
+          },
+          {
+            "name": "Clone",
+            "fields": [
+              {
+                "name": "pool_index",
+                "type": "u8"
+              },
+              {
+                "name": "quantity_is_input",
+                "type": "bool"
+              },
+              {
+                "name": "quantity_is_collateral",
+                "type": "bool"
+              }
+            ]
+          },
+          {
+            "name": "SanctumS",
+            "fields": [
+              {
+                "name": "src_lst_value_calc_accs",
+                "type": "u8"
+              },
+              {
+                "name": "dst_lst_value_calc_accs",
+                "type": "u8"
+              },
+              {
+                "name": "src_lst_index",
+                "type": "u32"
+              },
+              {
+                "name": "dst_lst_index",
+                "type": "u32"
+              }
+            ]
+          },
+          {
+            "name": "SanctumSAddLiquidity",
+            "fields": [
+              {
+                "name": "lst_value_calc_accs",
+                "type": "u8"
+              },
+              {
+                "name": "lst_index",
+                "type": "u32"
+              }
+            ]
+          },
+          {
+            "name": "SanctumSRemoveLiquidity",
+            "fields": [
+              {
+                "name": "lst_value_calc_accs",
+                "type": "u8"
+              },
+              {
+                "name": "lst_index",
+                "type": "u32"
+              }
+            ]
+          },
+          {
+            "name": "RaydiumCP"
+          },
+          {
+            "name": "WhirlpoolSwapV2",
+            "fields": [
+              {
+                "name": "a_to_b",
+                "type": "bool"
+              },
+              {
+                "name": "remaining_accounts_info",
+                "type": {
+                  "option": {
+                    "defined": {
+                      "name": "RemainingAccountsInfo"
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "name": "OneIntro"
+          },
+          {
+            "name": "PumpdotfunWrappedBuy"
+          },
+          {
+            "name": "PumpdotfunWrappedSell"
+          },
+          {
+            "name": "PerpsV2"
+          },
+          {
+            "name": "PerpsV2AddLiquidity"
+          },
+          {
+            "name": "PerpsV2RemoveLiquidity"
+          },
+          {
+            "name": "MoonshotWrappedBuy"
+          },
+          {
+            "name": "MoonshotWrappedSell"
+          },
+          {
+            "name": "StabbleStableSwap"
+          },
+          {
+            "name": "StabbleWeightedSwap"
+          },
+          {
+            "name": "Obric",
+            "fields": [
+              {
+                "name": "x_to_y",
+                "type": "bool"
+              }
+            ]
+          },
+          {
+            "name": "FoxBuyFromEstimatedCost"
+          },
+          {
+            "name": "FoxClaimPartial",
+            "fields": [
+              {
+                "name": "is_y",
+                "type": "bool"
+              }
+            ]
+          },
+          {
+            "name": "SolFi",
+            "fields": [
+              {
+                "name": "is_quote_to_base",
+                "type": "bool"
+              }
+            ]
+          },
+          {
+            "name": "SolayerDelegateNoInit"
+          },
+          {
+            "name": "SolayerUndelegateNoInit"
+          },
+          {
+            "name": "TokenMill",
+            "fields": [
+              {
+                "name": "side",
+                "type": {
+                  "defined": {
+                    "name": "Side"
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "name": "DaosFunBuy"
+          },
+          {
+            "name": "DaosFunSell"
+          },
+          {
+            "name": "ZeroFi"
+          },
+          {
+            "name": "StakeDexWithdrawWrappedSol"
+          },
+          {
+            "name": "VirtualsBuy"
+          },
+          {
+            "name": "VirtualsSell"
+          },
+          {
+            "name": "Perena",
+            "fields": [
+              {
+                "name": "in_index",
+                "type": "u8"
+              },
+              {
+                "name": "out_index",
+                "type": "u8"
+              }
+            ]
+          },
+          {
+            "name": "PumpdotfunAmmBuy"
+          },
+          {
+            "name": "PumpdotfunAmmSell"
+          },
+          {
+            "name": "Gamma"
+          },
+          {
+            "name": "MeteoraDlmmSwapV2",
+            "fields": [
+              {
+                "name": "remaining_accounts_info",
+                "type": {
+                  "defined": {
+                    "name": "RemainingAccountsInfo"
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "name": "Woofi"
+          },
+          {
+            "name": "MeteoraDammV2"
+          },
+          {
+            "name": "MeteoraDynamicBondingCurveSwap"
+          },
+          {
+            "name": "StabbleStableSwapV2"
+          },
+          {
+            "name": "StabbleWeightedSwapV2"
+          },
+          {
+            "name": "RaydiumLaunchlabBuy",
+            "fields": [
+              {
+                "name": "share_fee_rate",
+                "type": "u64"
+              }
+            ]
+          },
+          {
+            "name": "RaydiumLaunchlabSell",
+            "fields": [
+              {
+                "name": "share_fee_rate",
+                "type": "u64"
+              }
+            ]
+          },
+          {
+            "name": "BoopdotfunWrappedBuy"
+          },
+          {
+            "name": "BoopdotfunWrappedSell"
+          }
+        ]
+      }
+    },
+    {
+      "name": "SwapEvent",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "amm",
+            "type": "pubkey"
+          },
+          {
+            "name": "input_mint",
+            "type": "pubkey"
+          },
+          {
+            "name": "input_amount",
+            "type": "u64"
+          },
+          {
+            "name": "output_mint",
+            "type": "pubkey"
+          },
+          {
+            "name": "output_amount",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "TokenLedger",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "token_account",
+            "type": "pubkey"
+          },
+          {
+            "name": "amount",
+            "type": "u64"
+          }
+        ]
+      }
     }
   ]
 }
