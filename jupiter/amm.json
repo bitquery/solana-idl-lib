@@ -1759,6 +1759,19 @@
           },
           {
             "name": "BoopdotfunWrappedSell"
+          },
+          {
+            "name": "Plasma",
+            "fields": [
+              {
+                "name": "side",
+                "type": {
+                  "defined": {
+                    "name": "Side"
+                  }
+                }
+              }
+            ]
           }
         ]
       }
