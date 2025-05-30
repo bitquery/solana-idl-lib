@@ -863,7 +863,21 @@
           "desc": "Log authority"
         }
       ],
-      "args": [],
+      "args": [
+        {
+          "name": "header",
+          "type": {
+            "defined": "PhoenixMarketEvent"
+          }
+        },
+        {
+          "name": "phoenix_events",
+          "type": {
+            "with_bin": true,
+            "defined": "PhoenixEvents"
+          }
+        }
+      ],
       "discriminant": {
         "type": "u8",
         "value": 15
@@ -2174,6 +2188,22 @@
             "type": "u64"
           }
         ]
+      }
+    },
+    {
+      "name": "PhoenixEvents",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "phoenix_events",
+            "with_bin": true,
+            "type": {
+              "vec": {
+                "defined": "PhoenixMarketEvent"
+              }
+            }
+          }]
       }
     },
     {
