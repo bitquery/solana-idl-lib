@@ -1,0 +1,978 @@
+{
+    "version": "0.1.0",
+    "name": "obric_solana_v3",
+    "instructions": [
+        {
+            "name": "createPair",
+            "accounts": [
+                {
+                    "name": "tradingPair",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "mintX",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "mintY",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "mintLp",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "marginfiBankX",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "marginfiBankY",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "xPriceFeed",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "yPriceFeed",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "reserveX",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "reserveY",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "protocolFeeX",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "protocolFeeY",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "marginfiProgram",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "marginfiGroup",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "marginfiAccount",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "signer",
+                    "isMut": true,
+                    "isSigner": true
+                },
+                {
+                    "name": "tokenProgram",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "systemProgram",
+                    "isMut": false,
+                    "isSigner": false
+                }
+            ],
+            "args": [
+                {
+                    "name": "concentration",
+                    "type": "u64"
+                },
+                {
+                    "name": "feeMillionth",
+                    "type": "u64"
+                },
+                {
+                    "name": "rebatePercentage",
+                    "type": "u64"
+                },
+                {
+                    "name": "protocolFeeShareThousandth",
+                    "type": "u64"
+                }
+            ]
+        },
+        {
+            "name": "refreshLendingStatus",
+            "accounts": [
+                {
+                    "name": "tradingPair",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "marginfiProgram",
+                    "isMut": false,
+                    "isSigner": false,
+                    "docs": [
+                        "margin start"
+                    ]
+                },
+                {
+                    "name": "marginfiGroup",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "marginfiBankX",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "marginfiBankY",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "marginfiAccount",
+                    "isMut": true,
+                    "isSigner": false
+                }
+            ],
+            "args": []
+        },
+        {
+            "name": "updateConcentration",
+            "accounts": [
+                {
+                    "name": "tradingPair",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "mintX",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "mintY",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "xPriceFeed",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "yPriceFeed",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "user",
+                    "isMut": false,
+                    "isSigner": true
+                }
+            ],
+            "args": [
+                {
+                    "name": "concentration",
+                    "type": "u64"
+                }
+            ]
+        },
+        {
+            "name": "updateFeeParams",
+            "accounts": [
+                {
+                    "name": "tradingPair",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "mintX",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "mintY",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "user",
+                    "isMut": false,
+                    "isSigner": true
+                }
+            ],
+            "args": [
+                {
+                    "name": "feeMillionth",
+                    "type": "u64"
+                },
+                {
+                    "name": "protocolFeeShareThousandth",
+                    "type": "u64"
+                }
+            ]
+        },
+        {
+            "name": "deposit",
+            "accounts": [
+                {
+                    "name": "tradingPair",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "mintX",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "mintY",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "mintLp",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "xPriceFeed",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "yPriceFeed",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "reserveY",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "userTokenAccountY",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "userTokenAccountLp",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "marginfiProgram",
+                    "isMut": false,
+                    "isSigner": false,
+                    "docs": [
+                        "margin start"
+                    ]
+                },
+                {
+                    "name": "marginfiGroup",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "marginfiBankX",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "marginfiBankY",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "marginfiAccount",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "marginfiBankYLiquidityVault",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "user",
+                    "isMut": false,
+                    "isSigner": true
+                },
+                {
+                    "name": "tokenProgram",
+                    "isMut": false,
+                    "isSigner": false
+                }
+            ],
+            "args": [
+                {
+                    "name": "inputY",
+                    "type": "u64"
+                }
+            ]
+        },
+        {
+            "name": "withdraw",
+            "accounts": [
+                {
+                    "name": "tradingPair",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "mintX",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "mintY",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "mintLp",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "xPriceFeed",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "yPriceFeed",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "reserveY",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "userTokenAccountY",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "userTokenAccountLp",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "marginfiProgram",
+                    "isMut": false,
+                    "isSigner": false,
+                    "docs": [
+                        "margin start"
+                    ]
+                },
+                {
+                    "name": "marginfiGroup",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "marginfiBankX",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "marginfiPriceX",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "marginfiBankY",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "marginfiPriceY",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "marginfiAccount",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "marginfiBankYLiquidityVault",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "marginfiBankYLiquidityVaultAuthority",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "user",
+                    "isMut": false,
+                    "isSigner": true
+                },
+                {
+                    "name": "tokenProgram",
+                    "isMut": false,
+                    "isSigner": false
+                }
+            ],
+            "args": [
+                {
+                    "name": "lpAmount",
+                    "type": "u64"
+                }
+            ]
+        },
+        {
+            "name": "swapXToY",
+            "accounts": [
+                {
+                    "name": "tradingPair",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "mintX",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "mintY",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "xPriceFeed",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "yPriceFeed",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "reserveX",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "reserveY",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "userTokenAccountX",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "userTokenAccountY",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "protocolFeeY",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "marginfiProgram",
+                    "isMut": false,
+                    "isSigner": false,
+                    "docs": [
+                        "margin start"
+                    ]
+                },
+                {
+                    "name": "marginfiGroup",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "marginfiBankX",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "marginfiPriceX",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "marginfiBankY",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "marginfiPriceY",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "marginfiAccount",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "marginfiBankXLiquidityVault",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "marginfiBankYLiquidityVault",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "marginfiBankYLiquidityVaultAuthority",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "user",
+                    "isMut": false,
+                    "isSigner": true
+                },
+                {
+                    "name": "tokenProgram",
+                    "isMut": false,
+                    "isSigner": false
+                }
+            ],
+            "args": [
+                {
+                    "name": "inputX",
+                    "type": "u64"
+                },
+                {
+                    "name": "minOutputAmt",
+                    "type": "u64"
+                }
+            ]
+        },
+        {
+            "name": "swapYToX",
+            "accounts": [
+                {
+                    "name": "tradingPair",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "mintX",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "mintY",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "xPriceFeed",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "yPriceFeed",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "reserveX",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "reserveY",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "userTokenAccountX",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "userTokenAccountY",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "protocolFeeX",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "marginfiProgram",
+                    "isMut": false,
+                    "isSigner": false,
+                    "docs": [
+                        "margin start"
+                    ]
+                },
+                {
+                    "name": "marginfiGroup",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "marginfiBankX",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "marginfiPriceX",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "marginfiBankY",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "marginfiPriceY",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "marginfiAccount",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "marginfiBankXLiquidityVault",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "marginfiBankXLiquidityVaultAuthority",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "marginfiBankYLiquidityVault",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "user",
+                    "isMut": false,
+                    "isSigner": true
+                },
+                {
+                    "name": "tokenProgram",
+                    "isMut": false,
+                    "isSigner": false
+                }
+            ],
+            "args": [
+                {
+                    "name": "inputY",
+                    "type": "u64"
+                },
+                {
+                    "name": "minOutputAmt",
+                    "type": "u64"
+                }
+            ]
+        }
+    ],
+    "accounts": [
+        {
+            "name": "SSTradingPair",
+            "type": {
+                "kind": "struct",
+                "fields": [
+                    {
+                        "name": "bump",
+                        "type": "u8"
+                    },
+                    {
+                        "name": "mintX",
+                        "type": "publicKey"
+                    },
+                    {
+                        "name": "mintY",
+                        "type": "publicKey"
+                    },
+                    {
+                        "name": "decimalsX",
+                        "type": "u8"
+                    },
+                    {
+                        "name": "decimalsY",
+                        "type": "u8"
+                    },
+                    {
+                        "name": "mintLp",
+                        "type": "publicKey"
+                    },
+                    {
+                        "name": "xPriceFeedId",
+                        "type": "publicKey"
+                    },
+                    {
+                        "name": "yPriceFeedId",
+                        "type": "publicKey"
+                    },
+                    {
+                        "name": "marginfiBankX",
+                        "type": "publicKey"
+                    },
+                    {
+                        "name": "marginfiBankY",
+                        "type": "publicKey"
+                    },
+                    {
+                        "name": "reserveX",
+                        "type": "publicKey"
+                    },
+                    {
+                        "name": "reserveY",
+                        "type": "publicKey"
+                    },
+                    {
+                        "name": "protocolFeeX",
+                        "type": "publicKey"
+                    },
+                    {
+                        "name": "protocolFeeY",
+                        "type": "publicKey"
+                    },
+                    {
+                        "name": "marginfiAccount",
+                        "type": "publicKey"
+                    },
+                    {
+                        "name": "depositX",
+                        "type": "u64"
+                    },
+                    {
+                        "name": "borrowX",
+                        "type": "u64"
+                    },
+                    {
+                        "name": "depositY",
+                        "type": "u64"
+                    },
+                    {
+                        "name": "borrowY",
+                        "type": "u64"
+                    },
+                    {
+                        "name": "targetY",
+                        "type": "u64"
+                    },
+                    {
+                        "name": "concentration",
+                        "type": "u64"
+                    },
+                    {
+                        "name": "bigK",
+                        "type": "u128"
+                    },
+                    {
+                        "name": "cumulativeVolume",
+                        "type": "u64"
+                    },
+                    {
+                        "name": "multX",
+                        "type": "u64"
+                    },
+                    {
+                        "name": "multY",
+                        "type": "u64"
+                    },
+                    {
+                        "name": "feeMillionth",
+                        "type": "u64"
+                    },
+                    {
+                        "name": "rebatePercentage",
+                        "type": "u64"
+                    },
+                    {
+                        "name": "protocolFeeShareThousandth",
+                        "type": "u64"
+                    },
+                    {
+                        "name": "volumeRecords",
+                        "type": {
+                            "array": [
+                                "u64",
+                                8
+                            ]
+                        }
+                    },
+                    {
+                        "name": "volumeTimeRecords",
+                        "type": {
+                            "array": [
+                                "i64",
+                                8
+                            ]
+                        }
+                    },
+                    {
+                        "name": "padding2",
+                        "type": {
+                            "array": [
+                                "u64",
+                                32
+                            ]
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "name": "LendingStatus",
+            "type": {
+                "kind": "struct",
+                "fields": [
+                    {
+                        "name": "depositX",
+                        "type": "u64"
+                    },
+                    {
+                        "name": "borrowX",
+                        "type": "u64"
+                    },
+                    {
+                        "name": "depositY",
+                        "type": "u64"
+                    },
+                    {
+                        "name": "borrowY",
+                        "type": "u64"
+                    }
+                ]
+            }
+        }
+    ],
+    "errors": [
+        {
+            "code": 6000,
+            "name": "AlreadyInitialized"
+        },
+        {
+            "code": 6001,
+            "name": "Unauthorized",
+            "msg": "Unauthorized"
+        },
+        {
+            "code": 6002,
+            "name": "MismatchedTokenMint",
+            "msg": "Mismatched token mint"
+        },
+        {
+            "code": 6003,
+            "name": "InvalidConcentrationArg",
+            "msg": "Invalid concentration argument"
+        },
+        {
+            "code": 6004,
+            "name": "InsufficientActiveY"
+        },
+        {
+            "code": 6005,
+            "name": "InsufficientActiveX"
+        },
+        {
+            "code": 6006,
+            "name": "InvalidInputAmount",
+            "msg": "input amount must be greater than 0"
+        },
+        {
+            "code": 6007,
+            "name": "NumOverflowing"
+        },
+        {
+            "code": 6008,
+            "name": "OutputAmountLessThanExpected"
+        },
+        {
+            "code": 6009,
+            "name": "ReserveNotEmpty"
+        },
+        {
+            "code": 6010,
+            "name": "PythError",
+            "msg": "Pyth has an internal error"
+        },
+        {
+            "code": 6011,
+            "name": "PythOffline",
+            "msg": "Pyth price oracle is offline"
+        },
+        {
+            "code": 6012,
+            "name": "TryToSerializePriceAccount",
+            "msg": "Program should not try to serialize a price account"
+        },
+        {
+            "code": 6013,
+            "name": "InvalidPriceAccount"
+        },
+        {
+            "code": 6014,
+            "name": "NegativePrice"
+        },
+        {
+            "code": 6015,
+            "name": "InvalidPriceOwner",
+            "msg": "Invalid price account owner program"
+        },
+        {
+            "code": 6016,
+            "name": "InvalidRoutesForSwap"
+        },
+        {
+            "code": 6017,
+            "name": "BorrowYShouldBeZero"
+        },
+        {
+            "code": 6018,
+            "name": "TryToSerializeLarixAccount"
+        },
+        {
+            "code": 6019,
+            "name": "NoLarixReserveFoundForMint"
+        },
+        {
+            "code": 6020,
+            "name": "LarixAccountDeserializeFailed"
+        },
+        {
+            "code": 6021,
+            "name": "InvalidLarixProgram"
+        },
+        {
+            "code": 6022,
+            "name": "InvalidLarixReserveKey"
+        }
+    ]
+}
