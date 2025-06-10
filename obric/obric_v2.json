@@ -1,0 +1,1043 @@
+{
+    "version": "0.1.0",
+    "name": "obric_solana",
+    "instructions": [
+        {
+            "name": "createPair",
+            "accounts": [
+                {
+                    "name": "tradingPair",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "mintX",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "mintY",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "mintSslpX",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "mintSslpY",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "reserveX",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "reserveY",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "protocolFeeX",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "protocolFeeY",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "xPriceFeed",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "yPriceFeed",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "user",
+                    "isMut": true,
+                    "isSigner": true
+                },
+                {
+                    "name": "systemProgram",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "tokenProgram",
+                    "isMut": false,
+                    "isSigner": false
+                }
+            ],
+            "args": [
+                {
+                    "name": "concentration",
+                    "type": "u64"
+                },
+                {
+                    "name": "feeMillionth",
+                    "type": "u64"
+                },
+                {
+                    "name": "rebatePercentage",
+                    "type": "u64"
+                },
+                {
+                    "name": "protocolFeeShareThousandth",
+                    "type": "u64"
+                }
+            ]
+        },
+        {
+            "name": "createPairV2",
+            "accounts": [
+                {
+                    "name": "tradingPair",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "mintX",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "mintY",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "mintSslpX",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "mintSslpY",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "reserveX",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "reserveY",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "protocolFeeX",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "protocolFeeY",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "xPriceFeed",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "yPriceFeed",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "user",
+                    "isMut": true,
+                    "isSigner": true
+                },
+                {
+                    "name": "systemProgram",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "tokenProgram",
+                    "isMut": false,
+                    "isSigner": false
+                }
+            ],
+            "args": [
+                {
+                    "name": "concentration",
+                    "type": "u64"
+                },
+                {
+                    "name": "feeMillionth",
+                    "type": "u64"
+                },
+                {
+                    "name": "rebatePercentage",
+                    "type": "u64"
+                },
+                {
+                    "name": "protocolFeeShareThousandth",
+                    "type": "u64"
+                }
+            ]
+        },
+        {
+            "name": "updateConcentration",
+            "accounts": [
+                {
+                    "name": "tradingPair",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "mintX",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "mintY",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "xPriceFeed",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "yPriceFeed",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "user",
+                    "isMut": false,
+                    "isSigner": true
+                }
+            ],
+            "args": [
+                {
+                    "name": "concentration",
+                    "type": "u64"
+                }
+            ]
+        },
+        {
+            "name": "updateVersion",
+            "accounts": [
+                {
+                    "name": "tradingPair",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "mintX",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "mintY",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "mintSslpX",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "mintSslpY",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "user",
+                    "isMut": false,
+                    "isSigner": true
+                }
+            ],
+            "args": [
+                {
+                    "name": "version",
+                    "type": "u8"
+                }
+            ]
+        },
+        {
+            "name": "updateFeeParams",
+            "accounts": [
+                {
+                    "name": "tradingPair",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "mintX",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "mintY",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "user",
+                    "isMut": false,
+                    "isSigner": true
+                }
+            ],
+            "args": [
+                {
+                    "name": "feeMillionth",
+                    "type": "u64"
+                },
+                {
+                    "name": "protocolFeeShareThousandth",
+                    "type": "u64"
+                }
+            ]
+        },
+        {
+            "name": "updateOracles",
+            "accounts": [
+                {
+                    "name": "tradingPair",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "mintX",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "mintY",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "xPriceFeed",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "yPriceFeed",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "user",
+                    "isMut": false,
+                    "isSigner": true
+                }
+            ],
+            "args": []
+        },
+        {
+            "name": "withdrawFees",
+            "accounts": [
+                {
+                    "name": "tradingPair",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "mintX",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "mintY",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "protocolFeeX",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "protocolFeeY",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "userTokenAccountX",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "userTokenAccountY",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "signer",
+                    "isMut": false,
+                    "isSigner": true
+                },
+                {
+                    "name": "tokenProgram",
+                    "isMut": false,
+                    "isSigner": false
+                }
+            ],
+            "args": []
+        },
+        {
+            "name": "deposit",
+            "accounts": [
+                {
+                    "name": "tradingPair",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "mintX",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "mintY",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "reserveX",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "reserveY",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "userTokenAccountX",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "userTokenAccountY",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "mintSslpX",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "mintSslpY",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "userSslpX",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "userSslpY",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "xPriceFeed",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "yPriceFeed",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "user",
+                    "isMut": true,
+                    "isSigner": true
+                },
+                {
+                    "name": "tokenProgram",
+                    "isMut": false,
+                    "isSigner": false
+                }
+            ],
+            "args": [
+                {
+                    "name": "inputX",
+                    "type": "u64"
+                },
+                {
+                    "name": "inputY",
+                    "type": "u64"
+                }
+            ]
+        },
+        {
+            "name": "withdraw",
+            "accounts": [
+                {
+                    "name": "tradingPair",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "mintX",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "mintY",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "reserveX",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "reserveY",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "userTokenAccountX",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "userTokenAccountY",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "mintSslpX",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "mintSslpY",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "userSslpX",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "userSslpY",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "xPriceFeed",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "yPriceFeed",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "user",
+                    "isMut": false,
+                    "isSigner": true
+                },
+                {
+                    "name": "tokenProgram",
+                    "isMut": false,
+                    "isSigner": false
+                }
+            ],
+            "args": [
+                {
+                    "name": "lpAmountX",
+                    "type": "u64"
+                },
+                {
+                    "name": "lpAmountY",
+                    "type": "u64"
+                }
+            ]
+        },
+        {
+            "name": "swapXToY",
+            "accounts": [
+                {
+                    "name": "tradingPair",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "mintX",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "mintY",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "reserveX",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "reserveY",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "userTokenAccountX",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "userTokenAccountY",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "protocolFeeY",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "xPriceFeed",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "yPriceFeed",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "user",
+                    "isMut": false,
+                    "isSigner": true
+                },
+                {
+                    "name": "tokenProgram",
+                    "isMut": false,
+                    "isSigner": false
+                }
+            ],
+            "args": [
+                {
+                    "name": "inputX",
+                    "type": "u64"
+                },
+                {
+                    "name": "minOutputAmt",
+                    "type": "u64"
+                }
+            ]
+        },
+        {
+            "name": "swapYToX",
+            "accounts": [
+                {
+                    "name": "tradingPair",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "mintX",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "mintY",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "reserveX",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "reserveY",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "userTokenAccountX",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "userTokenAccountY",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "protocolFeeX",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "xPriceFeed",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "yPriceFeed",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "user",
+                    "isMut": false,
+                    "isSigner": true
+                },
+                {
+                    "name": "tokenProgram",
+                    "isMut": false,
+                    "isSigner": false
+                }
+            ],
+            "args": [
+                {
+                    "name": "inputY",
+                    "type": "u64"
+                },
+                {
+                    "name": "minOutputAmt",
+                    "type": "u64"
+                }
+            ]
+        },
+        {
+            "name": "swap",
+            "accounts": [
+                {
+                    "name": "tradingPair",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "mintX",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "mintY",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "reserveX",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "reserveY",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "userTokenAccountX",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "userTokenAccountY",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "protocolFee",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "xPriceFeed",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "yPriceFeed",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "user",
+                    "isMut": false,
+                    "isSigner": true
+                },
+                {
+                    "name": "tokenProgram",
+                    "isMut": false,
+                    "isSigner": false
+                }
+            ],
+            "args": [
+                {
+                    "name": "isXToY",
+                    "type": "bool"
+                },
+                {
+                    "name": "inputAmt",
+                    "type": "u64"
+                },
+                {
+                    "name": "minOutputAmt",
+                    "type": "u64"
+                }
+            ]
+        }
+    ],
+    "accounts": [
+        {
+            "name": "SSTradingPair",
+            "type": {
+                "kind": "struct",
+                "fields": [
+                    {
+                        "name": "isInitialized",
+                        "type": "bool"
+                    },
+                    {
+                        "name": "xPriceFeedId",
+                        "type": "publicKey"
+                    },
+                    {
+                        "name": "yPriceFeedId",
+                        "type": "publicKey"
+                    },
+                    {
+                        "name": "reserveX",
+                        "type": "publicKey"
+                    },
+                    {
+                        "name": "reserveY",
+                        "type": "publicKey"
+                    },
+                    {
+                        "name": "protocolFeeX",
+                        "type": "publicKey"
+                    },
+                    {
+                        "name": "protocolFeeY",
+                        "type": "publicKey"
+                    },
+                    {
+                        "name": "bump",
+                        "type": "u8"
+                    },
+                    {
+                        "name": "mintX",
+                        "type": "publicKey"
+                    },
+                    {
+                        "name": "mintY",
+                        "type": "publicKey"
+                    },
+                    {
+                        "name": "concentration",
+                        "type": "u64"
+                    },
+                    {
+                        "name": "bigK",
+                        "type": "u128"
+                    },
+                    {
+                        "name": "targetX",
+                        "type": "u64"
+                    },
+                    {
+                        "name": "cumulativeVolume",
+                        "type": "u64"
+                    },
+                    {
+                        "name": "multX",
+                        "type": "u64"
+                    },
+                    {
+                        "name": "multY",
+                        "type": "u64"
+                    },
+                    {
+                        "name": "feeMillionth",
+                        "type": "u64"
+                    },
+                    {
+                        "name": "rebatePercentage",
+                        "type": "u64"
+                    },
+                    {
+                        "name": "protocolFeeShareThousandth",
+                        "type": "u64"
+                    },
+                    {
+                        "name": "volumeRecord",
+                        "type": {
+                            "array": [
+                                "u64",
+                                8
+                            ]
+                        }
+                    },
+                    {
+                        "name": "volumeTimeRecord",
+                        "type": {
+                            "array": [
+                                "i64",
+                                8
+                            ]
+                        }
+                    },
+                    {
+                        "name": "version",
+                        "type": "u8"
+                    },
+                    {
+                        "name": "padding",
+                        "type": {
+                            "array": [
+                                "u8",
+                                7
+                            ]
+                        }
+                    },
+                    {
+                        "name": "mintSslpX",
+                        "type": "publicKey"
+                    },
+                    {
+                        "name": "mintSslpY",
+                        "type": "publicKey"
+                    },
+                    {
+                        "name": "padding2",
+                        "type": {
+                            "array": [
+                                "u64",
+                                15
+                            ]
+                        }
+                    }
+                ]
+            }
+        }
+    ],
+    "errors": [
+        {
+            "code": 6000,
+            "name": "AlreadyInitialized"
+        },
+        {
+            "code": 6001,
+            "name": "Unauthorized",
+            "msg": "Unauthorized"
+        },
+        {
+            "code": 6002,
+            "name": "MismatchedTokenMint",
+            "msg": "Mismatched token mint"
+        },
+        {
+            "code": 6003,
+            "name": "InvalidConcentrationArg",
+            "msg": "Invalid concentration argument"
+        },
+        {
+            "code": 6004,
+            "name": "InvalidRebateArg",
+            "msg": "Invalid rebate argument"
+        },
+        {
+            "code": 6005,
+            "name": "InvalidFeeArg",
+            "msg": "Invalid fee argument"
+        },
+        {
+            "code": 6006,
+            "name": "BigKLacksPrecision",
+            "msg": "Computation lacks precision"
+        },
+        {
+            "code": 6007,
+            "name": "DepositLessThanMinimal",
+            "msg": "Deposit less than minimal required amount"
+        },
+        {
+            "code": 6008,
+            "name": "DepositCausesUnfairPrice",
+            "msg": "Deposit causes unfair price change"
+        },
+        {
+            "code": 6009,
+            "name": "WithdrawCausesUnfairPrice",
+            "msg": "Withdrawal causes unfair price change"
+        },
+        {
+            "code": 6010,
+            "name": "InsufficientActiveY"
+        },
+        {
+            "code": 6011,
+            "name": "InsufficientActiveX"
+        },
+        {
+            "code": 6012,
+            "name": "InvalidInputAmount",
+            "msg": "input amount must be greater than 0"
+        },
+        {
+            "code": 6013,
+            "name": "NumOverflowing"
+        },
+        {
+            "code": 6014,
+            "name": "OutputAmountLessThanExpected"
+        },
+        {
+            "code": 6015,
+            "name": "PythError",
+            "msg": "Pyth has an internal error"
+        },
+        {
+            "code": 6016,
+            "name": "PythOffline",
+            "msg": "Pyth price oracle is offline"
+        },
+        {
+            "code": 6017,
+            "name": "TryToSerializePriceAccount",
+            "msg": "Program should not try to serialize a price account"
+        },
+        {
+            "code": 6018,
+            "name": "InvalidPriceAccount"
+        },
+        {
+            "code": 6019,
+            "name": "NegativePrice"
+        },
+        {
+            "code": 6020,
+            "name": "InvalidPriceOwner",
+            "msg": "Invalid price account owner program"
+        },
+        {
+            "code": 6021,
+            "name": "InvalidRoutesForSwap"
+        }
+    ]
+}
