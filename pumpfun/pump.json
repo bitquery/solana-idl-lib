@@ -105,6 +105,37 @@
       ]
     },
     {
+      "name": "migrate",
+      "docs": ["Migrates liquidity to pump_amm if the bonding curve is complete."],
+      "accounts": [
+        { "name": "global", "isMut": false, "isSigner": false },
+        { "name": "withdrawAuthority", "isMut": true, "isSigner": false },
+        { "name": "mint", "isMut": false, "isSigner": false },
+        { "name": "bondingCurve", "isMut": true, "isSigner": false },
+        { "name": "associatedBondingCurve", "isMut": true, "isSigner": false },
+        { "name": "user", "isMut": true, "isSigner": true },
+        { "name": "systemProgram", "isMut": false, "isSigner": false },
+        { "name": "tokenProgram", "isMut": false, "isSigner": false },
+        { "name": "pumpAmm", "isMut": false, "isSigner": false },
+        { "name": "pool", "isMut": true, "isSigner": false },
+        { "name": "poolAuthority", "isMut": true, "isSigner": false },
+        { "name": "poolAuthorityMintAccount", "isMut": true, "isSigner": false },
+        { "name": "poolAuthorityWsolAccount", "isMut": true, "isSigner": false },
+        { "name": "ammGlobalConfig", "isMut": false, "isSigner": false },
+        { "name": "wsolMint", "isMut": false, "isSigner": false },
+        { "name": "lpMint", "isMut": true, "isSigner": false },
+        { "name": "userPoolTokenAccount", "isMut": true, "isSigner": false },
+        { "name": "poolBaseTokenAccount", "isMut": true, "isSigner": false },
+        { "name": "poolQuoteTokenAccount", "isMut": true, "isSigner": false },
+        { "name": "token2022Program", "isMut": false, "isSigner": false },
+        { "name": "associatedTokenProgram", "isMut": false, "isSigner": false },
+        { "name": "pumpAmmEventAuthority", "isMut": false, "isSigner": false },
+        { "name": "eventAuthority", "isMut": false, "isSigner": false },
+        { "name": "program", "isMut": false, "isSigner": false }
+      ],
+      "args": []
+    },
+    {
       "name": "withdraw",
       "docs": [
         "Allows the admin to withdraw liquidity for a migration once the bonding curve completes"
