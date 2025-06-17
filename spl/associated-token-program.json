@@ -1,0 +1,199 @@
+{
+  "version": "1.1.0",
+  "name": "spl_associated_token_account",
+  "instructions": [
+    {
+      "name": "create",
+      "docs": [
+        "Creates an associated token account for the given wallet address and token mint",
+        "",
+        "Accounts expected by this instruction:",
+        "",
+        "0. `[writeable, signer]` Funding account (must be a system account)",
+        "1. `[writeable]` Associated token account address to be created",
+        "2. `[]` Wallet address for the new associated token account",
+        "3. `[]` The token mint for the new associated token account",
+        "4. `[]` System program",
+        "5. `[]` SPL Token program",
+        "6. `[]` Rent sysvar"
+      ],
+      "accounts": [
+        {
+          "name": "payer",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "associatedToken",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "authority",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "mint",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "tokenProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "rent",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [],
+      "discriminant": {
+        "type": "u8",
+        "value": 0
+      }
+    },
+    {
+      "name": "createIdempotent",
+      "docs": [
+        "Creates an associated token account for the given wallet address and token mint,",
+        "if it doesn't already exist.  This is useful for programs that need to use",
+        "associated token accounts but cannot assume that the account exists.",
+        "",
+        "Accounts expected by this instruction:",
+        "",
+        "0. `[writeable, signer]` Funding account (must be a system account)",
+        "1. `[writeable]` Associated token account address to be created",
+        "2. `[]` Wallet address for the new associated token account",
+        "3. `[]` The token mint for the new associated token account",
+        "4. `[]` System program",
+        "5. `[]` SPL Token program"
+      ],
+      "accounts": [
+        {
+          "name": "payer",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "associatedToken",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "authority",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "mint",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "tokenProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [],
+      "discriminant": {
+        "type": "u8",
+        "value": 1
+      }
+    },
+    {
+      "name": "recoverNested",
+      "docs": [
+        "Transfers tokens from a nested associated token account to an associated token account",
+        "with the owner of the nested associated token account as the wallet address.",
+        "",
+        "Accounts expected by this instruction:",
+        "",
+        "0. `[writeable, signer]` Funding account (must be a system account)",
+        "1. `[writeable]` Nested associated token account, must have `wallet` as owner.",
+        "2. `[]` Token mint for the nested associated token account",
+        "3. `[]` Wallet address for the owner of the nested associated token account, which will",
+        "   receive the tokens in an associated token account with `wallet` as the wallet address.",
+        "4. `[writeable]` Associated token account for the wallet and mint, may need to be created",
+        "5. `[]` System program",
+        "6. `[]` SPL Token program"
+      ],
+      "accounts": [
+        {
+          "name": "payer",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "nestedAssociatedTokenAccount",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "nestedMint",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "ownerAssociatedTokenAccount",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "owner",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "ownerMint",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "wallet",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "tokenProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [],
+      "discriminant": {
+        "type": "u8",
+        "value": 2
+      }
+    }
+  ],
+  "errors": [
+    {
+      "code": 0,
+      "name": "InvalidOwner",
+      "msg": "Associated token account owner does not match address derivation"
+    }
+  ],
+  "metadata": {
+    "address": "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL",
+    "origin": "shank"
+  }
+}
