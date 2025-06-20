@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "name": "spl-token-2022",
+  "name": "spl_token_2022",
   "instructions": [
     {
       "name": "initializeMint",
