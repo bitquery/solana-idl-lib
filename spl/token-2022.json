@@ -165,11 +165,6 @@
           "name": "authority",
           "isMut": false,
           "isSigner": true
-        },
-        {
-          "name": "signers",
-          "isMut": false,
-          "isSigner": true
         }
       ],
       "args": [
@@ -200,11 +195,6 @@
           "name": "owner",
           "isMut": false,
           "isSigner": true
-        },
-        {
-          "name": "signers",
-          "isMut": false,
-          "isSigner": true
         }
       ],
       "args": [
@@ -230,11 +220,6 @@
           "name": "owner",
           "isMut": false,
           "isSigner": true
-        },
-        {
-          "name": "signers",
-          "isMut": false,
-          "isSigner": true
         }
       ],
       "args": [],
@@ -253,11 +238,6 @@
         },
         {
           "name": "currentAuthority",
-          "isMut": false,
-          "isSigner": true
-        },
-        {
-          "name": "signers",
           "isMut": false,
           "isSigner": true
         }
@@ -299,11 +279,6 @@
           "name": "mintAuthority",
           "isMut": false,
           "isSigner": true
-        },
-        {
-          "name": "signers",
-          "isMut": false,
-          "isSigner": true
         }
       ],
       "args": [
@@ -332,11 +307,6 @@
         },
         {
           "name": "owner",
-          "isMut": false,
-          "isSigner": true
-        },
-        {
-          "name": "signers",
           "isMut": false,
           "isSigner": true
         }
@@ -369,11 +339,6 @@
           "name": "owner",
           "isMut": false,
           "isSigner": true
-        },
-        {
-          "name": "signers",
-          "isMut": false,
-          "isSigner": true
         }
       ],
       "args": [],
@@ -399,11 +364,6 @@
           "name": "owner",
           "isMut": false,
           "isSigner": true
-        },
-        {
-          "name": "signers",
-          "isMut": false,
-          "isSigner": true
         }
       ],
       "args": [],
@@ -427,11 +387,6 @@
         },
         {
           "name": "owner",
-          "isMut": false,
-          "isSigner": true
-        },
-        {
-          "name": "signers",
           "isMut": false,
           "isSigner": true
         }
@@ -462,11 +417,6 @@
         },
         {
           "name": "owner",
-          "isMut": false,
-          "isSigner": true
-        },
-        {
-          "name": "signers",
           "isMut": false,
           "isSigner": true
         }
@@ -508,11 +458,6 @@
           "name": "owner",
           "isMut": false,
           "isSigner": true
-        },
-        {
-          "name": "signers",
-          "isMut": false,
-          "isSigner": true
         }
       ],
       "args": [
@@ -547,11 +492,6 @@
           "name": "mintAuthority",
           "isMut": false,
           "isSigner": true
-        },
-        {
-          "name": "signers",
-          "isMut": false,
-          "isSigner": true
         }
       ],
       "args": [
@@ -584,11 +524,6 @@
         },
         {
           "name": "owner",
-          "isMut": false,
-          "isSigner": true
-        },
-        {
-          "name": "signers",
           "isMut": false,
           "isSigner": true
         }
@@ -793,14 +728,7 @@
           "isSigner": false
         }
       ],
-      "args": [
-        {
-          "name": "extensionType",
-          "type": {
-            "defined": "ExtensionTypeArray"
-          }
-        }
-      ],
+      "args": [],
       "discriminant": {
         "type": "u8",
         "value": 21
@@ -933,21 +861,9 @@
           "name": "owner",
           "isMut": false,
           "isSigner": true
-        },
-        {
-          "name": "signers",
-          "isMut": false,
-          "isSigner": true
         }
       ],
-      "args": [
-        {
-          "name": "extensionType",
-          "type": {
-            "defined": "ExtensionTypeArray"
-          }
-        }
-      ],
+      "args": [],
       "discriminant": {
         "type": "u8",
         "value": 29
@@ -1073,11 +989,6 @@
         },
         {
           "name": "authority",
-          "isMut": false,
-          "isSigner": true
-        },
-        {
-          "name": "signers",
           "isMut": false,
           "isSigner": true
         }
@@ -1374,8 +1285,7 @@
             "type": {
               "vec": {
                 "defined": "ExtensionType"
-              },
-              "size": "remainder"
+              }
             }
           }
         ]
