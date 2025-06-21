@@ -1,5 +1,5 @@
 {
-  "version": "1.0.0",
+  "version": "0.5.0",
   "name": "spl_token_2022",
   "instructions": [
     {
@@ -28,21 +28,16 @@
         {
           "name": "freezeAuthority",
           "type": {
-            "option": "publicKey",
-            "prefix": "u8"
+            "option": "publicKey"
           }
         }
-      ],
-      "discriminant": {
-        "type": "u8",
-        "value": 0
-      }
+      ]
     },
     {
       "name": "initializeAccount",
       "accounts": [
         {
-          "name": "accountToInitialize",
+          "name": "account",
           "isMut": true,
           "isSigner": false
         },
@@ -62,11 +57,7 @@
           "isSigner": false
         }
       ],
-      "args": [],
-      "discriminant": {
-        "type": "u8",
-        "value": 1
-      }
+      "args": []
     },
     {
       "name": "initializeMultisig",
@@ -80,73 +71,14 @@
           "name": "rent",
           "isMut": false,
           "isSigner": false
-        },
-        {
-          "name": "signer1",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "signer2",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "signer3",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "signer4",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "signer5",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "signer6",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "signer7",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "signer8",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "signer9",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "signer10",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "signer11",
-          "isMut": false,
-          "isSigner": false
         }
       ],
       "args": [
         {
-          "name": "noOfSignersRequired",
+          "name": "m",
           "type": "u8"
         }
-      ],
-      "discriminant": {
-        "type": "u8",
-        "value": 2
-      }
+      ]
     },
     {
       "name": "transfer",
@@ -172,11 +104,7 @@
           "name": "amount",
           "type": "u64"
         }
-      ],
-      "discriminant": {
-        "type": "u8",
-        "value": 3
-      }
+      ]
     },
     {
       "name": "approve",
@@ -202,11 +130,7 @@
           "name": "amount",
           "type": "u64"
         }
-      ],
-      "discriminant": {
-        "type": "u8",
-        "value": 4
-      }
+      ]
     },
     {
       "name": "revoke",
@@ -222,22 +146,23 @@
           "isSigner": true
         }
       ],
-      "args": [],
-      "discriminant": {
-        "type": "u8",
-        "value": 5
-      }
+      "args": []
     },
     {
       "name": "setAuthority",
       "accounts": [
         {
-          "name": "mint",
+          "name": "owned",
           "isMut": true,
           "isSigner": false
         },
         {
-          "name": "currentAuthority",
+          "name": "owner",
+          "isMut": false,
+          "isSigner": true
+        },
+        {
+          "name": "signer",
           "isMut": false,
           "isSigner": true
         }
@@ -252,15 +177,10 @@
         {
           "name": "newAuthority",
           "type": {
-            "option": "publicKey",
-            "prefix": "u8"
+            "option": "publicKey"
           }
         }
-      ],
-      "discriminant": {
-        "type": "u8",
-        "value": 6
-      }
+      ]
     },
     {
       "name": "mintTo",
@@ -271,37 +191,7 @@
           "isSigner": false
         },
         {
-          "name": "mintTo",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "mintAuthority",
-          "isMut": false,
-          "isSigner": true
-        }
-      ],
-      "args": [
-        {
-          "name": "amount",
-          "type": "u64"
-        }
-      ],
-      "discriminant": {
-        "type": "u8",
-        "value": 7
-      }
-    },
-    {
-      "name": "burn",
-      "accounts": [
-        {
-          "name": "burnAccount",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "mint",
+          "name": "account",
           "isMut": true,
           "isSigner": false
         },
@@ -316,17 +206,39 @@
           "name": "amount",
           "type": "u64"
         }
+      ]
+    },
+    {
+      "name": "burn",
+      "accounts": [
+        {
+          "name": "account",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "mint",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "authority",
+          "isMut": false,
+          "isSigner": true
+        }
       ],
-      "discriminant": {
-        "type": "u8",
-        "value": 8
-      }
+      "args": [
+        {
+          "name": "amount",
+          "type": "u64"
+        }
+      ]
     },
     {
       "name": "closeAccount",
       "accounts": [
         {
-          "name": "closeAccount",
+          "name": "account",
           "isMut": true,
           "isSigner": false
         },
@@ -341,17 +253,13 @@
           "isSigner": true
         }
       ],
-      "args": [],
-      "discriminant": {
-        "type": "u8",
-        "value": 9
-      }
+      "args": []
     },
     {
       "name": "freezeAccount",
       "accounts": [
         {
-          "name": "freezeAccount",
+          "name": "account",
           "isMut": true,
           "isSigner": false
         },
@@ -366,22 +274,18 @@
           "isSigner": true
         }
       ],
-      "args": [],
-      "discriminant": {
-        "type": "u8",
-        "value": 10
-      }
+      "args": []
     },
     {
       "name": "thawAccount",
       "accounts": [
         {
-          "name": "thawAccount",
+          "name": "account",
           "isMut": true,
           "isSigner": false
         },
         {
-          "name": "tokenMint",
+          "name": "mint",
           "isMut": false,
           "isSigner": false
         },
@@ -391,11 +295,7 @@
           "isSigner": true
         }
       ],
-      "args": [],
-      "discriminant": {
-        "type": "u8",
-        "value": 11
-      }
+      "args": []
     },
     {
       "name": "transferChecked",
@@ -406,7 +306,7 @@
           "isSigner": false
         },
         {
-          "name": "tokenMint",
+          "name": "mint",
           "isMut": false,
           "isSigner": false
         },
@@ -416,7 +316,7 @@
           "isSigner": false
         },
         {
-          "name": "owner",
+          "name": "authority",
           "isMut": false,
           "isSigner": true
         }
@@ -430,11 +330,7 @@
           "name": "decimals",
           "type": "u8"
         }
-      ],
-      "discriminant": {
-        "type": "u8",
-        "value": 12
-      }
+      ]
     },
     {
       "name": "approveChecked",
@@ -445,7 +341,7 @@
           "isSigner": false
         },
         {
-          "name": "tokenMint",
+          "name": "mint",
           "isMut": false,
           "isSigner": false
         },
@@ -469,56 +365,18 @@
           "name": "decimals",
           "type": "u8"
         }
-      ],
-      "discriminant": {
-        "type": "u8",
-        "value": 13
-      }
+      ]
     },
     {
       "name": "mintToChecked",
       "accounts": [
         {
-          "name": "tokenMint",
+          "name": "mint",
           "isMut": true,
           "isSigner": false
         },
         {
-          "name": "mintTo",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "mintAuthority",
-          "isMut": false,
-          "isSigner": true
-        }
-      ],
-      "args": [
-        {
-          "name": "amount",
-          "type": "u64"
-        },
-        {
-          "name": "decimals",
-          "type": "u8"
-        }
-      ],
-      "discriminant": {
-        "type": "u8",
-        "value": 14
-      }
-    },
-    {
-      "name": "burnChecked",
-      "accounts": [
-        {
-          "name": "burnAccount",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "tokenMint",
+          "name": "account",
           "isMut": true,
           "isSigner": false
         },
@@ -537,22 +395,48 @@
           "name": "decimals",
           "type": "u8"
         }
+      ]
+    },
+    {
+      "name": "burnChecked",
+      "accounts": [
+        {
+          "name": "account",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "mint",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "authority",
+          "isMut": false,
+          "isSigner": true
+        }
       ],
-      "discriminant": {
-        "type": "u8",
-        "value": 15
-      }
+      "args": [
+        {
+          "name": "amount",
+          "type": "u64"
+        },
+        {
+          "name": "decimals",
+          "type": "u8"
+        }
+      ]
     },
     {
       "name": "initializeAccount2",
       "accounts": [
         {
-          "name": "initializeAccount",
+          "name": "account",
           "isMut": true,
           "isSigner": false
         },
         {
-          "name": "associatedMint",
+          "name": "mint",
           "isMut": false,
           "isSigner": false
         },
@@ -567,37 +451,29 @@
           "name": "owner",
           "type": "publicKey"
         }
-      ],
-      "discriminant": {
-        "type": "u8",
-        "value": 16
-      }
+      ]
     },
     {
       "name": "syncNative",
       "accounts": [
         {
-          "name": "nativeTokenAccount",
+          "name": "account",
           "isMut": true,
           "isSigner": false
         }
       ],
-      "args": [],
-      "discriminant": {
-        "type": "u8",
-        "value": 17
-      }
+      "args": []
     },
     {
       "name": "initializeAccount3",
       "accounts": [
         {
-          "name": "initializeAccount",
+          "name": "account",
           "isMut": true,
           "isSigner": false
         },
         {
-          "name": "associatedMint",
+          "name": "mint",
           "isMut": false,
           "isSigner": false
         }
@@ -607,86 +483,28 @@
           "name": "owner",
           "type": "publicKey"
         }
-      ],
-      "discriminant": {
-        "type": "u8",
-        "value": 18
-      }
+      ]
     },
     {
       "name": "initializeMultisig2",
       "accounts": [
         {
-          "name": "initializeAccount",
+          "name": "multisig",
           "isMut": true,
           "isSigner": false
         },
         {
-          "name": "signer1",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "signer2",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "signer3",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "signer4",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "signer5",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "signer6",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "signer7",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "signer8",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "signer9",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "signer10",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "signer11",
+          "name": "signer",
           "isMut": false,
           "isSigner": false
         }
       ],
       "args": [
         {
-          "name": "noOfSignersRequired",
+          "name": "m",
           "type": "u8"
         }
-      ],
-      "discriminant": {
-        "type": "u8",
-        "value": 19
-      }
+      ]
     },
     {
       "name": "initializeMint2",
@@ -709,15 +527,10 @@
         {
           "name": "freezeAuthority",
           "type": {
-            "option": "publicKey",
-            "prefix": "u8"
+            "option": "publicKey"
           }
         }
-      ],
-      "discriminant": {
-        "type": "u8",
-        "value": 20
-      }
+      ]
     },
     {
       "name": "getAccountDataSize",
@@ -728,26 +541,19 @@
           "isSigner": false
         }
       ],
-      "args": [],
-      "discriminant": {
-        "type": "u8",
-        "value": 21
-      }
+      "args": [
+      ]
     },
     {
       "name": "initializeImmutableOwner",
       "accounts": [
         {
-          "name": "initializeAccount",
+          "name": "tokenAccount",
           "isMut": true,
           "isSigner": false
         }
       ],
-      "args": [],
-      "discriminant": {
-        "type": "u8",
-        "value": 22
-      }
+      "args": []
     },
     {
       "name": "amountToUiAmount",
@@ -763,11 +569,7 @@
           "name": "amount",
           "type": "u64"
         }
-      ],
-      "discriminant": {
-        "type": "u8",
-        "value": 23
-      }
+      ]
     },
     {
       "name": "uiAmountToAmount",
@@ -781,13 +583,11 @@
       "args": [
         {
           "name": "uiAmount",
-          "type": "string"
+          "type": {
+            "defined": "&'astr"
+          }
         }
-      ],
-      "discriminant": {
-        "type": "u8",
-        "value": 24
-      }
+      ]
     },
     {
       "name": "initializeMintCloseAuthority",
@@ -802,48 +602,16 @@
         {
           "name": "closeAuthority",
           "type": {
-            "option": "publicKey",
-            "prefix": "u8"
+            "option": "publicKey"
           }
         }
-      ],
-      "discriminant": {
-        "type": "u8",
-        "value": 25
-      }
-    },
-    {
-      "name": "transferFeeExtension",
-      "accounts": [],
-      "args": [],
-      "discriminant": {
-        "type": "u8",
-        "value": 26
-      }
-    },
-    {
-      "name": "confidentialTransferExtension",
-      "accounts": [],
-      "args": [],
-      "discriminant": {
-        "type": "u8",
-        "value": 27
-      }
-    },
-    {
-      "name": "defaultAccountStateExtension",
-      "accounts": [],
-      "args": [],
-      "discriminant": {
-        "type": "u8",
-        "value": 28
-      }
+      ]
     },
     {
       "name": "reallocate",
       "accounts": [
         {
-          "name": "reallocatedAccount",
+          "name": "account",
           "isMut": true,
           "isSigner": false
         },
@@ -863,45 +631,29 @@
           "isSigner": true
         }
       ],
-      "args": [],
-      "discriminant": {
-        "type": "u8",
-        "value": 29
-      }
-    },
-    {
-      "name": "memoTransferExtension",
-      "accounts": [],
-      "args": [],
-      "discriminant": {
-        "type": "u8",
-        "value": 30
-      }
+      "args": [
+      ]
     },
     {
       "name": "createNativeMint",
       "accounts": [
         {
-          "name": "fundingAccount",
+          "name": "payer",
           "isMut": true,
           "isSigner": true
         },
         {
-          "name": "mint",
+          "name": "crateNativeMint",
           "isMut": true,
           "isSigner": false
         },
         {
-          "name": "fundingAccount",
+          "name": "systemProgram",
           "isMut": false,
           "isSigner": false
         }
       ],
-      "args": [],
-      "discriminant": {
-        "type": "u8",
-        "value": 31
-      }
+      "args": []
     },
     {
       "name": "initializeNonTransferableMint",
@@ -912,29 +664,7 @@
           "isSigner": false
         }
       ],
-      "args": [],
-      "discriminant": {
-        "type": "u8",
-        "value": 32
-      }
-    },
-    {
-      "name": "interestBearingMintExtension",
-      "accounts": [],
-      "args": [],
-      "discriminant": {
-        "type": "u8",
-        "value": 33
-      }
-    },
-    {
-      "name": "cpiGuardExtension",
-      "accounts": [],
-      "args": [],
-      "discriminant": {
-        "type": "u8",
-        "value": 34
-      }
+      "args": []
     },
     {
       "name": "initializePermanentDelegate",
@@ -950,135 +680,19 @@
           "name": "delegate",
           "type": "publicKey"
         }
-      ],
-      "discriminant": {
-        "type": "u8",
-        "value": 35
-      }
-    },
-    {
-      "name": "transferHookExtension",
-      "accounts": [],
-      "args": [],
-      "discriminant": {
-        "type": "u8",
-        "value": 36
-      }
-    },
-    {
-      "name": "confidentialTransferFeeExtension",
-      "accounts": [],
-      "args": [],
-      "discriminant": {
-        "type": "u8",
-        "value": 37
-      }
-    },
-    {
-      "name": "withdrawExcessLamports",
-      "accounts": [
-        {
-          "name": "source",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "destination",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "authority",
-          "isMut": false,
-          "isSigner": true
-        }
-      ],
-      "args": [],
-      "discriminant": {
-        "type": "u8",
-        "value": 38
-      }
-    },
-    {
-      "name": "metadataPointerExtension",
-      "accounts": [],
-      "args": [],
-      "discriminant": {
-        "type": "u8",
-        "value": 39
-      }
-    },
-    {
-      "name": "groupPointerExtension",
-      "accounts": [],
-      "args": [],
-      "discriminant": {
-        "type": "u8",
-        "value": 40
-      }
-    },
-    {
-      "name": "groupMemberPointerExtension",
-      "accounts": [],
-      "args": [],
-      "discriminant": {
-        "type": "u8",
-        "value": 41
-      }
-    },
-    {
-      "name": "initializeTokenMetadata",
-      "discriminator": [210, 225, 30, 162, 88, 184, 77, 141],
-      "accounts": [
-        {
-          "name": "metadata",
-          "isMut": true,
-          "isSigner": true
-        },
-        {
-          "name": "updateAuthority",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "mint",
-          "isMut": true,
-          "isSigner": true
-        },
-        {
-          "name": "mintAuthority",
-          "isMut": true,
-          "isSigner": false
-        }
-      ],
-      "args": [
-        {
-          "name": "name",
-          "type": "string"
-        },
-        {
-          "name": "symbol",
-          "type": "string"
-        },
-        {
-          "name": "uri",
-          "type": "string"
-        },
-        { "name": "additionalMetadata", "type": { "option": { "hashMap": ["string", "string"] } } }
       ]
     }
   ],
   "accounts": [
     {
-      "name": "MintAccount",
+      "name": "Mint",
       "type": {
         "kind": "struct",
         "fields": [
           {
-            "name": "mint_authority",
+            "name": "mintAuthority",
             "type": {
-              "option": "publicKey",
-              "prefix": "u32"
+              "option": "publicKey"
             }
           },
           {
@@ -1090,21 +704,20 @@
             "type": "u8"
           },
           {
-            "name": "is_initialized",
+            "name": "isInitialized",
             "type": "bool"
           },
           {
-            "name": "freeze_authority",
+            "name": "freezeAuthority",
             "type": {
-              "option": "publicKey",
-              "prefix": "u32"
+              "option": "publicKey"
             }
           }
         ]
       }
     },
     {
-      "name": "TokenAccount",
+      "name": "Account",
       "type": {
         "kind": "struct",
         "fields": [
@@ -1123,8 +736,7 @@
           {
             "name": "delegate",
             "type": {
-              "option": "publicKey",
-              "prefix": "u32"
+              "option": "publicKey"
             }
           },
           {
@@ -1134,41 +746,39 @@
             }
           },
           {
-            "name": "is_native",
+            "name": "isNative",
             "type": {
-              "option": "u64",
-              "prefix": "u32"
+              "option": "u64"
             }
           },
           {
-            "name": "delegated_amount",
+            "name": "delegatedAmount",
             "type": "u64"
           },
           {
-            "name": "close_authority",
+            "name": "closeAuthority",
             "type": {
-              "option": "publicKey",
-              "prefix": "u32"
+              "option": "publicKey"
             }
           }
         ]
       }
     },
     {
-      "name": "MultisigAccount",
+      "name": "Multisig",
       "type": {
         "kind": "struct",
         "fields": [
           {
-            "name": "num_of_signers_required",
+            "name": "m",
             "type": "u8"
           },
           {
-            "name": "num_of_valid_signers_required",
+            "name": "n",
             "type": "u8"
           },
           {
-            "name": "is_initialized",
+            "name": "isInitialized",
             "type": "bool"
           },
           {
@@ -1189,7 +799,6 @@
       "name": "AccountState",
       "type": {
         "kind": "enum",
-        "size": "u8",
         "variants": [
           {
             "name": "Uninitialized"
@@ -1204,28 +813,9 @@
       }
     },
     {
-      "name": "AccountType",
-      "type": {
-        "kind": "enum",
-        "size": "u8",
-        "variants": [
-          {
-            "name": "Uninitialized"
-          },
-          {
-            "name": "Mint"
-          },
-          {
-            "name": "Account"
-          }
-        ]
-      }
-    },
-    {
       "name": "AuthorityType",
       "type": {
         "kind": "enum",
-        "size": "u8",
         "variants": [
           {
             "name": "MintTokens"
@@ -1253,532 +843,6 @@
           },
           {
             "name": "PermanentDelegate"
-          },
-          {
-            "name": "ConfidentialTransferMint"
-          },
-          {
-            "name": "TransferHookProgramId"
-          },
-          {
-            "name": "ConfidentialTransferFeeConfig"
-          },
-          {
-            "name": "MetadataPointer"
-          },
-          {
-            "name": "GroupPointer"
-          },
-          {
-            "name": "GroupMemberPointer"
-          }
-        ]
-      }
-    },
-    {
-      "name": "ExtensionTypeArray",
-      "type": {
-        "kind": "struct",
-        "fields": [
-          {
-            "name": "ExtensionType",
-            "type": {
-              "vec": {
-                "defined": "ExtensionType"
-              }
-            }
-          }
-        ]
-      }
-    },
-    {
-      "name": "ExtensionTypeWithFields",
-      "type": {
-        "kind": "enum",
-        "size": "u16",
-        "variants": [
-          {
-            "name": "Uninitialized"
-          },
-          {
-            "name": "TransferFeeConfig",
-            "fields": [
-              {
-                "name": "extensionLength",
-                "type": "u16"
-              },
-              {
-                "name": "transferFeeConfigAuthority",
-                "type": "publicKey"
-              },
-              {
-                "name": "withdrawWithheldAuthority",
-                "type": "publicKey"
-              },
-              {
-                "name": "withheldAmount",
-                "type": "u64"
-              },
-              {
-                "name": "olderTransferFee",
-                "type": {
-                  "defined": "TransferFee"
-                }
-              },
-              {
-                "name": "newerTransferFee",
-                "type": {
-                  "defined": "TransferFee"
-                }
-              }
-            ]
-          },
-          {
-            "name": "TransferFeeAmount",
-            "fields": [
-              {
-                "name": "extensionLength",
-                "type": "u16"
-              },
-              {
-                "name": "withheldAmount",
-                "type": "u64"
-              }
-            ]
-          },
-          {
-            "name": "MintCloseAuthority",
-            "fields": [
-              {
-                "name": "extensionLength",
-                "type": "u16"
-              },
-              {
-                "name": "closeAuthority",
-                "type": "publicKey"
-              }
-            ]
-          },
-          {
-            "name": "ConfidentialTransferMint",
-            "fields": [
-              {
-                "name": "extensionLength",
-                "type": "u16"
-              },
-              {
-                "name": "authority",
-                "type": "publicKey"
-              },
-              {
-                "name": "autoApproveNewAccounts",
-                "type": "bool"
-              },
-              {
-                "name": "auditorElgamalPubkey",
-                "type": "publicKey"
-              }
-            ]
-          },
-          {
-            "name": "ConfidentialTransferAccount",
-            "fields": [
-              {
-                "name": "extensionLength",
-                "type": "u16"
-              },
-              {
-                "name": "approved",
-                "type": "bool"
-              },
-              {
-                "name": "elgamal_pubkey",
-                "type": "publicKey"
-              },
-              {
-                "name": "pending_balance_lo",
-                "type": {
-                  "array": [
-                    "u8",
-                    64
-                  ]
-                }
-              },
-              {
-                "name": "pending_balance_hi",
-                "type": {
-                  "array": [
-                    "u8",
-                    64
-                  ]
-                }
-              },
-              {
-                "name": "available_balance",
-                "type": {
-                  "array": [
-                    "u8",
-                    64
-                  ]
-                }
-              },
-              {
-                "name": "decryptable_available_balance",
-                "type": {
-                  "array": [
-                    "u8",
-                    36
-                  ]
-                }
-              },
-              {
-                "name": "allow_confidential_credits",
-                "type": "bool"
-              },
-              {
-                "name": "allow_non_confidential_credits",
-                "type": "bool"
-              },
-              {
-                "name": "pending_balance_credit_counter",
-                "type": "u64"
-              },
-              {
-                "name": "maximum_pending_balance_credit_counter",
-                "type": "u64"
-              },
-              {
-                "name": "expected_pending_balance_credit_counter",
-                "type": "u64"
-              },
-              {
-                "name": "actual_pending_balance_credit_counter",
-                "type": "u64"
-              }
-            ]
-          },
-          {
-            "name": "DefaultAccountState",
-            "fields": [
-              {
-                "name": "extensionLength",
-                "type": "u16"
-              },
-              {
-                "name": "defaultAccountState",
-                "type": {
-                  "defined": "AccountState"
-                }
-              }
-            ]
-          },
-          {
-            "name": "ImmutableOwner",
-            "fields": [
-              {
-                "name": "extensionLength",
-                "type": "u16"
-              }
-            ]
-          },
-          {
-            "name": "MemoTransfer",
-            "fields": [
-              {
-                "name": "extensionLength",
-                "type": "u16"
-              },
-              {
-                "name": "requireIncomingTransferMemos",
-                "type": "bool"
-              }
-            ]
-          },
-          {
-            "name": "NonTransferable",
-            "fields": [
-              {
-                "name": "extensionLength",
-                "type": "u16"
-              }
-            ]
-          },
-          {
-            "name": "InterestBearingConfig",
-            "fields": [
-              {
-                "name": "extensionLength",
-                "type": "u16"
-              },
-              {
-                "name": "rateAuthority",
-                "type": "publicKey"
-              },
-              {
-                "name": "initializationTimestamp",
-                "type": "i64"
-              },
-              {
-                "name": "preUpdateAverageRate",
-                "type": "i16"
-              },
-              {
-                "name": "lastUpdateTimestamp",
-                "type": "i64"
-              },
-              {
-                "name": "currentRate",
-                "type": "i16"
-              }
-            ]
-          },
-          {
-            "name": "CpiGuard",
-            "fields": [
-              {
-                "name": "extensionLength",
-                "type": "u16"
-              },
-              {
-                "name": "lockCpi",
-                "type": "bool"
-              }
-            ]
-          },
-          {
-            "name": "PermanentDelegate",
-            "fields": [
-              {
-                "name": "extensionLength",
-                "type": "u16"
-              },
-              {
-                "name": "delegate",
-                "type": "publicKey"
-              }
-            ]
-          },
-          {
-            "name": "NonTransferableAccount",
-            "fields": [
-              {
-                "name": "extensionLength",
-                "type": "u16"
-              }
-            ]
-          },
-          {
-            "name": "TransferHook",
-            "fields": [
-              {
-                "name": "extensionLength",
-                "type": "u16"
-              },
-              {
-                "name": "authority",
-                "type": "publicKey"
-              },
-              {
-                "name": "programId",
-                "type": "publicKey"
-              }
-            ]
-          },
-          {
-            "name": "TransferHookAccount",
-            "fields": [
-              {
-                "name": "extensionLength",
-                "type": "u16"
-              },
-              {
-                "name": "transferring",
-                "type": "bool"
-              }
-            ]
-          },
-          {
-            "name": "ConfidentialTransferFeeConfig",
-            "fields": [
-              {
-                "name": "extensionLength",
-                "type": "u16"
-              },
-              {
-                "name": "authority",
-                "type": "publicKey"
-              },
-              {
-                "name": "withdrawWithheldAuthorityElgamalPubkey",
-                "type": "publicKey"
-              },
-              {
-                "name": "harvestToMintEnabled",
-                "type": "bool"
-              },
-              {
-                "name": "withheldAmount",
-                "type": {
-                  "array": [
-                    "u8",
-                    64
-                  ]
-                }
-              }
-            ]
-          },
-          {
-            "name": "ConfidentialTransferFeeAmount",
-            "fields": [
-              {
-                "name": "extensionLength",
-                "type": "u16"
-              },
-              {
-                "name": "withheldAmount",
-                "type": {
-                  "array": [
-                    "u8",
-                    64
-                  ]
-                }
-              }
-            ]
-          },
-          {
-            "name": "MetadataPointer",
-            "fields": [
-              {
-                "name": "extensionLength",
-                "type": "u16"
-              },
-              {
-                "name": "authority",
-                "type": "publicKey"
-              },
-              {
-                "name": "metadataAddress",
-                "type": "publicKey"
-              }
-            ]
-          },
-          {
-            "name": "TokenMetadata",
-            "fields": [
-              {
-                "name": "extensionLength",
-                "type": "u16"
-              },
-              {
-                "name": "updateAuthority",
-                "type": "publicKey"
-              },
-              {
-                "name": "mint",
-                "type": "publicKey"
-              },
-              {
-                "name": "name",
-                "type": "string"
-              },
-              {
-                "name": "symbol",
-                "type": "string"
-              },
-              {
-                "name": "uri",
-                "type": "string"
-              },
-              {
-                "name": "additionalMetadata",
-                "type": {
-                  "hashMap": [
-                    "string",
-                    "string"
-                  ]
-                }
-              }
-            ]
-          },
-          {
-            "name": "GroupPointer",
-            "fields": [
-              {
-                "name": "extensionLength",
-                "type": "u16"
-              },
-              {
-                "name": "authority",
-                "type": "publicKey"
-              },
-              {
-                "name": "groupAddress",
-                "type": "publicKey"
-              }
-            ]
-          },
-          {
-            "name": "TokenGroup",
-            "fields": [
-              {
-                "name": "extensionLength",
-                "type": "u16"
-              },
-              {
-                "name": "updateAuthority",
-                "type": "publicKey"
-              },
-              {
-                "name": "mint",
-                "type": "publicKey"
-              },
-              {
-                "name": "size",
-                "type": "u32"
-              },
-              {
-                "name": "maxSize",
-                "type": "u32"
-              }
-            ]
-          },
-          {
-            "name": "GroupMemberPointer",
-            "fields": [
-              {
-                "name": "extensionLength",
-                "type": "u16"
-              },
-              {
-                "name": "authority",
-                "type": "publicKey"
-              },
-              {
-                "name": "memberAddress",
-                "type": "publicKey"
-              }
-            ]
-          },
-          {
-            "name": "TokenGroupMember",
-            "fields": [
-              {
-                "name": "extensionLength",
-                "type": "u16"
-              },
-              {
-                "name": "mint",
-                "type": "publicKey"
-              },
-              {
-                "name": "group",
-                "type": "publicKey"
-              },
-              {
-                "name": "memberNumber",
-                "type": "u32"
-              }
-            ]
           }
         ]
       }
@@ -1787,7 +851,6 @@
       "name": "ExtensionType",
       "type": {
         "kind": "enum",
-        "size": "u16",
         "variants": [
           {
             "name": "Uninitialized"
@@ -1829,83 +892,268 @@
             "name": "PermanentDelegate"
           },
           {
-            "name": "NonTransferableAccount"
+            "name": "AccountPaddingTest"
           },
           {
-            "name": "TransferHook"
-          },
-          {
-            "name": "TransferHookAccount"
-          },
-          {
-            "name": "ConfidentialTransferFeeConfig"
-          },
-          {
-            "name": "ConfidentialTransferFeeAmount"
-          },
-          {
-            "name": "MetadataPointer"
-          },
-          {
-            "name": "TokenMetadata"
-          },
-          {
-            "name": "GroupPointer"
-          },
-          {
-            "name": "TokenGroup"
-          },
-          {
-            "name": "GroupMemberPointer"
-          },
-          {
-            "name": "TokenGroupMember"
-          }
-        ]
-      }
-    },
-    {
-      "name": "TransferFee",
-      "type": {
-        "kind": "struct",
-        "fields": [
-          {
-            "name": "epoch",
-            "type": "u64"
-          },
-          {
-            "name": "maximumFee",
-            "type": "u64"
-          },
-          {
-            "name": "transferFeeBasisPoints",
-            "type": "u16"
-          }
-        ]
-      }
-    },
-    {
-      "name": "BasisPoints",
-      "type": {
-        "kind": "struct",
-        "fields": [
-          {
-            "name": "BasisPoints",
-            "type": {
-              "array": [
-                "u8",
-                2
-              ]
-            }
+            "name": "MintPaddingTest"
           }
         ]
       }
     }
   ],
+  "errors": [
+    {
+      "code": 0,
+      "name": "NotRentExempt",
+      "msg": "Lamport balance below rent-exempt threshold"
+    },
+    {
+      "code": 1,
+      "name": "InsufficientFunds",
+      "msg": "Insufficient funds"
+    },
+    {
+      "code": 2,
+      "name": "InvalidMint",
+      "msg": "Invalid Mint"
+    },
+    {
+      "code": 3,
+      "name": "MintMismatch",
+      "msg": "Account not associated with this Mint"
+    },
+    {
+      "code": 4,
+      "name": "OwnerMismatch",
+      "msg": "Owner does not match"
+    },
+    {
+      "code": 5,
+      "name": "FixedSupply",
+      "msg": "Fixed supply"
+    },
+    {
+      "code": 6,
+      "name": "AlreadyInUse",
+      "msg": "Already in use"
+    },
+    {
+      "code": 7,
+      "name": "InvalidNumberOfProvidedSigners",
+      "msg": "Invalid number of provided signers"
+    },
+    {
+      "code": 8,
+      "name": "InvalidNumberOfRequiredSigners",
+      "msg": "Invalid number of required signers"
+    },
+    {
+      "code": 9,
+      "name": "UninitializedState",
+      "msg": "State is uninitialized"
+    },
+    {
+      "code": 10,
+      "name": "NativeNotSupported",
+      "msg": "Instruction does not support native tokens"
+    },
+    {
+      "code": 11,
+      "name": "NonNativeHasBalance",
+      "msg": "Non-native account can only be closed if its balance is zero"
+    },
+    {
+      "code": 12,
+      "name": "InvalidInstruction",
+      "msg": "Invalid instruction"
+    },
+    {
+      "code": 13,
+      "name": "InvalidState",
+      "msg": "State is invalid for requested operation"
+    },
+    {
+      "code": 14,
+      "name": "Overflow",
+      "msg": "Operation overflowed"
+    },
+    {
+      "code": 15,
+      "name": "AuthorityTypeNotSupported",
+      "msg": "Account does not support specified authority type"
+    },
+    {
+      "code": 16,
+      "name": "MintCannotFreeze",
+      "msg": "This token mint cannot freeze accounts"
+    },
+    {
+      "code": 17,
+      "name": "AccountFrozen",
+      "msg": "Account is frozen"
+    },
+    {
+      "code": 18,
+      "name": "MintDecimalsMismatch",
+      "msg": "The provided decimals value different from the Mint decimals"
+    },
+    {
+      "code": 19,
+      "name": "NonNativeNotSupported",
+      "msg": "Instruction does not support non-native tokens"
+    },
+    {
+      "code": 20,
+      "name": "ExtensionTypeMismatch",
+      "msg": "Extension type does not match already existing extensions"
+    },
+    {
+      "code": 21,
+      "name": "ExtensionBaseMismatch",
+      "msg": "Extension does not match the base type provided"
+    },
+    {
+      "code": 22,
+      "name": "ExtensionAlreadyInitialized",
+      "msg": "Extension already initialized on this account"
+    },
+    {
+      "code": 23,
+      "name": "ConfidentialTransferAccountHasBalance",
+      "msg": "An account can only be closed if its confidential balance is zero"
+    },
+    {
+      "code": 24,
+      "name": "ConfidentialTransferAccountNotApproved",
+      "msg": "Account not approved for confidential transfers"
+    },
+    {
+      "code": 25,
+      "name": "ConfidentialTransferDepositsAndTransfersDisabled",
+      "msg": "Account not accepting deposits or transfers"
+    },
+    {
+      "code": 26,
+      "name": "ConfidentialTransferElGamalPubkeyMismatch",
+      "msg": "ElGamal public key mismatch"
+    },
+    {
+      "code": 27,
+      "name": "ConfidentialTransferBalanceMismatch",
+      "msg": "Balance mismatch"
+    },
+    {
+      "code": 28,
+      "name": "MintHasSupply",
+      "msg": "Mint has non-zero supply. Burn all tokens before closing the mint"
+    },
+    {
+      "code": 29,
+      "name": "NoAuthorityExists",
+      "msg": "No authority exists to perform the desired operation"
+    },
+    {
+      "code": 30,
+      "name": "TransferFeeExceedsMaximum",
+      "msg": "Transfer fee exceeds maximum of 10,000 basis points"
+    },
+    {
+      "code": 31,
+      "name": "MintRequiredForTransfer",
+      "msg": "Mint required for this account to transfer tokens, use `transfer_checked` or `transfer_checked_with_fee`"
+    },
+    {
+      "code": 32,
+      "name": "FeeMismatch",
+      "msg": "Calculated fee does not match expected fee"
+    },
+    {
+      "code": 33,
+      "name": "FeeParametersMismatch",
+      "msg": "Fee parameters associated with zero-knowledge proofs do not match fee parameters in mint"
+    },
+    {
+      "code": 34,
+      "name": "ImmutableOwner",
+      "msg": "The owner authority cannot be changed"
+    },
+    {
+      "code": 35,
+      "name": "AccountHasWithheldTransferFees",
+      "msg": "An account can only be closed if its withheld fee balance is zero, harvest fees to the mint and try again"
+    },
+    {
+      "code": 36,
+      "name": "NoMemo",
+      "msg": "No memo in previous instruction; required for recipient to receive a transfer"
+    },
+    {
+      "code": 37,
+      "name": "NonTransferable",
+      "msg": "Transfer is disabled for this mint"
+    },
+    {
+      "code": 38,
+      "name": "NonTransferableNeedsImmutableOwnership",
+      "msg": "Non-transferable tokens can't be minted to an account without immutable ownership"
+    },
+    {
+      "code": 39,
+      "name": "MaximumPendingBalanceCreditCounterExceeded",
+      "msg": "The total number of `Deposit` and `Transfer` instructions to an account cannot exceed\n            the associated `maximum_pending_balance_credit_counter`"
+    },
+    {
+      "code": 40,
+      "name": "MaximumDepositAmountExceeded",
+      "msg": "Deposit amount exceeds maximum limit"
+    },
+    {
+      "code": 41,
+      "name": "CpiGuardSettingsLocked",
+      "msg": "CPI Guard cannot be enabled or disabled in CPI"
+    },
+    {
+      "code": 42,
+      "name": "CpiGuardTransferBlocked",
+      "msg": "CPI Guard is enabled, and a program attempted to transfer user funds via CPI without using a delegate"
+    },
+    {
+      "code": 43,
+      "name": "CpiGuardBurnBlocked",
+      "msg": "CPI Guard is enabled, and a program attempted to burn user funds via CPI without using a delegate"
+    },
+    {
+      "code": 44,
+      "name": "CpiGuardCloseAccountBlocked",
+      "msg": "CPI Guard is enabled, and a program attempted to close an account via CPI without returning lamports to owner"
+    },
+    {
+      "code": 45,
+      "name": "CpiGuardApproveBlocked",
+      "msg": "CPI Guard is enabled, and a program attempted to approve a delegate via CPI"
+    },
+    {
+      "code": 46,
+      "name": "CpiGuardSetAuthorityBlocked",
+      "msg": "CPI Guard is enabled, and a program attempted to add or replace an authority via CPI"
+    },
+    {
+      "code": 47,
+      "name": "CpiGuardOwnerChangeBlocked",
+      "msg": "Account ownership cannot be changed while CPI Guard is enabled"
+    },
+    {
+      "code": 48,
+      "name": "ExtensionNotFound",
+      "msg": "Extension not found in account data"
+    },
+    {
+      "code": 49,
+      "name": "NonConfidentialTransfersDisabled",
+      "msg": "Non-confidential transfers disabled"
+    }
+  ],
   "metadata": {
-    "origin": "shank",
-    "address": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
-    "binaryVersion": "1.0.0",
-    "libVersion": "1.0.0"
+    "instruction_selector_type": "index"
   }
 }
