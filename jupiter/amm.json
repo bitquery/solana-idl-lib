@@ -1799,7 +1799,17 @@
           },
           {
             "name":"MeteoraDynamicBondingCurveSwapWithRemainingAccounts"
-          }
+          },
+          {
+            "name":"TesseraV",
+            "fields":[
+              {
+                "name":"side",
+                "type":{"defined":{"name":"Side"}}
+              }
+            ]
+          },
+          {"name":"RaydiumStable"}
         ]
       }
     },
