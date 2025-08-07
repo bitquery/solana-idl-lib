@@ -39,7 +39,172 @@
             ]
           }
         },
-        {"name": "program"}
+        {"name": "program"},
+        {
+          "name": "coin_creator_vault_ata",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "account",
+                "path": "coin_creator_vault_authority"
+              },
+              {
+                "kind": "account",
+                "path": "quote_token_program"
+              },
+              {
+                "kind": "account",
+                "path": "quote_mint"
+              }
+            ],
+            "program": {
+              "kind": "const",
+              "value": [
+                140,
+                151,
+                37,
+                143,
+                78,
+                36,
+                137,
+                241,
+                187,
+                61,
+                16,
+                41,
+                20,
+                142,
+                13,
+                131,
+                11,
+                90,
+                19,
+                153,
+                218,
+                255,
+                16,
+                132,
+                4,
+                142,
+                123,
+                216,
+                219,
+                233,
+                248,
+                89
+              ]
+            }
+          }
+        },
+        {
+          "name": "coin_creator_vault_authority",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  114,
+                  101,
+                  97,
+                  116,
+                  111,
+                  114,
+                  95,
+                  118,
+                  97,
+                  117,
+                  108,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "pool.coin_creator",
+                "account": "Pool"
+              }
+            ]
+          }
+        },
+        {
+          "name": "global_volume_accumulator",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  103,
+                  108,
+                  111,
+                  98,
+                  97,
+                  108,
+                  95,
+                  118,
+                  111,
+                  108,
+                  117,
+                  109,
+                  101,
+                  95,
+                  97,
+                  99,
+                  99,
+                  117,
+                  109,
+                  117,
+                  108,
+                  97,
+                  116,
+                  111,
+                  114
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "user_volume_accumulator",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  117,
+                  115,
+                  101,
+                  114,
+                  95,
+                  118,
+                  111,
+                  108,
+                  117,
+                  109,
+                  101,
+                  95,
+                  97,
+                  99,
+                  99,
+                  117,
+                  109,
+                  117,
+                  108,
+                  97,
+                  116,
+                  111,
+                  114
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "user"
+              }
+            ]
+          }
+        }
       ],
       "args": [{"name": "base_amount_out", "type": "u64"}, {"name": "max_quote_amount_in", "type": "u64"}]
     },
@@ -269,7 +434,94 @@
             ]
           }
         },
-        {"name": "program"}
+        {"name": "program"},
+        {
+          "name": "coin_creator_vault_ata",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "account",
+                "path": "coin_creator_vault_authority"
+              },
+              {
+                "kind": "account",
+                "path": "quote_token_program"
+              },
+              {
+                "kind": "account",
+                "path": "quote_mint"
+              }
+            ],
+            "program": {
+              "kind": "const",
+              "value": [
+                140,
+                151,
+                37,
+                143,
+                78,
+                36,
+                137,
+                241,
+                187,
+                61,
+                16,
+                41,
+                20,
+                142,
+                13,
+                131,
+                11,
+                90,
+                19,
+                153,
+                218,
+                255,
+                16,
+                132,
+                4,
+                142,
+                123,
+                216,
+                219,
+                233,
+                248,
+                89
+              ]
+            }
+          }
+        },
+        {
+          "name": "coin_creator_vault_authority",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  114,
+                  101,
+                  97,
+                  116,
+                  111,
+                  114,
+                  95,
+                  118,
+                  97,
+                  117,
+                  108,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "pool.coin_creator",
+                "account": "Pool"
+              }
+            ]
+          }
+        }
       ],
       "args": [{"name": "base_amount_in", "type": "u64"}, {"name": "min_quote_amount_out", "type": "u64"}]
     },
@@ -418,7 +670,10 @@
           {"name": "user_base_token_account"             , "type": "pubkey"},
           {"name": "user_quote_token_account"            , "type": "pubkey"},
           {"name": "protocol_fee_recipient"              , "type": "pubkey"},
-          {"name": "protocol_fee_recipient_token_account", "type": "pubkey"}
+          {"name": "protocol_fee_recipient_token_account", "type": "pubkey"},
+          {"name": "coin_creator", "type": "pubkey"},
+          {"name": "coin_creator_fee_basis_points", "type": "u64"},
+          {"name": "coin_creator_fee", "type": "u64"}
         ]
       }
     },
@@ -431,10 +686,9 @@
           {"name": "admin", "type": "pubkey"},
           {"name": "lp_fee_basis_points", "type": "u64"},
           {"name": "protocol_fee_basis_points", "type": "u64"},
-          {
-            "name": "protocol_fee_recipients",
-            "type": {"array": ["pubkey", 8]}
-          }
+          {"name": "protocol_fee_recipients", "type": {"array": ["pubkey", 8]}},
+          {"name": "coin_creator_fee_basis_points", "type": "u64"},
+          {"name": "admin_set_coin_creator_authority", "type": "pubkey"}
         ]
       }
     },
@@ -461,7 +715,8 @@
           {"name": "pool"                    , "type": "pubkey"},
           {"name": "lp_mint"                 , "type": "pubkey"},
           {"name": "user_base_token_account" , "type": "pubkey"},
-          {"name": "user_quote_token_account", "type": "pubkey"}
+          {"name": "user_quote_token_account", "type": "pubkey"},
+          {"name": "coin_creator", "type": "pubkey"}
         ]
       }
     },
@@ -554,7 +809,8 @@
           {"name": "lp_mint"                 , "type": "pubkey"                                                                },
           {"name": "pool_base_token_account" , "type": "pubkey"                                                                },
           {"name": "pool_quote_token_account", "type": "pubkey"                                                                },
-          {"name": "lp_supply"               , "type": "u64"   , "docs": ["True circulating supply without burns and lock-ups"]}
+          {"name": "lp_supply"               , "type": "u64"   , "docs": ["True circulating supply without burns and lock-ups"]},
+          {"name": "coin_creator", "type": "pubkey"}
         ]
       }
     },
@@ -582,7 +838,10 @@
           {"name": "user_base_token_account"             , "type": "pubkey"},
           {"name": "user_quote_token_account"            , "type": "pubkey"},
           {"name": "protocol_fee_recipient"              , "type": "pubkey"},
-          {"name": "protocol_fee_recipient_token_account", "type": "pubkey"}
+          {"name": "protocol_fee_recipient_token_account", "type": "pubkey"},
+          {"name": "coin_creator", "type": "pubkey"},
+          {"name": "coin_creator_fee_basis_points", "type": "u64"},
+          {"name": "coin_creator_fee", "type": "u64"}
         ]
       }
     },
