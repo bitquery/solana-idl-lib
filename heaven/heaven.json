@@ -1,0 +1,6003 @@
+{
+ "address": "GgE4QoiM8VYoQNZkiNLHNbzXEkKyynzsApC8BvBY4b1V",
+ "metadata": {
+  "name": "Heaven",
+  "version": "0.2.0",
+  "spec": "0.1.0",
+  "description": "Created with Anchor"
+ },
+ "instructions": [
+  {
+   "name": "admin_borrow_sol",
+   "discriminator": [204, 72, 95, 215, 172, 192, 137, 252],
+   "accounts": [
+    {
+     "name": "token_program",
+     "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+    },
+    {
+     "name": "associated_token_program",
+     "address": "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL"
+    },
+    {
+     "name": "payer",
+     "writable": true,
+     "signer": true
+    },
+    {
+     "name": "admin",
+     "signer": true
+    },
+    {
+     "name": "protocol_config_state",
+     "pda": {
+      "seeds": [
+       {
+        "kind": "const",
+        "value": [
+         112, 114, 111, 116, 111, 99, 111, 108, 95, 99, 111, 110, 102, 105, 103,
+         95, 115, 116, 97, 116, 101
+        ]
+       },
+       {
+        "kind": "arg",
+        "path": "version"
+       }
+      ]
+     }
+    },
+    {
+     "name": "system_program",
+     "address": "11111111111111111111111111111111"
+    },
+    {
+     "name": "protocol_staking_admin_state",
+     "pda": {
+      "seeds": [
+       {
+        "kind": "const",
+        "value": [
+         112, 114, 111, 116, 111, 99, 111, 108, 95, 115, 116, 97, 107, 105, 110,
+         103, 95, 97, 100, 109, 105, 110, 95, 115, 116, 97, 116, 101
+        ]
+       }
+      ]
+     }
+    },
+    {
+     "name": "address_lookup_program",
+     "docs": ["CHECK"],
+     "address": "AddressLookupTab1e1111111111111111111111111"
+    },
+    {
+     "name": "instruction_sysvar_account_info"
+    },
+    {
+     "name": "temp_sol_holder",
+     "docs": ["CHECK"],
+     "writable": true,
+     "pda": {
+      "seeds": [
+       {
+        "kind": "const",
+        "value": [
+         116, 101, 109, 112, 95, 115, 111, 108, 95, 104, 111, 108, 100, 101, 114
+        ]
+       },
+       {
+        "kind": "arg",
+        "path": "version"
+       }
+      ]
+     }
+    }
+   ],
+   "args": [
+    {
+     "name": "version",
+     "type": "u16"
+    },
+    {
+     "name": "amount",
+     "type": "u64"
+    }
+   ]
+  },
+  {
+   "name": "admin_claim_msol",
+   "discriminator": [124, 48, 60, 199, 203, 49, 36, 41],
+   "accounts": [
+    {
+     "name": "token_program",
+     "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+    },
+    {
+     "name": "associated_token_program",
+     "address": "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL"
+    },
+    {
+     "name": "payer",
+     "writable": true,
+     "signer": true
+    },
+    {
+     "name": "admin",
+     "signer": true
+    },
+    {
+     "name": "protocol_config_state",
+     "writable": true,
+     "pda": {
+      "seeds": [
+       {
+        "kind": "const",
+        "value": [
+         112, 114, 111, 116, 111, 99, 111, 108, 95, 99, 111, 110, 102, 105, 103,
+         95, 115, 116, 97, 116, 101
+        ]
+       },
+       {
+        "kind": "arg",
+        "path": "version"
+       }
+      ]
+     }
+    },
+    {
+     "name": "system_program",
+     "address": "11111111111111111111111111111111"
+    },
+    {
+     "name": "protocol_staking_admin_state",
+     "pda": {
+      "seeds": [
+       {
+        "kind": "const",
+        "value": [
+         112, 114, 111, 116, 111, 99, 111, 108, 95, 115, 116, 97, 107, 105, 110,
+         103, 95, 97, 100, 109, 105, 110, 95, 115, 116, 97, 116, 101
+        ]
+       }
+      ]
+     }
+    },
+    {
+     "name": "msol_ticket",
+     "docs": ["CHECK"],
+     "writable": true,
+     "pda": {
+      "seeds": [
+       {
+        "kind": "const",
+        "value": [
+         109, 115, 111, 108, 95, 116, 105, 99, 107, 101, 116, 95, 97, 99, 99
+        ]
+       },
+       {
+        "kind": "account",
+        "path": "protocol_config_state"
+       },
+       {
+        "kind": "arg",
+        "path": "ticket_number"
+       }
+      ]
+     }
+    },
+    {
+     "name": "msol_mint",
+     "address": "mSoLzYCxHdYgdzU16g5QSh3i5K3z3KZK7ytfqcJm7So"
+    },
+    {
+     "name": "msol_ticket_sol_spent",
+     "docs": ["CHECK"],
+     "pda": {
+      "seeds": [
+       {
+        "kind": "const",
+        "value": [
+         109, 115, 111, 108, 95, 116, 105, 99, 107, 101, 116, 95, 97, 99, 99,
+         95, 115, 111, 108, 95, 115, 112, 101, 110, 116
+        ]
+       },
+       {
+        "kind": "account",
+        "path": "protocol_config_state"
+       },
+       {
+        "kind": "arg",
+        "path": "ticket_number"
+       }
+      ]
+     }
+    }
+   ],
+   "args": [
+    {
+     "name": "version",
+     "type": "u16"
+    },
+    {
+     "name": "ticket_number",
+     "type": "u32"
+    }
+   ]
+  },
+  {
+   "name": "admin_claim_staking_rewards",
+   "discriminator": [24, 163, 220, 171, 225, 222, 166, 248],
+   "accounts": [
+    {
+     "name": "token_program",
+     "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+    },
+    {
+     "name": "associated_token_program",
+     "address": "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL"
+    },
+    {
+     "name": "payer",
+     "writable": true,
+     "signer": true
+    },
+    {
+     "name": "admin",
+     "signer": true
+    },
+    {
+     "name": "protocol_config_state",
+     "writable": true,
+     "pda": {
+      "seeds": [
+       {
+        "kind": "const",
+        "value": [
+         112, 114, 111, 116, 111, 99, 111, 108, 95, 99, 111, 110, 102, 105, 103,
+         95, 115, 116, 97, 116, 101
+        ]
+       },
+       {
+        "kind": "arg",
+        "path": "version"
+       }
+      ]
+     }
+    },
+    {
+     "name": "protocol_config_wsol_vault",
+     "writable": true,
+     "pda": {
+      "seeds": [
+       {
+        "kind": "account",
+        "path": "protocol_config_state"
+       },
+       {
+        "kind": "const",
+        "value": [
+         6, 221, 246, 225, 215, 101, 161, 147, 217, 203, 225, 70, 206, 235, 121,
+         172, 28, 180, 133, 237, 95, 91, 55, 145, 58, 140, 245, 133, 126, 255,
+         0, 169
+        ]
+       },
+       {
+        "kind": "account",
+        "path": "wsol_mint"
+       }
+      ],
+      "program": {
+       "kind": "const",
+       "value": [
+        140, 151, 37, 143, 78, 36, 137, 241, 187, 61, 16, 41, 20, 142, 13, 131,
+        11, 90, 19, 153, 218, 255, 16, 132, 4, 142, 123, 216, 219, 233, 248, 89
+       ]
+      }
+     }
+    },
+    {
+     "name": "system_program",
+     "address": "11111111111111111111111111111111"
+    },
+    {
+     "name": "protocol_staking_admin_state",
+     "pda": {
+      "seeds": [
+       {
+        "kind": "const",
+        "value": [
+         112, 114, 111, 116, 111, 99, 111, 108, 95, 115, 116, 97, 107, 105, 110,
+         103, 95, 97, 100, 109, 105, 110, 95, 115, 116, 97, 116, 101
+        ]
+       }
+      ]
+     }
+    },
+    {
+     "name": "wsol_token_vault",
+     "writable": true,
+     "pda": {
+      "seeds": [
+       {
+        "kind": "account",
+        "path": "payer"
+       },
+       {
+        "kind": "account",
+        "path": "token_program"
+       },
+       {
+        "kind": "account",
+        "path": "wsol_mint"
+       }
+      ],
+      "program": {
+       "kind": "const",
+       "value": [
+        140, 151, 37, 143, 78, 36, 137, 241, 187, 61, 16, 41, 20, 142, 13, 131,
+        11, 90, 19, 153, 218, 255, 16, 132, 4, 142, 123, 216, 219, 233, 248, 89
+       ]
+      }
+     }
+    },
+    {
+     "name": "wsol_mint"
+    }
+   ],
+   "args": [
+    {
+     "name": "version",
+     "type": "u16"
+    },
+    {
+     "name": "amount",
+     "type": "u64"
+    }
+   ]
+  },
+  {
+   "name": "admin_claim_standard_creator_trading_fees",
+   "discriminator": [182, 39, 168, 25, 96, 63, 76, 17],
+   "accounts": [
+    {
+     "name": "swap",
+     "accounts": [
+      {
+       "name": "token_a_program"
+      },
+      {
+       "name": "token_b_program"
+      },
+      {
+       "name": "associated_token_program",
+       "address": "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL"
+      },
+      {
+       "name": "system_program",
+       "address": "11111111111111111111111111111111"
+      },
+      {
+       "name": "liquidity_pool_state",
+       "writable": true
+      },
+      {
+       "name": "user",
+       "docs": ["CHECK"],
+       "writable": true,
+       "signer": true
+      },
+      {
+       "name": "token_a_mint",
+       "docs": ["CHECK"]
+      },
+      {
+       "name": "token_b_mint",
+       "docs": ["CHECK"]
+      },
+      {
+       "name": "user_token_a_vault",
+       "writable": true
+      },
+      {
+       "name": "user_token_b_vault",
+       "writable": true
+      },
+      {
+       "name": "token_a_vault",
+       "writable": true
+      },
+      {
+       "name": "token_b_vault",
+       "writable": true
+      },
+      {
+       "name": "protocol_config",
+       "writable": true
+      },
+      {
+       "name": "instruction_sysvar_account_info",
+       "docs": ["CHECK"],
+       "address": "Sysvar1nstructions1111111111111111111111111"
+      }
+     ]
+    },
+    {
+     "name": "protocol_admin",
+     "signer": true
+    },
+    {
+     "name": "protocol_admin_state",
+     "pda": {
+      "seeds": [
+       {
+        "kind": "const",
+        "value": [
+         112, 114, 111, 116, 111, 99, 111, 108, 95, 102, 101, 101, 95, 97, 100,
+         109, 105, 110, 95, 115, 116, 97, 116, 101
+        ]
+       }
+      ]
+     }
+    }
+   ],
+   "args": [
+    {
+     "name": "amount",
+     "type": "u64"
+    }
+   ]
+  },
+  {
+   "name": "admin_deposit_msol",
+   "discriminator": [206, 189, 208, 166, 19, 81, 202, 48],
+   "accounts": [
+    {
+     "name": "token_program",
+     "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+    },
+    {
+     "name": "associated_token_program",
+     "address": "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL"
+    },
+    {
+     "name": "payer",
+     "writable": true,
+     "signer": true
+    },
+    {
+     "name": "admin",
+     "signer": true
+    },
+    {
+     "name": "protocol_config_state",
+     "pda": {
+      "seeds": [
+       {
+        "kind": "const",
+        "value": [
+         112, 114, 111, 116, 111, 99, 111, 108, 95, 99, 111, 110, 102, 105, 103,
+         95, 115, 116, 97, 116, 101
+        ]
+       },
+       {
+        "kind": "arg",
+        "path": "version"
+       }
+      ]
+     }
+    },
+    {
+     "name": "system_program",
+     "address": "11111111111111111111111111111111"
+    },
+    {
+     "name": "protocol_staking_admin_state",
+     "pda": {
+      "seeds": [
+       {
+        "kind": "const",
+        "value": [
+         112, 114, 111, 116, 111, 99, 111, 108, 95, 115, 116, 97, 107, 105, 110,
+         103, 95, 97, 100, 109, 105, 110, 95, 115, 116, 97, 116, 101
+        ]
+       }
+      ]
+     }
+    },
+    {
+     "name": "address_lookup_program",
+     "docs": ["CHECK"],
+     "address": "AddressLookupTab1e1111111111111111111111111"
+    },
+    {
+     "name": "instruction_sysvar_account_info"
+    },
+    {
+     "name": "temp_sol_holder",
+     "docs": ["CHECK"],
+     "writable": true,
+     "pda": {
+      "seeds": [
+       {
+        "kind": "const",
+        "value": [
+         116, 101, 109, 112, 95, 115, 111, 108, 95, 104, 111, 108, 100, 101, 114
+        ]
+       },
+       {
+        "kind": "arg",
+        "path": "version"
+       }
+      ]
+     }
+    }
+   ],
+   "args": [
+    {
+     "name": "version",
+     "type": "u16"
+    },
+    {
+     "name": "amount",
+     "type": "u64"
+    }
+   ]
+  },
+  {
+   "name": "admin_mint_msol",
+   "discriminator": [140, 202, 57, 195, 97, 213, 168, 19],
+   "accounts": [
+    {
+     "name": "token_program",
+     "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+    },
+    {
+     "name": "associated_token_program",
+     "address": "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL"
+    },
+    {
+     "name": "payer",
+     "writable": true,
+     "signer": true
+    },
+    {
+     "name": "admin",
+     "signer": true
+    },
+    {
+     "name": "protocol_config_state",
+     "pda": {
+      "seeds": [
+       {
+        "kind": "const",
+        "value": [
+         112, 114, 111, 116, 111, 99, 111, 108, 95, 99, 111, 110, 102, 105, 103,
+         95, 115, 116, 97, 116, 101
+        ]
+       },
+       {
+        "kind": "arg",
+        "path": "version"
+       }
+      ]
+     }
+    },
+    {
+     "name": "system_program",
+     "address": "11111111111111111111111111111111"
+    },
+    {
+     "name": "protocol_staking_admin_state",
+     "pda": {
+      "seeds": [
+       {
+        "kind": "const",
+        "value": [
+         112, 114, 111, 116, 111, 99, 111, 108, 95, 115, 116, 97, 107, 105, 110,
+         103, 95, 97, 100, 109, 105, 110, 95, 115, 116, 97, 116, 101
+        ]
+       }
+      ]
+     }
+    },
+    {
+     "name": "address_lookup_program",
+     "docs": ["CHECK"],
+     "address": "AddressLookupTab1e1111111111111111111111111"
+    },
+    {
+     "name": "instruction_sysvar_account_info"
+    },
+    {
+     "name": "temp_sol_holder",
+     "docs": ["CHECK"],
+     "writable": true,
+     "pda": {
+      "seeds": [
+       {
+        "kind": "const",
+        "value": [
+         116, 101, 109, 112, 95, 115, 111, 108, 95, 104, 111, 108, 100, 101, 114
+        ]
+       },
+       {
+        "kind": "arg",
+        "path": "version"
+       }
+      ]
+     }
+    }
+   ],
+   "args": [
+    {
+     "name": "version",
+     "type": "u16"
+    },
+    {
+     "name": "amount",
+     "type": "u64"
+    }
+   ]
+  },
+  {
+   "name": "admin_repay_sol",
+   "discriminator": [136, 61, 48, 232, 166, 26, 207, 46],
+   "accounts": [
+    {
+     "name": "token_program",
+     "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+    },
+    {
+     "name": "associated_token_program",
+     "address": "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL"
+    },
+    {
+     "name": "payer",
+     "writable": true,
+     "signer": true
+    },
+    {
+     "name": "admin",
+     "signer": true
+    },
+    {
+     "name": "protocol_config_state",
+     "pda": {
+      "seeds": [
+       {
+        "kind": "const",
+        "value": [
+         112, 114, 111, 116, 111, 99, 111, 108, 95, 99, 111, 110, 102, 105, 103,
+         95, 115, 116, 97, 116, 101
+        ]
+       },
+       {
+        "kind": "arg",
+        "path": "version"
+       }
+      ]
+     }
+    },
+    {
+     "name": "system_program",
+     "address": "11111111111111111111111111111111"
+    },
+    {
+     "name": "protocol_staking_admin_state",
+     "pda": {
+      "seeds": [
+       {
+        "kind": "const",
+        "value": [
+         112, 114, 111, 116, 111, 99, 111, 108, 95, 115, 116, 97, 107, 105, 110,
+         103, 95, 97, 100, 109, 105, 110, 95, 115, 116, 97, 116, 101
+        ]
+       }
+      ]
+     }
+    },
+    {
+     "name": "address_lookup_program",
+     "docs": ["CHECK"],
+     "address": "AddressLookupTab1e1111111111111111111111111"
+    },
+    {
+     "name": "instruction_sysvar_account_info"
+    },
+    {
+     "name": "temp_sol_holder",
+     "docs": ["CHECK"],
+     "writable": true,
+     "pda": {
+      "seeds": [
+       {
+        "kind": "const",
+        "value": [
+         116, 101, 109, 112, 95, 115, 111, 108, 95, 104, 111, 108, 100, 101, 114
+        ]
+       },
+       {
+        "kind": "arg",
+        "path": "version"
+       }
+      ]
+     }
+    }
+   ],
+   "args": [
+    {
+     "name": "version",
+     "type": "u16"
+    },
+    {
+     "name": "amount",
+     "type": "u64"
+    }
+   ]
+  },
+  {
+   "name": "admin_unstake_msol",
+   "discriminator": [253, 218, 141, 252, 40, 9, 7, 154],
+   "accounts": [
+    {
+     "name": "token_program",
+     "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+    },
+    {
+     "name": "associated_token_program",
+     "address": "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL"
+    },
+    {
+     "name": "payer",
+     "writable": true,
+     "signer": true
+    },
+    {
+     "name": "admin",
+     "signer": true
+    },
+    {
+     "name": "protocol_config_state",
+     "writable": true,
+     "pda": {
+      "seeds": [
+       {
+        "kind": "const",
+        "value": [
+         112, 114, 111, 116, 111, 99, 111, 108, 95, 99, 111, 110, 102, 105, 103,
+         95, 115, 116, 97, 116, 101
+        ]
+       },
+       {
+        "kind": "arg",
+        "path": "version"
+       }
+      ]
+     }
+    },
+    {
+     "name": "system_program",
+     "address": "11111111111111111111111111111111"
+    },
+    {
+     "name": "protocol_staking_admin_state",
+     "pda": {
+      "seeds": [
+       {
+        "kind": "const",
+        "value": [
+         112, 114, 111, 116, 111, 99, 111, 108, 95, 115, 116, 97, 107, 105, 110,
+         103, 95, 97, 100, 109, 105, 110, 95, 115, 116, 97, 116, 101
+        ]
+       }
+      ]
+     }
+    },
+    {
+     "name": "msol_ticket",
+     "docs": ["CHECK"],
+     "writable": true,
+     "pda": {
+      "seeds": [
+       {
+        "kind": "const",
+        "value": [
+         109, 115, 111, 108, 95, 116, 105, 99, 107, 101, 116, 95, 97, 99, 99
+        ]
+       },
+       {
+        "kind": "account",
+        "path": "protocol_config_state"
+       },
+       {
+        "kind": "arg",
+        "path": "ticket_number"
+       }
+      ]
+     }
+    },
+    {
+     "name": "msol_mint",
+     "address": "mSoLzYCxHdYgdzU16g5QSh3i5K3z3KZK7ytfqcJm7So"
+    },
+    {
+     "name": "msol_ticket_sol_spent",
+     "docs": ["CHECK"],
+     "writable": true,
+     "pda": {
+      "seeds": [
+       {
+        "kind": "const",
+        "value": [
+         109, 115, 111, 108, 95, 116, 105, 99, 107, 101, 116, 95, 97, 99, 99,
+         95, 115, 111, 108, 95, 115, 112, 101, 110, 116
+        ]
+       },
+       {
+        "kind": "account",
+        "path": "protocol_config_state"
+       },
+       {
+        "kind": "arg",
+        "path": "ticket_number"
+       }
+      ]
+     }
+    }
+   ],
+   "args": [
+    {
+     "name": "version",
+     "type": "u16"
+    },
+    {
+     "name": "ticket_number",
+     "type": "u32"
+    },
+    {
+     "name": "amount",
+     "type": "u64"
+    }
+   ]
+  },
+  {
+   "name": "admin_update_standard_liquidity_pool_state",
+   "discriminator": [99, 228, 41, 63, 221, 244, 200, 199],
+   "accounts": [
+    {
+     "name": "liquidity_pool_state",
+     "writable": true
+    },
+    {
+     "name": "protocol_config",
+     "writable": true
+    },
+    {
+     "name": "protocol_admin",
+     "signer": true
+    },
+    {
+     "name": "protocol_admin_state",
+     "pda": {
+      "seeds": [
+       {
+        "kind": "const",
+        "value": [
+         112, 114, 111, 116, 111, 99, 111, 108, 95, 102, 101, 101, 95, 97, 100,
+         109, 105, 110, 95, 115, 116, 97, 116, 101
+        ]
+       }
+      ]
+     }
+    }
+   ],
+   "args": [
+    {
+     "name": "update",
+     "type": {
+      "defined": {
+       "name": "AdminUpdateLiquidityPoolState"
+      }
+     }
+    }
+   ]
+  },
+  {
+   "name": "admin_withdraw_msol",
+   "discriminator": [249, 219, 141, 72, 210, 110, 216, 99],
+   "accounts": [
+    {
+     "name": "token_program",
+     "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+    },
+    {
+     "name": "associated_token_program",
+     "address": "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL"
+    },
+    {
+     "name": "payer",
+     "writable": true,
+     "signer": true
+    },
+    {
+     "name": "admin",
+     "signer": true
+    },
+    {
+     "name": "protocol_config_state",
+     "pda": {
+      "seeds": [
+       {
+        "kind": "const",
+        "value": [
+         112, 114, 111, 116, 111, 99, 111, 108, 95, 99, 111, 110, 102, 105, 103,
+         95, 115, 116, 97, 116, 101
+        ]
+       },
+       {
+        "kind": "arg",
+        "path": "version"
+       }
+      ]
+     }
+    },
+    {
+     "name": "system_program",
+     "address": "11111111111111111111111111111111"
+    },
+    {
+     "name": "protocol_staking_admin_state",
+     "pda": {
+      "seeds": [
+       {
+        "kind": "const",
+        "value": [
+         112, 114, 111, 116, 111, 99, 111, 108, 95, 115, 116, 97, 107, 105, 110,
+         103, 95, 97, 100, 109, 105, 110, 95, 115, 116, 97, 116, 101
+        ]
+       }
+      ]
+     }
+    },
+    {
+     "name": "address_lookup_program",
+     "docs": ["CHECK"],
+     "address": "AddressLookupTab1e1111111111111111111111111"
+    },
+    {
+     "name": "instruction_sysvar_account_info"
+    },
+    {
+     "name": "temp_sol_holder",
+     "docs": ["CHECK"],
+     "writable": true,
+     "pda": {
+      "seeds": [
+       {
+        "kind": "const",
+        "value": [
+         116, 101, 109, 112, 95, 115, 111, 108, 95, 104, 111, 108, 100, 101, 114
+        ]
+       },
+       {
+        "kind": "arg",
+        "path": "version"
+       }
+      ]
+     }
+    }
+   ],
+   "args": [
+    {
+     "name": "version",
+     "type": "u16"
+    },
+    {
+     "name": "amount",
+     "type": "u64"
+    }
+   ]
+  },
+  {
+   "name": "admin_withdraw_transfer_fee",
+   "discriminator": [117, 79, 164, 203, 126, 72, 22, 246],
+   "accounts": [
+    {
+     "name": "token_program"
+    },
+    {
+     "name": "mint"
+    },
+    {
+     "name": "receiver",
+     "writable": true
+    },
+    {
+     "name": "protocol_fee_admin_state",
+     "pda": {
+      "seeds": [
+       {
+        "kind": "const",
+        "value": [
+         112, 114, 111, 116, 111, 99, 111, 108, 95, 102, 101, 101, 95, 97, 100,
+         109, 105, 110, 95, 115, 116, 97, 116, 101
+        ]
+       }
+      ]
+     }
+    },
+    {
+     "name": "admin",
+     "signer": true
+    },
+    {
+     "name": "protocol_config",
+     "writable": true,
+     "pda": {
+      "seeds": [
+       {
+        "kind": "const",
+        "value": [
+         112, 114, 111, 116, 111, 99, 111, 108, 95, 99, 111, 110, 102, 105, 103,
+         95, 115, 116, 97, 116, 101
+        ]
+       },
+       {
+        "kind": "arg",
+        "path": "protocol_config_version"
+       }
+      ]
+     }
+    }
+   ],
+   "args": [
+    {
+     "name": "protocol_config_version",
+     "type": "u16"
+    }
+   ]
+  },
+  {
+   "name": "buy",
+   "discriminator": [102, 6, 61, 18, 1, 218, 235, 234],
+   "accounts": [
+    {
+     "name": "token_a_program"
+    },
+    {
+     "name": "token_b_program"
+    },
+    {
+     "name": "associated_token_program",
+     "address": "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL"
+    },
+    {
+     "name": "system_program",
+     "address": "11111111111111111111111111111111"
+    },
+    {
+     "name": "liquidity_pool_state",
+     "writable": true
+    },
+    {
+     "name": "user",
+     "docs": ["CHECK"],
+     "writable": true,
+     "signer": true
+    },
+    {
+     "name": "token_a_mint",
+     "docs": ["CHECK"]
+    },
+    {
+     "name": "token_b_mint",
+     "docs": ["CHECK"]
+    },
+    {
+     "name": "user_token_a_vault",
+     "writable": true
+    },
+    {
+     "name": "user_token_b_vault",
+     "writable": true
+    },
+    {
+     "name": "token_a_vault",
+     "writable": true
+    },
+    {
+     "name": "token_b_vault",
+     "writable": true
+    },
+    {
+     "name": "protocol_config",
+     "writable": true
+    },
+    {
+     "name": "instruction_sysvar_account_info",
+     "docs": ["CHECK"],
+     "address": "Sysvar1nstructions1111111111111111111111111"
+    }
+   ],
+   "args": [
+    {
+     "name": "params",
+     "type": {
+      "defined": {
+       "name": "BuyParams"
+      }
+     }
+    }
+   ]
+  },
+  {
+   "name": "claim_standard_creator_trading_fee_protocol_fees",
+   "discriminator": [0, 201, 226, 228, 127, 45, 69, 110],
+   "accounts": [
+    {
+     "name": "swap",
+     "accounts": [
+      {
+       "name": "token_a_program"
+      },
+      {
+       "name": "token_b_program"
+      },
+      {
+       "name": "associated_token_program",
+       "address": "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL"
+      },
+      {
+       "name": "system_program",
+       "address": "11111111111111111111111111111111"
+      },
+      {
+       "name": "liquidity_pool_state",
+       "writable": true
+      },
+      {
+       "name": "user",
+       "docs": ["CHECK"],
+       "writable": true,
+       "signer": true
+      },
+      {
+       "name": "token_a_mint",
+       "docs": ["CHECK"]
+      },
+      {
+       "name": "token_b_mint",
+       "docs": ["CHECK"]
+      },
+      {
+       "name": "user_token_a_vault",
+       "writable": true
+      },
+      {
+       "name": "user_token_b_vault",
+       "writable": true
+      },
+      {
+       "name": "token_a_vault",
+       "writable": true
+      },
+      {
+       "name": "token_b_vault",
+       "writable": true
+      },
+      {
+       "name": "protocol_config",
+       "writable": true
+      },
+      {
+       "name": "instruction_sysvar_account_info",
+       "docs": ["CHECK"],
+       "address": "Sysvar1nstructions1111111111111111111111111"
+      }
+     ]
+    },
+    {
+     "name": "protocol_admin",
+     "signer": true
+    },
+    {
+     "name": "protocol_admin_state",
+     "pda": {
+      "seeds": [
+       {
+        "kind": "const",
+        "value": [
+         112, 114, 111, 116, 111, 99, 111, 108, 95, 102, 101, 101, 95, 97, 100,
+         109, 105, 110, 95, 115, 116, 97, 116, 101
+        ]
+       }
+      ]
+     }
+    }
+   ],
+   "args": [
+    {
+     "name": "amount",
+     "type": "u64"
+    }
+   ]
+  },
+  {
+   "name": "claim_standard_creator_trading_fees",
+   "discriminator": [165, 89, 221, 52, 170, 249, 34, 111],
+   "accounts": [
+    {
+     "name": "token_a_program"
+    },
+    {
+     "name": "token_b_program"
+    },
+    {
+     "name": "associated_token_program",
+     "address": "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL"
+    },
+    {
+     "name": "system_program",
+     "address": "11111111111111111111111111111111"
+    },
+    {
+     "name": "liquidity_pool_state",
+     "writable": true
+    },
+    {
+     "name": "user",
+     "docs": ["CHECK"],
+     "writable": true,
+     "signer": true
+    },
+    {
+     "name": "token_a_mint",
+     "docs": ["CHECK"]
+    },
+    {
+     "name": "token_b_mint",
+     "docs": ["CHECK"]
+    },
+    {
+     "name": "user_token_a_vault",
+     "writable": true
+    },
+    {
+     "name": "user_token_b_vault",
+     "writable": true
+    },
+    {
+     "name": "token_a_vault",
+     "writable": true
+    },
+    {
+     "name": "token_b_vault",
+     "writable": true
+    },
+    {
+     "name": "protocol_config",
+     "writable": true
+    },
+    {
+     "name": "instruction_sysvar_account_info",
+     "docs": ["CHECK"],
+     "address": "Sysvar1nstructions1111111111111111111111111"
+    }
+   ],
+   "args": [
+    {
+     "name": "amount",
+     "type": "u64"
+    }
+   ]
+  },
+  {
+   "name": "claim_standard_protocol_trading_fees",
+   "discriminator": [84, 206, 140, 245, 63, 212, 64, 237],
+   "accounts": [
+    {
+     "name": "swap",
+     "accounts": [
+      {
+       "name": "token_a_program"
+      },
+      {
+       "name": "token_b_program"
+      },
+      {
+       "name": "associated_token_program",
+       "address": "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL"
+      },
+      {
+       "name": "system_program",
+       "address": "11111111111111111111111111111111"
+      },
+      {
+       "name": "liquidity_pool_state",
+       "writable": true
+      },
+      {
+       "name": "user",
+       "docs": ["CHECK"],
+       "writable": true,
+       "signer": true
+      },
+      {
+       "name": "token_a_mint",
+       "docs": ["CHECK"]
+      },
+      {
+       "name": "token_b_mint",
+       "docs": ["CHECK"]
+      },
+      {
+       "name": "user_token_a_vault",
+       "writable": true
+      },
+      {
+       "name": "user_token_b_vault",
+       "writable": true
+      },
+      {
+       "name": "token_a_vault",
+       "writable": true
+      },
+      {
+       "name": "token_b_vault",
+       "writable": true
+      },
+      {
+       "name": "protocol_config",
+       "writable": true
+      },
+      {
+       "name": "instruction_sysvar_account_info",
+       "docs": ["CHECK"],
+       "address": "Sysvar1nstructions1111111111111111111111111"
+      }
+     ]
+    },
+    {
+     "name": "protocol_admin",
+     "signer": true
+    },
+    {
+     "name": "protocol_admin_state",
+     "pda": {
+      "seeds": [
+       {
+        "kind": "const",
+        "value": [
+         112, 114, 111, 116, 111, 99, 111, 108, 95, 102, 101, 101, 95, 97, 100,
+         109, 105, 110, 95, 115, 116, 97, 116, 101
+        ]
+       }
+      ]
+     }
+    }
+   ],
+   "args": [
+    {
+     "name": "amount",
+     "type": "u64"
+    }
+   ]
+  },
+  {
+   "name": "claim_standard_reflection_trading_fees",
+   "discriminator": [70, 148, 37, 147, 102, 20, 30, 23],
+   "accounts": [
+    {
+     "name": "swap",
+     "accounts": [
+      {
+       "name": "token_a_program"
+      },
+      {
+       "name": "token_b_program"
+      },
+      {
+       "name": "associated_token_program",
+       "address": "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL"
+      },
+      {
+       "name": "system_program",
+       "address": "11111111111111111111111111111111"
+      },
+      {
+       "name": "liquidity_pool_state",
+       "writable": true
+      },
+      {
+       "name": "user",
+       "docs": ["CHECK"],
+       "writable": true,
+       "signer": true
+      },
+      {
+       "name": "token_a_mint",
+       "docs": ["CHECK"]
+      },
+      {
+       "name": "token_b_mint",
+       "docs": ["CHECK"]
+      },
+      {
+       "name": "user_token_a_vault",
+       "writable": true
+      },
+      {
+       "name": "user_token_b_vault",
+       "writable": true
+      },
+      {
+       "name": "token_a_vault",
+       "writable": true
+      },
+      {
+       "name": "token_b_vault",
+       "writable": true
+      },
+      {
+       "name": "protocol_config",
+       "writable": true
+      },
+      {
+       "name": "instruction_sysvar_account_info",
+       "docs": ["CHECK"],
+       "address": "Sysvar1nstructions1111111111111111111111111"
+      }
+     ]
+    },
+    {
+     "name": "protocol_admin",
+     "signer": true
+    },
+    {
+     "name": "protocol_admin_state",
+     "pda": {
+      "seeds": [
+       {
+        "kind": "const",
+        "value": [
+         112, 114, 111, 116, 111, 99, 111, 108, 95, 102, 101, 101, 95, 97, 100,
+         109, 105, 110, 95, 115, 116, 97, 116, 101
+        ]
+       }
+      ]
+     }
+    }
+   ],
+   "args": [
+    {
+     "name": "amount",
+     "type": "u64"
+    }
+   ]
+  },
+  {
+   "name": "close_protocol_lookup_table",
+   "discriminator": [79, 72, 48, 39, 119, 3, 42, 116],
+   "accounts": [
+    {
+     "name": "payer",
+     "writable": true,
+     "signer": true
+    },
+    {
+     "name": "system_program",
+     "address": "11111111111111111111111111111111"
+    },
+    {
+     "name": "address_lookup_program",
+     "docs": ["CHECK"],
+     "address": "AddressLookupTab1e1111111111111111111111111"
+    },
+    {
+     "name": "authority",
+     "pda": {
+      "seeds": [
+       {
+        "kind": "const",
+        "value": [97, 117, 116, 104, 111, 114, 105, 116, 121]
+       }
+      ]
+     }
+    },
+    {
+     "name": "lookup_table",
+     "writable": true
+    },
+    {
+     "name": "protocol_owner_state",
+     "pda": {
+      "seeds": [
+       {
+        "kind": "const",
+        "value": [
+         112, 114, 111, 116, 111, 99, 111, 108, 95, 111, 119, 110, 101, 114, 95,
+         115, 116, 97, 116, 101
+        ]
+       }
+      ]
+     }
+    },
+    {
+     "name": "current_owner",
+     "signer": true
+    }
+   ],
+   "args": [
+    {
+     "name": "version",
+     "type": "u64"
+    }
+   ]
+  },
+  {
+   "name": "create_or_update_protocol_fee_admin",
+   "discriminator": [21, 126, 176, 20, 85, 111, 53, 31],
+   "accounts": [
+    {
+     "name": "system_program",
+     "address": "11111111111111111111111111111111"
+    },
+    {
+     "name": "payer",
+     "writable": true,
+     "signer": true
+    },
+    {
+     "name": "current_owner",
+     "signer": true
+    },
+    {
+     "name": "protocol_owner_state",
+     "pda": {
+      "seeds": [
+       {
+        "kind": "const",
+        "value": [
+         112, 114, 111, 116, 111, 99, 111, 108, 95, 111, 119, 110, 101, 114, 95,
+         115, 116, 97, 116, 101
+        ]
+       }
+      ]
+     }
+    },
+    {
+     "name": "new_admin",
+     "signer": true
+    },
+    {
+     "name": "protocol_fee_admin_state",
+     "writable": true,
+     "pda": {
+      "seeds": [
+       {
+        "kind": "const",
+        "value": [
+         112, 114, 111, 116, 111, 99, 111, 108, 95, 102, 101, 101, 95, 97, 100,
+         109, 105, 110, 95, 115, 116, 97, 116, 101
+        ]
+       }
+      ]
+     }
+    }
+   ],
+   "args": []
+  },
+  {
+   "name": "create_or_update_protocol_owner",
+   "discriminator": [170, 124, 128, 40, 48, 105, 139, 148],
+   "accounts": [
+    {
+     "name": "system_program",
+     "address": "11111111111111111111111111111111"
+    },
+    {
+     "name": "payer",
+     "writable": true,
+     "signer": true
+    },
+    {
+     "name": "current_owner",
+     "signer": true
+    },
+    {
+     "name": "new_owner",
+     "signer": true
+    },
+    {
+     "name": "protocol_owner_state",
+     "writable": true,
+     "pda": {
+      "seeds": [
+       {
+        "kind": "const",
+        "value": [
+         112, 114, 111, 116, 111, 99, 111, 108, 95, 111, 119, 110, 101, 114, 95,
+         115, 116, 97, 116, 101
+        ]
+       }
+      ]
+     }
+    }
+   ],
+   "args": []
+  },
+  {
+   "name": "create_or_update_protocol_staking_admin",
+   "discriminator": [4, 172, 196, 213, 120, 50, 30, 137],
+   "accounts": [
+    {
+     "name": "system_program",
+     "address": "11111111111111111111111111111111"
+    },
+    {
+     "name": "payer",
+     "writable": true,
+     "signer": true
+    },
+    {
+     "name": "current_owner",
+     "signer": true
+    },
+    {
+     "name": "protocol_owner_state",
+     "pda": {
+      "seeds": [
+       {
+        "kind": "const",
+        "value": [
+         112, 114, 111, 116, 111, 99, 111, 108, 95, 111, 119, 110, 101, 114, 95,
+         115, 116, 97, 116, 101
+        ]
+       }
+      ]
+     }
+    },
+    {
+     "name": "new_admin",
+     "signer": true
+    },
+    {
+     "name": "protocol_staking_admin_state",
+     "writable": true,
+     "pda": {
+      "seeds": [
+       {
+        "kind": "const",
+        "value": [
+         112, 114, 111, 116, 111, 99, 111, 108, 95, 115, 116, 97, 107, 105, 110,
+         103, 95, 97, 100, 109, 105, 110, 95, 115, 116, 97, 116, 101
+        ]
+       }
+      ]
+     }
+    }
+   ],
+   "args": []
+  },
+  {
+   "name": "create_protocol_config",
+   "discriminator": [115, 114, 24, 111, 14, 53, 113, 254],
+   "accounts": [
+    {
+     "name": "token_program",
+     "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+    },
+    {
+     "name": "associated_token_program",
+     "address": "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL"
+    },
+    {
+     "name": "payer",
+     "writable": true,
+     "signer": true
+    },
+    {
+     "name": "owner",
+     "signer": true
+    },
+    {
+     "name": "protocol_config_state",
+     "writable": true,
+     "pda": {
+      "seeds": [
+       {
+        "kind": "const",
+        "value": [
+         112, 114, 111, 116, 111, 99, 111, 108, 95, 99, 111, 110, 102, 105, 103,
+         95, 115, 116, 97, 116, 101
+        ]
+       },
+       {
+        "kind": "arg",
+        "path": "version"
+       }
+      ]
+     }
+    },
+    {
+     "name": "system_program",
+     "address": "11111111111111111111111111111111"
+    },
+    {
+     "name": "protocol_owner_state",
+     "pda": {
+      "seeds": [
+       {
+        "kind": "const",
+        "value": [
+         112, 114, 111, 116, 111, 99, 111, 108, 95, 111, 119, 110, 101, 114, 95,
+         115, 116, 97, 116, 101
+        ]
+       }
+      ]
+     }
+    },
+    {
+     "name": "msol_token_vault",
+     "writable": true,
+     "pda": {
+      "seeds": [
+       {
+        "kind": "account",
+        "path": "protocol_config_state"
+       },
+       {
+        "kind": "account",
+        "path": "token_program"
+       },
+       {
+        "kind": "account",
+        "path": "msol_mint"
+       }
+      ],
+      "program": {
+       "kind": "const",
+       "value": [
+        140, 151, 37, 143, 78, 36, 137, 241, 187, 61, 16, 41, 20, 142, 13, 131,
+        11, 90, 19, 153, 218, 255, 16, 132, 4, 142, 123, 216, 219, 233, 248, 89
+       ]
+      }
+     }
+    },
+    {
+     "name": "msol_mint",
+     "docs": ["CHECK"],
+     "address": "mSoLzYCxHdYgdzU16g5QSh3i5K3z3KZK7ytfqcJm7So"
+    }
+   ],
+   "args": [
+    {
+     "name": "version",
+     "type": "u16"
+    },
+    {
+     "name": "params",
+     "type": {
+      "defined": {
+       "name": "ProtocolConfigParams"
+      }
+     }
+    }
+   ]
+  },
+  {
+   "name": "create_protocol_lookup_table",
+   "discriminator": [249, 3, 99, 153, 168, 241, 243, 228],
+   "accounts": [
+    {
+     "name": "payer",
+     "writable": true,
+     "signer": true
+    },
+    {
+     "name": "system_program",
+     "address": "11111111111111111111111111111111"
+    },
+    {
+     "name": "address_lookup_program",
+     "docs": ["CHECK"],
+     "address": "AddressLookupTab1e1111111111111111111111111"
+    },
+    {
+     "name": "authority",
+     "pda": {
+      "seeds": [
+       {
+        "kind": "const",
+        "value": [97, 117, 116, 104, 111, 114, 105, 116, 121]
+       }
+      ]
+     }
+    },
+    {
+     "name": "lookup_table",
+     "writable": true
+    },
+    {
+     "name": "protocol_owner_state",
+     "pda": {
+      "seeds": [
+       {
+        "kind": "const",
+        "value": [
+         112, 114, 111, 116, 111, 99, 111, 108, 95, 111, 119, 110, 101, 114, 95,
+         115, 116, 97, 116, 101
+        ]
+       }
+      ]
+     }
+    },
+    {
+     "name": "current_owner",
+     "signer": true
+    }
+   ],
+   "args": [
+    {
+     "name": "version",
+     "type": "u64"
+    }
+   ]
+  },
+  {
+   "name": "create_standard_liquidity_pool",
+   "discriminator": [42, 43, 126, 56, 231, 10, 208, 53],
+   "accounts": [
+    {
+     "name": "token_program",
+     "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+    },
+    {
+     "name": "associated_token_program",
+     "address": "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL"
+    },
+    {
+     "name": "system_program",
+     "address": "11111111111111111111111111111111"
+    },
+    {
+     "name": "user",
+     "signer": true
+    },
+    {
+     "name": "payer",
+     "writable": true,
+     "signer": true
+    },
+    {
+     "name": "token_a_mint"
+    },
+    {
+     "name": "token_b_mint",
+     "address": "So11111111111111111111111111111111111111112"
+    },
+    {
+     "name": "user_token_a_vault",
+     "writable": true
+    },
+    {
+     "name": "token_a_vault",
+     "writable": true,
+     "pda": {
+      "seeds": [
+       {
+        "kind": "account",
+        "path": "protocol_config"
+       },
+       {
+        "kind": "account",
+        "path": "token_a_program"
+       },
+       {
+        "kind": "account",
+        "path": "token_a_mint"
+       }
+      ],
+      "program": {
+       "kind": "const",
+       "value": [
+        140, 151, 37, 143, 78, 36, 137, 241, 187, 61, 16, 41, 20, 142, 13, 131,
+        11, 90, 19, 153, 218, 255, 16, 132, 4, 142, 123, 216, 219, 233, 248, 89
+       ]
+      }
+     }
+    },
+    {
+     "name": "token_b_vault",
+     "writable": true,
+     "pda": {
+      "seeds": [
+       {
+        "kind": "account",
+        "path": "protocol_config"
+       },
+       {
+        "kind": "account",
+        "path": "token_program"
+       },
+       {
+        "kind": "account",
+        "path": "token_b_mint"
+       }
+      ],
+      "program": {
+       "kind": "const",
+       "value": [
+        140, 151, 37, 143, 78, 36, 137, 241, 187, 61, 16, 41, 20, 142, 13, 131,
+        11, 90, 19, 153, 218, 255, 16, 132, 4, 142, 123, 216, 219, 233, 248, 89
+       ]
+      }
+     }
+    },
+    {
+     "name": "liquidity_pool_state",
+     "writable": true,
+     "pda": {
+      "seeds": [
+       {
+        "kind": "const",
+        "value": [
+         108, 105, 113, 117, 105, 100, 105, 116, 121, 95, 112, 111, 111, 108,
+         95, 115, 116, 97, 116, 101
+        ]
+       },
+       {
+        "kind": "account",
+        "path": "token_a_mint"
+       },
+       {
+        "kind": "account",
+        "path": "token_b_mint"
+       }
+      ]
+     }
+    },
+    {
+     "name": "protocol_config",
+     "writable": true,
+     "pda": {
+      "seeds": [
+       {
+        "kind": "const",
+        "value": [
+         112, 114, 111, 116, 111, 99, 111, 108, 95, 99, 111, 110, 102, 105, 103,
+         95, 115, 116, 97, 116, 101
+        ]
+       },
+       {
+        "kind": "arg",
+        "path": "protocol_config_version"
+       }
+      ]
+     }
+    },
+    {
+     "name": "token_a_program"
+    }
+   ],
+   "args": [
+    {
+     "name": "protocol_config_version",
+     "type": "u16"
+    },
+    {
+     "name": "params",
+     "type": {
+      "defined": {
+       "name": "CreateStandardLiquidityPoolParams"
+      }
+     }
+    }
+   ]
+  },
+  {
+   "name": "deactivate_protocol_lookup_table",
+   "discriminator": [218, 12, 88, 58, 150, 44, 152, 72],
+   "accounts": [
+    {
+     "name": "payer",
+     "writable": true,
+     "signer": true
+    },
+    {
+     "name": "system_program",
+     "address": "11111111111111111111111111111111"
+    },
+    {
+     "name": "address_lookup_program",
+     "docs": ["CHECK"],
+     "address": "AddressLookupTab1e1111111111111111111111111"
+    },
+    {
+     "name": "authority",
+     "pda": {
+      "seeds": [
+       {
+        "kind": "const",
+        "value": [97, 117, 116, 104, 111, 114, 105, 116, 121]
+       }
+      ]
+     }
+    },
+    {
+     "name": "lookup_table",
+     "writable": true
+    },
+    {
+     "name": "protocol_owner_state",
+     "pda": {
+      "seeds": [
+       {
+        "kind": "const",
+        "value": [
+         112, 114, 111, 116, 111, 99, 111, 108, 95, 111, 119, 110, 101, 114, 95,
+         115, 116, 97, 116, 101
+        ]
+       }
+      ]
+     }
+    },
+    {
+     "name": "current_owner",
+     "signer": true
+    }
+   ],
+   "args": [
+    {
+     "name": "version",
+     "type": "u64"
+    }
+   ]
+  },
+  {
+   "name": "extend_protocol_lookup_table",
+   "discriminator": [7, 227, 198, 1, 107, 113, 31, 88],
+   "accounts": [
+    {
+     "name": "payer",
+     "writable": true,
+     "signer": true
+    },
+    {
+     "name": "system_program",
+     "address": "11111111111111111111111111111111"
+    },
+    {
+     "name": "address_lookup_program",
+     "docs": ["CHECK"],
+     "address": "AddressLookupTab1e1111111111111111111111111"
+    },
+    {
+     "name": "authority",
+     "pda": {
+      "seeds": [
+       {
+        "kind": "const",
+        "value": [97, 117, 116, 104, 111, 114, 105, 116, 121]
+       }
+      ]
+     }
+    },
+    {
+     "name": "lookup_table",
+     "writable": true
+    },
+    {
+     "name": "protocol_owner_state",
+     "pda": {
+      "seeds": [
+       {
+        "kind": "const",
+        "value": [
+         112, 114, 111, 116, 111, 99, 111, 108, 95, 111, 119, 110, 101, 114, 95,
+         115, 116, 97, 116, 101
+        ]
+       }
+      ]
+     }
+    },
+    {
+     "name": "current_owner",
+     "signer": true
+    }
+   ],
+   "args": [
+    {
+     "name": "version",
+     "type": "u64"
+    },
+    {
+     "name": "addresses",
+     "type": {
+      "vec": "pubkey"
+     }
+    }
+   ]
+  },
+  {
+   "name": "initialize_protocol_lending",
+   "discriminator": [0, 205, 237, 240, 27, 79, 27, 59],
+   "accounts": [
+    {
+     "name": "token_program",
+     "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+    },
+    {
+     "name": "associated_token_program",
+     "address": "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL"
+    },
+    {
+     "name": "payer",
+     "writable": true,
+     "signer": true
+    },
+    {
+     "name": "admin",
+     "signer": true
+    },
+    {
+     "name": "protocol_config_state",
+     "pda": {
+      "seeds": [
+       {
+        "kind": "const",
+        "value": [
+         112, 114, 111, 116, 111, 99, 111, 108, 95, 99, 111, 110, 102, 105, 103,
+         95, 115, 116, 97, 116, 101
+        ]
+       },
+       {
+        "kind": "arg",
+        "path": "version"
+       }
+      ]
+     }
+    },
+    {
+     "name": "system_program",
+     "address": "11111111111111111111111111111111"
+    },
+    {
+     "name": "protocol_staking_admin_state",
+     "pda": {
+      "seeds": [
+       {
+        "kind": "const",
+        "value": [
+         112, 114, 111, 116, 111, 99, 111, 108, 95, 115, 116, 97, 107, 105, 110,
+         103, 95, 97, 100, 109, 105, 110, 95, 115, 116, 97, 116, 101
+        ]
+       }
+      ]
+     }
+    },
+    {
+     "name": "address_lookup_program",
+     "docs": ["CHECK"],
+     "address": "AddressLookupTab1e1111111111111111111111111"
+    },
+    {
+     "name": "instruction_sysvar_account_info"
+    },
+    {
+     "name": "temp_sol_holder",
+     "docs": ["CHECK"],
+     "writable": true,
+     "pda": {
+      "seeds": [
+       {
+        "kind": "const",
+        "value": [
+         116, 101, 109, 112, 95, 115, 111, 108, 95, 104, 111, 108, 100, 101, 114
+        ]
+       },
+       {
+        "kind": "arg",
+        "path": "version"
+       }
+      ]
+     }
+    }
+   ],
+   "args": [
+    {
+     "name": "version",
+     "type": "u16"
+    },
+    {
+     "name": "recent_slot",
+     "type": "u64"
+    }
+   ]
+  },
+  {
+   "name": "remaining_accounts_stub",
+   "discriminator": [32, 143, 83, 94, 23, 34, 59, 239],
+   "accounts": [
+    {
+     "name": "create_protocol_config_remaining_accounts",
+     "accounts": [
+      {
+       "name": "protocol_lending_lookup_table",
+       "docs": ["CHECK"],
+       "writable": true
+      },
+      {
+       "name": "kamino_lending_user_metadata",
+       "docs": ["CHECK"],
+       "writable": true
+      },
+      {
+       "name": "kamino_lending_referrer_user_metadata",
+       "docs": ["CHECK"]
+      },
+      {
+       "name": "rent",
+       "address": "SysvarRent111111111111111111111111111111111"
+      },
+      {
+       "name": "kamino_lending_program",
+       "docs": ["CHECK"]
+      },
+      {
+       "name": "kamino_lending_obligation",
+       "docs": ["CHECK"],
+       "writable": true
+      },
+      {
+       "name": "kamino_lending_main_market",
+       "docs": ["CHECK"]
+      },
+      {
+       "name": "kamino_reserve_msol_state",
+       "docs": ["CHECK"],
+       "writable": true
+      },
+      {
+       "name": "kamino_reserve_sol_state",
+       "docs": ["CHECK"],
+       "writable": true
+      },
+      {
+       "name": "kamino_scope_prices",
+       "docs": ["CHECK"]
+      },
+      {
+       "name": "msol_liquid_staking",
+       "accounts": [
+        {
+         "name": "marinade_liquid_staking_state",
+         "docs": ["#1 - Marinade Liquid Staking State", "CHECK"],
+         "writable": true
+        },
+        {
+         "name": "msol_mint",
+         "docs": ["#2 - mSOL Mint", "CHECK"],
+         "writable": true
+        },
+        {
+         "name": "marinade_sol_leg_account",
+         "docs": ["#3 - Marinade SOL Leg Account", "CHECK"],
+         "writable": true
+        },
+        {
+         "name": "marinade_msol_leg_account",
+         "docs": ["#4 - Marinade mSOL Leg Account", "CHECK"],
+         "writable": true
+        },
+        {
+         "name": "marinade_msol_leg_authority",
+         "docs": ["#5 - Marinade mSOL Leg Authority", "CHECK"]
+        },
+        {
+         "name": "marinade_reserve_sol_pda",
+         "docs": ["#6 - Marinade Reserve SOL PDA", "CHECK"],
+         "writable": true
+        },
+        {
+         "name": "transfer_from",
+         "docs": ["#7 - Transfer From", "CHECK"],
+         "writable": true
+        },
+        {
+         "name": "mint_to",
+         "docs": ["#8 - Mint To", "CHECK"],
+         "writable": true
+        },
+        {
+         "name": "marinade_msol_mint_authority",
+         "docs": ["#9 - Marinade mSOL Mint Authority", "CHECK"]
+        },
+        {
+         "name": "system_program",
+         "docs": ["#10 - System Program"],
+         "address": "11111111111111111111111111111111"
+        },
+        {
+         "name": "token_program",
+         "docs": ["#11 - Token Program"],
+         "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+        },
+        {
+         "name": "marinade_finance_program",
+         "docs": ["#12 - Marinade Finance Program", "CHECK"]
+        },
+        {
+         "name": "referral_state",
+         "docs": ["#13 - Referral State", "CHECK"],
+         "writable": true
+        },
+        {
+         "name": "msol_token_partner_account",
+         "docs": ["#14 - mSOL Token Partner Account", "CHECK"],
+         "writable": true
+        }
+       ]
+      },
+      {
+       "name": "msol_staking_program",
+       "docs": ["CHECK"]
+      },
+      {
+       "name": "kamino_deposit_with_farm",
+       "accounts": [
+        {
+         "name": "deposit_accounts_owner",
+         "docs": ["#1 - Deposit Accounts Owner"],
+         "writable": true
+        },
+        {
+         "name": "accounts",
+         "accounts": [
+          {
+           "name": "deposit_accounts_obligation",
+           "docs": ["#2 - Deposit Accounts Obligation"],
+           "writable": true
+          },
+          {
+           "name": "deposit_accounts_lending_market",
+           "docs": ["#3 - Deposit Accounts Lending Market"]
+          },
+          {
+           "name": "deposit_accounts_lending_market_authority",
+           "docs": ["#4 - Deposit Accounts Lending Market Authority"]
+          },
+          {
+           "name": "deposit_accounts_reserve",
+           "docs": ["#5 - Deposit Accounts Reserve"],
+           "writable": true
+          },
+          {
+           "name": "deposit_accounts_reserve_liquidity_mint",
+           "docs": ["#6 - Deposit Accounts Reserve Liquidity Mint"]
+          },
+          {
+           "name": "deposit_accounts_reserve_liquidity_supply",
+           "docs": ["#7 - Deposit Accounts Reserve Liquidity Supply"],
+           "writable": true
+          },
+          {
+           "name": "deposit_accounts_reserve_collateral_mint",
+           "docs": ["#8 - Deposit Accounts Reserve Collateral Mint"],
+           "writable": true
+          },
+          {
+           "name": "deposit_accounts_reserve_destination_deposit_collateral",
+           "docs": [
+            "#9 - Deposit Accounts Reserve Destination Deposit Collateral"
+           ],
+           "writable": true
+          },
+          {
+           "name": "deposit_accounts_user_source_liquidity",
+           "docs": ["#10 - Deposit Accounts User Source Liquidity"],
+           "writable": true
+          },
+          {
+           "name": "deposit_accounts_placeholder_user_destination_collateral",
+           "docs": [
+            "#11 - Deposit Accounts Placeholder User Destination Collateral"
+           ]
+          },
+          {
+           "name": "deposit_accounts_collateral_token_program",
+           "docs": ["#12 - Deposit Accounts Collateral Token Program"]
+          },
+          {
+           "name": "deposit_accounts_liquidity_token_program",
+           "docs": ["#13 - Deposit Accounts Liquidity Token Program"]
+          },
+          {
+           "name": "deposit_accounts_instruction_sysvar_account",
+           "docs": ["#14 - Deposit Accounts Instruction Sysvar Account"]
+          },
+          {
+           "name": "farms_accounts_obligation_farm_user_state",
+           "docs": ["#15 - Farms Accounts Obligation Farm User State"]
+          },
+          {
+           "name": "farms_accounts_reserve_farm_state",
+           "docs": ["#16 - Farms Accounts Reserve Farm State"]
+          },
+          {
+           "name": "farms_program",
+           "docs": ["#17 - Farms Program"]
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "name": "kamino_borrow_with_farm",
+       "accounts": [
+        {
+         "name": "borrow_accounts_owner",
+         "docs": ["#1 - Borrow Accounts Owner"],
+         "writable": true
+        },
+        {
+         "name": "accounts",
+         "accounts": [
+          {
+           "name": "borrow_accounts_obligation",
+           "docs": ["#2 - Borrow Accounts Obligation"],
+           "writable": true
+          },
+          {
+           "name": "borrow_accounts_lending_market",
+           "docs": ["#3 - Borrow Accounts Lending Market"]
+          },
+          {
+           "name": "borrow_accounts_lending_market_authority",
+           "docs": ["#4 - Borrow Accounts Lending Market Authority"]
+          },
+          {
+           "name": "borrow_accounts_borrow_reserve",
+           "docs": ["#5 - Borrow Accounts Borrow Reserve"],
+           "writable": true
+          },
+          {
+           "name": "borrow_accounts_borrow_reserve_liquidity_mint",
+           "docs": ["#6 - Borrow Accounts Borrow Reserve Liquidity Mint"]
+          },
+          {
+           "name": "borrow_accounts_reserve_source_liquidity",
+           "docs": ["#7 - Borrow Accounts Reserve Source Liquidity"],
+           "writable": true
+          },
+          {
+           "name": "borrow_accounts_borrow_reserve_liquidity_fee_receiver",
+           "docs": [
+            "#8 - Borrow Accounts Borrow Reserve Liquidity Fee Receiver"
+           ],
+           "writable": true
+          },
+          {
+           "name": "borrow_accounts_user_destination_liquidity",
+           "docs": ["#9 - Borrow Accounts User Destination Liquidity"],
+           "writable": true
+          },
+          {
+           "name": "borrow_accounts_referrer_token_state",
+           "docs": ["#10 - Borrow Accounts Referrer Token State"]
+          },
+          {
+           "name": "borrow_accounts_token_program",
+           "docs": ["#11 - Borrow Accounts Token Program"]
+          },
+          {
+           "name": "borrow_accounts_instruction_sysvar_account",
+           "docs": ["#12 - Borrow Accounts Instruction Sysvar Account"]
+          },
+          {
+           "name": "farms_accounts_obligation_farm_user_state",
+           "docs": ["#13 - Farms Accounts Obligation Farm User State"]
+          },
+          {
+           "name": "farms_accounts_reserve_farm_state",
+           "docs": ["#14 - Farms Accounts Reserve Farm State"]
+          },
+          {
+           "name": "farms_program",
+           "docs": ["#15 - Farms Program"]
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "name": "kamino_repay_with_farm",
+       "accounts": [
+        {
+         "name": "repay_accounts_owner",
+         "docs": ["#1 - Repay Accounts Owner"],
+         "writable": true
+        },
+        {
+         "name": "accounts",
+         "accounts": [
+          {
+           "name": "repay_accounts_obligation",
+           "docs": ["#2 - Repay Accounts Obligation"],
+           "writable": true
+          },
+          {
+           "name": "repay_accounts_lending_market",
+           "docs": ["#3 - Repay Accounts Lending Market"]
+          },
+          {
+           "name": "repay_accounts_repay_reserve",
+           "docs": ["#4 - Repay Accounts Repay Reserve"],
+           "writable": true
+          },
+          {
+           "name": "repay_accounts_reserve_liquidity_mint",
+           "docs": ["#5 - Repay Accounts Reserve Liquidity Mint"]
+          },
+          {
+           "name": "repay_accounts_reserve_destination_liquidity",
+           "docs": ["#6 - Repay Accounts Reserve Destination Liquidity"],
+           "writable": true
+          },
+          {
+           "name": "repay_accounts_user_source_liquidity",
+           "docs": ["#7 - Repay Accounts User Source Liquidity"],
+           "writable": true
+          },
+          {
+           "name": "repay_accounts_token_program",
+           "docs": ["#8 - Repay Accounts Token Program"]
+          },
+          {
+           "name": "repay_accounts_instruction_sysvar_account",
+           "docs": ["#9 - Repay Accounts Instruction Sysvar Account"]
+          },
+          {
+           "name": "farms_accounts_obligation_farm_user_state",
+           "docs": ["#10 - Farms Accounts Obligation Farm User State"]
+          },
+          {
+           "name": "farms_accounts_reserve_farm_state",
+           "docs": ["#11 - Farms Accounts Reserve Farm State"]
+          },
+          {
+           "name": "lending_market_authority",
+           "docs": ["#12 - Lending Market Authority"]
+          },
+          {
+           "name": "farms_program",
+           "docs": ["#13 - Farms Program"]
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "name": "associated_token_program",
+       "docs": ["CHECK"]
+      },
+      {
+       "name": "temp_sol_holder",
+       "docs": ["CHECK"],
+       "writable": true
+      },
+      {
+       "name": "chainlink_program",
+       "docs": ["CHECK"]
+      },
+      {
+       "name": "chainlink_sol_usd_price_feed",
+       "docs": ["CHECK"]
+      },
+      {
+       "name": "clock",
+       "address": "SysvarC1ock11111111111111111111111111111111"
+      },
+      {
+       "name": "kamino_withdraw_with_farm",
+       "accounts": [
+        {
+         "name": "withdraw_accounts_owner",
+         "docs": ["#1 - Withdraw Accounts Owner", "CHECK"]
+        },
+        {
+         "name": "accounts",
+         "accounts": [
+          {
+           "name": "withdraw_accounts_obligation",
+           "docs": ["#2 - Withdraw Accounts Obligation", "CHECK"],
+           "writable": true
+          },
+          {
+           "name": "withdraw_accounts_lending_market",
+           "docs": ["#3 - Withdraw Accounts Lending Market", "CHECK"]
+          },
+          {
+           "name": "withdraw_accounts_lending_market_authority",
+           "docs": ["#4 - Withdraw Accounts Lending Market Authority", "CHECK"]
+          },
+          {
+           "name": "withdraw_accounts_withdraw_reserve",
+           "docs": ["#5 - Withdraw Accounts Withdraw Reserve", "CHECK"],
+           "writable": true
+          },
+          {
+           "name": "withdraw_accounts_reserve_liquidity_mint",
+           "docs": ["#6 - Withdraw Accounts Reserve Liquidity Mint", "CHECK"]
+          },
+          {
+           "name": "withdraw_accounts_reserve_source_collateral",
+           "docs": [
+            "#7 - Withdraw Accounts Reserve Source Collateral",
+            "CHECK"
+           ],
+           "writable": true
+          },
+          {
+           "name": "withdraw_accounts_reserve_collateral_mint",
+           "docs": ["#8 - Withdraw Accounts Reserve Collateral Mint", "CHECK"],
+           "writable": true
+          },
+          {
+           "name": "withdraw_accounts_reserve_liquidity_supply",
+           "docs": ["#9 - Withdraw Accounts Reserve Liquidity Supply", "CHECK"],
+           "writable": true
+          },
+          {
+           "name": "withdraw_accounts_user_destination_liquidity",
+           "docs": [
+            "#10 - Withdraw Accounts User Destination Liquidity",
+            "CHECK"
+           ],
+           "writable": true
+          },
+          {
+           "name": "withdraw_accounts_placeholder_user_destination_collateral",
+           "docs": [
+            "#11 - Withdraw Accounts Placeholder User Destination Collateral",
+            "CHECK"
+           ]
+          },
+          {
+           "name": "withdraw_accounts_collateral_token_program",
+           "docs": ["#12 - Withdraw Accounts Collateral Token Program", "CHECK"]
+          },
+          {
+           "name": "withdraw_accounts_liquidity_token_program",
+           "docs": ["#13 - Withdraw Accounts Liquidity Token Program", "CHECK"]
+          },
+          {
+           "name": "withdraw_accounts_instruction_sysvar_account",
+           "docs": [
+            "#14 - Withdraw Accounts Instruction Sysvar Account",
+            "CHECK"
+           ]
+          },
+          {
+           "name": "farms_accounts_obligation_farm_user_state",
+           "docs": ["#15 - Farms Accounts Obligation Farm User State", "CHECK"],
+           "writable": true
+          },
+          {
+           "name": "farms_accounts_reserve_farm_state",
+           "docs": ["#16 - Farms Accounts Reserve Farm State", "CHECK"],
+           "writable": true
+          },
+          {
+           "name": "farms_program",
+           "docs": ["#17 - Farms Program", "CHECK"]
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "name": "temp_sol_holder_msol_vault",
+       "docs": ["CHECK"],
+       "writable": true
+      }
+     ]
+    },
+    {
+     "name": "kamino_lending_user_metadata",
+     "accounts": [
+      {
+       "name": "owner",
+       "signer": true
+      },
+      {
+       "name": "fee_payer",
+       "writable": true,
+       "signer": true
+      },
+      {
+       "name": "user_metadata",
+       "docs": ["CHECK"],
+       "writable": true
+      },
+      {
+       "name": "referrer_user_metadata",
+       "docs": ["CHECK"]
+      },
+      {
+       "name": "rent",
+       "address": "SysvarRent111111111111111111111111111111111"
+      },
+      {
+       "name": "system_program",
+       "address": "11111111111111111111111111111111"
+      },
+      {
+       "name": "kamino_lending_program",
+       "docs": ["CHECK"]
+      }
+     ]
+    },
+    {
+     "name": "kamino_lending_init_obligation",
+     "accounts": [
+      {
+       "name": "obligation_owner",
+       "signer": true
+      },
+      {
+       "name": "fee_payer",
+       "writable": true,
+       "signer": true
+      },
+      {
+       "name": "obligation",
+       "docs": ["CHECK"],
+       "writable": true
+      },
+      {
+       "name": "lending_market",
+       "docs": ["CHECK"]
+      },
+      {
+       "name": "seed1_account",
+       "docs": ["CHECK"]
+      },
+      {
+       "name": "seed2_account",
+       "docs": ["CHECK"]
+      },
+      {
+       "name": "owner_user_metadata",
+       "docs": ["CHECK"]
+      },
+      {
+       "name": "rent",
+       "address": "SysvarRent111111111111111111111111111111111"
+      },
+      {
+       "name": "system_program",
+       "address": "11111111111111111111111111111111"
+      }
+     ]
+    },
+    {
+     "name": "kamino_lending_refresh_reserve",
+     "accounts": [
+      {
+       "name": "reserve",
+       "writable": true
+      },
+      {
+       "name": "lending_market"
+      },
+      {
+       "name": "pyth_oracle"
+      },
+      {
+       "name": "switchboard_price_oracle"
+      },
+      {
+       "name": "switchboard_twap_oracle"
+      },
+      {
+       "name": "scope_prices"
+      }
+     ]
+    },
+    {
+     "name": "kamino_lending_refresh_obligation",
+     "accounts": [
+      {
+       "name": "lending_market"
+      },
+      {
+       "name": "obligation",
+       "writable": true
+      }
+     ]
+    },
+    {
+     "name": "refresh_msol_price_list",
+     "accounts": [
+      {
+       "name": "oracle_prices",
+       "docs": ["CHECK"],
+       "writable": true
+      },
+      {
+       "name": "oracle_mappings",
+       "docs": ["CHECK"]
+      },
+      {
+       "name": "oracle_twaps",
+       "docs": ["CHECK"],
+       "writable": true
+      },
+      {
+       "name": "instruction_sysvar_account_info"
+      },
+      {
+       "name": "marinade_liquid_staking_state",
+       "docs": ["CHECK"]
+      },
+      {
+       "name": "pythnet_custody_price_sol_account",
+       "docs": ["CHECK"]
+      },
+      {
+       "name": "marinade_liquid_staking_state_2",
+       "docs": ["CHECK"]
+      },
+      {
+       "name": "pythnet_custody_price_sol_account_2",
+       "docs": ["CHECK"]
+      }
+     ]
+    },
+    {
+     "name": "msol_liquid_staking",
+     "accounts": [
+      {
+       "name": "marinade_liquid_staking_state",
+       "docs": ["#1 - Marinade Liquid Staking State", "CHECK"],
+       "writable": true
+      },
+      {
+       "name": "msol_mint",
+       "docs": ["#2 - mSOL Mint", "CHECK"],
+       "writable": true
+      },
+      {
+       "name": "marinade_sol_leg_account",
+       "docs": ["#3 - Marinade SOL Leg Account", "CHECK"],
+       "writable": true
+      },
+      {
+       "name": "marinade_msol_leg_account",
+       "docs": ["#4 - Marinade mSOL Leg Account", "CHECK"],
+       "writable": true
+      },
+      {
+       "name": "marinade_msol_leg_authority",
+       "docs": ["#5 - Marinade mSOL Leg Authority", "CHECK"]
+      },
+      {
+       "name": "marinade_reserve_sol_pda",
+       "docs": ["#6 - Marinade Reserve SOL PDA", "CHECK"],
+       "writable": true
+      },
+      {
+       "name": "transfer_from",
+       "docs": ["#7 - Transfer From", "CHECK"],
+       "writable": true
+      },
+      {
+       "name": "mint_to",
+       "docs": ["#8 - Mint To", "CHECK"],
+       "writable": true
+      },
+      {
+       "name": "marinade_msol_mint_authority",
+       "docs": ["#9 - Marinade mSOL Mint Authority", "CHECK"]
+      },
+      {
+       "name": "system_program",
+       "docs": ["#10 - System Program"],
+       "address": "11111111111111111111111111111111"
+      },
+      {
+       "name": "token_program",
+       "docs": ["#11 - Token Program"],
+       "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+      },
+      {
+       "name": "marinade_finance_program",
+       "docs": ["#12 - Marinade Finance Program", "CHECK"]
+      },
+      {
+       "name": "referral_state",
+       "docs": ["#13 - Referral State", "CHECK"],
+       "writable": true
+      },
+      {
+       "name": "msol_token_partner_account",
+       "docs": ["#14 - mSOL Token Partner Account", "CHECK"],
+       "writable": true
+      }
+     ]
+    },
+    {
+     "name": "msol_liquid_staking_cpi",
+     "accounts": [
+      {
+       "name": "marinade_liquid_staking_state",
+       "docs": ["#1 - Marinade Liquid Staking State", "CHECK"],
+       "writable": true
+      },
+      {
+       "name": "msol_mint",
+       "docs": ["#2 - mSOL Mint", "CHECK"],
+       "writable": true
+      },
+      {
+       "name": "marinade_sol_leg_account",
+       "docs": ["#3 - Marinade SOL Leg Account", "CHECK"],
+       "writable": true
+      },
+      {
+       "name": "marinade_msol_leg_account",
+       "docs": ["#4 - Marinade mSOL Leg Account", "CHECK"],
+       "writable": true
+      },
+      {
+       "name": "marinade_msol_leg_authority",
+       "docs": ["#5 - Marinade mSOL Leg Authority", "CHECK"]
+      },
+      {
+       "name": "marinade_reserve_sol_pda",
+       "docs": ["#6 - Marinade Reserve SOL PDA", "CHECK"],
+       "writable": true
+      },
+      {
+       "name": "transfer_from",
+       "docs": ["#7 - Transfer From", "CHECK"],
+       "writable": true,
+       "signer": true
+      },
+      {
+       "name": "mint_to",
+       "docs": ["#8 - Mint To", "CHECK"],
+       "writable": true
+      },
+      {
+       "name": "marinade_msol_mint_authority",
+       "docs": ["#9 - Marinade mSOL Mint Authority", "CHECK"]
+      },
+      {
+       "name": "system_program",
+       "docs": ["#10 - System Program"],
+       "address": "11111111111111111111111111111111"
+      },
+      {
+       "name": "token_program",
+       "docs": ["#11 - Token Program"],
+       "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+      },
+      {
+       "name": "marinade_finance_program",
+       "docs": ["#12 - Marinade Finance Program", "CHECK"]
+      },
+      {
+       "name": "referral_state",
+       "docs": ["#13 - Referral State", "CHECK"],
+       "writable": true
+      },
+      {
+       "name": "msol_token_partner_account",
+       "docs": ["#14 - mSOL Token Partner Account", "CHECK"],
+       "writable": true
+      }
+     ]
+    },
+    {
+     "name": "kamino_deposit_with_farm",
+     "accounts": [
+      {
+       "name": "deposit_accounts_obligation",
+       "docs": ["#2 - Deposit Accounts Obligation"],
+       "writable": true
+      },
+      {
+       "name": "deposit_accounts_lending_market",
+       "docs": ["#3 - Deposit Accounts Lending Market"]
+      },
+      {
+       "name": "deposit_accounts_lending_market_authority",
+       "docs": ["#4 - Deposit Accounts Lending Market Authority"]
+      },
+      {
+       "name": "deposit_accounts_reserve",
+       "docs": ["#5 - Deposit Accounts Reserve"],
+       "writable": true
+      },
+      {
+       "name": "deposit_accounts_reserve_liquidity_mint",
+       "docs": ["#6 - Deposit Accounts Reserve Liquidity Mint"]
+      },
+      {
+       "name": "deposit_accounts_reserve_liquidity_supply",
+       "docs": ["#7 - Deposit Accounts Reserve Liquidity Supply"],
+       "writable": true
+      },
+      {
+       "name": "deposit_accounts_reserve_collateral_mint",
+       "docs": ["#8 - Deposit Accounts Reserve Collateral Mint"],
+       "writable": true
+      },
+      {
+       "name": "deposit_accounts_reserve_destination_deposit_collateral",
+       "docs": ["#9 - Deposit Accounts Reserve Destination Deposit Collateral"],
+       "writable": true
+      },
+      {
+       "name": "deposit_accounts_user_source_liquidity",
+       "docs": ["#10 - Deposit Accounts User Source Liquidity"],
+       "writable": true
+      },
+      {
+       "name": "deposit_accounts_placeholder_user_destination_collateral",
+       "docs": [
+        "#11 - Deposit Accounts Placeholder User Destination Collateral"
+       ]
+      },
+      {
+       "name": "deposit_accounts_collateral_token_program",
+       "docs": ["#12 - Deposit Accounts Collateral Token Program"]
+      },
+      {
+       "name": "deposit_accounts_liquidity_token_program",
+       "docs": ["#13 - Deposit Accounts Liquidity Token Program"]
+      },
+      {
+       "name": "deposit_accounts_instruction_sysvar_account",
+       "docs": ["#14 - Deposit Accounts Instruction Sysvar Account"]
+      },
+      {
+       "name": "farms_accounts_obligation_farm_user_state",
+       "docs": ["#15 - Farms Accounts Obligation Farm User State"]
+      },
+      {
+       "name": "farms_accounts_reserve_farm_state",
+       "docs": ["#16 - Farms Accounts Reserve Farm State"]
+      },
+      {
+       "name": "farms_program",
+       "docs": ["#17 - Farms Program"]
+      }
+     ]
+    },
+    {
+     "name": "kamino_deposit_with_farm_cpi",
+     "accounts": [
+      {
+       "name": "deposit_accounts_owner",
+       "docs": ["#1 - Deposit Accounts Owner"],
+       "writable": true,
+       "signer": true
+      },
+      {
+       "name": "accounts",
+       "accounts": [
+        {
+         "name": "deposit_accounts_obligation",
+         "docs": ["#2 - Deposit Accounts Obligation"],
+         "writable": true
+        },
+        {
+         "name": "deposit_accounts_lending_market",
+         "docs": ["#3 - Deposit Accounts Lending Market"]
+        },
+        {
+         "name": "deposit_accounts_lending_market_authority",
+         "docs": ["#4 - Deposit Accounts Lending Market Authority"]
+        },
+        {
+         "name": "deposit_accounts_reserve",
+         "docs": ["#5 - Deposit Accounts Reserve"],
+         "writable": true
+        },
+        {
+         "name": "deposit_accounts_reserve_liquidity_mint",
+         "docs": ["#6 - Deposit Accounts Reserve Liquidity Mint"]
+        },
+        {
+         "name": "deposit_accounts_reserve_liquidity_supply",
+         "docs": ["#7 - Deposit Accounts Reserve Liquidity Supply"],
+         "writable": true
+        },
+        {
+         "name": "deposit_accounts_reserve_collateral_mint",
+         "docs": ["#8 - Deposit Accounts Reserve Collateral Mint"],
+         "writable": true
+        },
+        {
+         "name": "deposit_accounts_reserve_destination_deposit_collateral",
+         "docs": [
+          "#9 - Deposit Accounts Reserve Destination Deposit Collateral"
+         ],
+         "writable": true
+        },
+        {
+         "name": "deposit_accounts_user_source_liquidity",
+         "docs": ["#10 - Deposit Accounts User Source Liquidity"],
+         "writable": true
+        },
+        {
+         "name": "deposit_accounts_placeholder_user_destination_collateral",
+         "docs": [
+          "#11 - Deposit Accounts Placeholder User Destination Collateral"
+         ]
+        },
+        {
+         "name": "deposit_accounts_collateral_token_program",
+         "docs": ["#12 - Deposit Accounts Collateral Token Program"]
+        },
+        {
+         "name": "deposit_accounts_liquidity_token_program",
+         "docs": ["#13 - Deposit Accounts Liquidity Token Program"]
+        },
+        {
+         "name": "deposit_accounts_instruction_sysvar_account",
+         "docs": ["#14 - Deposit Accounts Instruction Sysvar Account"]
+        },
+        {
+         "name": "farms_accounts_obligation_farm_user_state",
+         "docs": ["#15 - Farms Accounts Obligation Farm User State"]
+        },
+        {
+         "name": "farms_accounts_reserve_farm_state",
+         "docs": ["#16 - Farms Accounts Reserve Farm State"]
+        },
+        {
+         "name": "farms_program",
+         "docs": ["#17 - Farms Program"]
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "name": "kamino_deposit_with_farm_client",
+     "accounts": [
+      {
+       "name": "deposit_accounts_owner",
+       "docs": ["#1 - Deposit Accounts Owner"],
+       "writable": true
+      },
+      {
+       "name": "accounts",
+       "accounts": [
+        {
+         "name": "deposit_accounts_obligation",
+         "docs": ["#2 - Deposit Accounts Obligation"],
+         "writable": true
+        },
+        {
+         "name": "deposit_accounts_lending_market",
+         "docs": ["#3 - Deposit Accounts Lending Market"]
+        },
+        {
+         "name": "deposit_accounts_lending_market_authority",
+         "docs": ["#4 - Deposit Accounts Lending Market Authority"]
+        },
+        {
+         "name": "deposit_accounts_reserve",
+         "docs": ["#5 - Deposit Accounts Reserve"],
+         "writable": true
+        },
+        {
+         "name": "deposit_accounts_reserve_liquidity_mint",
+         "docs": ["#6 - Deposit Accounts Reserve Liquidity Mint"]
+        },
+        {
+         "name": "deposit_accounts_reserve_liquidity_supply",
+         "docs": ["#7 - Deposit Accounts Reserve Liquidity Supply"],
+         "writable": true
+        },
+        {
+         "name": "deposit_accounts_reserve_collateral_mint",
+         "docs": ["#8 - Deposit Accounts Reserve Collateral Mint"],
+         "writable": true
+        },
+        {
+         "name": "deposit_accounts_reserve_destination_deposit_collateral",
+         "docs": [
+          "#9 - Deposit Accounts Reserve Destination Deposit Collateral"
+         ],
+         "writable": true
+        },
+        {
+         "name": "deposit_accounts_user_source_liquidity",
+         "docs": ["#10 - Deposit Accounts User Source Liquidity"],
+         "writable": true
+        },
+        {
+         "name": "deposit_accounts_placeholder_user_destination_collateral",
+         "docs": [
+          "#11 - Deposit Accounts Placeholder User Destination Collateral"
+         ]
+        },
+        {
+         "name": "deposit_accounts_collateral_token_program",
+         "docs": ["#12 - Deposit Accounts Collateral Token Program"]
+        },
+        {
+         "name": "deposit_accounts_liquidity_token_program",
+         "docs": ["#13 - Deposit Accounts Liquidity Token Program"]
+        },
+        {
+         "name": "deposit_accounts_instruction_sysvar_account",
+         "docs": ["#14 - Deposit Accounts Instruction Sysvar Account"]
+        },
+        {
+         "name": "farms_accounts_obligation_farm_user_state",
+         "docs": ["#15 - Farms Accounts Obligation Farm User State"]
+        },
+        {
+         "name": "farms_accounts_reserve_farm_state",
+         "docs": ["#16 - Farms Accounts Reserve Farm State"]
+        },
+        {
+         "name": "farms_program",
+         "docs": ["#17 - Farms Program"]
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "name": "kamino_borrow_with_farm",
+     "accounts": [
+      {
+       "name": "borrow_accounts_obligation",
+       "docs": ["#2 - Borrow Accounts Obligation"],
+       "writable": true
+      },
+      {
+       "name": "borrow_accounts_lending_market",
+       "docs": ["#3 - Borrow Accounts Lending Market"]
+      },
+      {
+       "name": "borrow_accounts_lending_market_authority",
+       "docs": ["#4 - Borrow Accounts Lending Market Authority"]
+      },
+      {
+       "name": "borrow_accounts_borrow_reserve",
+       "docs": ["#5 - Borrow Accounts Borrow Reserve"],
+       "writable": true
+      },
+      {
+       "name": "borrow_accounts_borrow_reserve_liquidity_mint",
+       "docs": ["#6 - Borrow Accounts Borrow Reserve Liquidity Mint"]
+      },
+      {
+       "name": "borrow_accounts_reserve_source_liquidity",
+       "docs": ["#7 - Borrow Accounts Reserve Source Liquidity"],
+       "writable": true
+      },
+      {
+       "name": "borrow_accounts_borrow_reserve_liquidity_fee_receiver",
+       "docs": ["#8 - Borrow Accounts Borrow Reserve Liquidity Fee Receiver"],
+       "writable": true
+      },
+      {
+       "name": "borrow_accounts_user_destination_liquidity",
+       "docs": ["#9 - Borrow Accounts User Destination Liquidity"],
+       "writable": true
+      },
+      {
+       "name": "borrow_accounts_referrer_token_state",
+       "docs": ["#10 - Borrow Accounts Referrer Token State"]
+      },
+      {
+       "name": "borrow_accounts_token_program",
+       "docs": ["#11 - Borrow Accounts Token Program"]
+      },
+      {
+       "name": "borrow_accounts_instruction_sysvar_account",
+       "docs": ["#12 - Borrow Accounts Instruction Sysvar Account"]
+      },
+      {
+       "name": "farms_accounts_obligation_farm_user_state",
+       "docs": ["#13 - Farms Accounts Obligation Farm User State"]
+      },
+      {
+       "name": "farms_accounts_reserve_farm_state",
+       "docs": ["#14 - Farms Accounts Reserve Farm State"]
+      },
+      {
+       "name": "farms_program",
+       "docs": ["#15 - Farms Program"]
+      }
+     ]
+    },
+    {
+     "name": "kamino_borrow_with_farm_cpi",
+     "accounts": [
+      {
+       "name": "borrow_accounts_owner",
+       "docs": ["#1 - Borrow Accounts Owner"],
+       "writable": true,
+       "signer": true
+      },
+      {
+       "name": "accounts",
+       "accounts": [
+        {
+         "name": "borrow_accounts_obligation",
+         "docs": ["#2 - Borrow Accounts Obligation"],
+         "writable": true
+        },
+        {
+         "name": "borrow_accounts_lending_market",
+         "docs": ["#3 - Borrow Accounts Lending Market"]
+        },
+        {
+         "name": "borrow_accounts_lending_market_authority",
+         "docs": ["#4 - Borrow Accounts Lending Market Authority"]
+        },
+        {
+         "name": "borrow_accounts_borrow_reserve",
+         "docs": ["#5 - Borrow Accounts Borrow Reserve"],
+         "writable": true
+        },
+        {
+         "name": "borrow_accounts_borrow_reserve_liquidity_mint",
+         "docs": ["#6 - Borrow Accounts Borrow Reserve Liquidity Mint"]
+        },
+        {
+         "name": "borrow_accounts_reserve_source_liquidity",
+         "docs": ["#7 - Borrow Accounts Reserve Source Liquidity"],
+         "writable": true
+        },
+        {
+         "name": "borrow_accounts_borrow_reserve_liquidity_fee_receiver",
+         "docs": ["#8 - Borrow Accounts Borrow Reserve Liquidity Fee Receiver"],
+         "writable": true
+        },
+        {
+         "name": "borrow_accounts_user_destination_liquidity",
+         "docs": ["#9 - Borrow Accounts User Destination Liquidity"],
+         "writable": true
+        },
+        {
+         "name": "borrow_accounts_referrer_token_state",
+         "docs": ["#10 - Borrow Accounts Referrer Token State"]
+        },
+        {
+         "name": "borrow_accounts_token_program",
+         "docs": ["#11 - Borrow Accounts Token Program"]
+        },
+        {
+         "name": "borrow_accounts_instruction_sysvar_account",
+         "docs": ["#12 - Borrow Accounts Instruction Sysvar Account"]
+        },
+        {
+         "name": "farms_accounts_obligation_farm_user_state",
+         "docs": ["#13 - Farms Accounts Obligation Farm User State"]
+        },
+        {
+         "name": "farms_accounts_reserve_farm_state",
+         "docs": ["#14 - Farms Accounts Reserve Farm State"]
+        },
+        {
+         "name": "farms_program",
+         "docs": ["#15 - Farms Program"]
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "name": "kamino_borrow_with_farm_client",
+     "accounts": [
+      {
+       "name": "borrow_accounts_owner",
+       "docs": ["#1 - Borrow Accounts Owner"],
+       "writable": true
+      },
+      {
+       "name": "accounts",
+       "accounts": [
+        {
+         "name": "borrow_accounts_obligation",
+         "docs": ["#2 - Borrow Accounts Obligation"],
+         "writable": true
+        },
+        {
+         "name": "borrow_accounts_lending_market",
+         "docs": ["#3 - Borrow Accounts Lending Market"]
+        },
+        {
+         "name": "borrow_accounts_lending_market_authority",
+         "docs": ["#4 - Borrow Accounts Lending Market Authority"]
+        },
+        {
+         "name": "borrow_accounts_borrow_reserve",
+         "docs": ["#5 - Borrow Accounts Borrow Reserve"],
+         "writable": true
+        },
+        {
+         "name": "borrow_accounts_borrow_reserve_liquidity_mint",
+         "docs": ["#6 - Borrow Accounts Borrow Reserve Liquidity Mint"]
+        },
+        {
+         "name": "borrow_accounts_reserve_source_liquidity",
+         "docs": ["#7 - Borrow Accounts Reserve Source Liquidity"],
+         "writable": true
+        },
+        {
+         "name": "borrow_accounts_borrow_reserve_liquidity_fee_receiver",
+         "docs": ["#8 - Borrow Accounts Borrow Reserve Liquidity Fee Receiver"],
+         "writable": true
+        },
+        {
+         "name": "borrow_accounts_user_destination_liquidity",
+         "docs": ["#9 - Borrow Accounts User Destination Liquidity"],
+         "writable": true
+        },
+        {
+         "name": "borrow_accounts_referrer_token_state",
+         "docs": ["#10 - Borrow Accounts Referrer Token State"]
+        },
+        {
+         "name": "borrow_accounts_token_program",
+         "docs": ["#11 - Borrow Accounts Token Program"]
+        },
+        {
+         "name": "borrow_accounts_instruction_sysvar_account",
+         "docs": ["#12 - Borrow Accounts Instruction Sysvar Account"]
+        },
+        {
+         "name": "farms_accounts_obligation_farm_user_state",
+         "docs": ["#13 - Farms Accounts Obligation Farm User State"]
+        },
+        {
+         "name": "farms_accounts_reserve_farm_state",
+         "docs": ["#14 - Farms Accounts Reserve Farm State"]
+        },
+        {
+         "name": "farms_program",
+         "docs": ["#15 - Farms Program"]
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "name": "kamino_repay_with_farm",
+     "accounts": [
+      {
+       "name": "repay_accounts_obligation",
+       "docs": ["#2 - Repay Accounts Obligation"],
+       "writable": true
+      },
+      {
+       "name": "repay_accounts_lending_market",
+       "docs": ["#3 - Repay Accounts Lending Market"]
+      },
+      {
+       "name": "repay_accounts_repay_reserve",
+       "docs": ["#4 - Repay Accounts Repay Reserve"],
+       "writable": true
+      },
+      {
+       "name": "repay_accounts_reserve_liquidity_mint",
+       "docs": ["#5 - Repay Accounts Reserve Liquidity Mint"]
+      },
+      {
+       "name": "repay_accounts_reserve_destination_liquidity",
+       "docs": ["#6 - Repay Accounts Reserve Destination Liquidity"],
+       "writable": true
+      },
+      {
+       "name": "repay_accounts_user_source_liquidity",
+       "docs": ["#7 - Repay Accounts User Source Liquidity"],
+       "writable": true
+      },
+      {
+       "name": "repay_accounts_token_program",
+       "docs": ["#8 - Repay Accounts Token Program"]
+      },
+      {
+       "name": "repay_accounts_instruction_sysvar_account",
+       "docs": ["#9 - Repay Accounts Instruction Sysvar Account"]
+      },
+      {
+       "name": "farms_accounts_obligation_farm_user_state",
+       "docs": ["#10 - Farms Accounts Obligation Farm User State"]
+      },
+      {
+       "name": "farms_accounts_reserve_farm_state",
+       "docs": ["#11 - Farms Accounts Reserve Farm State"]
+      },
+      {
+       "name": "lending_market_authority",
+       "docs": ["#12 - Lending Market Authority"]
+      },
+      {
+       "name": "farms_program",
+       "docs": ["#13 - Farms Program"]
+      }
+     ]
+    },
+    {
+     "name": "kamino_repay_with_farm_cpi",
+     "accounts": [
+      {
+       "name": "repay_accounts_owner",
+       "docs": ["#1 - Repay Accounts Owner"],
+       "writable": true,
+       "signer": true
+      },
+      {
+       "name": "accounts",
+       "accounts": [
+        {
+         "name": "repay_accounts_obligation",
+         "docs": ["#2 - Repay Accounts Obligation"],
+         "writable": true
+        },
+        {
+         "name": "repay_accounts_lending_market",
+         "docs": ["#3 - Repay Accounts Lending Market"]
+        },
+        {
+         "name": "repay_accounts_repay_reserve",
+         "docs": ["#4 - Repay Accounts Repay Reserve"],
+         "writable": true
+        },
+        {
+         "name": "repay_accounts_reserve_liquidity_mint",
+         "docs": ["#5 - Repay Accounts Reserve Liquidity Mint"]
+        },
+        {
+         "name": "repay_accounts_reserve_destination_liquidity",
+         "docs": ["#6 - Repay Accounts Reserve Destination Liquidity"],
+         "writable": true
+        },
+        {
+         "name": "repay_accounts_user_source_liquidity",
+         "docs": ["#7 - Repay Accounts User Source Liquidity"],
+         "writable": true
+        },
+        {
+         "name": "repay_accounts_token_program",
+         "docs": ["#8 - Repay Accounts Token Program"]
+        },
+        {
+         "name": "repay_accounts_instruction_sysvar_account",
+         "docs": ["#9 - Repay Accounts Instruction Sysvar Account"]
+        },
+        {
+         "name": "farms_accounts_obligation_farm_user_state",
+         "docs": ["#10 - Farms Accounts Obligation Farm User State"]
+        },
+        {
+         "name": "farms_accounts_reserve_farm_state",
+         "docs": ["#11 - Farms Accounts Reserve Farm State"]
+        },
+        {
+         "name": "lending_market_authority",
+         "docs": ["#12 - Lending Market Authority"]
+        },
+        {
+         "name": "farms_program",
+         "docs": ["#13 - Farms Program"]
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "name": "kamino_repay_with_farm_client",
+     "accounts": [
+      {
+       "name": "repay_accounts_owner",
+       "docs": ["#1 - Repay Accounts Owner"],
+       "writable": true
+      },
+      {
+       "name": "accounts",
+       "accounts": [
+        {
+         "name": "repay_accounts_obligation",
+         "docs": ["#2 - Repay Accounts Obligation"],
+         "writable": true
+        },
+        {
+         "name": "repay_accounts_lending_market",
+         "docs": ["#3 - Repay Accounts Lending Market"]
+        },
+        {
+         "name": "repay_accounts_repay_reserve",
+         "docs": ["#4 - Repay Accounts Repay Reserve"],
+         "writable": true
+        },
+        {
+         "name": "repay_accounts_reserve_liquidity_mint",
+         "docs": ["#5 - Repay Accounts Reserve Liquidity Mint"]
+        },
+        {
+         "name": "repay_accounts_reserve_destination_liquidity",
+         "docs": ["#6 - Repay Accounts Reserve Destination Liquidity"],
+         "writable": true
+        },
+        {
+         "name": "repay_accounts_user_source_liquidity",
+         "docs": ["#7 - Repay Accounts User Source Liquidity"],
+         "writable": true
+        },
+        {
+         "name": "repay_accounts_token_program",
+         "docs": ["#8 - Repay Accounts Token Program"]
+        },
+        {
+         "name": "repay_accounts_instruction_sysvar_account",
+         "docs": ["#9 - Repay Accounts Instruction Sysvar Account"]
+        },
+        {
+         "name": "farms_accounts_obligation_farm_user_state",
+         "docs": ["#10 - Farms Accounts Obligation Farm User State"]
+        },
+        {
+         "name": "farms_accounts_reserve_farm_state",
+         "docs": ["#11 - Farms Accounts Reserve Farm State"]
+        },
+        {
+         "name": "lending_market_authority",
+         "docs": ["#12 - Lending Market Authority"]
+        },
+        {
+         "name": "farms_program",
+         "docs": ["#13 - Farms Program"]
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "name": "order_unstake_msol_client",
+     "accounts": [
+      {
+       "name": "marinade_finance_program",
+       "docs": ["CHECK"]
+      },
+      {
+       "name": "marinade_liquid_staking_state",
+       "docs": ["CHECK"],
+       "writable": true
+      },
+      {
+       "name": "msol_mint",
+       "docs": ["CHECK"],
+       "writable": true
+      },
+      {
+       "name": "burn_msol_from",
+       "docs": ["CHECK"],
+       "writable": true
+      },
+      {
+       "name": "burn_msol_authority",
+       "docs": ["CHECK"],
+       "writable": true,
+       "signer": true
+      },
+      {
+       "name": "new_ticket_account",
+       "docs": ["CHECK"],
+       "writable": true
+      },
+      {
+       "name": "clock",
+       "address": "SysvarC1ock11111111111111111111111111111111"
+      },
+      {
+       "name": "rent",
+       "address": "SysvarRent111111111111111111111111111111111"
+      },
+      {
+       "name": "token_program",
+       "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+      }
+     ]
+    },
+    {
+     "name": "order_unstake_msol_cpi",
+     "accounts": [
+      {
+       "name": "marinade_liquid_staking_state",
+       "docs": ["CHECK"],
+       "writable": true
+      },
+      {
+       "name": "msol_mint",
+       "docs": ["CHECK"],
+       "writable": true
+      },
+      {
+       "name": "burn_msol_from",
+       "docs": ["CHECK"],
+       "writable": true
+      },
+      {
+       "name": "burn_msol_authority",
+       "docs": ["CHECK"],
+       "writable": true,
+       "signer": true
+      },
+      {
+       "name": "new_ticket_account",
+       "docs": ["CHECK"],
+       "writable": true,
+       "signer": true
+      },
+      {
+       "name": "clock",
+       "address": "SysvarC1ock11111111111111111111111111111111"
+      },
+      {
+       "name": "rent",
+       "address": "SysvarRent111111111111111111111111111111111"
+      },
+      {
+       "name": "token_program",
+       "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+      }
+     ]
+    },
+    {
+     "name": "claim_msol_cpi",
+     "accounts": [
+      {
+       "name": "state",
+       "docs": ["CHECK"],
+       "writable": true
+      },
+      {
+       "name": "reserve_pda",
+       "docs": ["CHECK"],
+       "writable": true
+      },
+      {
+       "name": "ticket_account",
+       "docs": ["CHECK"],
+       "writable": true
+      },
+      {
+       "name": "transfer_sol_to",
+       "docs": ["CHECK"],
+       "writable": true,
+       "signer": true
+      },
+      {
+       "name": "clock",
+       "address": "SysvarC1ock11111111111111111111111111111111"
+      },
+      {
+       "name": "system_program",
+       "address": "11111111111111111111111111111111"
+      }
+     ]
+    },
+    {
+     "name": "kamino_withdraw_with_farm",
+     "accounts": [
+      {
+       "name": "withdraw_accounts_obligation",
+       "docs": ["#2 - Withdraw Accounts Obligation", "CHECK"],
+       "writable": true
+      },
+      {
+       "name": "withdraw_accounts_lending_market",
+       "docs": ["#3 - Withdraw Accounts Lending Market", "CHECK"]
+      },
+      {
+       "name": "withdraw_accounts_lending_market_authority",
+       "docs": ["#4 - Withdraw Accounts Lending Market Authority", "CHECK"]
+      },
+      {
+       "name": "withdraw_accounts_withdraw_reserve",
+       "docs": ["#5 - Withdraw Accounts Withdraw Reserve", "CHECK"],
+       "writable": true
+      },
+      {
+       "name": "withdraw_accounts_reserve_liquidity_mint",
+       "docs": ["#6 - Withdraw Accounts Reserve Liquidity Mint", "CHECK"]
+      },
+      {
+       "name": "withdraw_accounts_reserve_source_collateral",
+       "docs": ["#7 - Withdraw Accounts Reserve Source Collateral", "CHECK"],
+       "writable": true
+      },
+      {
+       "name": "withdraw_accounts_reserve_collateral_mint",
+       "docs": ["#8 - Withdraw Accounts Reserve Collateral Mint", "CHECK"],
+       "writable": true
+      },
+      {
+       "name": "withdraw_accounts_reserve_liquidity_supply",
+       "docs": ["#9 - Withdraw Accounts Reserve Liquidity Supply", "CHECK"],
+       "writable": true
+      },
+      {
+       "name": "withdraw_accounts_user_destination_liquidity",
+       "docs": ["#10 - Withdraw Accounts User Destination Liquidity", "CHECK"],
+       "writable": true
+      },
+      {
+       "name": "withdraw_accounts_placeholder_user_destination_collateral",
+       "docs": [
+        "#11 - Withdraw Accounts Placeholder User Destination Collateral",
+        "CHECK"
+       ]
+      },
+      {
+       "name": "withdraw_accounts_collateral_token_program",
+       "docs": ["#12 - Withdraw Accounts Collateral Token Program", "CHECK"]
+      },
+      {
+       "name": "withdraw_accounts_liquidity_token_program",
+       "docs": ["#13 - Withdraw Accounts Liquidity Token Program", "CHECK"]
+      },
+      {
+       "name": "withdraw_accounts_instruction_sysvar_account",
+       "docs": ["#14 - Withdraw Accounts Instruction Sysvar Account", "CHECK"]
+      },
+      {
+       "name": "farms_accounts_obligation_farm_user_state",
+       "docs": ["#15 - Farms Accounts Obligation Farm User State", "CHECK"],
+       "writable": true
+      },
+      {
+       "name": "farms_accounts_reserve_farm_state",
+       "docs": ["#16 - Farms Accounts Reserve Farm State", "CHECK"],
+       "writable": true
+      },
+      {
+       "name": "farms_program",
+       "docs": ["#17 - Farms Program", "CHECK"]
+      }
+     ]
+    },
+    {
+     "name": "kamino_withdraw_with_farm_cpi",
+     "accounts": [
+      {
+       "name": "withdraw_accounts_owner",
+       "docs": ["#1 - Withdraw Accounts Owner", "CHECK"],
+       "writable": true,
+       "signer": true
+      },
+      {
+       "name": "accounts",
+       "accounts": [
+        {
+         "name": "withdraw_accounts_obligation",
+         "docs": ["#2 - Withdraw Accounts Obligation", "CHECK"],
+         "writable": true
+        },
+        {
+         "name": "withdraw_accounts_lending_market",
+         "docs": ["#3 - Withdraw Accounts Lending Market", "CHECK"]
+        },
+        {
+         "name": "withdraw_accounts_lending_market_authority",
+         "docs": ["#4 - Withdraw Accounts Lending Market Authority", "CHECK"]
+        },
+        {
+         "name": "withdraw_accounts_withdraw_reserve",
+         "docs": ["#5 - Withdraw Accounts Withdraw Reserve", "CHECK"],
+         "writable": true
+        },
+        {
+         "name": "withdraw_accounts_reserve_liquidity_mint",
+         "docs": ["#6 - Withdraw Accounts Reserve Liquidity Mint", "CHECK"]
+        },
+        {
+         "name": "withdraw_accounts_reserve_source_collateral",
+         "docs": ["#7 - Withdraw Accounts Reserve Source Collateral", "CHECK"],
+         "writable": true
+        },
+        {
+         "name": "withdraw_accounts_reserve_collateral_mint",
+         "docs": ["#8 - Withdraw Accounts Reserve Collateral Mint", "CHECK"],
+         "writable": true
+        },
+        {
+         "name": "withdraw_accounts_reserve_liquidity_supply",
+         "docs": ["#9 - Withdraw Accounts Reserve Liquidity Supply", "CHECK"],
+         "writable": true
+        },
+        {
+         "name": "withdraw_accounts_user_destination_liquidity",
+         "docs": [
+          "#10 - Withdraw Accounts User Destination Liquidity",
+          "CHECK"
+         ],
+         "writable": true
+        },
+        {
+         "name": "withdraw_accounts_placeholder_user_destination_collateral",
+         "docs": [
+          "#11 - Withdraw Accounts Placeholder User Destination Collateral",
+          "CHECK"
+         ]
+        },
+        {
+         "name": "withdraw_accounts_collateral_token_program",
+         "docs": ["#12 - Withdraw Accounts Collateral Token Program", "CHECK"]
+        },
+        {
+         "name": "withdraw_accounts_liquidity_token_program",
+         "docs": ["#13 - Withdraw Accounts Liquidity Token Program", "CHECK"]
+        },
+        {
+         "name": "withdraw_accounts_instruction_sysvar_account",
+         "docs": ["#14 - Withdraw Accounts Instruction Sysvar Account", "CHECK"]
+        },
+        {
+         "name": "farms_accounts_obligation_farm_user_state",
+         "docs": ["#15 - Farms Accounts Obligation Farm User State", "CHECK"],
+         "writable": true
+        },
+        {
+         "name": "farms_accounts_reserve_farm_state",
+         "docs": ["#16 - Farms Accounts Reserve Farm State", "CHECK"],
+         "writable": true
+        },
+        {
+         "name": "farms_program",
+         "docs": ["#17 - Farms Program", "CHECK"]
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "name": "kamino_withdraw_with_farm_client",
+     "accounts": [
+      {
+       "name": "withdraw_accounts_owner",
+       "docs": ["#1 - Withdraw Accounts Owner", "CHECK"]
+      },
+      {
+       "name": "accounts",
+       "accounts": [
+        {
+         "name": "withdraw_accounts_obligation",
+         "docs": ["#2 - Withdraw Accounts Obligation", "CHECK"],
+         "writable": true
+        },
+        {
+         "name": "withdraw_accounts_lending_market",
+         "docs": ["#3 - Withdraw Accounts Lending Market", "CHECK"]
+        },
+        {
+         "name": "withdraw_accounts_lending_market_authority",
+         "docs": ["#4 - Withdraw Accounts Lending Market Authority", "CHECK"]
+        },
+        {
+         "name": "withdraw_accounts_withdraw_reserve",
+         "docs": ["#5 - Withdraw Accounts Withdraw Reserve", "CHECK"],
+         "writable": true
+        },
+        {
+         "name": "withdraw_accounts_reserve_liquidity_mint",
+         "docs": ["#6 - Withdraw Accounts Reserve Liquidity Mint", "CHECK"]
+        },
+        {
+         "name": "withdraw_accounts_reserve_source_collateral",
+         "docs": ["#7 - Withdraw Accounts Reserve Source Collateral", "CHECK"],
+         "writable": true
+        },
+        {
+         "name": "withdraw_accounts_reserve_collateral_mint",
+         "docs": ["#8 - Withdraw Accounts Reserve Collateral Mint", "CHECK"],
+         "writable": true
+        },
+        {
+         "name": "withdraw_accounts_reserve_liquidity_supply",
+         "docs": ["#9 - Withdraw Accounts Reserve Liquidity Supply", "CHECK"],
+         "writable": true
+        },
+        {
+         "name": "withdraw_accounts_user_destination_liquidity",
+         "docs": [
+          "#10 - Withdraw Accounts User Destination Liquidity",
+          "CHECK"
+         ],
+         "writable": true
+        },
+        {
+         "name": "withdraw_accounts_placeholder_user_destination_collateral",
+         "docs": [
+          "#11 - Withdraw Accounts Placeholder User Destination Collateral",
+          "CHECK"
+         ]
+        },
+        {
+         "name": "withdraw_accounts_collateral_token_program",
+         "docs": ["#12 - Withdraw Accounts Collateral Token Program", "CHECK"]
+        },
+        {
+         "name": "withdraw_accounts_liquidity_token_program",
+         "docs": ["#13 - Withdraw Accounts Liquidity Token Program", "CHECK"]
+        },
+        {
+         "name": "withdraw_accounts_instruction_sysvar_account",
+         "docs": ["#14 - Withdraw Accounts Instruction Sysvar Account", "CHECK"]
+        },
+        {
+         "name": "farms_accounts_obligation_farm_user_state",
+         "docs": ["#15 - Farms Accounts Obligation Farm User State", "CHECK"],
+         "writable": true
+        },
+        {
+         "name": "farms_accounts_reserve_farm_state",
+         "docs": ["#16 - Farms Accounts Reserve Farm State", "CHECK"],
+         "writable": true
+        },
+        {
+         "name": "farms_program",
+         "docs": ["#17 - Farms Program", "CHECK"]
+        }
+       ]
+      }
+     ]
+    }
+   ],
+   "args": []
+  },
+  {
+   "name": "sell",
+   "discriminator": [51, 230, 133, 164, 1, 127, 131, 173],
+   "accounts": [
+    {
+     "name": "token_a_program"
+    },
+    {
+     "name": "token_b_program"
+    },
+    {
+     "name": "associated_token_program",
+     "address": "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL"
+    },
+    {
+     "name": "system_program",
+     "address": "11111111111111111111111111111111"
+    },
+    {
+     "name": "liquidity_pool_state",
+     "writable": true
+    },
+    {
+     "name": "user",
+     "docs": ["CHECK"],
+     "writable": true,
+     "signer": true
+    },
+    {
+     "name": "token_a_mint",
+     "docs": ["CHECK"]
+    },
+    {
+     "name": "token_b_mint",
+     "docs": ["CHECK"]
+    },
+    {
+     "name": "user_token_a_vault",
+     "writable": true
+    },
+    {
+     "name": "user_token_b_vault",
+     "writable": true
+    },
+    {
+     "name": "token_a_vault",
+     "writable": true
+    },
+    {
+     "name": "token_b_vault",
+     "writable": true
+    },
+    {
+     "name": "protocol_config",
+     "writable": true
+    },
+    {
+     "name": "instruction_sysvar_account_info",
+     "docs": ["CHECK"],
+     "address": "Sysvar1nstructions1111111111111111111111111"
+    }
+   ],
+   "args": [
+    {
+     "name": "params",
+     "type": {
+      "defined": {
+       "name": "SellParams"
+      }
+     }
+    }
+   ],
+   "returns": "u64"
+  },
+  {
+   "name": "set_protocol_slot_fees",
+   "discriminator": [181, 82, 19, 15, 126, 205, 152, 242],
+   "accounts": [
+    {
+     "name": "owner",
+     "signer": true
+    },
+    {
+     "name": "protocol_config_state",
+     "writable": true,
+     "pda": {
+      "seeds": [
+       {
+        "kind": "const",
+        "value": [
+         112, 114, 111, 116, 111, 99, 111, 108, 95, 99, 111, 110, 102, 105, 103,
+         95, 115, 116, 97, 116, 101
+        ]
+       },
+       {
+        "kind": "arg",
+        "path": "version"
+       }
+      ]
+     }
+    },
+    {
+     "name": "protocol_owner_state",
+     "pda": {
+      "seeds": [
+       {
+        "kind": "const",
+        "value": [
+         112, 114, 111, 116, 111, 99, 111, 108, 95, 111, 119, 110, 101, 114, 95,
+         115, 116, 97, 116, 101
+        ]
+       }
+      ]
+     }
+    }
+   ],
+   "args": [
+    {
+     "name": "version",
+     "type": "u16"
+    },
+    {
+     "name": "fee_type",
+     "type": {
+      "defined": {
+       "name": "FeeType"
+      }
+     }
+    },
+    {
+     "name": "slot_fees",
+     "type": {
+      "defined": {
+       "name": "SlotFeeBracketsParams"
+      }
+     }
+    }
+   ]
+  },
+  {
+   "name": "update_allow_create_pool",
+   "discriminator": [223, 252, 231, 62, 96, 219, 241, 214],
+   "accounts": [
+    {
+     "name": "admin",
+     "signer": true
+    },
+    {
+     "name": "protocol_config_state",
+     "writable": true
+    },
+    {
+     "name": "protocol_admin_state",
+     "pda": {
+      "seeds": [
+       {
+        "kind": "const",
+        "value": [
+         112, 114, 111, 116, 111, 99, 111, 108, 95, 102, 101, 101, 95, 97, 100,
+         109, 105, 110, 95, 115, 116, 97, 116, 101
+        ]
+       }
+      ]
+     }
+    }
+   ],
+   "args": [
+    {
+     "name": "version",
+     "type": "u16"
+    },
+    {
+     "name": "allow_create_pool",
+     "type": "bool"
+    }
+   ]
+  },
+  {
+   "name": "update_creator_trading_fee_receiver",
+   "discriminator": [246, 229, 200, 79, 31, 21, 120, 25],
+   "accounts": [
+    {
+     "name": "swap",
+     "accounts": [
+      {
+       "name": "token_a_program"
+      },
+      {
+       "name": "token_b_program"
+      },
+      {
+       "name": "associated_token_program",
+       "address": "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL"
+      },
+      {
+       "name": "system_program",
+       "address": "11111111111111111111111111111111"
+      },
+      {
+       "name": "liquidity_pool_state",
+       "writable": true
+      },
+      {
+       "name": "user",
+       "docs": ["CHECK"],
+       "writable": true,
+       "signer": true
+      },
+      {
+       "name": "token_a_mint",
+       "docs": ["CHECK"]
+      },
+      {
+       "name": "token_b_mint",
+       "docs": ["CHECK"]
+      },
+      {
+       "name": "user_token_a_vault",
+       "writable": true
+      },
+      {
+       "name": "user_token_b_vault",
+       "writable": true
+      },
+      {
+       "name": "token_a_vault",
+       "writable": true
+      },
+      {
+       "name": "token_b_vault",
+       "writable": true
+      },
+      {
+       "name": "protocol_config",
+       "writable": true
+      },
+      {
+       "name": "instruction_sysvar_account_info",
+       "docs": ["CHECK"],
+       "address": "Sysvar1nstructions1111111111111111111111111"
+      }
+     ]
+    },
+    {
+     "name": "new_receiver",
+     "signer": true
+    }
+   ],
+   "args": []
+  },
+  {
+   "name": "update_protocol_config",
+   "discriminator": [197, 97, 123, 54, 221, 168, 11, 135],
+   "accounts": [
+    {
+     "name": "owner",
+     "signer": true
+    },
+    {
+     "name": "protocol_config_state",
+     "writable": true
+    },
+    {
+     "name": "protocol_owner_state",
+     "pda": {
+      "seeds": [
+       {
+        "kind": "const",
+        "value": [
+         112, 114, 111, 116, 111, 99, 111, 108, 95, 111, 119, 110, 101, 114, 95,
+         115, 116, 97, 116, 101
+        ]
+       }
+      ]
+     }
+    }
+   ],
+   "args": [
+    {
+     "name": "version",
+     "type": "u16"
+    },
+    {
+     "name": "params",
+     "type": {
+      "defined": {
+       "name": "ProtocolConfigParams"
+      }
+     }
+    }
+   ]
+  }
+ ],
+ "accounts": [
+  {
+   "name": "LiquidityPoolState",
+   "discriminator": [190, 158, 220, 130, 15, 162, 132, 252]
+  },
+  {
+   "name": "MsolTicketSolSpent",
+   "discriminator": [66, 196, 62, 134, 124, 149, 250, 66]
+  },
+  {
+   "name": "ProtocolAdminState",
+   "discriminator": [24, 124, 174, 225, 232, 30, 115, 192]
+  },
+  {
+   "name": "ProtocolConfig",
+   "discriminator": [207, 91, 250, 28, 152, 179, 215, 209]
+  },
+  {
+   "name": "ProtocolOwnerState",
+   "discriminator": [208, 64, 209, 204, 113, 226, 22, 98]
+  }
+ ],
+ "events": [
+  {
+   "name": "CreateLiquidityPoolEvent",
+   "discriminator": [116, 216, 239, 141, 207, 211, 178, 127]
+  },
+  {
+   "name": "CreateStandardLiquidityPoolEvent",
+   "discriminator": [189, 56, 131, 144, 75, 63, 249, 148]
+  },
+  {
+   "name": "CreatingLiquidityPoolEvent",
+   "discriminator": [52, 128, 4, 166, 122, 176, 84, 207]
+  },
+  {
+   "name": "TradeEvent",
+   "discriminator": [189, 219, 127, 211, 78, 230, 97, 238]
+  },
+  {
+   "name": "UserDefinedEvent",
+   "discriminator": [33, 21, 108, 20, 241, 244, 167, 131]
+  }
+ ],
+ "errors": [
+  {
+   "code": 6000,
+   "name": "UnsupportedTokenMint",
+   "msg": "Unsupported token mint"
+  },
+  {
+   "code": 6001,
+   "name": "InvalidTokenVaultBalance",
+   "msg": "Invalid token vault balance"
+  },
+  {
+   "code": 6002,
+   "name": "InvalidUserToken",
+   "msg": "Invalid user token"
+  },
+  {
+   "code": 6003,
+   "name": "InvalidTaxationMode",
+   "msg": "Invalid taxation mode"
+  },
+  {
+   "code": 6004,
+   "name": "InvalidOwner",
+   "msg": "Invalid owner"
+  },
+  {
+   "code": 6005,
+   "name": "InvalidLockLiquidityProviderTokenPercentage",
+   "msg": "Invalid lock liquidity provider token percentage"
+  },
+  {
+   "code": 6006,
+   "name": "CannotCreatePoolWithDisabledProtocolConfigVersion",
+   "msg": "Cannot create pool with the a disabled protocol config version"
+  },
+  {
+   "code": 6007,
+   "name": "InvalidTokenInputAmount",
+   "msg": "Invalid token input amount"
+  },
+  {
+   "code": 6008,
+   "name": "InvalidSwapTax",
+   "msg": "Invalid swap tax"
+  },
+  {
+   "code": 6009,
+   "name": "InvalidFeeMode",
+   "msg": "Invalid fee mode"
+  },
+  {
+   "code": 6010,
+   "name": "InvalidLiquidityProviderTokenLockVault",
+   "msg": "Invalid liquidity provider token lock vault"
+  },
+  {
+   "code": 6011,
+   "name": "InvalidUserLiquidityProviderTokenVault",
+   "msg": "Invalid liquidity provider token vault"
+  },
+  {
+   "code": 6012,
+   "name": "InsufficientBalance",
+   "msg": "Insufficient balance"
+  },
+  {
+   "code": 6013,
+   "name": "ExceededSlippage",
+   "msg": "Exceeded slippage"
+  },
+  {
+   "code": 6014,
+   "name": "InvalidAddLiquidityInput",
+   "msg": "Invalid add liquidity input"
+  },
+  {
+   "code": 6015,
+   "name": "InvalidRemoveLiquidityInput",
+   "msg": "Invalid remove liquidity input"
+  },
+  {
+   "code": 6016,
+   "name": "AddLiquidityDisabled",
+   "msg": "Add liquidity is disabled"
+  },
+  {
+   "code": 6017,
+   "name": "RemoveLiquidityDisabled",
+   "msg": "Remove liquidity is disabled"
+  },
+  {
+   "code": 6018,
+   "name": "SwapDisabled",
+   "msg": "Swap is disabled"
+  },
+  {
+   "code": 6019,
+   "name": "LiquidityPoolIsNotOpenYet",
+   "msg": "Liquidity pool is not open yet"
+  },
+  {
+   "code": 6020,
+   "name": "InvalidSwapInInputs",
+   "msg": "Invalid swap in inputs"
+  },
+  {
+   "code": 6021,
+   "name": "InvalidProtocolSwapFeeWallet",
+   "msg": "Invalid protocol swap fee wallet"
+  },
+  {
+   "code": 6022,
+   "name": "InvalidSwapOutInputs",
+   "msg": "Invalid swap out inputs"
+  },
+  {
+   "code": 6023,
+   "name": "InvalidPostFeeAmount",
+   "msg": "Invalid post fee amount"
+  },
+  {
+   "code": 6024,
+   "name": "ExceededQuoteTokenSlippage",
+   "msg": "Exceeded quote token slippage"
+  },
+  {
+   "code": 6025,
+   "name": "ExceededBaseTokenSlippage",
+   "msg": "Exceeded base token slippage"
+  },
+  {
+   "code": 6026,
+   "name": "LpTokensLocked",
+   "msg": "Lp tokens locked"
+  },
+  {
+   "code": 6027,
+   "name": "InvalidProtocolBaseTokenSwapFeeVault",
+   "msg": "Invalid protocol base token swap fee vault"
+  },
+  {
+   "code": 6028,
+   "name": "InvalidProtocolQuoteTokenSwapFeeVault",
+   "msg": "Invalid protocol quote token swap fee vault"
+  },
+  {
+   "code": 6029,
+   "name": "InvalidUserPoolStatsAccount",
+   "msg": "Invalid user pool stats account"
+  },
+  {
+   "code": 6030,
+   "name": "InvalidUserGlobalStatsAccount",
+   "msg": "Invalid user global stats account"
+  },
+  {
+   "code": 6031,
+   "name": "CannotUpdateLpLock",
+   "msg": "Cannot update lp lock"
+  },
+  {
+   "code": 6032,
+   "name": "ZeroAmount",
+   "msg": "Zero amount"
+  },
+  {
+   "code": 6033,
+   "name": "CannotUpdateLpOpenTime",
+   "msg": "Cannot update lp open time"
+  },
+  {
+   "code": 6034,
+   "name": "CannotSetLockBurnLpTokens",
+   "msg": "Cannot set lock burn lp tokens"
+  },
+  {
+   "code": 6035,
+   "name": "InvalidTax",
+   "msg": "Invalid tax"
+  },
+  {
+   "code": 6036,
+   "name": "InvalidChainlinkFeedAccount",
+   "msg": "Invalid chainlink feed account"
+  },
+  {
+   "code": 6037,
+   "name": "InvalidChainlinkProgram",
+   "msg": "Invalid chainlink program"
+  },
+  {
+   "code": 6038,
+   "name": "InvalidConfigVersion",
+   "msg": "Invalid config version"
+  },
+  {
+   "code": 6039,
+   "name": "CannotUpdateLockedTaxation",
+   "msg": "Cannot update locked taxation"
+  },
+  {
+   "code": 6040,
+   "name": "CannotClaimSwapFee",
+   "msg": "Cannot claim swap fee"
+  },
+  {
+   "code": 6041,
+   "name": "NonCreatorCannotAddLp",
+   "msg": "This pool does not allow non-creator to add lp"
+  },
+  {
+   "code": 6042,
+   "name": "SimpleAmmBaseTokenCannotHaveFreezeAuthority",
+   "msg": "Simple amm base token mint cannot have freeze authority"
+  },
+  {
+   "code": 6043,
+   "name": "SimpleAmmBaseTokenCannotHaveMintAuthority",
+   "msg": "Simple amm base token mint cannot have mint authority"
+  },
+  {
+   "code": 6044,
+   "name": "SimpleAmmQuoteTokenMustBeWSOL",
+   "msg": "Simple amm quote token mint must be WSOL"
+  },
+  {
+   "code": 6045,
+   "name": "SimpleAmmBaseTokenSupplyMustMatchInputAmount",
+   "msg": "Simple amm base token supply must match input amount"
+  },
+  {
+   "code": 6046,
+   "name": "SimpleAmmBaseTokenMustBeSplToken",
+   "msg": "Simple amm base token mint must be SPL token"
+  },
+  {
+   "code": 6047,
+   "name": "InvalidProgramAuthorityLookupTableAddress",
+   "msg": "Invalid program authority lookup table address"
+  },
+  {
+   "code": 6048,
+   "name": "CannotCreatePoolWithUnsupportedPoolType",
+   "msg": "CannotCreatePoolWithUnsupportedPoolType"
+  },
+  {
+   "code": 6049,
+   "name": "InvalidLendingMarket",
+   "msg": "InvalidLendingMarket"
+  },
+  {
+   "code": 6050,
+   "name": "KaminoPriceListRefreshIxNotFound",
+   "msg": "KaminoPriceListRefreshIxNotFound"
+  },
+  {
+   "code": 6051,
+   "name": "KaminoError",
+   "msg": "KaminoError"
+  },
+  {
+   "code": 6052,
+   "name": "ReserveRebalancing",
+   "msg": "Reserve rebalancing, please try again."
+  },
+  {
+   "code": 6053,
+   "name": "OnlySingleSwapAllowed",
+   "msg": "Only single swap allowed"
+  }
+ ],
+ "types": [
+  {
+   "name": "AdminUpdateLiquidityPoolState",
+   "type": {
+    "kind": "enum",
+    "variants": [
+     {
+      "name": "CreatorTradingFeeClaimStatus",
+      "fields": [
+       {
+        "defined": {
+         "name": "CreatorTradingFeeClaimStatus"
+        }
+       }
+      ]
+     },
+     {
+      "name": "CreatorTradingFeeDistribution",
+      "fields": [
+       {
+        "defined": {
+         "name": "CreatorTradingFeeDistribution"
+        }
+       }
+      ]
+     },
+     {
+      "name": "CreatorTradingFeeReceiver",
+      "fields": ["pubkey"]
+     },
+     {
+      "name": "FeeConfigurationMode",
+      "fields": [
+       {
+        "defined": {
+         "name": "FeeConfigurationMode"
+        }
+       }
+      ]
+     },
+     {
+      "name": "SlotOffsetBasedFees",
+      "fields": [
+       {
+        "name": "fee_type",
+        "type": {
+         "defined": {
+          "name": "FeeType"
+         }
+        }
+       },
+       {
+        "name": "fees",
+        "type": {
+         "defined": {
+          "name": "SlotFeeBrackets"
+         }
+        }
+       }
+      ]
+     },
+     {
+      "name": "MarketCapBasedFees",
+      "fields": [
+       {
+        "name": "fee_type",
+        "type": {
+         "defined": {
+          "name": "FeeType"
+         }
+        }
+       },
+       {
+        "name": "fees",
+        "type": {
+         "defined": {
+          "name": "FeeBrackets"
+         }
+        }
+       }
+      ]
+     },
+     {
+      "name": "ToggleSwapPermission",
+      "fields": ["bool"]
+     }
+    ]
+   }
+  },
+  {
+   "name": "BuyParams",
+   "type": {
+    "kind": "struct",
+    "fields": [
+     {
+      "name": "max_sol_spend",
+      "type": "u64"
+     },
+     {
+      "name": "minimum_amount_out",
+      "type": "u64"
+     },
+     {
+      "name": "encoded_user_defined_event_data",
+      "type": "string"
+     }
+    ]
+   }
+  },
+  {
+   "name": "CreateLiquidityPoolEvent",
+   "type": {
+    "kind": "struct",
+    "fields": [
+     {
+      "name": "liquidity_pool_id",
+      "type": "pubkey"
+     },
+     {
+      "name": "user",
+      "type": "pubkey"
+     },
+     {
+      "name": "base_token_input_transfer_fee_amount",
+      "type": "u64"
+     },
+     {
+      "name": "quote_token_input_transfer_fee_amount",
+      "type": "u64"
+     },
+     {
+      "name": "base_token_input_amount",
+      "type": "u64"
+     },
+     {
+      "name": "quote_token_input_amount",
+      "type": "u64"
+     },
+     {
+      "name": "lp_token_output_amount",
+      "type": "u64"
+     },
+     {
+      "name": "locked_lp",
+      "type": "bool"
+     }
+    ]
+   }
+  },
+  {
+   "name": "CreateStandardLiquidityPoolEvent",
+   "type": {
+    "kind": "struct",
+    "fields": [
+     {
+      "name": "pool_id",
+      "type": "pubkey"
+     },
+     {
+      "name": "payer",
+      "type": "pubkey"
+     },
+     {
+      "name": "creator",
+      "type": "pubkey"
+     },
+     {
+      "name": "mint",
+      "type": "pubkey"
+     },
+     {
+      "name": "config_version",
+      "type": "u16"
+     },
+     {
+      "name": "initial_token_reserve",
+      "type": "u64"
+     },
+     {
+      "name": "initial_virtual_wsol_reserve",
+      "type": "u64"
+     }
+    ]
+   }
+  },
+  {
+   "name": "CreateStandardLiquidityPoolParams",
+   "type": {
+    "kind": "struct",
+    "fields": [
+     {
+      "name": "encoded_user_defined_event_data",
+      "type": "string"
+     },
+     {
+      "name": "initial_purchase_amount",
+      "type": "u64"
+     },
+     {
+      "name": "max_sol_spend",
+      "type": "u64"
+     }
+    ]
+   }
+  },
+  {
+   "name": "CreatingLiquidityPoolEvent",
+   "type": {
+    "kind": "struct",
+    "fields": [
+     {
+      "name": "id",
+      "type": "pubkey"
+     },
+     {
+      "name": "base",
+      "type": "pubkey"
+     },
+     {
+      "name": "quote",
+      "type": "pubkey"
+     },
+     {
+      "name": "base_amount",
+      "type": "u64"
+     },
+     {
+      "name": "quote_amount",
+      "type": "u64"
+     }
+    ]
+   }
+  },
+  {
+   "name": "CreatorTradingFeeClaimStatus",
+   "type": {
+    "kind": "enum",
+    "variants": [
+     {
+      "name": "Unclaimed"
+     },
+     {
+      "name": "Submitted"
+     },
+     {
+      "name": "Processed"
+     }
+    ]
+   }
+  },
+  {
+   "name": "CreatorTradingFeeDistribution",
+   "type": {
+    "kind": "enum",
+    "variants": [
+     {
+      "name": "Community"
+     },
+     {
+      "name": "Creator"
+     },
+     {
+      "name": "Blocked"
+     },
+     {
+      "name": "Shared"
+     }
+    ]
+   }
+  },
+  {
+   "name": "FeeBracket",
+   "repr": {
+    "kind": "c"
+   },
+   "type": {
+    "kind": "struct",
+    "fields": [
+     {
+      "name": "market_cap_upper_bound",
+      "type": "u64"
+     },
+     {
+      "name": "buy_fee_bps",
+      "type": "u32"
+     },
+     {
+      "name": "sell_fee_bps",
+      "type": "u32"
+     }
+    ]
+   }
+  },
+  {
+   "name": "FeeBrackets",
+   "repr": {
+    "kind": "c"
+   },
+   "type": {
+    "kind": "struct",
+    "fields": [
+     {
+      "name": "brackets",
+      "type": {
+       "array": [
+        {
+         "defined": {
+          "name": "FeeBracket"
+         }
+        },
+        4
+       ]
+      }
+     },
+     {
+      "name": "count",
+      "type": "u8"
+     },
+     {
+      "name": "_padding",
+      "type": {
+       "array": ["u8", 7]
+      }
+     }
+    ]
+   }
+  },
+  {
+   "name": "FeeConfigurationMode",
+   "type": {
+    "kind": "enum",
+    "variants": [
+     {
+      "name": "Global"
+     },
+     {
+      "name": "Local"
+     }
+    ]
+   }
+  },
+  {
+   "name": "FeeType",
+   "type": {
+    "kind": "enum",
+    "variants": [
+     {
+      "name": "ProtocolFee"
+     },
+     {
+      "name": "LiquidityProviderFee"
+     },
+     {
+      "name": "CreatorFee"
+     },
+     {
+      "name": "CreatorFeeProtocolFee"
+     },
+     {
+      "name": "ReflectionFee"
+     }
+    ]
+   }
+  },
+  {
+   "name": "LiquidityPoolAllowlist",
+   "repr": {
+    "kind": "c"
+   },
+   "type": {
+    "kind": "struct",
+    "fields": [
+     {
+      "name": "swap",
+      "type": "u8"
+     },
+     {
+      "name": "remove_liquidity",
+      "type": "u8"
+     },
+     {
+      "name": "deposit_liquidity",
+      "type": "u8"
+     },
+     {
+      "name": "same_slot_trading",
+      "type": "u8"
+     },
+     {
+      "name": "update_creator_trading_fee",
+      "type": "u8"
+     },
+     {
+      "name": "padding1",
+      "type": {
+       "array": ["u8", 2]
+      }
+     }
+    ]
+   }
+  },
+  {
+   "name": "LiquidityPoolFeatureFlags",
+   "repr": {
+    "kind": "c"
+   },
+   "type": {
+    "kind": "struct",
+    "fields": [
+     {
+      "name": "sandwich_resistant_mode",
+      "type": "u8"
+     },
+     {
+      "name": "padding1",
+      "type": {
+       "array": ["u8", 7]
+      }
+     }
+    ]
+   }
+  },
+  {
+   "name": "LiquidityPoolInfo",
+   "repr": {
+    "kind": "c"
+   },
+   "type": {
+    "kind": "struct",
+    "fields": [
+     {
+      "name": "creator",
+      "type": "pubkey"
+     },
+     {
+      "name": "update_authority",
+      "type": "pubkey"
+     },
+     {
+      "name": "open_at",
+      "type": "u64"
+     },
+     {
+      "name": "created_at",
+      "type": "u64"
+     },
+     {
+      "name": "protocol_config_version",
+      "type": "u16"
+     },
+     {
+      "name": "r#type",
+      "type": "u8"
+     },
+     {
+      "name": "pool_authority_bump",
+      "type": "u8"
+     },
+     {
+      "name": "temp_sol_holder_bump",
+      "type": "u8"
+     },
+     {
+      "name": "_pad",
+      "type": {
+       "array": ["u8", 3]
+      }
+     }
+    ]
+   }
+  },
+  {
+   "name": "LiquidityPoolLpTokenInfo",
+   "repr": {
+    "kind": "c"
+   },
+   "type": {
+    "kind": "struct",
+    "fields": [
+     {
+      "name": "supply",
+      "type": {
+       "defined": {
+        "name": "LiquidityPoolLpTokenSupply"
+       }
+      }
+     },
+     {
+      "name": "decimals",
+      "type": "u8"
+     },
+     {
+      "name": "_pad",
+      "type": {
+       "array": ["u8", 7]
+      }
+     }
+    ]
+   }
+  },
+  {
+   "name": "LiquidityPoolLpTokenSupply",
+   "repr": {
+    "kind": "c"
+   },
+   "type": {
+    "kind": "struct",
+    "fields": [
+     {
+      "name": "initial",
+      "type": "u64"
+     },
+     {
+      "name": "total",
+      "type": "u64"
+     },
+     {
+      "name": "unlocked",
+      "type": "u64"
+     },
+     {
+      "name": "locked",
+      "type": "u64"
+     },
+     {
+      "name": "burnt",
+      "type": "u64"
+     }
+    ]
+   }
+  },
+  {
+   "name": "LiquidityPoolMarketCapBasedFees",
+   "repr": {
+    "kind": "c"
+   },
+   "type": {
+    "kind": "struct",
+    "fields": [
+     {
+      "name": "protocol_trading_fee",
+      "type": {
+       "defined": {
+        "name": "FeeBrackets"
+       }
+      }
+     },
+     {
+      "name": "liquidity_provider_trading_fee",
+      "type": {
+       "defined": {
+        "name": "FeeBrackets"
+       }
+      }
+     },
+     {
+      "name": "creator_trading_fee",
+      "type": {
+       "defined": {
+        "name": "FeeBrackets"
+       }
+      }
+     },
+     {
+      "name": "creator_trading_fee_protocol_fee",
+      "type": {
+       "defined": {
+        "name": "FeeBrackets"
+       }
+      }
+     },
+     {
+      "name": "reflection_trading_fee",
+      "type": {
+       "defined": {
+        "name": "FeeBrackets"
+       }
+      }
+     }
+    ]
+   }
+  },
+  {
+   "name": "LiquidityPoolReserve",
+   "repr": {
+    "kind": "c"
+   },
+   "type": {
+    "kind": "struct",
+    "fields": [
+     {
+      "name": "token_a",
+      "type": "u64"
+     },
+     {
+      "name": "token_b",
+      "type": "u64"
+     },
+     {
+      "name": "snapshot_slot",
+      "type": "u64"
+     },
+     {
+      "name": "snapshot_a",
+      "type": "u64"
+     },
+     {
+      "name": "snapshot_b",
+      "type": "u64"
+     },
+     {
+      "name": "padding",
+      "type": "u64"
+     },
+     {
+      "name": "initial_a",
+      "type": "u64"
+     },
+     {
+      "name": "initial_b",
+      "type": "u64"
+     },
+     {
+      "name": "leader_slot_window",
+      "type": "u8"
+     },
+     {
+      "name": "_pad",
+      "type": {
+       "array": ["u8", 7]
+      }
+     }
+    ]
+   }
+  },
+  {
+   "name": "LiquidityPoolSlotOffsetBasedFees",
+   "repr": {
+    "kind": "c"
+   },
+   "type": {
+    "kind": "struct",
+    "fields": [
+     {
+      "name": "protocol_trading_fee",
+      "type": {
+       "defined": {
+        "name": "SlotFeeBrackets"
+       }
+      }
+     },
+     {
+      "name": "liquidity_provider_trading_fee",
+      "type": {
+       "defined": {
+        "name": "SlotFeeBrackets"
+       }
+      }
+     },
+     {
+      "name": "creator_trading_fee",
+      "type": {
+       "defined": {
+        "name": "SlotFeeBrackets"
+       }
+      }
+     },
+     {
+      "name": "creator_trading_fee_protocol_fee",
+      "type": {
+       "defined": {
+        "name": "SlotFeeBrackets"
+       }
+      }
+     },
+     {
+      "name": "reflection_trading_fee",
+      "type": {
+       "defined": {
+        "name": "SlotFeeBrackets"
+       }
+      }
+     },
+     {
+      "name": "_pad",
+      "type": {
+       "array": ["u8", 6]
+      }
+     }
+    ]
+   }
+  },
+  {
+   "name": "LiquidityPoolState",
+   "serialization": "bytemuck",
+   "repr": {
+    "kind": "c"
+   },
+   "type": {
+    "kind": "struct",
+    "fields": [
+     {
+      "name": "info",
+      "type": {
+       "defined": {
+        "name": "LiquidityPoolInfo"
+       }
+      }
+     },
+     {
+      "name": "market_cap_based_fees",
+      "type": {
+       "defined": {
+        "name": "LiquidityPoolMarketCapBasedFees"
+       }
+      }
+     },
+     {
+      "name": "reserve",
+      "type": {
+       "defined": {
+        "name": "LiquidityPoolReserve"
+       }
+      }
+     },
+     {
+      "name": "lp_token",
+      "type": {
+       "defined": {
+        "name": "LiquidityPoolLpTokenInfo"
+       }
+      }
+     },
+     {
+      "name": "protocol_trading_fees",
+      "type": "u64"
+     },
+     {
+      "name": "creator_trading_fees",
+      "type": "u64"
+     },
+     {
+      "name": "creator_trading_fees_claimed_by_creator",
+      "type": "u64"
+     },
+     {
+      "name": "creator_trading_fees_claimed_by_others",
+      "type": "u64"
+     },
+     {
+      "name": "liquidity_provider_trading_fees",
+      "type": "u64"
+     },
+     {
+      "name": "creator_trading_fee_protocol_fees",
+      "type": "u64"
+     },
+     {
+      "name": "reflection_trading_fees",
+      "type": "u64"
+     },
+     {
+      "name": "created_at_slot",
+      "type": "u64"
+     },
+     {
+      "name": "trading_volume_usd",
+      "type": "f64"
+     },
+     {
+      "name": "creator_trading_fee_trading_volume_threshold",
+      "type": "f64"
+     },
+     {
+      "name": "creator_trading_fee_trading_volume_threshold_reached_unix_timestamp",
+      "type": "u64"
+     },
+     {
+      "name": "token_a_vault",
+      "type": "pubkey"
+     },
+     {
+      "name": "token_b_vault",
+      "type": "pubkey"
+     },
+     {
+      "name": "protocol_config",
+      "type": "pubkey"
+     },
+     {
+      "name": "key",
+      "type": "pubkey"
+     },
+     {
+      "name": "token_a",
+      "type": {
+       "defined": {
+        "name": "LiquidityPoolTokenInfo"
+       }
+      }
+     },
+     {
+      "name": "token_b",
+      "type": {
+       "defined": {
+        "name": "LiquidityPoolTokenInfo"
+       }
+      }
+     },
+     {
+      "name": "allowlist",
+      "type": {
+       "defined": {
+        "name": "LiquidityPoolAllowlist"
+       }
+      }
+     },
+     {
+      "name": "feature_flags",
+      "type": {
+       "defined": {
+        "name": "LiquidityPoolFeatureFlags"
+       }
+      }
+     },
+     {
+      "name": "taxable_side",
+      "type": "u8"
+     },
+     {
+      "name": "taxable_side_type",
+      "type": "u8"
+     },
+     {
+      "name": "creator_trading_fee_distribution",
+      "type": "u8"
+     },
+     {
+      "name": "creator_trading_fee_claim_status",
+      "type": "u8"
+     },
+     {
+      "name": "fee_configuration_mode",
+      "type": "u8"
+     },
+     {
+      "name": "is_migrated",
+      "type": "u8"
+     },
+     {
+      "name": "_pad",
+      "type": {
+       "array": ["u8", 13]
+      }
+     },
+     {
+      "name": "slot_offset_based_fees",
+      "type": {
+       "defined": {
+        "name": "LiquidityPoolSlotOffsetBasedFees"
+       }
+      }
+     },
+     {
+      "name": "creator_trading_fee_receiver",
+      "type": "pubkey"
+     }
+    ]
+   }
+  },
+  {
+   "name": "LiquidityPoolTokenInfo",
+   "repr": {
+    "kind": "c"
+   },
+   "type": {
+    "kind": "struct",
+    "fields": [
+     {
+      "name": "mint",
+      "type": "pubkey"
+     },
+     {
+      "name": "decimals",
+      "type": "u8"
+     },
+     {
+      "name": "owner",
+      "type": "pubkey"
+     }
+    ]
+   }
+  },
+  {
+   "name": "LiquidityPoolType",
+   "repr": {
+    "kind": "c"
+   },
+   "type": {
+    "kind": "enum",
+    "variants": [
+     {
+      "name": "None"
+     },
+     {
+      "name": "Pro"
+     },
+     {
+      "name": "Standard"
+     }
+    ]
+   }
+  },
+  {
+   "name": "MsolTicketSolSpent",
+   "serialization": "bytemuck",
+   "repr": {
+    "kind": "c"
+   },
+   "type": {
+    "kind": "struct",
+    "fields": [
+     {
+      "name": "cost_basis",
+      "type": "u64"
+     },
+     {
+      "name": "msol_unstaked",
+      "type": "u64"
+     }
+    ]
+   }
+  },
+  {
+   "name": "ProtocolAdminState",
+   "type": {
+    "kind": "struct",
+    "fields": [
+     {
+      "name": "current_protocol_admin",
+      "type": "pubkey"
+     }
+    ]
+   }
+  },
+  {
+   "name": "ProtocolConfig",
+   "serialization": "bytemuck",
+   "repr": {
+    "kind": "c"
+   },
+   "type": {
+    "kind": "struct",
+    "fields": [
+     {
+      "name": "create_pool_fee",
+      "type": "u64"
+     },
+     {
+      "name": "initial_token_b_amount",
+      "type": "f64"
+     },
+     {
+      "name": "initial_token_a_amount",
+      "type": "u64"
+     },
+     {
+      "name": "unstaked_wsol_reserve",
+      "type": "u64"
+     },
+     {
+      "name": "total_sol_spent",
+      "type": "u64"
+     },
+     {
+      "name": "total_msol_received",
+      "type": "u64"
+     },
+     {
+      "name": "total_realized_profit",
+      "type": "u64"
+     },
+     {
+      "name": "pool_count",
+      "type": "u64"
+     },
+     {
+      "name": "max_supply_per_wallet",
+      "type": "u64"
+     },
+     {
+      "name": "creator_trading_fee_trading_volume_threshold",
+      "type": "f64"
+     },
+     {
+      "name": "market_cap_based_fees",
+      "type": {
+       "defined": {
+        "name": "LiquidityPoolMarketCapBasedFees"
+       }
+      }
+     },
+     {
+      "name": "buffer_bps",
+      "type": "u16"
+     },
+     {
+      "name": "auto_staking_threshold_bps",
+      "type": "u16"
+     },
+     {
+      "name": "version",
+      "type": "u16"
+     },
+     {
+      "name": "protocol_config_state_bump",
+      "type": "u8"
+     },
+     {
+      "name": "allow_create_pool",
+      "type": "u8"
+     },
+     {
+      "name": "supported_pool_type",
+      "type": "u8"
+     },
+     {
+      "name": "default_leader_slot_window",
+      "type": "u8"
+     },
+     {
+      "name": "auto_staking_enabled",
+      "type": "u8"
+     },
+     {
+      "name": "leader_slot_window",
+      "type": "u8"
+     },
+     {
+      "name": "sandwich_resistence_enabled",
+      "type": "u8"
+     },
+     {
+      "name": "token_a_decimals",
+      "type": "u8"
+     },
+     {
+      "name": "migration_market_cap_threshold",
+      "type": "u16"
+     },
+     {
+      "name": "_pad",
+      "type": {
+       "array": ["u8", 8]
+      }
+     },
+     {
+      "name": "max_creator_trading_fee",
+      "type": "u32"
+     },
+     {
+      "name": "slot_offset_based_fees",
+      "type": {
+       "defined": {
+        "name": "LiquidityPoolSlotOffsetBasedFees"
+       }
+      }
+     }
+    ]
+   }
+  },
+  {
+   "name": "ProtocolConfigParams",
+   "type": {
+    "kind": "struct",
+    "fields": [
+     {
+      "name": "create_pool_fee",
+      "type": "u64"
+     },
+     {
+      "name": "allow_create_pool",
+      "type": "bool"
+     },
+     {
+      "name": "supported_pool_type",
+      "type": {
+       "defined": {
+        "name": "LiquidityPoolType"
+       }
+      }
+     },
+     {
+      "name": "market_cap_based_fees",
+      "type": {
+       "defined": {
+        "name": "LiquidityPoolMarketCapBasedFees"
+       }
+      }
+     },
+     {
+      "name": "initial_token_b_amount",
+      "type": "f64"
+     },
+     {
+      "name": "initial_token_a_amount",
+      "type": "u64"
+     },
+     {
+      "name": "default_leader_slot_window",
+      "type": "u8"
+     },
+     {
+      "name": "auto_staking_enabled",
+      "type": "bool"
+     },
+     {
+      "name": "sandwich_resistence_enabled",
+      "type": "bool"
+     },
+     {
+      "name": "buffer_bps",
+      "type": "u16"
+     },
+     {
+      "name": "auto_staking_threshold_bps",
+      "type": "u16"
+     },
+     {
+      "name": "token_a_decimals",
+      "type": "u8"
+     },
+     {
+      "name": "max_creator_trading_fee",
+      "type": "u32"
+     },
+     {
+      "name": "max_supply_per_wallet",
+      "type": "u64"
+     },
+     {
+      "name": "creator_trading_fee_trading_volume_threshold",
+      "type": "f64"
+     },
+     {
+      "name": "migration_market_cap_threshold",
+      "type": "u16"
+     }
+    ]
+   }
+  },
+  {
+   "name": "ProtocolOwnerState",
+   "type": {
+    "kind": "struct",
+    "fields": [
+     {
+      "name": "current_protocol_owner",
+      "type": "pubkey"
+     }
+    ]
+   }
+  },
+  {
+   "name": "SellParams",
+   "type": {
+    "kind": "struct",
+    "fields": [
+     {
+      "name": "amount_in",
+      "type": "u64"
+     },
+     {
+      "name": "minimum_amount_out",
+      "type": "u64"
+     },
+     {
+      "name": "encoded_user_defined_event_data",
+      "type": "string"
+     }
+    ]
+   }
+  },
+  {
+   "name": "SlotFeeBracket",
+   "repr": {
+    "kind": "c"
+   },
+   "type": {
+    "kind": "struct",
+    "fields": [
+     {
+      "name": "buy_fee_bps",
+      "type": "u16"
+     },
+     {
+      "name": "sell_fee_bps",
+      "type": "u16"
+     },
+     {
+      "name": "slot_offset_upperbound",
+      "type": "u16"
+     }
+    ]
+   }
+  },
+  {
+   "name": "SlotFeeBrackets",
+   "repr": {
+    "kind": "c"
+   },
+   "type": {
+    "kind": "struct",
+    "fields": [
+     {
+      "name": "brackets",
+      "type": {
+       "array": [
+        {
+         "defined": {
+          "name": "SlotFeeBracket"
+         }
+        },
+        42
+       ]
+      }
+     },
+     {
+      "name": "max_slot_offset",
+      "type": "u16"
+     },
+     {
+      "name": "max_fee_bps",
+      "type": "u16"
+     },
+     {
+      "name": "count",
+      "type": "u8"
+     },
+     {
+      "name": "enabled",
+      "type": "u8"
+     },
+     {
+      "name": "_padding",
+      "type": {
+       "array": ["u8", 4]
+      }
+     }
+    ]
+   }
+  },
+  {
+   "name": "SlotFeeBracketsParams",
+   "type": {
+    "kind": "struct",
+    "fields": [
+     {
+      "name": "brackets",
+      "type": {
+       "vec": {
+        "defined": {
+         "name": "SlotFeeBracket"
+        }
+       }
+      }
+     },
+     {
+      "name": "max_slot_offset",
+      "type": "u16"
+     },
+     {
+      "name": "max_fee_bps",
+      "type": "u16"
+     },
+     {
+      "name": "count",
+      "type": "u8"
+     },
+     {
+      "name": "enabled",
+      "type": "u8"
+     }
+    ]
+   }
+  },
+  {
+   "name": "TradeEvent",
+   "type": {
+    "kind": "struct",
+    "fields": [
+     {
+      "name": "base_reserve",
+      "type": "u64"
+     },
+     {
+      "name": "quote_reserve",
+      "type": "u64"
+     },
+     {
+      "name": "total_creator_trading_fees",
+      "type": "u64"
+     },
+     {
+      "name": "total_fee_paid",
+      "type": "u64"
+     }
+    ]
+   }
+  },
+  {
+   "name": "UserDefinedEvent",
+   "type": {
+    "kind": "struct",
+    "fields": [
+     {
+      "name": "liquidity_pool_id",
+      "type": "pubkey"
+     },
+     {
+      "name": "instruction_name",
+      "type": "string"
+     },
+     {
+      "name": "base64_data",
+      "type": "string"
+     }
+    ]
+   }
+  }
+ ]
+}
