@@ -1870,6 +1870,30 @@
                 "type": "bool"
               }
             ]
+          },
+          {
+            "name": "SolFiV2",
+            "fields": [
+              {
+                "name": "is_quote_to_base",
+                "type": "bool"
+              }
+            ]
+          },
+          {
+            "name": "Aquifer"
+          },
+          {
+            "name": "PumpWrappedBuyV3"
+          },
+          {
+            "name": "PumpWrappedSellV3"
+          },
+          {
+            "name": "PumpSwapBuyV3"
+          },
+          {
+            "name": "PumpSwapSellV3"
           }
         ]
       }
