@@ -2,7 +2,7 @@
   "address": "dbcij3LWUppWqq96dh6gJWwBifmcGfLSB5D4DuSMaqN",
   "metadata": {
     "name": "dynamic_bonding_curve",
-    "version": "0.1.0",
+    "version": "0.1.6",
     "spec": "0.1.0",
     "description": "Created with Anchor"
   },
@@ -659,7 +659,7 @@
     {
       "name": "create_claim_fee_operator",
       "docs": [
-        "ADMIN FUNCTIONS ///"
+        "ADMIN FUNCTIONS_ ///"
       ],
       "discriminator": [
         169,
@@ -2796,7 +2796,7 @@
         {
           "name": "quote_mint",
           "docs": [
-            "The mint of of token"
+            "The mint of token"
           ],
           "relations": [
             "config"
@@ -2997,6 +2997,224 @@
       ]
     },
     {
+      "name": "swap2",
+      "discriminator": [
+        65,
+        75,
+        63,
+        76,
+        235,
+        91,
+        91,
+        136
+      ],
+      "accounts": [
+        {
+          "name": "pool_authority",
+          "address": "FhVo3mqL8PW5pH5U2CN4XE33DokiyZnUwuGpH2hmHLuM"
+        },
+        {
+          "name": "config",
+          "docs": [
+            "config key"
+          ],
+          "relations": [
+            "pool"
+          ]
+        },
+        {
+          "name": "pool",
+          "docs": [
+            "Pool account"
+          ],
+          "writable": true
+        },
+        {
+          "name": "input_token_account",
+          "docs": [
+            "The user token account for input token"
+          ],
+          "writable": true
+        },
+        {
+          "name": "output_token_account",
+          "docs": [
+            "The user token account for output token"
+          ],
+          "writable": true
+        },
+        {
+          "name": "base_vault",
+          "docs": [
+            "The vault token account for base token"
+          ],
+          "writable": true,
+          "relations": [
+            "pool"
+          ]
+        },
+        {
+          "name": "quote_vault",
+          "docs": [
+            "The vault token account for quote token"
+          ],
+          "writable": true,
+          "relations": [
+            "pool"
+          ]
+        },
+        {
+          "name": "base_mint",
+          "docs": [
+            "The mint of base token"
+          ]
+        },
+        {
+          "name": "quote_mint",
+          "docs": [
+            "The mint of quote token"
+          ]
+        },
+        {
+          "name": "payer",
+          "docs": [
+            "The user performing the swap"
+          ],
+          "signer": true
+        },
+        {
+          "name": "token_base_program",
+          "docs": [
+            "Token base program"
+          ]
+        },
+        {
+          "name": "token_quote_program",
+          "docs": [
+            "Token quote program"
+          ]
+        },
+        {
+          "name": "referral_token_account",
+          "docs": [
+            "referral token account"
+          ],
+          "writable": true,
+          "optional": true
+        },
+        {
+          "name": "event_authority",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  95,
+                  95,
+                  101,
+                  118,
+                  101,
+                  110,
+                  116,
+                  95,
+                  97,
+                  117,
+                  116,
+                  104,
+                  111,
+                  114,
+                  105,
+                  116,
+                  121
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "program"
+        }
+      ],
+      "args": [
+        {
+          "name": "params",
+          "type": {
+            "defined": {
+              "name": "SwapParameters2"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "transfer_pool_creator",
+      "discriminator": [
+        20,
+        7,
+        169,
+        33,
+        58,
+        147,
+        166,
+        33
+      ],
+      "accounts": [
+        {
+          "name": "virtual_pool",
+          "writable": true
+        },
+        {
+          "name": "config",
+          "relations": [
+            "virtual_pool"
+          ]
+        },
+        {
+          "name": "creator",
+          "signer": true,
+          "relations": [
+            "virtual_pool"
+          ]
+        },
+        {
+          "name": "new_creator"
+        },
+        {
+          "name": "event_authority",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  95,
+                  95,
+                  101,
+                  118,
+                  101,
+                  110,
+                  116,
+                  95,
+                  97,
+                  117,
+                  116,
+                  104,
+                  111,
+                  114,
+                  105,
+                  116,
+                  121
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "program"
+        }
+      ],
+      "args": []
+    },
+    {
       "name": "withdraw_leftover",
       "discriminator": [
         20,
@@ -3148,6 +3366,112 @@
         }
       ],
       "args": []
+    },
+    {
+      "name": "withdraw_migration_fee",
+      "docs": [
+        "BOTH partner and creator FUNCTIONS ///"
+      ],
+      "discriminator": [
+        237,
+        142,
+        45,
+        23,
+        129,
+        6,
+        222,
+        162
+      ],
+      "accounts": [
+        {
+          "name": "pool_authority",
+          "address": "FhVo3mqL8PW5pH5U2CN4XE33DokiyZnUwuGpH2hmHLuM"
+        },
+        {
+          "name": "config",
+          "relations": [
+            "virtual_pool"
+          ]
+        },
+        {
+          "name": "virtual_pool",
+          "writable": true
+        },
+        {
+          "name": "token_quote_account",
+          "docs": [
+            "The receiver token account"
+          ],
+          "writable": true
+        },
+        {
+          "name": "quote_vault",
+          "docs": [
+            "The vault token account for output token"
+          ],
+          "writable": true,
+          "relations": [
+            "virtual_pool"
+          ]
+        },
+        {
+          "name": "quote_mint",
+          "docs": [
+            "The mint of quote token"
+          ],
+          "relations": [
+            "config"
+          ]
+        },
+        {
+          "name": "sender",
+          "signer": true
+        },
+        {
+          "name": "token_quote_program",
+          "docs": [
+            "Token b program"
+          ]
+        },
+        {
+          "name": "event_authority",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  95,
+                  95,
+                  101,
+                  118,
+                  101,
+                  110,
+                  116,
+                  95,
+                  97,
+                  117,
+                  116,
+                  104,
+                  111,
+                  114,
+                  105,
+                  116,
+                  121
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "program"
+        }
+      ],
+      "args": [
+        {
+          "name": "flag",
+          "type": "u8"
+        }
+      ]
     }
   ],
   "accounts": [
@@ -3349,6 +3673,19 @@
       ]
     },
     {
+      "name": "EvtCreateConfigV2",
+      "discriminator": [
+        163,
+        74,
+        66,
+        187,
+        119,
+        195,
+        26,
+        144
+      ]
+    },
+    {
       "name": "EvtCreateDammV2MigrationMetadata",
       "discriminator": [
         103,
@@ -3427,6 +3764,19 @@
       ]
     },
     {
+      "name": "EvtPartnerWithdrawMigrationFee",
+      "discriminator": [
+        181,
+        105,
+        127,
+        67,
+        8,
+        187,
+        120,
+        57
+      ]
+    },
+    {
       "name": "EvtPartnerWithdrawSurplus",
       "discriminator": [
         195,
@@ -3466,6 +3816,32 @@
       ]
     },
     {
+      "name": "EvtSwap2",
+      "discriminator": [
+        189,
+        66,
+        51,
+        168,
+        38,
+        80,
+        117,
+        153
+      ]
+    },
+    {
+      "name": "EvtUpdatePoolCreator",
+      "discriminator": [
+        107,
+        225,
+        165,
+        237,
+        91,
+        158,
+        213,
+        220
+      ]
+    },
+    {
       "name": "EvtVirtualPoolMetadata",
       "discriminator": [
         188,
@@ -3489,6 +3865,19 @@
         156,
         94,
         229
+      ]
+    },
+    {
+      "name": "EvtWithdrawMigrationFee",
+      "discriminator": [
+        26,
+        203,
+        84,
+        85,
+        161,
+        23,
+        100,
+        214
       ]
     }
   ],
@@ -3672,6 +4061,71 @@
       "code": 6035,
       "name": "InvalidCreatorTradingFeePercentage",
       "msg": "Invalid creator trading fee percentage"
+    },
+    {
+      "code": 6036,
+      "name": "InvalidNewCreator",
+      "msg": "Invalid new creator"
+    },
+    {
+      "code": 6037,
+      "name": "InvalidTokenAuthorityOption",
+      "msg": "Invalid token authority option"
+    },
+    {
+      "code": 6038,
+      "name": "InvalidAccount",
+      "msg": "Invalid account for the instruction"
+    },
+    {
+      "code": 6039,
+      "name": "InvalidMigratorFeePercentage",
+      "msg": "Invalid migrator fee percentage"
+    },
+    {
+      "code": 6040,
+      "name": "MigrationFeeHasBeenWithdraw",
+      "msg": "Migration fee has been withdraw"
+    },
+    {
+      "code": 6041,
+      "name": "InvalidBaseFeeMode",
+      "msg": "Invalid base fee mode"
+    },
+    {
+      "code": 6042,
+      "name": "InvalidFeeRateLimiter",
+      "msg": "Invalid fee rate limiter"
+    },
+    {
+      "code": 6043,
+      "name": "FailToValidateSingleSwapInstruction",
+      "msg": "Fail to validate single swap instruction in rate limiter"
+    },
+    {
+      "code": 6044,
+      "name": "InvalidMigratedPoolFee",
+      "msg": "Invalid migrated pool fee params"
+    },
+    {
+      "code": 6045,
+      "name": "UndeterminedError",
+      "msg": "Undertermined error"
+    },
+    {
+      "code": 6046,
+      "name": "RateLimiterNotSupported",
+      "msg": "Rate limiter not supported"
+    },
+    {
+      "code": 6047,
+      "name": "AmountLeftIsNotZero",
+      "msg": "Amount left is not zero"
+    },
+    {
+      "code": 6048,
+      "name": "NextSqrtPriceIsSmallerThanStartSqrtPrice",
+      "msg": "Next sqrt price is smaller than start sqrt price"
     }
   ],
   "types": [
@@ -3689,19 +4143,19 @@
             "type": "u64"
           },
           {
-            "name": "period_frequency",
+            "name": "second_factor",
             "type": "u64"
           },
           {
-            "name": "reduction_factor",
+            "name": "third_factor",
             "type": "u64"
           },
           {
-            "name": "number_of_period",
+            "name": "first_factor",
             "type": "u16"
           },
           {
-            "name": "fee_scheduler_mode",
+            "name": "base_fee_mode",
             "type": "u8"
           },
           {
@@ -3726,19 +4180,19 @@
             "type": "u64"
           },
           {
-            "name": "number_of_period",
+            "name": "first_factor",
             "type": "u16"
           },
           {
-            "name": "period_frequency",
+            "name": "second_factor",
             "type": "u64"
           },
           {
-            "name": "reduction_factor",
+            "name": "third_factor",
             "type": "u64"
           },
           {
-            "name": "fee_scheduler_mode",
+            "name": "base_fee_mode",
             "type": "u8"
           }
         ]
@@ -3907,16 +4361,27 @@
             "type": "u8"
           },
           {
-            "name": "padding_0",
+            "name": "token_update_authority",
+            "type": "u8"
+          },
+          {
+            "name": "migration_fee",
             "type": {
-              "array": [
-                "u8",
-                7
-              ]
+              "defined": {
+                "name": "MigrationFee"
+              }
             }
           },
           {
-            "name": "padding_1",
+            "name": "migrated_pool_fee",
+            "type": {
+              "defined": {
+                "name": "MigratedPoolFee"
+              }
+            }
+          },
+          {
+            "name": "padding",
             "docs": [
               "padding for future use"
             ],
@@ -4312,6 +4777,38 @@
       }
     },
     {
+      "name": "EvtCreateConfigV2",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "config",
+            "type": "pubkey"
+          },
+          {
+            "name": "quote_mint",
+            "type": "pubkey"
+          },
+          {
+            "name": "fee_claimer",
+            "type": "pubkey"
+          },
+          {
+            "name": "leftover_receiver",
+            "type": "pubkey"
+          },
+          {
+            "name": "config_parameters",
+            "type": {
+              "defined": {
+                "name": "ConfigParameters"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
       "name": "EvtCreateDammV2MigrationMetadata",
       "type": {
         "kind": "struct",
@@ -4427,6 +4924,22 @@
       }
     },
     {
+      "name": "EvtPartnerWithdrawMigrationFee",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "pool",
+            "type": "pubkey"
+          },
+          {
+            "name": "fee",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
       "name": "EvtPartnerWithdrawSurplus",
       "type": {
         "kind": "struct",
@@ -4507,6 +5020,78 @@
       }
     },
     {
+      "name": "EvtSwap2",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "pool",
+            "type": "pubkey"
+          },
+          {
+            "name": "config",
+            "type": "pubkey"
+          },
+          {
+            "name": "trade_direction",
+            "type": "u8"
+          },
+          {
+            "name": "has_referral",
+            "type": "bool"
+          },
+          {
+            "name": "swap_parameters",
+            "type": {
+              "defined": {
+                "name": "SwapParameters2"
+              }
+            }
+          },
+          {
+            "name": "swap_result",
+            "type": {
+              "defined": {
+                "name": "SwapResult2"
+              }
+            }
+          },
+          {
+            "name": "quote_reserve_amount",
+            "type": "u64"
+          },
+          {
+            "name": "migration_threshold",
+            "type": "u64"
+          },
+          {
+            "name": "current_timestamp",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "EvtUpdatePoolCreator",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "pool",
+            "type": "pubkey"
+          },
+          {
+            "name": "creator",
+            "type": "pubkey"
+          },
+          {
+            "name": "new_creator",
+            "type": "pubkey"
+          }
+        ]
+      }
+    },
+    {
       "name": "EvtVirtualPoolMetadata",
       "docs": [
         "Create virtual pool metadata"
@@ -4541,6 +5126,26 @@
           {
             "name": "leftover_amount",
             "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "EvtWithdrawMigrationFee",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "pool",
+            "type": "pubkey"
+          },
+          {
+            "name": "fee",
+            "type": "u64"
+          },
+          {
+            "name": "flag",
+            "type": "u8"
           }
         ]
       }
@@ -4729,11 +5334,16 @@
             "type": "pubkey"
           },
           {
-            "name": "pool_creator",
+            "name": "padding_0",
             "docs": [
-              "pool creator"
+              "!!! BE CAREFUL to use tomestone field, previous is pool creator"
             ],
-            "type": "pubkey"
+            "type": {
+              "array": [
+                "u8",
+                32
+              ]
+            }
           },
           {
             "name": "partner",
@@ -4844,11 +5454,16 @@
             "type": "pubkey"
           },
           {
-            "name": "pool_creator",
+            "name": "padding_0",
             "docs": [
-              "pool creator"
+              "!!! BE CAREFUL to use tomestone field, previous is pool creator"
             ],
-            "type": "pubkey"
+            "type": {
+              "array": [
+                "u8",
+                32
+              ]
+            }
           },
           {
             "name": "partner",
@@ -4868,6 +5483,42 @@
                 126
               ]
             }
+          }
+        ]
+      }
+    },
+    {
+      "name": "MigratedPoolFee",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "collect_fee_mode",
+            "type": "u8"
+          },
+          {
+            "name": "dynamic_fee",
+            "type": "u8"
+          },
+          {
+            "name": "pool_fee_bps",
+            "type": "u16"
+          }
+        ]
+      }
+    },
+    {
+      "name": "MigrationFee",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "fee_percentage",
+            "type": "u8"
+          },
+          {
+            "name": "creator_fee_percentage",
+            "type": "u8"
           }
         ]
       }
@@ -5063,6 +5714,27 @@
             "type": "u8"
           },
           {
+            "name": "token_update_authority",
+            "docs": [
+              "token update authority"
+            ],
+            "type": "u8"
+          },
+          {
+            "name": "migration_fee_percentage",
+            "docs": [
+              "migration fee percentage"
+            ],
+            "type": "u8"
+          },
+          {
+            "name": "creator_migration_fee_percentage",
+            "docs": [
+              "creator migration fee percentage"
+            ],
+            "type": "u8"
+          },
+          {
             "name": "_padding_0",
             "docs": [
               "padding 0"
@@ -5070,19 +5742,7 @@
             "type": {
               "array": [
                 "u8",
-                2
-              ]
-            }
-          },
-          {
-            "name": "_padding_1",
-            "docs": [
-              "padding 1"
-            ],
-            "type": {
-              "array": [
-                "u8",
-                8
+                7
               ]
             }
           },
@@ -5140,16 +5800,44 @@
             "type": "u64"
           },
           {
+            "name": "migrated_collect_fee_mode",
+            "docs": [
+              "migrated pool collect fee mode"
+            ],
+            "type": "u8"
+          },
+          {
+            "name": "migrated_dynamic_fee",
+            "docs": [
+              "migrated dynamic fee option."
+            ],
+            "type": "u8"
+          },
+          {
+            "name": "migrated_pool_fee_bps",
+            "docs": [
+              "migrated pool fee in bps"
+            ],
+            "type": "u16"
+          },
+          {
+            "name": "_padding_1",
+            "docs": [
+              "padding 1"
+            ],
+            "type": {
+              "array": [
+                "u8",
+                12
+              ]
+            }
+          },
+          {
             "name": "_padding_2",
             "docs": [
               "padding 2"
             ],
-            "type": {
-              "array": [
-                "u128",
-                2
-              ]
-            }
+            "type": "u128"
           },
           {
             "name": "sqrt_start_price",
@@ -5338,6 +6026,35 @@
       }
     },
     {
+      "name": "SwapParameters2",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "amount_0",
+            "docs": [
+              "When it's exact in, partial fill, this will be amount_in. When it's exact out, this will be amount_out"
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "amount_1",
+            "docs": [
+              "When it's exact in, partial fill, this will be minimum_amount_out. When it's exact out, this will be maximum_amount_in"
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "swap_mode",
+            "docs": [
+              "Swap mode, refer [SwapMode]"
+            ],
+            "type": "u8"
+          }
+        ]
+      }
+    },
+    {
       "name": "SwapResult",
       "docs": [
         "Encodes all results of swapping"
@@ -5347,6 +6064,46 @@
         "fields": [
           {
             "name": "actual_input_amount",
+            "type": "u64"
+          },
+          {
+            "name": "output_amount",
+            "type": "u64"
+          },
+          {
+            "name": "next_sqrt_price",
+            "type": "u128"
+          },
+          {
+            "name": "trading_fee",
+            "type": "u64"
+          },
+          {
+            "name": "protocol_fee",
+            "type": "u64"
+          },
+          {
+            "name": "referral_fee",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "SwapResult2",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "included_fee_input_amount",
+            "type": "u64"
+          },
+          {
+            "name": "excluded_fee_input_amount",
+            "type": "u64"
+          },
+          {
+            "name": "amount_left",
             "type": "u64"
           },
           {
@@ -5387,7 +6144,9 @@
           {
             "name": "post_migration_token_supply",
             "docs": [
-              "post migration token supply"
+              "post migration token supply",
+              "becase DBC allow user to swap over the migration quote threshold, so in extreme case user may swap more than allowed buffer on curve",
+              "that result the total supply in post migration may be increased a bit (between pre_migration_token_supply and post_migration_token_supply)"
             ],
             "type": "u64"
           }
@@ -5555,16 +6314,11 @@
             "type": "u8"
           },
           {
-            "name": "_padding_0",
+            "name": "migration_fee_withdraw_status",
             "docs": [
-              "padding"
+              "migration fee withdraw status, first bit is for partner, second bit is for creator"
             ],
-            "type": {
-              "array": [
-                "u8",
-                1
-              ]
-            }
+            "type": "u8"
           },
           {
             "name": "metrics",
