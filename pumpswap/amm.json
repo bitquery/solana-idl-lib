@@ -379,12 +379,6 @@
         {
           "name": "max_quote_amount_in",
           "type": "u64"
-        },
-        {
-          "name": "track_volume",
-          "type": {
-            "option": "bool"
-          }
         }
       ]
     },
