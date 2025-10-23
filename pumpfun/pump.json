@@ -439,9 +439,7 @@
         {
           "name": "track_volume",
           "type": {
-            "defined": {
-              "name": "OptionBool"
-            }
+            "option": "bool"
           }
         }
       ]
@@ -650,9 +648,7 @@
         {
           "name": "track_volume",
           "type": {
-            "defined": {
-              "name": "OptionBool"
-            }
+            "option": "bool"
           }
         }
       ]
@@ -2872,13 +2868,6 @@
             "type": "i64"
           }
         ]
-      }
-    },
-    {
-      "name": "OptionBool",
-      "type": {
-        "kind": "struct",
-        "fields": ["bool"]
       }
     },
     {
