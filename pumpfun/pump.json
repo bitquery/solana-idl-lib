@@ -3083,27 +3083,39 @@
           },
           {
             "name": "track_volume",
-            "type": "bool"
+            "type": {
+              "option": "bool"
+            }
           },
           {
             "name": "total_unclaimed_tokens",
-            "type": "u64"
+            "type": {
+              "option": "u64"
+            }
           },
           {
             "name": "total_claimed_tokens",
-            "type": "u64"
+            "type": {
+              "option": "u64"
+            }
           },
           {
             "name": "current_sol_volume",
-            "type": "u64"
+            "type": {
+              "option": "u64"
+            }
           },
           {
             "name": "last_update_timestamp",
-            "type": "i64"
+            "type": {
+              "option": "i64"
+            }
           },
           {
             "name": "ix_name",
-            "type": "string"
+            "type": {
+              "option": "string"
+            }
           }
         ]
       }
