@@ -3014,7 +3014,6 @@
     },
     {
       "name": "TradeEvent",
-      "docs": ["ix_name: \"buy\" | \"sell\" | \"buy_exact_sol_in\""],
       "type": {
         "kind": "struct",
         "fields": [

@@ -2269,7 +2269,6 @@
     },
     {
       "name": "BuyEvent",
-      "docs": ["ix_name: \"buy\" | \"buy_exact_quote_in\""],
       "type": {
         "kind": "struct",
         "fields": [
