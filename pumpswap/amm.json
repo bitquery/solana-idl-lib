@@ -613,12 +613,6 @@
         {
           "name": "min_base_amount_out",
           "type": "u64"
-        },
-        {
-          "name": "track_volume",
-          "type": {
-            "option": "bool"
-          }
         }
       ]
     },
