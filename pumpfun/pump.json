@@ -638,12 +638,6 @@
         {
           "name": "min_tokens_out",
           "type": "u64"
-        },
-        {
-          "name": "track_volume",
-          "type": {
-            "option": "bool"
-          }
         }
       ]
     },
@@ -3074,42 +3068,6 @@
           {
             "name": "creator_fee",
             "type": "u64"
-          },
-          {
-            "name": "track_volume",
-            "type": {
-              "option": "bool"
-            }
-          },
-          {
-            "name": "total_unclaimed_tokens",
-            "type": {
-              "option": "u64"
-            }
-          },
-          {
-            "name": "total_claimed_tokens",
-            "type": {
-              "option": "u64"
-            }
-          },
-          {
-            "name": "current_sol_volume",
-            "type": {
-              "option": "u64"
-            }
-          },
-          {
-            "name": "last_update_timestamp",
-            "type": {
-              "option": "i64"
-            }
-          },
-          {
-            "name": "ix_name",
-            "type": {
-              "option": "string"
-            }
           }
         ]
       }
