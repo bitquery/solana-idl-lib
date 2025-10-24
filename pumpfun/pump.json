@@ -435,12 +435,6 @@
         {
           "name": "max_sol_cost",
           "type": "u64"
-        },
-        {
-          "name": "track_volume",
-          "type": {
-            "option": "bool"
-          }
         }
       ]
     },
