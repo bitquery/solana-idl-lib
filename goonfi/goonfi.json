@@ -1,0 +1,69 @@
+{
+  "version": "0.1.0",
+  "name": "GoonFi",
+  "instructions": [
+    {
+      "name": "swap",
+      "accounts": [
+        {
+          "name": "user",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "market",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "userTokenAccountA",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "userTokenAccountB",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "poolTokenAccountA",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "poolTokenAccountB",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "account",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "sysvarInstructions",
+          "isMut": false,
+          "isSigner": false
+        },        {
+          "name": "tokenProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "isBid",
+          "type": "bool"
+        }
+      ],
+      "discriminant": {
+        "type": "u8",
+        "value": 2
+      }
+    }
+  ],
+  "metadata": {
+	"origin": "shank",
+    "address": "goonERTdGsjnkZqWuVjs73BZ3Pb9qoCUdBUL17BnS5j"
+  }
+}
