@@ -170,7 +170,8 @@
       "discriminator": [102, 6, 61, 18, 1, 218, 235, 234],
       "accounts": [
         {
-          "name": "pool"
+          "name": "pool",
+          "writable": true
         },
         {
           "name": "user",
@@ -398,7 +399,8 @@
       "discriminator": [198, 46, 21, 82, 180, 217, 232, 112],
       "accounts": [
         {
-          "name": "pool"
+          "name": "pool",
+          "writable": true
         },
         {
           "name": "user",
@@ -1139,6 +1141,10 @@
         {
           "name": "coin_creator",
           "type": "pubkey"
+        },
+        {
+          "name": "is_mayhem_mode",
+          "type": "bool"
         }
       ]
     },
@@ -1379,7 +1385,8 @@
       "discriminator": [51, 230, 133, 164, 1, 127, 131, 173],
       "accounts": [
         {
-          "name": "pool"
+          "name": "pool",
+          "writable": true
         },
         {
           "name": "user",
@@ -1639,6 +1646,47 @@
       "args": []
     },
     {
+      "name": "set_reserved_fee_recipient",
+      "discriminator": [207, 189, 178, 71, 167, 122, 68, 180],
+      "accounts": [
+        {
+          "name": "admin",
+          "signer": true,
+          "relations": ["global_config"]
+        },
+        {
+          "name": "global_config",
+          "writable": true
+        },
+        {
+          "name": "event_authority",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  95, 95, 101, 118, 101, 110, 116, 95, 97, 117, 116, 104, 111, 114, 105, 116, 121
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "program"
+        }
+      ],
+      "args": [
+        {
+          "name": "reserved_fee_recipient",
+          "type": "pubkey"
+        },
+        {
+          "name": "whitelist_pda",
+          "type": "pubkey"
+        }
+      ]
+    },
+    {
       "name": "sync_user_volume_accumulator",
       "discriminator": [86, 31, 192, 87, 163, 87, 79, 238],
       "accounts": [
@@ -1696,6 +1744,43 @@
         }
       ],
       "args": []
+    },
+    {
+      "name": "toggle_mayhem_mode",
+      "discriminator": [1, 9, 111, 208, 100, 31, 255, 163],
+      "accounts": [
+        {
+          "name": "admin",
+          "signer": true,
+          "relations": ["global_config"]
+        },
+        {
+          "name": "global_config",
+          "writable": true
+        },
+        {
+          "name": "event_authority",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  95, 95, 101, 118, 101, 110, 116, 95, 97, 117, 116, 104, 111, 114, 105, 116, 121
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "program"
+        }
+      ],
+      "args": [
+        {
+          "name": "enabled",
+          "type": "bool"
+        }
+      ]
     },
     {
       "name": "update_admin",
@@ -2148,6 +2233,18 @@
       "code": 6040,
       "name": "BuySlippageBelowMinBaseAmountOut",
       "msg": "buy: slippage - would buy less tokens than expected min_base_amount_out"
+    },
+    {
+      "code": 6041,
+      "name": "MayhemModeDisabled"
+    },
+    {
+      "code": 6042,
+      "name": "OnlyPumpPoolsMayhemMode"
+    },
+    {
+      "code": 6043,
+      "name": "MayhemModeInDesiredState"
     }
   ],
   "types": [
@@ -2257,6 +2354,7 @@
     },
     {
       "name": "BuyEvent",
+      "docs": ["ix_name: \"buy\" | \"buy_exact_quote_in\""],
       "type": {
         "kind": "struct",
         "fields": [
@@ -2354,45 +2452,31 @@
           },
           {
             "name": "track_volume",
-            "type": {
-              "option": "bool"
-            }
+            "type": "bool"
           },
           {
             "name": "total_unclaimed_tokens",
-            "type": {
-              "option": "u64"
-            }
+            "type": "u64"
           },
           {
             "name": "total_claimed_tokens",
-            "type": {
-              "option": "u64"
-            }
+            "type": "u64"
           },
           {
             "name": "current_sol_volume",
-            "type": {
-              "option": "u64"
-            }
+            "type": "u64"
           },
           {
             "name": "last_update_timestamp",
-            "type": {
-              "option": "i64"
-            }
+            "type": "i64"
           },
           {
             "name": "min_base_amount_out",
-            "type": {
-              "option": "u64"
-            }
+            "type": "u64"
           },
           {
             "name": "ix_name",
-            "type": {
-              "option": "string"
-            }
+            "type": "string"
           }
         ]
       }
@@ -2611,6 +2695,10 @@
           {
             "name": "coin_creator",
             "type": "pubkey"
+          },
+          {
+            "name": "is_mayhem_mode",
+            "type": "bool"
           }
         ]
       }
@@ -2870,6 +2958,18 @@
             "name": "admin_set_coin_creator_authority",
             "docs": ["The admin authority for setting coin creators"],
             "type": "pubkey"
+          },
+          {
+            "name": "whitelist_pda",
+            "type": "pubkey"
+          },
+          {
+            "name": "reserved_fee_recipient",
+            "type": "pubkey"
+          },
+          {
+            "name": "mayhem_mode_enabled",
+            "type": "bool"
           }
         ]
       }
@@ -2975,6 +3075,10 @@
           {
             "name": "coin_creator",
             "type": "pubkey"
+          },
+          {
+            "name": "is_mayhem_mode",
+            "type": "bool"
           }
         ]
       }
