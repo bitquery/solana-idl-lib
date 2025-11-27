@@ -1438,6 +1438,116 @@
           "type": "publicKey"
         }
       ]
+    },
+    {
+      "name": "swapBaseInV2",
+      "accounts": [
+        {
+          "name": "tokenProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "amm",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "ammAuthority",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "ammCoinVault",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "ammPcVault",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "userSourceTokenAccount",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "userDestinationTokenAccount",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "userWalletAccount",
+          "isMut": false,
+          "isSigner": true
+        }
+      ],
+      "args": [
+        {
+          "name": "amountIn",
+          "type": "u64"
+        },
+        {
+          "name": "minimumAmountOut",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "swapBaseOutV2",
+      "accounts": [
+        {
+          "name": "tokenProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "amm",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "ammAuthority",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "ammCoinVault",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "ammPcVault",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "userSourceTokenAccount",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "userDestinationTokenAccount",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "userWalletAccount",
+          "isMut": false,
+          "isSigner": true
+        }
+      ],
+      "args": [
+        {
+          "name": "maxAmountIn",
+          "type": "u64"
+        },
+        {
+          "name": "amountOut",
+          "type": "u64"
+        }
+      ]
     }
   ],
   "accounts": [
