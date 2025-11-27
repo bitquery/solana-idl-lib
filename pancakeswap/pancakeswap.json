@@ -1405,7 +1405,21 @@
           "name": "memo_program",
           "docs": ["Memo program"],
           "address": "MemoSq4gqABAXKb96qnH8TysNcWxMyWCqXgDLGmfcHr"
-        }
+        },
+        { "name": "amm_config", "docs": ["The factory state to read protocol fees"] },
+        {
+          "name": "pool_state",
+          "docs": ["The program account of the pool in which the swap will be performed"],
+          "writable": true
+        },
+        {
+          "name": "output_token_account",
+          "docs": ["The user token account for output token"],
+          "writable": true
+        },
+        { "name": "input_vault", "docs": ["The vault token account for input token"], "writable": true },
+        { "name": "output_vault", "docs": ["The vault token account for output token"], "writable": true },
+        { "name": "output_token_mint", "docs": ["The mint of output token"], "writable": true }
       ],
       "args": [
         { "name": "amount_in", "type": "u64" },
