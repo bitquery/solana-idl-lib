@@ -1,0 +1,2848 @@
+{
+  "version": "1.0.0",
+  "name": "manifest",
+  "instructions": [
+    {
+      "name": "CreateMarket",
+      "accounts": [
+        {
+          "name": "payer",
+          "isMut": true,
+          "isSigner": true,
+          "docs": [
+            "Payer"
+          ]
+        },
+        {
+          "name": "market",
+          "isMut": true,
+          "isSigner": false,
+          "docs": [
+            "Account holding all market state"
+          ]
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false,
+          "docs": [
+            "System program"
+          ]
+        },
+        {
+          "name": "baseMint",
+          "isMut": false,
+          "isSigner": false,
+          "docs": [
+            "Base mint"
+          ]
+        },
+        {
+          "name": "quoteMint",
+          "isMut": false,
+          "isSigner": false,
+          "docs": [
+            "Quote mint"
+          ]
+        },
+        {
+          "name": "baseVault",
+          "isMut": true,
+          "isSigner": false,
+          "docs": [
+            "Base vault PDA, seeds are [b'vault', market, base_mint]"
+          ]
+        },
+        {
+          "name": "quoteVault",
+          "isMut": true,
+          "isSigner": false,
+          "docs": [
+            "Quote vault PDA, seeds are [b'vault', market, quote_mint]"
+          ]
+        },
+        {
+          "name": "tokenProgram",
+          "isMut": false,
+          "isSigner": false,
+          "docs": [
+            "Token program"
+          ]
+        },
+        {
+          "name": "tokenProgram22",
+          "isMut": false,
+          "isSigner": false,
+          "docs": [
+            "Token program 22"
+          ]
+        }
+      ],
+      "args": [],
+      "discriminant": {
+        "type": "u8",
+        "value": 0
+      }
+    },
+    {
+      "name": "ClaimSeat",
+      "accounts": [
+        {
+          "name": "payer",
+          "isMut": true,
+          "isSigner": true,
+          "docs": [
+            "Payer"
+          ]
+        },
+        {
+          "name": "market",
+          "isMut": true,
+          "isSigner": false,
+          "docs": [
+            "Account holding all market state"
+          ]
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false,
+          "docs": [
+            "System program"
+          ]
+        }
+      ],
+      "args": [],
+      "discriminant": {
+        "type": "u8",
+        "value": 1
+      }
+    },
+    {
+      "name": "Deposit",
+      "accounts": [
+        {
+          "name": "payer",
+          "isMut": true,
+          "isSigner": true,
+          "docs": [
+            "Payer"
+          ]
+        },
+        {
+          "name": "market",
+          "isMut": true,
+          "isSigner": false,
+          "docs": [
+            "Account holding all market state"
+          ]
+        },
+        {
+          "name": "traderToken",
+          "isMut": true,
+          "isSigner": false,
+          "docs": [
+            "Trader token account"
+          ]
+        },
+        {
+          "name": "vault",
+          "isMut": true,
+          "isSigner": false,
+          "docs": [
+            "Vault PDA, seeds are [b'vault', market, mint]"
+          ]
+        },
+        {
+          "name": "tokenProgram",
+          "isMut": false,
+          "isSigner": false,
+          "docs": [
+            "Token program(22), should be the version that aligns with the token being used"
+          ]
+        },
+        {
+          "name": "mint",
+          "isMut": false,
+          "isSigner": false,
+          "docs": [
+            "Required for token22 transfer_checked"
+          ]
+        }
+      ],
+      "args": [
+        {
+          "name": "params",
+          "type": {
+            "defined": "DepositParams"
+          }
+        },
+        {
+          "name": "traderIndexHint",
+          "type": {
+            "option": "u32"
+          }
+        }
+      ],
+      "discriminant": {
+        "type": "u8",
+        "value": 2
+      }
+    },
+    {
+      "name": "Withdraw",
+      "accounts": [
+        {
+          "name": "payer",
+          "isMut": true,
+          "isSigner": true,
+          "docs": [
+            "Payer"
+          ]
+        },
+        {
+          "name": "market",
+          "isMut": true,
+          "isSigner": false,
+          "docs": [
+            "Account holding all market state"
+          ]
+        },
+        {
+          "name": "traderToken",
+          "isMut": true,
+          "isSigner": false,
+          "docs": [
+            "Trader token account"
+          ]
+        },
+        {
+          "name": "vault",
+          "isMut": true,
+          "isSigner": false,
+          "docs": [
+            "Vault PDA, seeds are [b'vault', market, mint]"
+          ]
+        },
+        {
+          "name": "tokenProgram",
+          "isMut": false,
+          "isSigner": false,
+          "docs": [
+            "Token program(22), should be the version that aligns with the token being used"
+          ]
+        },
+        {
+          "name": "mint",
+          "isMut": false,
+          "isSigner": false,
+          "docs": [
+            "Required for token22 transfer_checked"
+          ]
+        }
+      ],
+      "args": [
+        {
+          "name": "params",
+          "type": {
+            "defined": "WithdrawParams"
+          }
+        }
+      ],
+      "discriminant": {
+        "type": "u8",
+        "value": 3
+      }
+    },
+    {
+      "name": "Swap",
+      "accounts": [
+        {
+          "name": "payer",
+          "isMut": true,
+          "isSigner": true,
+          "docs": [
+            "Payer"
+          ]
+        },
+        {
+          "name": "market",
+          "isMut": true,
+          "isSigner": false,
+          "docs": [
+            "Account holding all market state"
+          ]
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false,
+          "docs": [
+            "System program"
+          ]
+        },
+        {
+          "name": "traderBase",
+          "isMut": true,
+          "isSigner": false,
+          "docs": [
+            "Trader base token account"
+          ]
+        },
+        {
+          "name": "traderQuote",
+          "isMut": true,
+          "isSigner": false,
+          "docs": [
+            "Trader quote token account"
+          ]
+        },
+        {
+          "name": "baseVault",
+          "isMut": true,
+          "isSigner": false,
+          "docs": [
+            "Base vault PDA, seeds are [b'vault', market_address, base_mint]"
+          ]
+        },
+        {
+          "name": "quoteVault",
+          "isMut": true,
+          "isSigner": false,
+          "docs": [
+            "Quote vault PDA, seeds are [b'vault', market_address, quote_mint]"
+          ]
+        },
+        {
+          "name": "tokenProgramBase",
+          "isMut": false,
+          "isSigner": false,
+          "docs": [
+            "Token program(22) base"
+          ]
+        },
+        {
+          "name": "baseMint",
+          "isMut": false,
+          "isSigner": false,
+          "isOptional": true,
+          "docs": [
+            "Base mint, only included if base is Token22, otherwise not required"
+          ]
+        },
+        {
+          "name": "tokenProgramQuote",
+          "isMut": false,
+          "isSigner": false,
+          "isOptional": true,
+          "docs": [
+            "Token program(22) quote. Optional. Only include if different from base"
+          ]
+        },
+        {
+          "name": "quoteMint",
+          "isMut": false,
+          "isSigner": false,
+          "isOptional": true,
+          "docs": [
+            "Quote mint, only included if base is Token22, otherwise not required"
+          ]
+        },
+        {
+          "name": "global",
+          "isMut": true,
+          "isSigner": false,
+          "isOptional": true,
+          "docs": [
+            "Global account"
+          ]
+        },
+        {
+          "name": "globalVault",
+          "isMut": true,
+          "isSigner": false,
+          "isOptional": true,
+          "docs": [
+            "Global vault"
+          ]
+        }
+      ],
+      "args": [
+        {
+          "name": "params",
+          "type": {
+            "defined": "SwapParams"
+          }
+        }
+      ],
+      "discriminant": {
+        "type": "u8",
+        "value": 4
+      }
+    },
+    {
+      "name": "SwapV2",
+      "accounts": [
+        {
+          "name": "payer",
+          "isMut": true,
+          "isSigner": true,
+          "docs": [
+            "Payer"
+          ]
+        },
+        {
+          "name": "owner",
+          "isMut": true,
+          "isSigner": true,
+          "docs": [
+            "Owner"
+          ]
+        },
+        {
+          "name": "market",
+          "isMut": true,
+          "isSigner": false,
+          "docs": [
+            "Account holding all market state"
+          ]
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false,
+          "docs": [
+            "System program"
+          ]
+        },
+        {
+          "name": "traderBase",
+          "isMut": true,
+          "isSigner": false,
+          "docs": [
+            "Trader base token account"
+          ]
+        },
+        {
+          "name": "traderQuote",
+          "isMut": true,
+          "isSigner": false,
+          "docs": [
+            "Trader quote token account"
+          ]
+        },
+        {
+          "name": "baseVault",
+          "isMut": true,
+          "isSigner": false,
+          "docs": [
+            "Base vault PDA, seeds are [b'vault', market_address, base_mint]"
+          ]
+        },
+        {
+          "name": "quoteVault",
+          "isMut": true,
+          "isSigner": false,
+          "docs": [
+            "Quote vault PDA, seeds are [b'vault', market_address, quote_mint]"
+          ]
+        },
+        {
+          "name": "tokenProgramBase",
+          "isMut": false,
+          "isSigner": false,
+          "docs": [
+            "Token program(22) base"
+          ]
+        },
+        {
+          "name": "baseMint",
+          "isMut": false,
+          "isSigner": false,
+          "isOptional": true,
+          "docs": [
+            "Base mint, only included if base is Token22, otherwise not required"
+          ]
+        },
+        {
+          "name": "tokenProgramQuote",
+          "isMut": false,
+          "isSigner": false,
+          "isOptional": true,
+          "docs": [
+            "Token program(22) quote. Optional. Only include if different from base"
+          ]
+        },
+        {
+          "name": "quoteMint",
+          "isMut": false,
+          "isSigner": false,
+          "isOptional": true,
+          "docs": [
+            "Quote mint, only included if base is Token22, otherwise not required"
+          ]
+        },
+        {
+          "name": "global",
+          "isMut": true,
+          "isSigner": false,
+          "isOptional": true,
+          "docs": [
+            "Global account"
+          ]
+        },
+        {
+          "name": "globalVault",
+          "isMut": true,
+          "isSigner": false,
+          "isOptional": true,
+          "docs": [
+            "Global vault"
+          ]
+        }
+      ],
+      "args": [
+        {
+          "name": "params",
+          "type": {
+            "defined": "SwapParams"
+          }
+        }
+      ],
+      "discriminant": {
+        "type": "u8",
+        "value": 4
+      }
+    },
+    {
+      "name": "Expand",
+      "accounts": [
+        {
+          "name": "payer",
+          "isMut": true,
+          "isSigner": true,
+          "docs": [
+            "Payer"
+          ]
+        },
+        {
+          "name": "market",
+          "isMut": true,
+          "isSigner": false,
+          "docs": [
+            "Account holding all market state"
+          ]
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false,
+          "docs": [
+            "System program"
+          ]
+        }
+      ],
+      "args": [],
+      "discriminant": {
+        "type": "u8",
+        "value": 5
+      }
+    },
+    {
+      "name": "BatchUpdate",
+      "accounts": [
+        {
+          "name": "payer",
+          "isMut": true,
+          "isSigner": true,
+          "docs": [
+            "Payer"
+          ]
+        },
+        {
+          "name": "market",
+          "isMut": true,
+          "isSigner": false,
+          "docs": [
+            "Account holding all market state"
+          ]
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false,
+          "docs": [
+            "System program"
+          ]
+        },
+        {
+          "name": "baseMint",
+          "isMut": false,
+          "isSigner": false,
+          "isOptional": true,
+          "docs": [
+            "Mint for the base global account"
+          ]
+        },
+        {
+          "name": "baseGlobal",
+          "isMut": true,
+          "isSigner": false,
+          "isOptional": true,
+          "docs": [
+            "Base global account"
+          ]
+        },
+        {
+          "name": "baseGlobalVault",
+          "isMut": false,
+          "isSigner": false,
+          "isOptional": true,
+          "docs": [
+            "Base global vault"
+          ]
+        },
+        {
+          "name": "baseMarketVault",
+          "isMut": false,
+          "isSigner": false,
+          "isOptional": true,
+          "docs": [
+            "Base market vault"
+          ]
+        },
+        {
+          "name": "baseTokenProgram",
+          "isMut": false,
+          "isSigner": false,
+          "isOptional": true,
+          "docs": [
+            "Token program(22)"
+          ]
+        },
+        {
+          "name": "quoteMint",
+          "isMut": false,
+          "isSigner": false,
+          "isOptional": true,
+          "docs": [
+            "Mint for this global account"
+          ]
+        },
+        {
+          "name": "quoteGlobal",
+          "isMut": true,
+          "isSigner": false,
+          "isOptional": true,
+          "docs": [
+            "Quote global account"
+          ]
+        },
+        {
+          "name": "quoteGlobalVault",
+          "isMut": false,
+          "isSigner": false,
+          "isOptional": true,
+          "docs": [
+            "Quote global vault"
+          ]
+        },
+        {
+          "name": "quoteMarketVault",
+          "isMut": false,
+          "isSigner": false,
+          "isOptional": true,
+          "docs": [
+            "Quote market vault"
+          ]
+        },
+        {
+          "name": "quoteTokenProgram",
+          "isMut": false,
+          "isSigner": false,
+          "isOptional": true,
+          "docs": [
+            "Token program(22)"
+          ]
+        }
+      ],
+      "args": [
+        {
+          "name": "params",
+          "type": {
+            "defined": "BatchUpdateParams"
+          }
+        }
+      ],
+      "discriminant": {
+        "type": "u8",
+        "value": 6
+      }
+    },
+    {
+      "name": "GlobalCreate",
+      "accounts": [
+        {
+          "name": "payer",
+          "isMut": true,
+          "isSigner": true,
+          "docs": [
+            "Payer"
+          ]
+        },
+        {
+          "name": "global",
+          "isMut": true,
+          "isSigner": false,
+          "docs": [
+            "Global account"
+          ]
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false,
+          "docs": [
+            "System program"
+          ]
+        },
+        {
+          "name": "mint",
+          "isMut": false,
+          "isSigner": false,
+          "docs": [
+            "Mint for this global account"
+          ]
+        },
+        {
+          "name": "globalVault",
+          "isMut": true,
+          "isSigner": false,
+          "docs": [
+            "Global vault"
+          ]
+        },
+        {
+          "name": "tokenProgram",
+          "isMut": false,
+          "isSigner": false,
+          "docs": [
+            "Token program(22)"
+          ]
+        }
+      ],
+      "args": [],
+      "discriminant": {
+        "type": "u8",
+        "value": 7
+      }
+    },
+    {
+      "name": "GlobalAddTrader",
+      "accounts": [
+        {
+          "name": "payer",
+          "isMut": true,
+          "isSigner": true,
+          "docs": [
+            "Payer"
+          ]
+        },
+        {
+          "name": "global",
+          "isMut": true,
+          "isSigner": false,
+          "docs": [
+            "Global account"
+          ]
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false,
+          "docs": [
+            "System program"
+          ]
+        }
+      ],
+      "args": [],
+      "discriminant": {
+        "type": "u8",
+        "value": 8
+      }
+    },
+    {
+      "name": "GlobalDeposit",
+      "accounts": [
+        {
+          "name": "payer",
+          "isMut": true,
+          "isSigner": true,
+          "docs": [
+            "Payer"
+          ]
+        },
+        {
+          "name": "global",
+          "isMut": true,
+          "isSigner": false,
+          "docs": [
+            "Global account"
+          ]
+        },
+        {
+          "name": "mint",
+          "isMut": false,
+          "isSigner": false,
+          "docs": [
+            "Mint for this global account"
+          ]
+        },
+        {
+          "name": "globalVault",
+          "isMut": true,
+          "isSigner": false,
+          "docs": [
+            "Global vault"
+          ]
+        },
+        {
+          "name": "traderToken",
+          "isMut": true,
+          "isSigner": false,
+          "docs": [
+            "Trader token account"
+          ]
+        },
+        {
+          "name": "tokenProgram",
+          "isMut": false,
+          "isSigner": false,
+          "docs": [
+            "Token program(22)"
+          ]
+        }
+      ],
+      "args": [
+        {
+          "name": "params",
+          "type": {
+            "defined": "GlobalDepositParams"
+          }
+        }
+      ],
+      "discriminant": {
+        "type": "u8",
+        "value": 9
+      }
+    },
+    {
+      "name": "GlobalWithdraw",
+      "accounts": [
+        {
+          "name": "payer",
+          "isMut": true,
+          "isSigner": true,
+          "docs": [
+            "Payer"
+          ]
+        },
+        {
+          "name": "global",
+          "isMut": true,
+          "isSigner": false,
+          "docs": [
+            "Global account"
+          ]
+        },
+        {
+          "name": "mint",
+          "isMut": false,
+          "isSigner": false,
+          "docs": [
+            "Mint for this global account"
+          ]
+        },
+        {
+          "name": "globalVault",
+          "isMut": true,
+          "isSigner": false,
+          "docs": [
+            "Global vault"
+          ]
+        },
+        {
+          "name": "traderToken",
+          "isMut": true,
+          "isSigner": false,
+          "docs": [
+            "Trader token account"
+          ]
+        },
+        {
+          "name": "tokenProgram",
+          "isMut": false,
+          "isSigner": false,
+          "docs": [
+            "Token program(22)"
+          ]
+        }
+      ],
+      "args": [
+        {
+          "name": "params",
+          "type": {
+            "defined": "GlobalWithdrawParams"
+          }
+        }
+      ],
+      "discriminant": {
+        "type": "u8",
+        "value": 10
+      }
+    },
+    {
+      "name": "GlobalEvict",
+      "accounts": [
+        {
+          "name": "payer",
+          "isMut": true,
+          "isSigner": true,
+          "docs": [
+            "Payer"
+          ]
+        },
+        {
+          "name": "global",
+          "isMut": true,
+          "isSigner": false,
+          "docs": [
+            "Global account"
+          ]
+        },
+        {
+          "name": "mint",
+          "isMut": false,
+          "isSigner": false,
+          "docs": [
+            "Mint for this global account"
+          ]
+        },
+        {
+          "name": "globalVault",
+          "isMut": true,
+          "isSigner": false,
+          "docs": [
+            "Global vault"
+          ]
+        },
+        {
+          "name": "traderToken",
+          "isMut": false,
+          "isSigner": false,
+          "docs": [
+            "Trader token account"
+          ]
+        },
+        {
+          "name": "evicteeToken",
+          "isMut": false,
+          "isSigner": false,
+          "docs": [
+            "Evictee token account"
+          ]
+        },
+        {
+          "name": "tokenProgram",
+          "isMut": false,
+          "isSigner": false,
+          "docs": [
+            "Token program(22)"
+          ]
+        }
+      ],
+      "args": [
+        {
+          "name": "params",
+          "type": {
+            "defined": "GlobalEvictParams"
+          }
+        }
+      ],
+      "discriminant": {
+        "type": "u8",
+        "value": 11
+      }
+    },
+    {
+      "name": "GlobalClean",
+      "accounts": [
+        {
+          "name": "payer",
+          "isMut": true,
+          "isSigner": true,
+          "docs": [
+            "Payer for this tx, receiver of rent deposit"
+          ]
+        },
+        {
+          "name": "market",
+          "isMut": true,
+          "isSigner": false,
+          "docs": [
+            "Account holding all market state"
+          ]
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false,
+          "docs": [
+            "System program"
+          ]
+        },
+        {
+          "name": "global",
+          "isMut": true,
+          "isSigner": false,
+          "docs": [
+            "Global account"
+          ]
+        }
+      ],
+      "args": [
+        {
+          "name": "params",
+          "type": {
+            "defined": "GlobalCleanParams"
+          }
+        }
+      ],
+      "discriminant": {
+        "type": "u8",
+        "value": 12
+      }
+    },
+    {
+      "name": "SwapV2",
+      "accounts": [
+        {
+          "name": "payer",
+          "isMut": true,
+          "isSigner": true,
+          "docs": [
+            "Payer"
+          ]
+        },
+        {
+          "name": "owner",
+          "isMut": true,
+          "isSigner": true,
+          "docs": [
+            "Owner"
+          ]
+        },
+        {
+          "name": "market",
+          "isMut": true,
+          "isSigner": false,
+          "docs": [
+            "Account holding all market state"
+          ]
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false,
+          "docs": [
+            "System program"
+          ]
+        },
+        {
+          "name": "traderBase",
+          "isMut": true,
+          "isSigner": false,
+          "docs": [
+            "Trader base token account"
+          ]
+        },
+        {
+          "name": "traderQuote",
+          "isMut": true,
+          "isSigner": false,
+          "docs": [
+            "Trader quote token account"
+          ]
+        },
+        {
+          "name": "baseVault",
+          "isMut": true,
+          "isSigner": false,
+          "docs": [
+            "Base vault PDA, seeds are [b'vault', market_address, base_mint]"
+          ]
+        },
+        {
+          "name": "quoteVault",
+          "isMut": true,
+          "isSigner": false,
+          "docs": [
+            "Quote vault PDA, seeds are [b'vault', market_address, quote_mint]"
+          ]
+        },
+        {
+          "name": "tokenProgramBase",
+          "isMut": false,
+          "isSigner": false,
+          "docs": [
+            "Token program(22) base"
+          ]
+        },
+        {
+          "name": "baseMint",
+          "isMut": false,
+          "isSigner": false,
+          "isOptional": true,
+          "docs": [
+            "Base mint, only included if base is Token22, otherwise not required"
+          ]
+        },
+        {
+          "name": "tokenProgramQuote",
+          "isMut": false,
+          "isSigner": false,
+          "isOptional": true,
+          "docs": [
+            "Token program(22) quote. Optional. Only include if different from base"
+          ]
+        },
+        {
+          "name": "quoteMint",
+          "isMut": false,
+          "isSigner": false,
+          "isOptional": true,
+          "docs": [
+            "Quote mint, only included if base is Token22, otherwise not required"
+          ]
+        },
+        {
+          "name": "global",
+          "isMut": true,
+          "isSigner": false,
+          "isOptional": true,
+          "docs": [
+            "Global account"
+          ]
+        },
+        {
+          "name": "globalVault",
+          "isMut": true,
+          "isSigner": false,
+          "isOptional": true,
+          "docs": [
+            "Global vault"
+          ]
+        }
+      ],
+      "args": [
+        {
+          "name": "params",
+          "type": {
+            "defined": "SwapParams"
+          }
+        }
+      ],
+      "discriminant": {
+        "type": "u8",
+        "value": 13
+      }
+    }
+  ],
+  "accounts": [
+    {
+      "name": "CreateMarketLog",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "market",
+            "type": "publicKey"
+          },
+          {
+            "name": "creator",
+            "type": "publicKey"
+          },
+          {
+            "name": "baseMint",
+            "type": "publicKey"
+          },
+          {
+            "name": "quoteMint",
+            "type": "publicKey"
+          }
+        ]
+      }
+    },
+    {
+      "name": "ClaimSeatLog",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "market",
+            "type": "publicKey"
+          },
+          {
+            "name": "trader",
+            "type": "publicKey"
+          }
+        ]
+      }
+    },
+    {
+      "name": "DepositLog",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "market",
+            "type": "publicKey"
+          },
+          {
+            "name": "trader",
+            "type": "publicKey"
+          },
+          {
+            "name": "mint",
+            "type": "publicKey"
+          },
+          {
+            "name": "amountAtoms",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "WithdrawLog",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "market",
+            "type": "publicKey"
+          },
+          {
+            "name": "trader",
+            "type": "publicKey"
+          },
+          {
+            "name": "mint",
+            "type": "publicKey"
+          },
+          {
+            "name": "amountAtoms",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "FillLog",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "market",
+            "type": "publicKey"
+          },
+          {
+            "name": "maker",
+            "type": "publicKey"
+          },
+          {
+            "name": "taker",
+            "type": "publicKey"
+          },
+          {
+            "name": "baseMint",
+            "type": "publicKey"
+          },
+          {
+            "name": "quoteMint",
+            "type": "publicKey"
+          },
+          {
+            "name": "price",
+            "type": {
+              "defined": "QuoteAtomsPerBaseAtom"
+            }
+          },
+          {
+            "name": "baseAtoms",
+            "type": {
+              "defined": "BaseAtoms"
+            }
+          },
+          {
+            "name": "quoteAtoms",
+            "type": {
+              "defined": "QuoteAtoms"
+            }
+          },
+          {
+            "name": "makerSequenceNumber",
+            "type": "u64"
+          },
+          {
+            "name": "takerSequenceNumber",
+            "type": "u64"
+          },
+          {
+            "name": "takerIsBuy",
+            "type": "bool"
+          },
+          {
+            "name": "isMakerGlobal",
+            "type": "bool"
+          },
+          {
+            "name": "padding",
+            "type": {
+              "array": [
+                "u8",
+                14
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "PlaceOrderLog",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "market",
+            "type": "publicKey"
+          },
+          {
+            "name": "trader",
+            "type": "publicKey"
+          },
+          {
+            "name": "price",
+            "type": {
+              "defined": "QuoteAtomsPerBaseAtom"
+            }
+          },
+          {
+            "name": "baseAtoms",
+            "type": {
+              "defined": "BaseAtoms"
+            }
+          },
+          {
+            "name": "orderSequenceNumber",
+            "type": "u64"
+          },
+          {
+            "name": "orderIndex",
+            "type": "u32"
+          },
+          {
+            "name": "lastValidSlot",
+            "type": "u32"
+          },
+          {
+            "name": "orderType",
+            "type": {
+              "defined": "OrderType"
+            }
+          },
+          {
+            "name": "isBid",
+            "type": "bool"
+          },
+          {
+            "name": "padding",
+            "type": {
+              "array": [
+                "u8",
+                6
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "CancelOrderLog",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "market",
+            "type": "publicKey"
+          },
+          {
+            "name": "trader",
+            "type": "publicKey"
+          },
+          {
+            "name": "orderSequenceNumber",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "GlobalCreateLog",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "global",
+            "type": "publicKey"
+          },
+          {
+            "name": "creator",
+            "type": "publicKey"
+          }
+        ]
+      }
+    },
+    {
+      "name": "GlobalAddTraderLog",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "global",
+            "type": "publicKey"
+          },
+          {
+            "name": "trader",
+            "type": "publicKey"
+          }
+        ]
+      }
+    },
+    {
+      "name": "GlobalClaimSeatLog",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "global",
+            "type": "publicKey"
+          },
+          {
+            "name": "market",
+            "type": "publicKey"
+          },
+          {
+            "name": "trader",
+            "type": "publicKey"
+          }
+        ]
+      }
+    },
+    {
+      "name": "GlobalDepositLog",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "global",
+            "type": "publicKey"
+          },
+          {
+            "name": "trader",
+            "type": "publicKey"
+          },
+          {
+            "name": "globalAtoms",
+            "type": {
+              "defined": "GlobalAtoms"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "GlobalWithdrawLog",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "global",
+            "type": "publicKey"
+          },
+          {
+            "name": "trader",
+            "type": "publicKey"
+          },
+          {
+            "name": "globalAtoms",
+            "type": {
+              "defined": "GlobalAtoms"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "GlobalEvictLog",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "evictor",
+            "type": "publicKey"
+          },
+          {
+            "name": "evictee",
+            "type": "publicKey"
+          },
+          {
+            "name": "evictorAtoms",
+            "type": {
+              "defined": "GlobalAtoms"
+            }
+          },
+          {
+            "name": "evicteeAtoms",
+            "type": {
+              "defined": "GlobalAtoms"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "GlobalCleanupLog",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "cleaner",
+            "type": "publicKey"
+          },
+          {
+            "name": "maker",
+            "type": "publicKey"
+          },
+          {
+            "name": "amountDesired",
+            "type": {
+              "defined": "GlobalAtoms"
+            }
+          },
+          {
+            "name": "amountDeposited",
+            "type": {
+              "defined": "GlobalAtoms"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "QuoteAtoms",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "inner",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "BaseAtoms",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "inner",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "GlobalAtoms",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "inner",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "QuoteAtomsPerBaseAtom",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "inner",
+            "type": "u128"
+          }
+        ]
+      }
+    }
+  ],
+  "types": [
+    {
+      "name": "CancelOrderParams",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "orderSequenceNumber",
+            "type": "u64"
+          },
+          {
+            "name": "orderIndexHint",
+            "type": {
+              "option": "u32"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "PlaceOrderParams",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "baseAtoms",
+            "type": "u64"
+          },
+          {
+            "name": "priceMantissa",
+            "type": "u32"
+          },
+          {
+            "name": "priceExponent",
+            "type": "i8"
+          },
+          {
+            "name": "isBid",
+            "type": "bool"
+          },
+          {
+            "name": "lastValidSlot",
+            "type": "u32"
+          },
+          {
+            "name": "orderType",
+            "type": {
+              "defined": "OrderType"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "BatchUpdateParams",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "traderIndexHint",
+            "type": {
+              "option": "u32"
+            }
+          },
+          {
+            "name": "cancels",
+            "type": {
+              "vec": {
+                "defined": "CancelOrderParams"
+              }
+            }
+          },
+          {
+            "name": "orders",
+            "type": {
+              "vec": {
+                "defined": "PlaceOrderParams"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "DepositParams",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "amountAtoms",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "GlobalCleanParams",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "orderIndex",
+            "type": "u32"
+          }
+        ]
+      }
+    },
+    {
+      "name": "GlobalDepositParams",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "amountAtoms",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "GlobalEvictParams",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "amountAtoms",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "GlobalWithdrawParams",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "amountAtoms",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "SwapParams",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "inAtoms",
+            "type": "u64"
+          },
+          {
+            "name": "outAtoms",
+            "type": "u64"
+          },
+          {
+            "name": "isBaseIn",
+            "type": "bool"
+          },
+          {
+            "name": "isExactIn",
+            "type": "bool"
+          }
+        ]
+      }
+    },
+    {
+      "name": "WithdrawParams",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "amountAtoms",
+            "type": "u64"
+          },
+          {
+            "name": "traderIndexHint",
+            "type": {
+              "option": "u32"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "ClaimedSeat",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "trader",
+            "type": "publicKey"
+          },
+          {
+            "name": "baseWithdrawableBalance",
+            "type": "u64"
+          },
+          {
+            "name": "quoteWithdrawableBalance",
+            "type": "u64"
+          },
+          {
+            "name": "quoteVolume",
+            "type": "u64"
+          },
+          {
+            "name": "padding",
+            "type": {
+              "array": [
+                "u8",
+                8
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "GlobalFixed",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "discriminant",
+            "type": "u64"
+          },
+          {
+            "name": "mint",
+            "type": "publicKey"
+          },
+          {
+            "name": "vault",
+            "type": "publicKey"
+          },
+          {
+            "name": "globalTradersRootIndex",
+            "type": "u32"
+          },
+          {
+            "name": "globalDepositsRootIndex",
+            "type": "u32"
+          },
+          {
+            "name": "globalDepositsMaxIndex",
+            "type": "u32"
+          },
+          {
+            "name": "freeListHeadIndex",
+            "type": "u32"
+          },
+          {
+            "name": "numBytesAllocated",
+            "type": "u32"
+          },
+          {
+            "name": "vaultBump",
+            "type": "u8"
+          },
+          {
+            "name": "globalBump",
+            "type": "u8"
+          },
+          {
+            "name": "numSeatsClaimed",
+            "type": "u16"
+          }
+        ]
+      }
+    },
+    {
+      "name": "GlobalTrader",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "trader",
+            "type": "publicKey"
+          },
+          {
+            "name": "depositIndex",
+            "type": "u32"
+          },
+          {
+            "name": "padding",
+            "type": "u32"
+          },
+          {
+            "name": "padding2",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "GlobalDeposit",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "trader",
+            "type": "publicKey"
+          },
+          {
+            "name": "balanceAtoms",
+            "type": "u64"
+          },
+          {
+            "name": "padding",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "MarketFixed",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "discriminant",
+            "type": "u64"
+          },
+          {
+            "name": "version",
+            "type": "u8"
+          },
+          {
+            "name": "baseMintDecimals",
+            "type": "u8"
+          },
+          {
+            "name": "quoteMintDecimals",
+            "type": "u8"
+          },
+          {
+            "name": "baseVaultBump",
+            "type": "u8"
+          },
+          {
+            "name": "quoteVaultBump",
+            "type": "u8"
+          },
+          {
+            "name": "padding1",
+            "type": {
+              "array": [
+                "u8",
+                3
+              ]
+            }
+          },
+          {
+            "name": "baseMint",
+            "type": "publicKey"
+          },
+          {
+            "name": "quoteMint",
+            "type": "publicKey"
+          },
+          {
+            "name": "baseVault",
+            "type": "publicKey"
+          },
+          {
+            "name": "quoteVault",
+            "type": "publicKey"
+          },
+          {
+            "name": "orderSequenceNumber",
+            "type": "u64"
+          },
+          {
+            "name": "numBytesAllocated",
+            "type": "u32"
+          },
+          {
+            "name": "bidsRootIndex",
+            "type": "u32"
+          },
+          {
+            "name": "bidsBestIndex",
+            "type": "u32"
+          },
+          {
+            "name": "asksRootIndex",
+            "type": "u32"
+          },
+          {
+            "name": "asksBestIndex",
+            "type": "u32"
+          },
+          {
+            "name": "claimedSeatsRootIndex",
+            "type": "u32"
+          },
+          {
+            "name": "freeListHeadIndex",
+            "type": "u32"
+          },
+          {
+            "name": "padding2",
+            "type": {
+              "array": [
+                "u32",
+                1
+              ]
+            }
+          },
+          {
+            "name": "quoteVolume",
+            "type": "u64"
+          },
+          {
+            "name": "padding3",
+            "type": {
+              "array": [
+                "u64",
+                8
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "RestingOrder",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "price",
+            "type": "u128"
+          },
+          {
+            "name": "numBaseAtoms",
+            "type": "u64"
+          },
+          {
+            "name": "sequenceNumber",
+            "type": "u64"
+          },
+          {
+            "name": "traderIndex",
+            "type": "u32"
+          },
+          {
+            "name": "lastValidSlot",
+            "type": "u32"
+          },
+          {
+            "name": "isBid",
+            "type": "bool"
+          },
+          {
+            "name": "orderType",
+            "type": {
+              "defined": "OrderType"
+            }
+          },
+          {
+            "name": "padding",
+            "type": {
+              "array": [
+                "u8",
+                22
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "OrderType",
+      "type": {
+        "kind": "enum",
+        "variants": [
+          {
+            "name": "Limit"
+          },
+          {
+            "name": "ImmediateOrCancel"
+          },
+          {
+            "name": "PostOnly"
+          },
+          {
+            "name": "Global"
+          },
+          {
+            "name": "Reverse"
+          },
+          {
+            "name": "ReverseTight"
+          }
+        ]
+      }
+    }
+  ],
+  "errors": [
+    {
+      "code": 0,
+      "name": "InvalidMarketParameters",
+      "msg": "Invalid market parameters error"
+    },
+    {
+      "code": 1,
+      "name": "InvalidDepositAccounts",
+      "msg": "Invalid deposit accounts error"
+    },
+    {
+      "code": 2,
+      "name": "InvalidWithdrawAccounts",
+      "msg": "Invalid withdraw accounts error"
+    },
+    {
+      "code": 3,
+      "name": "InvalidCancel",
+      "msg": "Invalid cancel error"
+    },
+    {
+      "code": 4,
+      "name": "InvalidFreeList",
+      "msg": "Internal free list corruption error"
+    },
+    {
+      "code": 5,
+      "name": "AlreadyClaimedSeat",
+      "msg": "Cannot claim a second seat for the same trader"
+    },
+    {
+      "code": 6,
+      "name": "PostOnlyCrosses",
+      "msg": "Matched on a post only order"
+    },
+    {
+      "code": 7,
+      "name": "AlreadyExpired",
+      "msg": "New order is already expired"
+    },
+    {
+      "code": 8,
+      "name": "InsufficientOut",
+      "msg": "Less than minimum out amount"
+    },
+    {
+      "code": 9,
+      "name": "InvalidPlaceOrderFromWalletParams",
+      "msg": "Invalid place order from wallet params"
+    },
+    {
+      "code": 10,
+      "name": "WrongIndexHintParams",
+      "msg": "Index hint did not match actual index"
+    },
+    {
+      "code": 11,
+      "name": "PriceNotPositive",
+      "msg": "Price is not positive"
+    },
+    {
+      "code": 12,
+      "name": "OrderWouldOverflow",
+      "msg": "Order settlement would overflow"
+    },
+    {
+      "code": 13,
+      "name": "OrderTooSmall",
+      "msg": "Order is too small to settle any value"
+    },
+    {
+      "code": 14,
+      "name": "Overflow",
+      "msg": "Overflow in token addition"
+    },
+    {
+      "code": 15,
+      "name": "MissingGlobal",
+      "msg": "Missing Global account"
+    },
+    {
+      "code": 16,
+      "name": "GlobalInsufficient",
+      "msg": "Insufficient funds on global account to rest an order"
+    },
+    {
+      "code": 17,
+      "name": "IncorrectAccount",
+      "msg": "Account key did not match expected"
+    },
+    {
+      "code": 18,
+      "name": "InvalidMint",
+      "msg": "Mint not allowed for market"
+    },
+    {
+      "code": 19,
+      "name": "TooManyGlobalSeats",
+      "msg": "Cannot claim a new global seat, use evict"
+    },
+    {
+      "code": 20,
+      "name": "InvalidEvict",
+      "msg": "Can only evict the lowest depositor"
+    },
+    {
+      "code": 21,
+      "name": "InvalidClean",
+      "msg": "Tried to clean order that was not eligible to be cleaned"
+    }
+  ],
+  "metadata": {
+    "origin": "shank",
+    "address": "MNFSTqtC93rEfYHB6hF82sKdZpUDFWkViLByLd1k1Ms"
+  },
+  "events": [
+    {
+      "name": "CreateMarketLog",
+      "discriminator": [
+        33,
+        31,
+        11,
+        6,
+        133,
+        143,
+        39,
+        71
+      ],
+      "fields": [
+        {
+          "name": "market",
+          "type": "publicKey",
+          "index": false
+        },
+        {
+          "name": "creator",
+          "type": "publicKey",
+          "index": false
+        },
+        {
+          "name": "baseMint",
+          "type": "publicKey",
+          "index": false
+        },
+        {
+          "name": "quoteMint",
+          "type": "publicKey",
+          "index": false
+        }
+      ]
+    },
+    {
+      "name": "ClaimSeatLog",
+      "discriminator": [
+        129,
+        77,
+        152,
+        210,
+        218,
+        144,
+        163,
+        56
+      ],
+      "fields": [
+        {
+          "name": "market",
+          "type": "publicKey",
+          "index": false
+        },
+        {
+          "name": "trader",
+          "type": "publicKey",
+          "index": false
+        }
+      ]
+    },
+    {
+      "name": "DepositLog",
+      "discriminator": [
+        23,
+        214,
+        24,
+        34,
+        52,
+        104,
+        109,
+        188
+      ],
+      "fields": [
+        {
+          "name": "market",
+          "type": "publicKey",
+          "index": false
+        },
+        {
+          "name": "trader",
+          "type": "publicKey",
+          "index": false
+        },
+        {
+          "name": "mint",
+          "type": "publicKey",
+          "index": false
+        },
+        {
+          "name": "amountAtoms",
+          "type": "u64",
+          "index": false
+        }
+      ]
+    },
+    {
+      "name": "WithdrawLog",
+      "discriminator": [
+        112,
+        218,
+        111,
+        63,
+        18,
+        95,
+        136,
+        35
+      ],
+      "fields": [
+        {
+          "name": "market",
+          "type": "publicKey",
+          "index": false
+        },
+        {
+          "name": "trader",
+          "type": "publicKey",
+          "index": false
+        },
+        {
+          "name": "mint",
+          "type": "publicKey",
+          "index": false
+        },
+        {
+          "name": "amountAtoms",
+          "type": "u64",
+          "index": false
+        }
+      ]
+    },
+    {
+      "name": "FillLog",
+      "discriminator": [
+        58,
+        230,
+        242,
+        3,
+        75,
+        113,
+        4,
+        169
+      ],
+      "fields": [
+        {
+          "name": "market",
+          "type": "publicKey",
+          "index": false
+        },
+        {
+          "name": "maker",
+          "type": "publicKey",
+          "index": false
+        },
+        {
+          "name": "taker",
+          "type": "publicKey",
+          "index": false
+        },
+        {
+          "name": "baseMint",
+          "type": "publicKey",
+          "index": false
+        },
+        {
+          "name": "quoteMint",
+          "type": "publicKey",
+          "index": false
+        },
+        {
+          "name": "price",
+          "type": {
+            "defined": "QuoteAtomsPerBaseAtom"
+          },
+          "index": false
+        },
+        {
+          "name": "baseAtoms",
+          "type": {
+            "defined": "BaseAtoms"
+          },
+          "index": false
+        },
+        {
+          "name": "quoteAtoms",
+          "type": {
+            "defined": "QuoteAtoms"
+          },
+          "index": false
+        },
+        {
+          "name": "makerSequenceNumber",
+          "type": "u64",
+          "index": false
+        },
+        {
+          "name": "takerSequenceNumber",
+          "type": "u64",
+          "index": false
+        },
+        {
+          "name": "takerIsBuy",
+          "type": "bool",
+          "index": false
+        },
+        {
+          "name": "isMakerGlobal",
+          "type": "bool",
+          "index": false
+        },
+        {
+          "name": "padding",
+          "type": {
+            "array": [
+              "u8",
+              14
+            ]
+          },
+          "index": false
+        }
+      ]
+    },
+    {
+      "name": "PlaceOrderLog",
+      "discriminator": [
+        157,
+        118,
+        247,
+        213,
+        47,
+        19,
+        164,
+        120
+      ],
+      "fields": [
+        {
+          "name": "market",
+          "type": "publicKey",
+          "index": false
+        },
+        {
+          "name": "trader",
+          "type": "publicKey",
+          "index": false
+        },
+        {
+          "name": "price",
+          "type": {
+            "defined": "QuoteAtomsPerBaseAtom"
+          },
+          "index": false
+        },
+        {
+          "name": "baseAtoms",
+          "type": {
+            "defined": "BaseAtoms"
+          },
+          "index": false
+        },
+        {
+          "name": "orderSequenceNumber",
+          "type": "u64",
+          "index": false
+        },
+        {
+          "name": "orderIndex",
+          "type": "u32",
+          "index": false
+        },
+        {
+          "name": "lastValidSlot",
+          "type": "u32",
+          "index": false
+        },
+        {
+          "name": "orderType",
+          "type": {
+            "defined": "OrderType"
+          },
+          "index": false
+        },
+        {
+          "name": "isBid",
+          "type": "bool",
+          "index": false
+        },
+        {
+          "name": "padding",
+          "type": {
+            "array": [
+              "u8",
+              6
+            ]
+          },
+          "index": false
+        }
+      ]
+    },
+    {
+      "name": "PlaceOrderLogV2",
+      "discriminator": [
+        189,
+        97,
+        159,
+        235,
+        136,
+        5,
+        1,
+        141
+      ],
+      "fields": [
+        {
+          "name": "market",
+          "type": "publicKey",
+          "index": false
+        },
+        {
+          "name": "trader",
+          "type": "publicKey",
+          "index": false
+        },
+        {
+          "name": "payer",
+          "type": "publicKey",
+          "index": false
+        },
+        {
+          "name": "price",
+          "type": {
+            "defined": "QuoteAtomsPerBaseAtom"
+          },
+          "index": false
+        },
+        {
+          "name": "baseAtoms",
+          "type": {
+            "defined": "BaseAtoms"
+          },
+          "index": false
+        },
+        {
+          "name": "orderSequenceNumber",
+          "type": "u64",
+          "index": false
+        },
+        {
+          "name": "orderIndex",
+          "type": "u32",
+          "index": false
+        },
+        {
+          "name": "lastValidSlot",
+          "type": "u32",
+          "index": false
+        },
+        {
+          "name": "orderType",
+          "type": {
+            "defined": "OrderType"
+          },
+          "index": false
+        },
+        {
+          "name": "isBid",
+          "type": "bool",
+          "index": false
+        },
+        {
+          "name": "padding",
+          "type": {
+            "array": [
+              "u8",
+              6
+            ]
+          },
+          "index": false
+        }
+      ]
+    },
+    {
+      "name": "CancelOrderLog",
+      "discriminator": [
+        22,
+        65,
+        71,
+        33,
+        244,
+        235,
+        255,
+        215
+      ],
+      "fields": [
+        {
+          "name": "market",
+          "type": "publicKey",
+          "index": false
+        },
+        {
+          "name": "trader",
+          "type": "publicKey",
+          "index": false
+        },
+        {
+          "name": "orderSequenceNumber",
+          "type": "u64",
+          "index": false
+        }
+      ]
+    },
+    {
+      "name": "GlobalCreateLog",
+      "discriminator": [
+        188,
+        25,
+        199,
+        77,
+        26,
+        15,
+        142,
+        193
+      ],
+      "fields": [
+        {
+          "name": "global",
+          "type": "publicKey",
+          "index": false
+        },
+        {
+          "name": "creator",
+          "type": "publicKey",
+          "index": false
+        }
+      ]
+    },
+    {
+      "name": "GlobalAddTraderLog",
+      "discriminator": [
+        129,
+        246,
+        90,
+        94,
+        87,
+        186,
+        242,
+        7
+      ],
+      "fields": [
+        {
+          "name": "global",
+          "type": "publicKey",
+          "index": false
+        },
+        {
+          "name": "trader",
+          "type": "publicKey",
+          "index": false
+        }
+      ]
+    },
+    {
+      "name": "GlobalClaimSeatLog",
+      "discriminator": [
+        164,
+        46,
+        227,
+        175,
+        3,
+        143,
+        73,
+        86
+      ],
+      "fields": [
+        {
+          "name": "global",
+          "type": "publicKey",
+          "index": false
+        },
+        {
+          "name": "market",
+          "type": "publicKey",
+          "index": false
+        },
+        {
+          "name": "trader",
+          "type": "publicKey",
+          "index": false
+        }
+      ]
+    },
+    {
+      "name": "GlobalDepositLog",
+      "discriminator": [
+        16,
+        26,
+        72,
+        1,
+        145,
+        232,
+        182,
+        71
+      ],
+      "fields": [
+        {
+          "name": "global",
+          "type": "publicKey",
+          "index": false
+        },
+        {
+          "name": "trader",
+          "type": "publicKey",
+          "index": false
+        },
+        {
+          "name": "globalAtoms",
+          "type": {
+            "defined": "GlobalAtoms"
+          },
+          "index": false
+        }
+      ]
+    },
+    {
+      "name": "GlobalWithdrawLog",
+      "discriminator": [
+        206,
+        118,
+        67,
+        64,
+        124,
+        109,
+        157,
+        201
+      ],
+      "fields": [
+        {
+          "name": "global",
+          "type": "publicKey",
+          "index": false
+        },
+        {
+          "name": "trader",
+          "type": "publicKey",
+          "index": false
+        },
+        {
+          "name": "globalAtoms",
+          "type": {
+            "defined": "GlobalAtoms"
+          },
+          "index": false
+        }
+      ]
+    },
+    {
+      "name": "GlobalEvictLog",
+      "discriminator": [
+        250,
+        180,
+        155,
+        38,
+        98,
+        223,
+        82,
+        223
+      ],
+      "fields": [
+        {
+          "name": "evictor",
+          "type": "publicKey",
+          "index": false
+        },
+        {
+          "name": "evictee",
+          "type": "publicKey",
+          "index": false
+        },
+        {
+          "name": "evictorAtoms",
+          "type": {
+            "defined": "GlobalAtoms"
+          },
+          "index": false
+        },
+        {
+          "name": "evicteeAtoms",
+          "type": {
+            "defined": "GlobalAtoms"
+          },
+          "index": false
+        }
+      ]
+    },
+    {
+      "name": "GlobalCleanupLog",
+      "discriminator": [
+        193,
+        249,
+        115,
+        186,
+        42,
+        126,
+        196,
+        82
+      ],
+      "fields": [
+        {
+          "name": "cleaner",
+          "type": "publicKey",
+          "index": false
+        },
+        {
+          "name": "maker",
+          "type": "publicKey",
+          "index": false
+        },
+        {
+          "name": "amountDesired",
+          "type": {
+            "defined": "GlobalAtoms"
+          },
+          "index": false
+        },
+        {
+          "name": "amountDeposited",
+          "type": {
+            "defined": "GlobalAtoms"
+          },
+          "index": false
+        }
+      ]
+    }
+  ]
+}
