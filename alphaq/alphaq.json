@@ -1,0 +1,31 @@
+{
+  "version": "0.0.1",
+  "name": "AlphaQ",
+  "instructions": [
+    {
+      "name": "swap",
+      "accounts": [
+        { "name": "user", "isMut": true, "isSigner": true },
+        { "name": "market", "isMut": false, "isSigner": false },
+        { "name": "market_state", "isMut": true, "isSigner": false },
+        { "name": "user_token_account_a", "isMut": true, "isSigner": false },
+        { "name": "user_token_account_b", "isMut": true, "isSigner": false },
+        { "name": "vault_token_account_a", "isMut": true, "isSigner": false },
+        { "name": "vault_token_account_b", "isMut": true, "isSigner": false },
+        { "name": "token_a_authority", "isMut": true, "isSigner": false },
+        { "name": "token_b_authority", "isMut": true, "isSigner": false },
+        { "name": "vendor_key", "isMut": true, "isSigner": false },
+        { "name": "token_program", "isMut": false, "isSigner": false },
+        { "name": "instructions_sysvar", "isMut": false, "isSigner": false }
+      ],
+      "args": [
+        { "name": "amountIn", "type": "u64" },
+        { "name": "minimumAmountOut", "type": "u64" }
+      ]
+    }
+  ],
+  "metadata": {
+    "origin": "shank",
+    "address": "ALPHAQmeA7bjrVuccPsYPiCvsi428SNwte66Srvs4pHA"
+  }
+}
