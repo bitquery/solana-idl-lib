@@ -3,7 +3,7 @@
   "name": "AlphaQ",
   "instructions": [
     {
-      "name": "swap",
+      "name": "Swap",
       "accounts": [
         { "name": "user", "isMut": true, "isSigner": true },
         { "name": "market", "isMut": false, "isSigner": false },
@@ -19,13 +19,18 @@
         { "name": "instructions_sysvar", "isMut": false, "isSigner": false }
       ],
       "args": [
+        { "name": "aToB", "type": "u8" },
         { "name": "amountIn", "type": "u64" },
-        { "name": "minimumAmountOut", "type": "u64" }
-      ]
+        { "name": "minAmountOut", "type": "u64" }
+      ],
+      "discriminant": {
+        "type": "u8",
+        "value": 12
+      }
     }
   ],
   "metadata": {
-    "origin": "shank",
-    "address": "ALPHAQmeA7bjrVuccPsYPiCvsi428SNwte66Srvs4pHA"
+    "address": "ALPHAQmeA7bjrVuccPsYPiCvsi428SNwte66Srvs4pHA",
+    "origin": "shank"
   }
 }
