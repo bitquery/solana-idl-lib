@@ -687,11 +687,53 @@
           {
             "name": "DynamicV1",
             "fields": [
-              { "name": "candidate_swaps", "type": { "vec": { "defined": { "name": "CandidateSwap" } } } }
+              {
+                "name": "candidate_swaps",
+                "type": { "vec": { "defined": { "name": "CandidateSwap" } } }
+              },
+              { "name": "best_position", "type": { "option": "u8" } }
             ]
           },
           { "name": "PumpWrappedBuyV4" },
-          { "name": "PumpWrappedSellV4" }
+          { "name": "PumpWrappedSellV4" },
+          { "name": "CarrotIssue" },
+          { "name": "CarrotRedeem" },
+          { "name": "Manifest", "fields": [{ "name": "side", "type": { "defined": { "name": "Side" } } }] },
+          { "name": "BisonFi", "fields": [{ "name": "a_to_b", "type": "bool" }] },
+          {
+            "name": "HumidiFiV2",
+            "fields": [
+              { "name": "swap_id", "type": "u64" },
+              { "name": "is_base_to_quote", "type": "bool" }
+            ]
+          },
+          { "name": "PerenaStar", "fields": [{ "name": "is_mint", "type": "bool" }] },
+          {
+            "name": "JupiterRfqV2",
+            "fields": [
+              { "name": "side", "type": { "defined": { "name": "Side" } } },
+              { "name": "fill_data", "type": "bytes" }
+            ]
+          },
+          { "name": "GoonFiV2", "fields": [{ "name": "is_bid", "type": "bool" }] },
+          { "name": "Scorch", "fields": [{ "name": "swap_id", "type": "u128" }] },
+          {
+            "name": "VaultLiquidUnstake",
+            "fields": [
+              { "name": "lst_amounts", "type": { "array": ["u64", 5] } },
+              { "name": "seed", "type": "u64" }
+            ]
+          },
+          { "name": "XOrca" },
+          { "name": "Quantum", "fields": [{ "name": "side", "type": { "defined": { "name": "Side" } } }] },
+          {
+            "name": "WhaleStreetV2",
+            "fields": [
+              { "name": "side", "type": { "defined": { "name": "Side" } } },
+              { "name": "auth_amount_in", "type": "u64" },
+              { "name": "auth", "type": "u64" }
+            ]
+          }
         ]
       }
     },
@@ -707,7 +749,14 @@
               { "name": "is_base_to_quote", "type": "bool" }
             ]
           },
-          { "name": "TesseraV", "fields": [{ "name": "side", "type": { "defined": { "name": "Side" } } }] }
+          { "name": "TesseraV", "fields": [{ "name": "side", "type": { "defined": { "name": "Side" } } }] },
+          {
+            "name": "HumidiFiV2",
+            "fields": [
+              { "name": "swap_id", "type": "u64" },
+              { "name": "is_base_to_quote", "type": "bool" }
+            ]
+          }
         ]
       }
     },

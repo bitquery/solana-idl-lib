@@ -76,6 +76,16 @@
       ]
     },
     {
+      "name": "init_token_ledger",
+      "discriminator": [157, 116, 66, 59, 137, 180, 49, 157],
+      "accounts": [
+        { "name": "payer", "writable": true, "signer": true },
+        { "name": "token_ledger", "writable": true },
+        { "name": "system_program", "address": "11111111111111111111111111111111" }
+      ],
+      "args": [{ "name": "index", "type": "u8" }]
+    },
+    {
       "name": "proxy_swap",
       "discriminator": [19, 44, 130, 148, 72, 56, 44, 238],
       "accounts": [
@@ -115,6 +125,15 @@
         { "name": "program" }
       ],
       "args": [{ "name": "args", "type": { "defined": { "name": "SwapArgs" } } }]
+    },
+    {
+      "name": "set_token_ledger",
+      "discriminator": [228, 85, 185, 112, 78, 79, 77, 2],
+      "accounts": [
+        { "name": "token_ledger", "writable": true },
+        { "name": "token_account", "docs": ["SPL / Token-2022 token account to snapshot."] }
+      ],
+      "args": []
     },
     {
       "name": "swap",
@@ -232,6 +251,53 @@
       ]
     },
     {
+      "name": "swap_tob_v2",
+      "docs": ["Used to support commission distribution between parent and child nodes in TOB business"],
+      "discriminator": [72, 1, 215, 242, 8, 75, 54, 216],
+      "accounts": [
+        { "name": "payer", "writable": true, "signer": true },
+        { "name": "source_token_account", "writable": true },
+        { "name": "destination_token_account", "writable": true },
+        { "name": "source_mint" },
+        { "name": "destination_mint" },
+        { "name": "parent_commission_account", "writable": true },
+        { "name": "child_commission_account", "writable": true },
+        { "name": "platform_fee_account", "writable": true, "optional": true },
+        { "name": "sa_authority", "writable": true, "optional": true },
+        { "name": "source_token_sa", "writable": true, "optional": true },
+        { "name": "destination_token_sa", "writable": true, "optional": true },
+        { "name": "source_token_program", "optional": true },
+        { "name": "destination_token_program", "optional": true },
+        {
+          "name": "associated_token_program",
+          "optional": true,
+          "address": "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL"
+        },
+        { "name": "system_program", "optional": true, "address": "11111111111111111111111111111111" },
+        {
+          "name": "event_authority",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  95, 95, 101, 118, 101, 110, 116, 95, 97, 117, 116, 104, 111, 114, 105, 116, 121
+                ]
+              }
+            ]
+          }
+        },
+        { "name": "program" }
+      ],
+      "args": [
+        { "name": "args", "type": { "defined": { "name": "SwapArgs" } } },
+        { "name": "total_commission_info", "type": "u32" },
+        { "name": "parent_commission_rate", "type": "u32" },
+        { "name": "platform_fee_rate", "type": "u16" },
+        { "name": "trim_rate", "type": "u8" }
+      ]
+    },
+    {
       "name": "swap_tob_with_receiver",
       "discriminator": [223, 170, 216, 234, 204, 6, 241, 25],
       "accounts": [
@@ -286,6 +352,106 @@
       ]
     },
     {
+      "name": "swap_tob_with_receiver_token_ledger",
+      "discriminator": [239, 93, 10, 202, 161, 134, 127, 130],
+      "accounts": [
+        { "name": "payer", "writable": true, "signer": true },
+        { "name": "source_token_account", "writable": true },
+        { "name": "destination_token_account", "writable": true },
+        { "name": "source_mint" },
+        { "name": "destination_mint" },
+        { "name": "commission_account", "writable": true, "optional": true },
+        { "name": "platform_fee_account", "writable": true, "optional": true },
+        { "name": "sa_authority", "writable": true, "optional": true },
+        { "name": "source_token_sa", "writable": true, "optional": true },
+        { "name": "destination_token_sa", "writable": true, "optional": true },
+        { "name": "source_token_program", "optional": true },
+        { "name": "destination_token_program", "optional": true },
+        {
+          "name": "associated_token_program",
+          "optional": true,
+          "address": "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL"
+        },
+        { "name": "system_program", "optional": true, "address": "11111111111111111111111111111111" },
+        {
+          "name": "sol_receiver",
+          "docs": [
+            "Optional SOL receiver account",
+            "- None: normal swap or SOL stays with payer",
+            "- Some: SOL receiver when converting wSOL -> SOL"
+          ],
+          "writable": true,
+          "optional": true
+        },
+        { "name": "token_ledger" },
+        {
+          "name": "event_authority",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  95, 95, 101, 118, 101, 110, 116, 95, 97, 117, 116, 104, 111, 114, 105, 116, 121
+                ]
+              }
+            ]
+          }
+        },
+        { "name": "program" }
+      ],
+      "args": [
+        { "name": "args", "type": { "defined": { "name": "SwapArgsTokenLedger" } } },
+        { "name": "commission_info", "type": "u32" },
+        { "name": "platform_fee_rate", "type": "u16" },
+        { "name": "trim_rate", "type": "u8" }
+      ]
+    },
+    {
+      "name": "swap_tob_with_token_ledger",
+      "discriminator": [36, 92, 147, 219, 26, 176, 159, 90],
+      "accounts": [
+        { "name": "payer", "writable": true, "signer": true },
+        { "name": "source_token_account", "writable": true },
+        { "name": "destination_token_account", "writable": true },
+        { "name": "source_mint" },
+        { "name": "destination_mint" },
+        { "name": "commission_account", "writable": true, "optional": true },
+        { "name": "platform_fee_account", "writable": true, "optional": true },
+        { "name": "sa_authority", "writable": true, "optional": true },
+        { "name": "source_token_sa", "writable": true, "optional": true },
+        { "name": "destination_token_sa", "writable": true, "optional": true },
+        { "name": "source_token_program", "optional": true },
+        { "name": "destination_token_program", "optional": true },
+        {
+          "name": "associated_token_program",
+          "optional": true,
+          "address": "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL"
+        },
+        { "name": "system_program", "optional": true, "address": "11111111111111111111111111111111" },
+        { "name": "token_ledger" },
+        {
+          "name": "event_authority",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  95, 95, 101, 118, 101, 110, 116, 95, 97, 117, 116, 104, 111, 114, 105, 116, 121
+                ]
+              }
+            ]
+          }
+        },
+        { "name": "program" }
+      ],
+      "args": [
+        { "name": "args", "type": { "defined": { "name": "SwapArgsTokenLedger" } } },
+        { "name": "commission_info", "type": "u32" },
+        { "name": "platform_fee_rate", "type": "u16" },
+        { "name": "trim_rate", "type": "u8" }
+      ]
+    },
+    {
       "name": "swap_toc",
       "discriminator": [187, 201, 212, 51, 16, 155, 236, 60],
       "accounts": [
@@ -325,6 +491,52 @@
       "args": [
         { "name": "args", "type": { "defined": { "name": "SwapArgs" } } },
         { "name": "commission_info", "type": "u32" },
+        { "name": "platform_fee_rate", "type": "u16" }
+      ]
+    },
+    {
+      "name": "swap_toc_v2",
+      "docs": ["Used to support commission distribution between parent and child nodes in TOC business"],
+      "discriminator": [127, 214, 107, 189, 23, 90, 47, 104],
+      "accounts": [
+        { "name": "payer", "writable": true, "signer": true },
+        { "name": "source_token_account", "writable": true },
+        { "name": "destination_token_account", "writable": true },
+        { "name": "source_mint" },
+        { "name": "destination_mint" },
+        { "name": "parent_commission_account", "writable": true },
+        { "name": "child_commission_account", "writable": true },
+        { "name": "platform_fee_account", "writable": true, "optional": true },
+        { "name": "sa_authority", "writable": true, "optional": true },
+        { "name": "source_token_sa", "writable": true, "optional": true },
+        { "name": "destination_token_sa", "writable": true, "optional": true },
+        { "name": "source_token_program", "optional": true },
+        { "name": "destination_token_program", "optional": true },
+        {
+          "name": "associated_token_program",
+          "optional": true,
+          "address": "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL"
+        },
+        { "name": "system_program", "optional": true, "address": "11111111111111111111111111111111" },
+        {
+          "name": "event_authority",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  95, 95, 101, 118, 101, 110, 116, 95, 97, 117, 116, 104, 111, 114, 105, 116, 121
+                ]
+              }
+            ]
+          }
+        },
+        { "name": "program" }
+      ],
+      "args": [
+        { "name": "args", "type": { "defined": { "name": "SwapArgs" } } },
+        { "name": "total_commission_info", "type": "u32" },
+        { "name": "parent_commission_rate", "type": "u32" },
         { "name": "platform_fee_rate", "type": "u16" }
       ]
     },
@@ -378,19 +590,89 @@
         { "name": "program" }
       ],
       "args": [{ "name": "args", "type": { "defined": { "name": "PlatformFeeWrapUnwrapArgs" } } }]
+    },
+    {
+      "name": "wrap_unwrap_with_receiver",
+      "docs": [
+        "Wrap/Unwrap with optional specified receiver",
+        "- Wrap (SOL -> WSOL): receiver is WSOL token account (ATA)",
+        "- Unwrap (WSOL -> SOL): receiver is system account (EOA)",
+        "Transfer amount:",
+        "- From fee: amount_in",
+        "- To fee: amount_in - fees"
+      ],
+      "discriminator": [123, 25, 47, 134, 233, 167, 171, 170],
+      "accounts": [
+        { "name": "payer", "writable": true, "signer": true },
+        { "name": "payer_wsol_account", "writable": true },
+        { "name": "wsol_mint", "address": "So11111111111111111111111111111111111111112" },
+        {
+          "name": "temp_wsol_account",
+          "writable": true,
+          "optional": true,
+          "pda": {
+            "seeds": [
+              { "kind": "const", "value": [116, 101, 109, 112, 95, 119, 115, 111, 108] },
+              { "kind": "account", "path": "payer" }
+            ]
+          }
+        },
+        { "name": "commission_account", "writable": true, "optional": true },
+        { "name": "platform_fee_account", "writable": true, "optional": true },
+        {
+          "name": "authority_pda",
+          "docs": ["Used for signing fee transfers from authority_pda (SOL) or wsol_sa (WSOL)"],
+          "writable": true,
+          "optional": true
+        },
+        {
+          "name": "wsol_sa",
+          "docs": ["This is the authority_pda's associated token account for WSOL"],
+          "writable": true,
+          "optional": true
+        },
+        { "name": "token_program" },
+        { "name": "system_program", "address": "11111111111111111111111111111111" },
+        {
+          "name": "receiver",
+          "docs": [
+            "- Wrap: WSOL token account (ATA) to receive WSOL",
+            "- Unwrap: System account (EOA) to receive SOL"
+          ],
+          "writable": true
+        },
+        {
+          "name": "event_authority",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  95, 95, 101, 118, 101, 110, 116, 95, 97, 117, 116, 104, 111, 114, 105, 116, 121
+                ]
+              }
+            ]
+          }
+        },
+        { "name": "program" }
+      ],
+      "args": [{ "name": "args", "type": { "defined": { "name": "PlatformFeeWrapUnwrapArgs" } } }]
     }
   ],
+  "accounts": [{ "name": "TokenLedger", "discriminator": [156, 247, 9, 188, 54, 108, 85, 77] }],
   "events": [
-    { "name": "SwapCpiEvent", "discriminator": [85, 81, 149, 239, 163, 74, 158, 111] },
+    { "name": "SwapCpiEvent2", "discriminator": [21, 94, 224, 53, 220, 232, 193, 94] },
     { "name": "SwapEvent", "discriminator": [64, 198, 205, 232, 38, 8, 113, 226] },
-    { "name": "SwapWithFeesCpiEvent", "discriminator": [189, 97, 67, 12, 37, 209, 247, 29] },
-    { "name": "SwapWithFeesCpiEventEnhanced", "discriminator": [37, 72, 219, 67, 50, 244, 1, 213] }
+    { "name": "SwapTobV2CpiEvent2", "discriminator": [244, 105, 184, 90, 60, 165, 36, 33] },
+    { "name": "SwapTocV2CpiEvent2", "discriminator": [102, 16, 181, 62, 201, 71, 212, 41] },
+    { "name": "SwapWithFeesCpiEvent2", "discriminator": [12, 134, 38, 93, 167, 151, 42, 69] },
+    { "name": "SwapWithFeesCpiEventEnhanced2", "discriminator": [84, 79, 219, 247, 218, 156, 219, 177] }
   ],
   "errors": [
     { "code": 6000, "name": "RoutesCannotBeEmpty", "msg": "Routes cannot be empty" },
     { "code": 6001, "name": "TooManyRoutes", "msg": "Too many routes" },
     { "code": 6002, "name": "MultipleOrNoOutputNode", "msg": "Multiple or no output node" },
-    { "code": 6003, "name": "MultipleOrNoInputputNode", "msg": "Multiple or no input node" },
+    { "code": 6003, "name": "MultipleOrNoInputNode", "msg": "Multiple or no input node" },
     { "code": 6004, "name": "NotAllNodesProcessed", "msg": "Not all nodes are processed" },
     { "code": 6005, "name": "InputIndexShouldStartFromZero", "msg": "Input index should start from zero" },
     { "code": 6006, "name": "CircularDependency", "msg": "Circular dependency detected in DAG" },
@@ -399,92 +681,107 @@
     { "code": 6009, "name": "TargetNodeNotFound", "msg": "Target node not found" },
     { "code": 6010, "name": "MinReturnNotReached", "msg": "Min return not reached" },
     { "code": 6011, "name": "AmountInMustBeGreaterThanZero", "msg": "amount_in must be greater than 0" },
-    { "code": 6012, "name": "SlippageTooHigh", "msg": "slippage must be less than 100%" },
+    { "code": 6012, "name": "SlippageTooHigh", "msg": "slippage must be less than or equal to 100%" },
     { "code": 6013, "name": "InvalidExpectAmountOut", "msg": "invalid expect amount out" },
     { "code": 6014, "name": "WeightsMustSumTo100", "msg": "weights must sum to 100%" },
     { "code": 6015, "name": "InvalidShareAmount", "msg": "Invalid share amount" },
     { "code": 6016, "name": "InvalidCommissionRate", "msg": "Invalid commission rate" },
-    { "code": 6017, "name": "InvalidTrimRate", "msg": "Invalid trim rate" },
-    { "code": 6018, "name": "InvalidChargeRate", "msg": "Invalid charge rate" },
+    { "code": 6017, "name": "InvalidParentCommissionRate", "msg": "Invalid parent commission rate" },
+    { "code": 6018, "name": "InvalidTrimRate", "msg": "Invalid trim rate" },
+    { "code": 6019, "name": "InvalidChargeRate", "msg": "Invalid charge rate" },
     {
-      "code": 6019,
+      "code": 6020,
       "name": "InvalidCommissionTemporaryTokenAccount",
       "msg": "Invalid commission temporary token account"
     },
-    { "code": 6020, "name": "InvalidAccountsLength", "msg": "Invalid accounts length" },
-    { "code": 6021, "name": "SwapAuthorityIsNotSigner", "msg": "Swap authority is not signer" },
-    { "code": 6022, "name": "InvalidAuthorityPda", "msg": "Invalid authority pda" },
-    { "code": 6023, "name": "InvalidSwapAuthority", "msg": "Invalid swap authority" },
-    { "code": 6024, "name": "InvalidProgramId", "msg": "Invalid program id" },
-    { "code": 6025, "name": "InvalidPool", "msg": "Invalid pool" },
-    { "code": 6026, "name": "InvalidTokenMint", "msg": "Invalid token mint" },
-    { "code": 6027, "name": "CalculationError", "msg": "Calculation error" },
-    { "code": 6028, "name": "InvalidSanctumLstStateListData", "msg": "Invalid sanctum lst state list data" },
-    { "code": 6029, "name": "InvalidSanctumLstStateListIndex", "msg": "Invalid sanctum lst state list index" },
-    { "code": 6030, "name": "InvalidSanctumSwapAccounts", "msg": "Invalid sanctum swap accounts" },
-    { "code": 6031, "name": "InvalidSwapAuthorityAccounts", "msg": "Invalid swap authority account" },
-    { "code": 6032, "name": "InvalidBridgeSeed", "msg": "Bridge Seed Error" },
-    { "code": 6033, "name": "InvalidBundleInput", "msg": "Invalid accounts and instruction length" },
-    { "code": 6034, "name": "InvalidPlatformFeeRate", "msg": "Invalid platform fee rate" },
-    { "code": 6035, "name": "AmountOutMustBeGreaterThanZero", "msg": "Amount out must be greater than 0" },
-    { "code": 6036, "name": "InvalidDampingTerm", "msg": "Invalid DampingTerm" },
-    { "code": 6037, "name": "InvalidMint", "msg": "Invalid mint" },
-    { "code": 6038, "name": "InvalidPlatformFeeAccount", "msg": "Invalid platform fee account" },
-    { "code": 6039, "name": "InvalidTrimAccount", "msg": "Invalid trim account" },
-    { "code": 6040, "name": "InvalidChargeAccount", "msg": "Invalid charge account" },
-    { "code": 6041, "name": "InvalidPlatformFeeAmount", "msg": "Invalid platform fee amount" },
-    { "code": 6042, "name": "InvalidFeeTokenAccount", "msg": "Invalid fee token account" },
-    { "code": 6043, "name": "InvalidSaAuthority", "msg": "Invalid sa authority" },
-    { "code": 6044, "name": "InvalidNodeFromAccounts", "msg": "Invalid node from accounts" },
-    { "code": 6045, "name": "InvalidNodeToAccounts", "msg": "Invalid node to accounts" },
-    { "code": 6046, "name": "InvalidSourceTokenAccount", "msg": "Invalid source token account" },
-    { "code": 6047, "name": "InvalidTokenAccount", "msg": "Invalid token account" },
-    { "code": 6048, "name": "InvalidDestinationTokenAccount", "msg": "Invalid destination token account" },
-    { "code": 6049, "name": "CommissionAccountIsNone", "msg": "Commission account is none" },
-    { "code": 6050, "name": "PlatformFeeAccountIsNone", "msg": "Platform fee account is none" },
-    { "code": 6051, "name": "TrimAccountIsNone", "msg": "Trim account is none" },
-    { "code": 6052, "name": "ChargeAccountIsNone", "msg": "Charge account is none" },
-    { "code": 6053, "name": "InvalidFeeAccount", "msg": "Invalid fee account" },
-    { "code": 6054, "name": "InvalidTokenOwner", "msg": "Invalid token owner" },
-    { "code": 6055, "name": "SaAuthorityIsNone", "msg": "Sa authority is none" },
-    { "code": 6056, "name": "SourceTokenSaIsNone", "msg": "Source token sa is none" },
-    { "code": 6057, "name": "SourceTokenProgramIsNone", "msg": "Source token program is none" },
-    { "code": 6058, "name": "DestinationTokenSaIsNone", "msg": "Destination token sa is none" },
-    { "code": 6059, "name": "DestinationTokenProgramIsNone", "msg": "Destination token program is none" },
-    { "code": 6060, "name": "ResultMustBeGreaterThanZero", "msg": "Calculation result must be greater than zero" },
-    { "code": 6061, "name": "InvalidAccountData", "msg": "Invalid account data" },
-    { "code": 6062, "name": "InvalidRfqParameters", "msg": "Invalid RFQ parameters" },
-    { "code": 6063, "name": "TobAuthorityPdaRequired", "msg": "TOB mode requires authority PDA" },
-    { "code": 6064, "name": "TobWsolSaRequired", "msg": "TOB mode with WSOL fees requires wsol_sa account" },
-    { "code": 6065, "name": "InvalidWsolSa", "msg": "Invalid WSOL SA account" },
-    { "code": 6066, "name": "InvalidCommissionAccount", "msg": "Invalid commission account" },
-    { "code": 6067, "name": "InvalidActualAmountIn", "msg": "Invalid actual amount in" },
-    { "code": 6068, "name": "UnexpectedSaTokenAccount", "msg": "Unexpected SA token account in CPI" },
-    { "code": 6069, "name": "InvalidSourceTokenSaMint", "msg": "Invalid source token sa mint" },
-    { "code": 6070, "name": "InvalidDestinationTokenSaMint", "msg": "Invalid destination token sa mint" },
-    { "code": 6071, "name": "InsufficientFunds", "msg": "Insufficient funds" },
-    { "code": 6072, "name": "SaAuthorityLamportsDecreased", "msg": "Sa authority lamports decreased" },
-    { "code": 6073, "name": "InvalidTokenProgram", "msg": "Invalid token program" },
-    { "code": 6074, "name": "InvalidSigner", "msg": "Invalid signer" },
-    { "code": 6075, "name": "InvalidAssociatedTokenProgram", "msg": "Invalid associated token program" },
-    { "code": 6076, "name": "TokenProgramIsNone", "msg": "Token program is none" },
-    { "code": 6077, "name": "AssociatedTokenProgramIsNone", "msg": "Associated token program is none" },
-    { "code": 6078, "name": "SystemProgramIsNone", "msg": "System program is none" },
-    { "code": 6079, "name": "InsufficientBalance", "msg": "Insufficient balance for transfer" },
-    { "code": 6080, "name": "SolReceiverMustBeSystemAccount", "msg": "SOL receiver must be a system account" },
+    { "code": 6021, "name": "InvalidAccountsLength", "msg": "Invalid accounts length" },
+    { "code": 6022, "name": "SwapAuthorityIsNotSigner", "msg": "Swap authority is not signer" },
+    { "code": 6023, "name": "InvalidAuthorityPda", "msg": "Invalid authority pda" },
+    { "code": 6024, "name": "InvalidSwapAuthority", "msg": "Invalid swap authority" },
+    { "code": 6025, "name": "InvalidProgramId", "msg": "Invalid program id" },
+    { "code": 6026, "name": "InvalidPool", "msg": "Invalid pool" },
+    { "code": 6027, "name": "InvalidTokenMint", "msg": "Invalid token mint" },
+    { "code": 6028, "name": "CalculationError", "msg": "Calculation error" },
+    { "code": 6029, "name": "InvalidSanctumLstStateListData", "msg": "Invalid sanctum lst state list data" },
+    { "code": 6030, "name": "InvalidSanctumLstStateListIndex", "msg": "Invalid sanctum lst state list index" },
+    { "code": 6031, "name": "InvalidSanctumSwapAccounts", "msg": "Invalid sanctum swap accounts" },
+    { "code": 6032, "name": "InvalidSwapAuthorityAccount", "msg": "Invalid swap authority account" },
+    { "code": 6033, "name": "InvalidBridgeSeed", "msg": "Bridge Seed Error" },
+    { "code": 6034, "name": "InvalidBundleInput", "msg": "Invalid accounts and instruction length" },
+    { "code": 6035, "name": "InvalidPlatformFeeRate", "msg": "Invalid platform fee rate" },
+    { "code": 6036, "name": "AmountOutMustBeGreaterThanZero", "msg": "Amount out must be greater than 0" },
+    { "code": 6037, "name": "InvalidDampingTerm", "msg": "Invalid DampingTerm" },
+    { "code": 6038, "name": "InvalidMint", "msg": "Invalid mint" },
+    { "code": 6039, "name": "InvalidPlatformFeeAccount", "msg": "Invalid platform fee account" },
+    { "code": 6040, "name": "InvalidTrimAccount", "msg": "Invalid trim account" },
+    { "code": 6041, "name": "InvalidChargeAccount", "msg": "Invalid charge account" },
+    { "code": 6042, "name": "InvalidPlatformFeeAmount", "msg": "Invalid platform fee amount" },
+    { "code": 6043, "name": "InvalidFeeTokenAccount", "msg": "Invalid fee token account" },
+    { "code": 6044, "name": "InvalidSaAuthority", "msg": "Invalid sa authority" },
+    { "code": 6045, "name": "InvalidNodeFromAccounts", "msg": "Invalid node from accounts" },
+    { "code": 6046, "name": "InvalidNodeToAccounts", "msg": "Invalid node to accounts" },
+    { "code": 6047, "name": "InvalidSourceTokenAccount", "msg": "Invalid source token account" },
+    { "code": 6048, "name": "InvalidTokenAccount", "msg": "Invalid token account" },
+    { "code": 6049, "name": "InvalidDestinationTokenAccount", "msg": "Invalid destination token account" },
+    { "code": 6050, "name": "CommissionAccountIsNone", "msg": "Commission account is none" },
+    { "code": 6051, "name": "PlatformFeeAccountIsNone", "msg": "Platform fee account is none" },
+    { "code": 6052, "name": "TrimAccountIsNone", "msg": "Trim account is none" },
+    { "code": 6053, "name": "ChargeAccountIsNone", "msg": "Charge account is none" },
+    { "code": 6054, "name": "InvalidFeeAccount", "msg": "Invalid fee account" },
+    { "code": 6055, "name": "InvalidTokenOwner", "msg": "Invalid token owner" },
+    { "code": 6056, "name": "SaAuthorityIsNone", "msg": "Sa authority is none" },
+    { "code": 6057, "name": "SourceTokenSaIsNone", "msg": "Source token sa is none" },
+    { "code": 6058, "name": "SourceTokenProgramIsNone", "msg": "Source token program is none" },
+    { "code": 6059, "name": "DestinationTokenSaIsNone", "msg": "Destination token sa is none" },
+    { "code": 6060, "name": "DestinationTokenProgramIsNone", "msg": "Destination token program is none" },
+    { "code": 6061, "name": "ResultMustBeGreaterThanZero", "msg": "Calculation result must be greater than zero" },
+    { "code": 6062, "name": "InvalidAccountData", "msg": "Invalid account data" },
+    { "code": 6063, "name": "InvalidRfqParameters", "msg": "Invalid RFQ parameters" },
+    { "code": 6064, "name": "TobAuthorityPdaRequired", "msg": "TOB mode requires authority PDA" },
+    { "code": 6065, "name": "TobWsolSaRequired", "msg": "TOB mode with WSOL fees requires wsol_sa account" },
+    { "code": 6066, "name": "InvalidWsolSa", "msg": "Invalid WSOL SA account" },
+    { "code": 6067, "name": "InvalidCommissionAccount", "msg": "Invalid commission account" },
+    { "code": 6068, "name": "InvalidActualAmountIn", "msg": "Invalid actual amount in" },
+    { "code": 6069, "name": "UnexpectedSaTokenAccount", "msg": "Unexpected SA token account in CPI" },
+    { "code": 6070, "name": "InvalidSourceTokenSaMint", "msg": "Invalid source token sa mint" },
+    { "code": 6071, "name": "InvalidDestinationTokenSaMint", "msg": "Invalid destination token sa mint" },
+    { "code": 6072, "name": "InsufficientFunds", "msg": "Insufficient funds" },
+    { "code": 6073, "name": "SaAuthorityLamportsDecreased", "msg": "Sa authority lamports decreased" },
+    { "code": 6074, "name": "InvalidTokenProgram", "msg": "Invalid token program" },
+    { "code": 6075, "name": "InvalidSigner", "msg": "Invalid signer" },
+    { "code": 6076, "name": "InvalidAssociatedTokenProgram", "msg": "Invalid associated token program" },
+    { "code": 6077, "name": "TokenProgramIsNone", "msg": "Token program is none" },
+    { "code": 6078, "name": "AssociatedTokenProgramIsNone", "msg": "Associated token program is none" },
+    { "code": 6079, "name": "SystemProgramIsNone", "msg": "System program is none" },
+    { "code": 6080, "name": "InsufficientBalance", "msg": "Insufficient balance for transfer" },
+    { "code": 6081, "name": "SolReceiverMustBeSystemAccount", "msg": "SOL receiver must be a system account" },
     {
-      "code": 6081,
+      "code": 6082,
       "name": "SolReceiverRequiresAccCloseFlag",
       "msg": "SOL receiver requires acc_close_flag to be true"
     },
     {
-      "code": 6082,
+      "code": 6083,
       "name": "DestinationMustBeWsolForSolReceiver",
       "msg": "Destination must be wSOL when sol_receiver is specified"
     },
-    { "code": 6083, "name": "InvalidGoonfiParameters", "msg": "Invalid goonfi parameters" },
-    { "code": 6084, "name": "AdapterAbort", "msg": "Adapter abort" },
-    { "code": 6085, "name": "InconsistentFeeAccountTypes", "msg": "Inconsistent fee account types" }
+    { "code": 6084, "name": "InvalidGoonfiParameters", "msg": "Invalid goonfi parameters" },
+    { "code": 6085, "name": "AdapterAbort", "msg": "Adapter abort" },
+    { "code": 6086, "name": "InconsistentFeeAccountTypes", "msg": "Inconsistent fee account types" },
+    { "code": 6087, "name": "ReceiverMustBeTokenAccount", "msg": "Receiver must be a token account" },
+    { "code": 6088, "name": "ReceiverMustBeWsolAccount", "msg": "Receiver must be a WSOL token account" },
+    {
+      "code": 6089,
+      "name": "InconsistentCommissionAndTrimAccountTypes",
+      "msg": "The commission fee account and trim account are different types."
+    },
+    {
+      "code": 6090,
+      "name": "NoAvailableNodeIndexForReturnToStart",
+      "msg": "No available node index to support returning to START_INDEX"
+    },
+    { "code": 6091, "name": "InvalidTokenLedgerTokenAccount", "msg": "Invalid token ledger token account" },
+    { "code": 6092, "name": "TokenLedgerDeltaCalculationFailure", "msg": "Token ledger delta calculation failed" }
   ],
   "types": [
     {
@@ -596,7 +893,25 @@
           { "name": "AlphaQ" },
           { "name": "FutarchyAmm" },
           { "name": "PumpfunBuy2" },
-          { "name": "PumpfunSell2" }
+          { "name": "PumpfunSell2" },
+          { "name": "HumidifiSwap2", "fields": [{ "name": "swap_id", "type": "u64" }] },
+          { "name": "Scorch", "fields": [{ "name": "id", "type": "u128" }] },
+          { "name": "JupiterLendDeposit" },
+          { "name": "JupiterLendRedeem" },
+          { "name": "TaurusFi" },
+          { "name": "BisonFi" },
+          { "name": "GoonfiV2" },
+          { "name": "Quantum" },
+          { "name": "BoopfunBuy2" },
+          { "name": "BoopfunSell2" },
+          { "name": "ByrealClmm2" },
+          { "name": "Dooar2" },
+          { "name": "HeavenBuy2" },
+          { "name": "HeavenSell2" },
+          { "name": "MoonitBuy2" },
+          { "name": "MoonitSell2" },
+          { "name": "SaberDecimalWrapperDeposit2" },
+          { "name": "SaberDecimalWrapperWithdraw2" }
         ]
       }
     },
@@ -638,7 +953,23 @@
       }
     },
     {
-      "name": "SwapCpiEvent",
+      "name": "SwapArgsTokenLedger",
+      "docs": [
+        "Swap args for token-ledger swaps: no `amount_in` parameter.",
+        "`amount_in` is derived on-chain from `token_ledger` delta."
+      ],
+      "type": {
+        "kind": "struct",
+        "fields": [
+          { "name": "order_id", "type": "u64" },
+          { "name": "expect_amount_out", "type": "u64" },
+          { "name": "slippage", "type": "u16" },
+          { "name": "routes", "type": { "vec": { "defined": { "name": "Route" } } } }
+        ]
+      }
+    },
+    {
+      "name": "SwapCpiEvent2",
       "type": {
         "kind": "struct",
         "fields": [
@@ -647,6 +978,7 @@
           { "name": "destination_mint", "type": "pubkey" },
           { "name": "source_token_account_owner", "type": "pubkey" },
           { "name": "destination_token_account_owner", "type": "pubkey" },
+          { "name": "amount_in", "type": "u64" },
           { "name": "source_token_change", "type": "u64" },
           { "name": "destination_token_change", "type": "u64" }
         ]
@@ -664,7 +996,7 @@
       }
     },
     {
-      "name": "SwapWithFeesCpiEvent",
+      "name": "SwapTobV2CpiEvent2",
       "type": {
         "kind": "struct",
         "fields": [
@@ -673,6 +1005,64 @@
           { "name": "destination_mint", "type": "pubkey" },
           { "name": "source_token_account_owner", "type": "pubkey" },
           { "name": "destination_token_account_owner", "type": "pubkey" },
+          { "name": "amount_in", "type": "u64" },
+          { "name": "source_token_change", "type": "u64" },
+          { "name": "destination_token_change", "type": "u64" },
+          { "name": "commission_direction", "type": "bool" },
+          { "name": "total_commission_rate", "type": "u32" },
+          { "name": "parent_commission_rate", "type": "u32" },
+          { "name": "parent_commission_amount", "type": "u64" },
+          { "name": "parent_commission_account", "type": "pubkey" },
+          { "name": "child_commission_rate", "type": "u32" },
+          { "name": "child_commission_amount", "type": "u64" },
+          { "name": "child_commission_account", "type": "pubkey" },
+          { "name": "platform_fee_rate", "type": "u16" },
+          { "name": "platform_fee_amount", "type": "u64" },
+          { "name": "platform_fee_account", "type": "pubkey" },
+          { "name": "trim_rate", "type": "u8" },
+          { "name": "trim_amount", "type": "u64" },
+          { "name": "trim_account", "type": "pubkey" }
+        ]
+      }
+    },
+    {
+      "name": "SwapTocV2CpiEvent2",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          { "name": "order_id", "type": "u64" },
+          { "name": "source_mint", "type": "pubkey" },
+          { "name": "destination_mint", "type": "pubkey" },
+          { "name": "source_token_account_owner", "type": "pubkey" },
+          { "name": "destination_token_account_owner", "type": "pubkey" },
+          { "name": "amount_in", "type": "u64" },
+          { "name": "source_token_change", "type": "u64" },
+          { "name": "destination_token_change", "type": "u64" },
+          { "name": "commission_direction", "type": "bool" },
+          { "name": "total_commission_rate", "type": "u32" },
+          { "name": "parent_commission_rate", "type": "u32" },
+          { "name": "parent_commission_amount", "type": "u64" },
+          { "name": "parent_commission_account", "type": "pubkey" },
+          { "name": "child_commission_rate", "type": "u32" },
+          { "name": "child_commission_amount", "type": "u64" },
+          { "name": "child_commission_account", "type": "pubkey" },
+          { "name": "platform_fee_rate", "type": "u16" },
+          { "name": "platform_fee_amount", "type": "u64" },
+          { "name": "platform_fee_account", "type": "pubkey" }
+        ]
+      }
+    },
+    {
+      "name": "SwapWithFeesCpiEvent2",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          { "name": "order_id", "type": "u64" },
+          { "name": "source_mint", "type": "pubkey" },
+          { "name": "destination_mint", "type": "pubkey" },
+          { "name": "source_token_account_owner", "type": "pubkey" },
+          { "name": "destination_token_account_owner", "type": "pubkey" },
+          { "name": "amount_in", "type": "u64" },
           { "name": "source_token_change", "type": "u64" },
           { "name": "destination_token_change", "type": "u64" },
           { "name": "commission_direction", "type": "bool" },
@@ -689,7 +1079,7 @@
       }
     },
     {
-      "name": "SwapWithFeesCpiEventEnhanced",
+      "name": "SwapWithFeesCpiEventEnhanced2",
       "type": {
         "kind": "struct",
         "fields": [
@@ -698,6 +1088,7 @@
           { "name": "destination_mint", "type": "pubkey" },
           { "name": "source_token_account_owner", "type": "pubkey" },
           { "name": "destination_token_account_owner", "type": "pubkey" },
+          { "name": "amount_in", "type": "u64" },
           { "name": "source_token_change", "type": "u64" },
           { "name": "destination_token_change", "type": "u64" },
           { "name": "commission_direction", "type": "bool" },
@@ -713,6 +1104,21 @@
           { "name": "charge_rate", "type": "u16" },
           { "name": "charge_amount", "type": "u64" },
           { "name": "charge_account", "type": "pubkey" }
+        ]
+      }
+    },
+    {
+      "name": "TokenLedger",
+      "docs": [
+        "Token ledger PDA used to snapshot a token account balance within a transaction.",
+        "",
+        "Seeds: `[b\"token_ledger\", [index]]`, where `index = 0..=255` (u8)."
+      ],
+      "type": {
+        "kind": "struct",
+        "fields": [
+          { "name": "token_account", "type": "pubkey" },
+          { "name": "amount", "type": "u64" }
         ]
       }
     }
