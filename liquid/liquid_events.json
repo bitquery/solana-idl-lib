@@ -1,0 +1,2929 @@
+{
+  "address": "EventsQeXA43nLKR69DhHwNsJ6aM512AweMCgG3wG8zG",
+  "metadata": {
+    "name": "liquid_events",
+    "version": "0.1.0",
+    "spec": "0.1.0",
+    "description": "Centralized CPI-only event emission for liquid programs"
+  },
+  "instructions": [
+    {
+      "name": "log_amm_buyback",
+      "discriminator": [
+        94,
+        233,
+        233,
+        98,
+        143,
+        213,
+        246,
+        230
+      ],
+      "accounts": [
+        {
+          "name": "cpi_authority",
+          "docs": [
+            "CPI authority PDA from the calling program.",
+            "Must be derived from `SEED_CPI_AUTHORITY` using an authorized program's ID."
+          ],
+          "signer": true
+        }
+      ],
+      "args": [
+        {
+          "name": "_data",
+          "type": {
+            "defined": {
+              "name": "AmmBuybackExecuted"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "log_amm_paused",
+      "discriminator": [
+        125,
+        123,
+        180,
+        110,
+        93,
+        86,
+        46,
+        84
+      ],
+      "accounts": [
+        {
+          "name": "cpi_authority",
+          "docs": [
+            "CPI authority PDA from the calling program.",
+            "Must be derived from `SEED_CPI_AUTHORITY` using an authorized program's ID."
+          ],
+          "signer": true
+        }
+      ],
+      "args": [
+        {
+          "name": "_data",
+          "type": {
+            "defined": {
+              "name": "AmmProtocolPaused"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "log_amm_unpaused",
+      "discriminator": [
+        131,
+        89,
+        72,
+        210,
+        206,
+        135,
+        195,
+        111
+      ],
+      "accounts": [
+        {
+          "name": "cpi_authority",
+          "docs": [
+            "CPI authority PDA from the calling program.",
+            "Must be derived from `SEED_CPI_AUTHORITY` using an authorized program's ID."
+          ],
+          "signer": true
+        }
+      ],
+      "args": [
+        {
+          "name": "_data",
+          "type": {
+            "defined": {
+              "name": "AmmProtocolUnpaused"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "log_cashback_earned",
+      "discriminator": [
+        202,
+        32,
+        184,
+        171,
+        92,
+        91,
+        232,
+        157
+      ],
+      "accounts": [
+        {
+          "name": "cpi_authority",
+          "docs": [
+            "CPI authority PDA from the calling program.",
+            "Must be derived from `SEED_CPI_AUTHORITY` using an authorized program's ID."
+          ],
+          "signer": true
+        }
+      ],
+      "args": [
+        {
+          "name": "_data",
+          "type": {
+            "defined": {
+              "name": "CashbackEarned"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "log_cashback_mode",
+      "discriminator": [
+        58,
+        167,
+        152,
+        79,
+        199,
+        91,
+        227,
+        58
+      ],
+      "accounts": [
+        {
+          "name": "cpi_authority",
+          "docs": [
+            "CPI authority PDA from the calling program.",
+            "Must be derived from `SEED_CPI_AUTHORITY` using an authorized program's ID."
+          ],
+          "signer": true
+        }
+      ],
+      "args": [
+        {
+          "name": "_data",
+          "type": {
+            "defined": {
+              "name": "CashbackModeActivated"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "log_cashback_spent",
+      "discriminator": [
+        1,
+        25,
+        143,
+        23,
+        25,
+        183,
+        52,
+        65
+      ],
+      "accounts": [
+        {
+          "name": "cpi_authority",
+          "docs": [
+            "CPI authority PDA from the calling program.",
+            "Must be derived from `SEED_CPI_AUTHORITY` using an authorized program's ID."
+          ],
+          "signer": true
+        }
+      ],
+      "args": [
+        {
+          "name": "_data",
+          "type": {
+            "defined": {
+              "name": "CashbackSpent"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "log_curve_buyback",
+      "discriminator": [
+        36,
+        97,
+        45,
+        250,
+        112,
+        40,
+        95,
+        172
+      ],
+      "accounts": [
+        {
+          "name": "cpi_authority",
+          "docs": [
+            "CPI authority PDA from the calling program.",
+            "Must be derived from `SEED_CPI_AUTHORITY` using an authorized program's ID."
+          ],
+          "signer": true
+        }
+      ],
+      "args": [
+        {
+          "name": "_data",
+          "type": {
+            "defined": {
+              "name": "CurveBuybackExecuted"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "log_curve_completed",
+      "discriminator": [
+        103,
+        110,
+        221,
+        143,
+        36,
+        102,
+        235,
+        25
+      ],
+      "accounts": [
+        {
+          "name": "cpi_authority",
+          "docs": [
+            "CPI authority PDA from the calling program.",
+            "Must be derived from `SEED_CPI_AUTHORITY` using an authorized program's ID."
+          ],
+          "signer": true
+        }
+      ],
+      "args": [
+        {
+          "name": "_data",
+          "type": {
+            "defined": {
+              "name": "CurveCompleted"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "log_curve_paused",
+      "discriminator": [
+        219,
+        40,
+        139,
+        115,
+        1,
+        52,
+        206,
+        122
+      ],
+      "accounts": [
+        {
+          "name": "cpi_authority",
+          "docs": [
+            "CPI authority PDA from the calling program.",
+            "Must be derived from `SEED_CPI_AUTHORITY` using an authorized program's ID."
+          ],
+          "signer": true
+        }
+      ],
+      "args": [
+        {
+          "name": "_data",
+          "type": {
+            "defined": {
+              "name": "CurveProtocolPaused"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "log_curve_unpaused",
+      "discriminator": [
+        103,
+        202,
+        52,
+        122,
+        69,
+        174,
+        56,
+        56
+      ],
+      "accounts": [
+        {
+          "name": "cpi_authority",
+          "docs": [
+            "CPI authority PDA from the calling program.",
+            "Must be derived from `SEED_CPI_AUTHORITY` using an authorized program's ID."
+          ],
+          "signer": true
+        }
+      ],
+      "args": [
+        {
+          "name": "_data",
+          "type": {
+            "defined": {
+              "name": "CurveProtocolUnpaused"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "log_deal_closed",
+      "discriminator": [
+        213,
+        89,
+        13,
+        52,
+        222,
+        146,
+        123,
+        113
+      ],
+      "accounts": [
+        {
+          "name": "cpi_authority",
+          "docs": [
+            "CPI authority PDA from the calling program.",
+            "Must be derived from `SEED_CPI_AUTHORITY` using an authorized program's ID."
+          ],
+          "signer": true
+        }
+      ],
+      "args": [
+        {
+          "name": "_data",
+          "type": {
+            "defined": {
+              "name": "DealClosed"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "log_deal_created",
+      "discriminator": [
+        2,
+        176,
+        17,
+        97,
+        139,
+        83,
+        7,
+        82
+      ],
+      "accounts": [
+        {
+          "name": "cpi_authority",
+          "docs": [
+            "CPI authority PDA from the calling program.",
+            "Must be derived from `SEED_CPI_AUTHORITY` using an authorized program's ID."
+          ],
+          "signer": true
+        }
+      ],
+      "args": [
+        {
+          "name": "_data",
+          "type": {
+            "defined": {
+              "name": "DealCreated"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "log_deal_redeemed",
+      "discriminator": [
+        59,
+        67,
+        40,
+        95,
+        196,
+        7,
+        187,
+        34
+      ],
+      "accounts": [
+        {
+          "name": "cpi_authority",
+          "docs": [
+            "CPI authority PDA from the calling program.",
+            "Must be derived from `SEED_CPI_AUTHORITY` using an authorized program's ID."
+          ],
+          "signer": true
+        }
+      ],
+      "args": [
+        {
+          "name": "_data",
+          "type": {
+            "defined": {
+              "name": "DealRedeemed"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "log_deal_updated",
+      "discriminator": [
+        57,
+        238,
+        203,
+        252,
+        148,
+        25,
+        35,
+        40
+      ],
+      "accounts": [
+        {
+          "name": "cpi_authority",
+          "docs": [
+            "CPI authority PDA from the calling program.",
+            "Must be derived from `SEED_CPI_AUTHORITY` using an authorized program's ID."
+          ],
+          "signer": true
+        }
+      ],
+      "args": [
+        {
+          "name": "_data",
+          "type": {
+            "defined": {
+              "name": "DealUpdated"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "log_fee_config_authority_overridden",
+      "discriminator": [
+        165,
+        231,
+        9,
+        56,
+        47,
+        3,
+        49,
+        197
+      ],
+      "accounts": [
+        {
+          "name": "cpi_authority",
+          "docs": [
+            "CPI authority PDA from the calling program.",
+            "Must be derived from `SEED_CPI_AUTHORITY` using an authorized program's ID."
+          ],
+          "signer": true
+        }
+      ],
+      "args": [
+        {
+          "name": "_data",
+          "type": {
+            "defined": {
+              "name": "FeeConfigAuthorityOverridden"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "log_fee_config_revoked",
+      "discriminator": [
+        146,
+        150,
+        130,
+        48,
+        91,
+        87,
+        232,
+        173
+      ],
+      "accounts": [
+        {
+          "name": "cpi_authority",
+          "docs": [
+            "CPI authority PDA from the calling program.",
+            "Must be derived from `SEED_CPI_AUTHORITY` using an authorized program's ID."
+          ],
+          "signer": true
+        }
+      ],
+      "args": [
+        {
+          "name": "_data",
+          "type": {
+            "defined": {
+              "name": "FeeConfigRevoked"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "log_fee_config_updated",
+      "discriminator": [
+        95,
+        165,
+        250,
+        25,
+        230,
+        228,
+        100,
+        80
+      ],
+      "accounts": [
+        {
+          "name": "cpi_authority",
+          "docs": [
+            "CPI authority PDA from the calling program.",
+            "Must be derived from `SEED_CPI_AUTHORITY` using an authorized program's ID."
+          ],
+          "signer": true
+        }
+      ],
+      "args": [
+        {
+          "name": "_data",
+          "type": {
+            "defined": {
+              "name": "FeeConfigUpdated"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "log_fees_claimed",
+      "discriminator": [
+        242,
+        189,
+        86,
+        42,
+        87,
+        67,
+        179,
+        204
+      ],
+      "accounts": [
+        {
+          "name": "cpi_authority",
+          "docs": [
+            "CPI authority PDA from the calling program.",
+            "Must be derived from `SEED_CPI_AUTHORITY` using an authorized program's ID."
+          ],
+          "signer": true
+        }
+      ],
+      "args": [
+        {
+          "name": "_data",
+          "type": {
+            "defined": {
+              "name": "FeesClaimed"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "log_fees_distributed",
+      "discriminator": [
+        214,
+        170,
+        22,
+        0,
+        220,
+        114,
+        251,
+        37
+      ],
+      "accounts": [
+        {
+          "name": "cpi_authority",
+          "docs": [
+            "CPI authority PDA from the calling program.",
+            "Must be derived from `SEED_CPI_AUTHORITY` using an authorized program's ID."
+          ],
+          "signer": true
+        }
+      ],
+      "args": [
+        {
+          "name": "_data",
+          "type": {
+            "defined": {
+              "name": "FeesDistributed"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "log_lp_change",
+      "discriminator": [
+        142,
+        67,
+        148,
+        121,
+        205,
+        55,
+        246,
+        100
+      ],
+      "accounts": [
+        {
+          "name": "cpi_authority",
+          "docs": [
+            "CPI authority PDA from the calling program.",
+            "Must be derived from `SEED_CPI_AUTHORITY` using an authorized program's ID."
+          ],
+          "signer": true
+        }
+      ],
+      "args": [
+        {
+          "name": "_data",
+          "type": {
+            "defined": {
+              "name": "LpChangeEvent"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "log_migration_completed",
+      "discriminator": [
+        119,
+        235,
+        154,
+        176,
+        133,
+        159,
+        150,
+        53
+      ],
+      "accounts": [
+        {
+          "name": "cpi_authority",
+          "docs": [
+            "CPI authority PDA from the calling program.",
+            "Must be derived from `SEED_CPI_AUTHORITY` using an authorized program's ID."
+          ],
+          "signer": true
+        }
+      ],
+      "args": [
+        {
+          "name": "_data",
+          "type": {
+            "defined": {
+              "name": "MigrationCompleted"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "log_pool_created",
+      "discriminator": [
+        227,
+        207,
+        10,
+        252,
+        20,
+        155,
+        22,
+        221
+      ],
+      "accounts": [
+        {
+          "name": "cpi_authority",
+          "docs": [
+            "CPI authority PDA from the calling program.",
+            "Must be derived from `SEED_CPI_AUTHORITY` using an authorized program's ID."
+          ],
+          "signer": true
+        }
+      ],
+      "args": [
+        {
+          "name": "_data",
+          "type": {
+            "defined": {
+              "name": "PoolCreated"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "log_referral_withdrawn",
+      "discriminator": [
+        91,
+        65,
+        240,
+        232,
+        54,
+        203,
+        125,
+        119
+      ],
+      "accounts": [
+        {
+          "name": "cpi_authority",
+          "docs": [
+            "CPI authority PDA from the calling program.",
+            "Must be derived from `SEED_CPI_AUTHORITY` using an authorized program's ID."
+          ],
+          "signer": true
+        }
+      ],
+      "args": [
+        {
+          "name": "_data",
+          "type": {
+            "defined": {
+              "name": "ReferralRewardsWithdrawn"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "log_referrer_set",
+      "discriminator": [
+        135,
+        46,
+        202,
+        180,
+        141,
+        239,
+        160,
+        233
+      ],
+      "accounts": [
+        {
+          "name": "cpi_authority",
+          "docs": [
+            "CPI authority PDA from the calling program.",
+            "Must be derived from `SEED_CPI_AUTHORITY` using an authorized program's ID."
+          ],
+          "signer": true
+        }
+      ],
+      "args": [
+        {
+          "name": "_data",
+          "type": {
+            "defined": {
+              "name": "ReferrerSet"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "log_snapshot_taken",
+      "discriminator": [
+        193,
+        244,
+        251,
+        80,
+        65,
+        250,
+        152,
+        206
+      ],
+      "accounts": [
+        {
+          "name": "cpi_authority",
+          "docs": [
+            "CPI authority PDA from the calling program.",
+            "Must be derived from `SEED_CPI_AUTHORITY` using an authorized program's ID."
+          ],
+          "signer": true
+        }
+      ],
+      "args": [
+        {
+          "name": "_data",
+          "type": {
+            "defined": {
+              "name": "SnapshotTaken"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "log_swap",
+      "discriminator": [
+        197,
+        167,
+        128,
+        216,
+        16,
+        75,
+        196,
+        73
+      ],
+      "accounts": [
+        {
+          "name": "cpi_authority",
+          "docs": [
+            "CPI authority PDA from the calling program.",
+            "Must be derived from `SEED_CPI_AUTHORITY` using an authorized program's ID."
+          ],
+          "signer": true
+        }
+      ],
+      "args": [
+        {
+          "name": "_data",
+          "type": {
+            "defined": {
+              "name": "SwapEvent"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "log_token_created",
+      "discriminator": [
+        152,
+        109,
+        173,
+        215,
+        55,
+        165,
+        138,
+        8
+      ],
+      "accounts": [
+        {
+          "name": "cpi_authority",
+          "docs": [
+            "CPI authority PDA from the calling program.",
+            "Must be derived from `SEED_CPI_AUTHORITY` using an authorized program's ID."
+          ],
+          "signer": true
+        }
+      ],
+      "args": [
+        {
+          "name": "_data",
+          "type": {
+            "defined": {
+              "name": "TokenCreated"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "log_trade",
+      "discriminator": [
+        70,
+        253,
+        98,
+        112,
+        79,
+        171,
+        112,
+        145
+      ],
+      "accounts": [
+        {
+          "name": "cpi_authority",
+          "docs": [
+            "CPI authority PDA from the calling program.",
+            "Must be derived from `SEED_CPI_AUTHORITY` using an authorized program's ID."
+          ],
+          "signer": true
+        }
+      ],
+      "args": [
+        {
+          "name": "_data",
+          "type": {
+            "defined": {
+              "name": "TradeEvent"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "log_user_updated",
+      "discriminator": [
+        0,
+        88,
+        228,
+        169,
+        241,
+        23,
+        3,
+        244
+      ],
+      "accounts": [
+        {
+          "name": "cpi_authority",
+          "docs": [
+            "CPI authority PDA from the calling program.",
+            "Must be derived from `SEED_CPI_AUTHORITY` using an authorized program's ID."
+          ],
+          "signer": true
+        }
+      ],
+      "args": [
+        {
+          "name": "_data",
+          "type": {
+            "defined": {
+              "name": "UserUpdatedByAdmin"
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "errors": [
+    {
+      "code": 6000,
+      "name": "UnauthorizedCaller",
+      "msg": "Unauthorized caller: only authorized programs can emit events via CPI"
+    }
+  ],
+  "types": [
+    {
+      "name": "AmmBuybackExecuted",
+      "docs": [
+        "Event emitted when a buyback (buy-and-burn) is executed on an AMM pool."
+      ],
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "pool_id",
+            "docs": [
+              "The pool state PDA."
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "quote_amount_in",
+            "docs": [
+              "Amount of quote tokens used for the buyback."
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "base_amount_burned",
+            "docs": [
+              "Amount of base tokens burned."
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "base_mint",
+            "docs": [
+              "The base token mint."
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "quote_mint",
+            "docs": [
+              "The quote token mint."
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "executor",
+            "docs": [
+              "The address that triggered the buyback."
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "timestamp",
+            "docs": [
+              "Timestamp of the buyback."
+            ],
+            "type": "i64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "AmmProtocolPaused",
+      "docs": [
+        "Event emitted when the AMM protocol is paused."
+      ],
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "admin",
+            "docs": [
+              "The admin who paused the protocol."
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "timestamp",
+            "docs": [
+              "Timestamp of the pause."
+            ],
+            "type": "i64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "AmmProtocolUnpaused",
+      "docs": [
+        "Event emitted when the AMM protocol is unpaused."
+      ],
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "admin",
+            "docs": [
+              "The admin who unpaused the protocol."
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "timestamp",
+            "docs": [
+              "Timestamp of the unpause."
+            ],
+            "type": "i64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "BuyAmounts",
+      "docs": [
+        "Amounts for a buy trade (quote in, tokens out)."
+      ],
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "quote_amount_in",
+            "docs": [
+              "Quote amount in (SOL lamports or quote token)."
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "tokens_amount_out",
+            "docs": [
+              "Tokens received."
+            ],
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "CashbackEarned",
+      "docs": [
+        "Event emitted when a user earns cashback credits."
+      ],
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "user",
+            "docs": [
+              "The user earning cashback."
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "amount",
+            "docs": [
+              "Amount of cashback earned."
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "new_balance",
+            "docs": [
+              "New cashback balance after earning."
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "timestamp",
+            "docs": [
+              "Timestamp of the earning."
+            ],
+            "type": "i64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "CashbackModeActivated",
+      "docs": [
+        "Event emitted when a user activates cashback spending mode."
+      ],
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "user",
+            "docs": [
+              "The user activating cashback mode."
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "timestamp",
+            "docs": [
+              "Timestamp of activation."
+            ],
+            "type": "i64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "CashbackSpent",
+      "docs": [
+        "Event emitted when a user spends cashback credits."
+      ],
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "user",
+            "docs": [
+              "The user spending cashback."
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "amount",
+            "docs": [
+              "Amount of cashback spent."
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "remaining_balance",
+            "docs": [
+              "Remaining cashback balance after spending."
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "timestamp",
+            "docs": [
+              "Timestamp of the spending."
+            ],
+            "type": "i64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "CurveBuybackExecuted",
+      "docs": [
+        "Event emitted when a buyback is executed on a bonding curve."
+      ],
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "mint",
+            "docs": [
+              "The token mint."
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "quote_mint",
+            "docs": [
+              "Quote mint. None for native SOL curves."
+            ],
+            "type": {
+              "option": "pubkey"
+            }
+          },
+          {
+            "name": "quote_amount_in",
+            "docs": [
+              "Amount of quote tokens/SOL used for the buyback."
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "tokens_burned",
+            "docs": [
+              "Amount of tokens burned."
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "bonding_curve",
+            "docs": [
+              "The bonding curve PDA."
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "executor",
+            "docs": [
+              "The address that triggered the buyback."
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "timestamp",
+            "docs": [
+              "Timestamp of the buyback."
+            ],
+            "type": "i64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "CurveCompleted",
+      "docs": [
+        "Event emitted when a bonding curve is marked as complete (ready for migration)."
+      ],
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "mint",
+            "docs": [
+              "The token mint."
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "bonding_curve",
+            "docs": [
+              "The bonding curve PDA."
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "market_cap_usd",
+            "docs": [
+              "Market cap in USD at completion (6 decimals)."
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "sol_price_usd",
+            "docs": [
+              "SOL price in USD at completion (6 decimals)."
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "virtual_token_reserves",
+            "docs": [
+              "Virtual token reserves at completion."
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "virtual_quote_reserves",
+            "docs": [
+              "Virtual quote reserves (SOL) at completion."
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "real_token_reserves",
+            "docs": [
+              "Real token reserves at completion."
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "real_quote_reserves",
+            "docs": [
+              "Real quote reserves (SOL) at completion."
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "timestamp",
+            "docs": [
+              "Timestamp of completion."
+            ],
+            "type": "i64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "CurveProtocolPaused",
+      "docs": [
+        "Event emitted when the bonding curve protocol is paused."
+      ],
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "admin",
+            "docs": [
+              "The admin who paused the protocol."
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "timestamp",
+            "docs": [
+              "Timestamp of the pause."
+            ],
+            "type": "i64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "CurveProtocolUnpaused",
+      "docs": [
+        "Event emitted when the bonding curve protocol is unpaused."
+      ],
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "admin",
+            "docs": [
+              "The admin who unpaused the protocol."
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "timestamp",
+            "docs": [
+              "Timestamp of the unpause."
+            ],
+            "type": "i64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "DealClosed",
+      "docs": [
+        "Event emitted when a cashback deal is closed."
+      ],
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "owner",
+            "docs": [
+              "The deal owner."
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "redemption_count",
+            "docs": [
+              "Number of times the deal was redeemed."
+            ],
+            "type": "u32"
+          },
+          {
+            "name": "timestamp",
+            "docs": [
+              "Timestamp of closure."
+            ],
+            "type": "i64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "DealCreated",
+      "docs": [
+        "Event emitted when a cashback deal is created."
+      ],
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "owner",
+            "docs": [
+              "The deal owner."
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "cashback_multiplier_bps",
+            "docs": [
+              "Cashback multiplier in basis points."
+            ],
+            "type": "u16"
+          },
+          {
+            "name": "timestamp",
+            "docs": [
+              "Timestamp of creation."
+            ],
+            "type": "i64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "DealRedeemed",
+      "docs": [
+        "Event emitted when a user redeems a cashback deal."
+      ],
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "user",
+            "docs": [
+              "The user redeeming the deal."
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "deal_owner",
+            "docs": [
+              "The deal owner."
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "cashback_multiplier_bps",
+            "docs": [
+              "Cashback multiplier in basis points."
+            ],
+            "type": "u16"
+          },
+          {
+            "name": "timestamp",
+            "docs": [
+              "Timestamp of redemption."
+            ],
+            "type": "i64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "DealUpdated",
+      "docs": [
+        "Event emitted when a cashback deal is updated."
+      ],
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "owner",
+            "docs": [
+              "The deal owner."
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "old_multiplier_bps",
+            "docs": [
+              "Previous multiplier in basis points."
+            ],
+            "type": "u16"
+          },
+          {
+            "name": "new_multiplier_bps",
+            "docs": [
+              "New multiplier in basis points."
+            ],
+            "type": "u16"
+          },
+          {
+            "name": "timestamp",
+            "docs": [
+              "Timestamp of update."
+            ],
+            "type": "i64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "FeeConfigAuthorityOverridden",
+      "docs": [
+        "Event emitted when a fee configuration's update authority is overridden by admin."
+      ],
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "fee_config",
+            "docs": [
+              "The fee configuration PDA."
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "token_mint",
+            "docs": [
+              "The token mint this configuration applies to."
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "admin",
+            "docs": [
+              "The admin who performed the override."
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "old_authority",
+            "docs": [
+              "The previous update authority."
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "new_authority",
+            "docs": [
+              "The new update authority."
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "timestamp",
+            "docs": [
+              "Timestamp of the override."
+            ],
+            "type": "i64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "FeeConfigRevoked",
+      "docs": [
+        "Event emitted when a fee configuration is permanently revoked."
+      ],
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "fee_config",
+            "docs": [
+              "The fee configuration PDA."
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "token_mint",
+            "docs": [
+              "The token mint this configuration applies to."
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "revoker",
+            "docs": [
+              "The authority who revoked the configuration."
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "timestamp",
+            "docs": [
+              "Timestamp of the revocation."
+            ],
+            "type": "i64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "FeeConfigUpdateEventRecipient",
+      "docs": [
+        "Fee recipient for event emission. Mirrors `liquid_fees::FeeRecipient` without bytemuck deps."
+      ],
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "pubkey",
+            "docs": [
+              "Recipient public key."
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "basis_points",
+            "docs": [
+              "Share in basis points (sum must equal 10000)."
+            ],
+            "type": "u16"
+          }
+        ]
+      }
+    },
+    {
+      "name": "FeeConfigUpdated",
+      "docs": [
+        "Event emitted when a fee configuration is updated."
+      ],
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "fee_config",
+            "docs": [
+              "The fee configuration PDA."
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "token_mint",
+            "docs": [
+              "The token mint this configuration applies to."
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "authority",
+            "docs": [
+              "The authority who performed the update."
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "recipients",
+            "docs": [
+              "Fee recipients after the update."
+            ],
+            "type": {
+              "vec": {
+                "defined": {
+                  "name": "FeeConfigUpdateEventRecipient"
+                }
+              }
+            }
+          },
+          {
+            "name": "new_update_authority",
+            "docs": [
+              "The update authority after the update."
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "timestamp",
+            "docs": [
+              "Timestamp of the update."
+            ],
+            "type": "i64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "FeeMode",
+      "docs": [
+        "Fee mode for event emission. Mirrors `liquid_fees::FeeMode` without bytemuck deps."
+      ],
+      "repr": {
+        "kind": "rust"
+      },
+      "type": {
+        "kind": "enum",
+        "variants": [
+          {
+            "name": "Recipients"
+          },
+          {
+            "name": "Revoked"
+          }
+        ]
+      }
+    },
+    {
+      "name": "FeesClaimed",
+      "docs": [
+        "Event emitted when a recipient claims accumulated fees from their vault."
+      ],
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "mint",
+            "docs": [
+              "The mint of the claimed tokens. `Pubkey::default()` for native SOL."
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "amount",
+            "docs": [
+              "Amount claimed."
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "recipient",
+            "docs": [
+              "The recipient who claimed."
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "timestamp",
+            "docs": [
+              "Timestamp of the claim."
+            ],
+            "type": "i64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "FeesDistributed",
+      "docs": [
+        "Event emitted when accumulated fees are distributed to recipients."
+      ],
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "fee_config",
+            "docs": [
+              "The fee configuration PDA."
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "mint",
+            "docs": [
+              "The mint of the distributed tokens. `Pubkey::default()` for native SOL."
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "total_amount",
+            "docs": [
+              "Total amount distributed across all recipients."
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "recipients_count",
+            "docs": [
+              "Number of recipients that received fees."
+            ],
+            "type": "u8"
+          },
+          {
+            "name": "distributor",
+            "docs": [
+              "The address that triggered the distribution."
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "timestamp",
+            "docs": [
+              "Timestamp of the distribution."
+            ],
+            "type": "i64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "LpChangeEvent",
+      "docs": [
+        "Event emitted on LP deposit or withdraw."
+      ],
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "pool_id",
+            "docs": [
+              "The pool state PDA."
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "lp_amount_before",
+            "docs": [
+              "LP balance before change."
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "base_vault_before",
+            "docs": [
+              "Pool base vault balance before change."
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "quote_vault_before",
+            "docs": [
+              "Pool quote vault balance before change."
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "base_amount",
+            "docs": [
+              "Base amount deposited/withdrawn."
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "quote_amount",
+            "docs": [
+              "Quote amount deposited/withdrawn."
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "base_token_multiplier",
+            "docs": [
+              "ScaledUiAmount multiplier for the base token (1.0 if no extension)."
+            ],
+            "type": "f64"
+          },
+          {
+            "name": "base_transfer_fee",
+            "docs": [
+              "Transfer fee on base token."
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "quote_transfer_fee",
+            "docs": [
+              "Transfer fee on quote token."
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "change_type",
+            "docs": [
+              "0: deposit, 1: withdraw."
+            ],
+            "type": "u8"
+          },
+          {
+            "name": "user",
+            "docs": [
+              "The user who performed the deposit/withdraw."
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "timestamp",
+            "docs": [
+              "Timestamp of the LP change."
+            ],
+            "type": "i64"
+          },
+          {
+            "name": "lp_supply",
+            "docs": [
+              "Total LP supply after the change."
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "base_mint",
+            "docs": [
+              "The base token mint."
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "quote_mint",
+            "docs": [
+              "The quote token mint."
+            ],
+            "type": "pubkey"
+          }
+        ]
+      }
+    },
+    {
+      "name": "MigrationCompleted",
+      "docs": [
+        "Event emitted after a successful migration from bonding curve to AMM."
+      ],
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "mint",
+            "docs": [
+              "The token mint that was migrated."
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "quote_mint",
+            "docs": [
+              "Quote mint. None for native SOL migrations (WSOL used in AMM)."
+            ],
+            "type": {
+              "option": "pubkey"
+            }
+          },
+          {
+            "name": "bonding_curve",
+            "docs": [
+              "The bonding curve that was migrated."
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "amm_pool",
+            "docs": [
+              "The AMM pool state address."
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "token_amount",
+            "docs": [
+              "Amount of tokens migrated to AMM."
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "quote_amount",
+            "docs": [
+              "Amount of quote migrated to AMM (SOL or quote token)."
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "migrator",
+            "docs": [
+              "The address that triggered the migration."
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "creator",
+            "docs": [
+              "The creator of the original bonding curve."
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "timestamp",
+            "docs": [
+              "Timestamp of the migration."
+            ],
+            "type": "i64"
+          },
+          {
+            "name": "multiplier",
+            "docs": [
+              "The ScaledUiAmount multiplier applied at migration."
+            ],
+            "type": "f64"
+          },
+          {
+            "name": "lp_mint",
+            "docs": [
+              "The LP mint address created during migration."
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "lp_tokens_minted",
+            "docs": [
+              "Total LP tokens minted."
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "market_cap_usd",
+            "docs": [
+              "Market cap in USD at migration (6 decimals)."
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "sol_price_usd",
+            "docs": [
+              "SOL price in USD at migration (6 decimals). None for stable curves."
+            ],
+            "type": {
+              "option": "u64"
+            }
+          },
+          {
+            "name": "buyback_amount_migrated",
+            "docs": [
+              "Amount of buyback funds migrated to the AMM buyback vault (0 if none)."
+            ],
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "PoolCreated",
+      "docs": [
+        "Event emitted when a new AMM pool is created."
+      ],
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "pool_id",
+            "docs": [
+              "The pool state PDA."
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "base_mint",
+            "docs": [
+              "The base token mint."
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "quote_mint",
+            "docs": [
+              "The quote token mint."
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "creator",
+            "docs": [
+              "The creator of the pool."
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "initial_base_amount",
+            "docs": [
+              "Initial base token amount deposited."
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "initial_quote_amount",
+            "docs": [
+              "Initial quote token amount deposited."
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "lp_tokens_minted",
+            "docs": [
+              "LP tokens minted."
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "lp_mint",
+            "docs": [
+              "The LP mint address."
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "timestamp",
+            "docs": [
+              "Timestamp of pool creation."
+            ],
+            "type": "i64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "ReferralRewardsWithdrawn",
+      "docs": [
+        "Event emitted when referral rewards are withdrawn."
+      ],
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "user",
+            "docs": [
+              "The user who withdrew rewards."
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "mint",
+            "docs": [
+              "Mint of the withdrawn token. None for native SOL."
+            ],
+            "type": {
+              "option": "pubkey"
+            }
+          },
+          {
+            "name": "amount",
+            "docs": [
+              "Amount withdrawn."
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "timestamp",
+            "docs": [
+              "Timestamp of the withdrawal."
+            ],
+            "type": "i64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "ReferrerSet",
+      "docs": [
+        "Event emitted when a user sets their referrer."
+      ],
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "user",
+            "docs": [
+              "The user setting the referrer."
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "referrer",
+            "docs": [
+              "The referrer address."
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "timestamp",
+            "docs": [
+              "Timestamp of the referral."
+            ],
+            "type": "i64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "SellAmounts",
+      "docs": [
+        "Amounts for a sell trade (tokens in, quote out)."
+      ],
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "tokens_amount_in",
+            "docs": [
+              "Tokens sold."
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "quote_amount_out",
+            "docs": [
+              "Quote amount out (SOL lamports or quote token)."
+            ],
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "SnapshotTaken",
+      "docs": [
+        "Event emitted when a user volume snapshot is taken."
+      ],
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "user",
+            "docs": [
+              "The user whose snapshot was taken."
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "index",
+            "docs": [
+              "Snapshot index."
+            ],
+            "type": "u32"
+          },
+          {
+            "name": "usd_volume",
+            "docs": [
+              "USD volume at snapshot time."
+            ],
+            "type": "u128"
+          },
+          {
+            "name": "token_volume",
+            "docs": [
+              "Token volume at snapshot time."
+            ],
+            "type": "u128"
+          },
+          {
+            "name": "timestamp",
+            "docs": [
+              "Timestamp of snapshot."
+            ],
+            "type": "i64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "SwapEvent",
+      "docs": [
+        "Event emitted on an AMM swap."
+      ],
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "pool_id",
+            "docs": [
+              "The pool state PDA."
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "base_mint",
+            "docs": [
+              "The base (token) mint."
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "quote_mint",
+            "docs": [
+              "The quote mint."
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "trade_amounts",
+            "docs": [
+              "Trade in and out amounts."
+            ],
+            "type": {
+              "defined": {
+                "name": "TradeAmounts"
+              }
+            }
+          },
+          {
+            "name": "base_vault_before",
+            "docs": [
+              "Pool base vault balance before trade."
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "quote_vault_before",
+            "docs": [
+              "Pool quote vault balance before trade."
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "base_transfer_fee",
+            "docs": [
+              "Transfer fee on base token."
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "quote_transfer_fee",
+            "docs": [
+              "Transfer fee on quote token."
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "lp_fee",
+            "docs": [
+              "LP fee amount."
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "creator_fee",
+            "docs": [
+              "Creator fee amount."
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "protocol_fee",
+            "docs": [
+              "Protocol fee amount (after cashback deduction)."
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "lp_fee_bps",
+            "docs": [
+              "LP fee basis points."
+            ],
+            "type": "u16"
+          },
+          {
+            "name": "creator_fee_bps",
+            "docs": [
+              "Creator fee basis points."
+            ],
+            "type": "u16"
+          },
+          {
+            "name": "protocol_fee_bps",
+            "docs": [
+              "Protocol fee basis points."
+            ],
+            "type": "u16"
+          },
+          {
+            "name": "cashback",
+            "docs": [
+              "Cashback earned (positive) or spent (negative) by the user."
+            ],
+            "type": "i64"
+          },
+          {
+            "name": "cashback_bps",
+            "docs": [
+              "Cashback basis points from config."
+            ],
+            "type": "u16"
+          },
+          {
+            "name": "creator_fee_mode",
+            "docs": [
+              "Creator fee routing mode."
+            ],
+            "type": {
+              "defined": {
+                "name": "FeeMode"
+              }
+            }
+          },
+          {
+            "name": "fee_recipient",
+            "docs": [
+              "Fee recipient."
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "user",
+            "docs": [
+              "User who performed the swap."
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "creator",
+            "docs": [
+              "Creator of the token."
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "total_quote_volume",
+            "docs": [
+              "Cumulative quote volume after the trade."
+            ],
+            "type": "u128"
+          },
+          {
+            "name": "total_token_volume",
+            "docs": [
+              "Cumulative token volume after the trade."
+            ],
+            "type": "u128"
+          },
+          {
+            "name": "timestamp",
+            "docs": [
+              "Timestamp of the trade."
+            ],
+            "type": "i64"
+          },
+          {
+            "name": "sol_price_usd",
+            "docs": [
+              "SOL/USD price at trade time (6 decimals)."
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "market_cap_usd",
+            "docs": [
+              "Current market cap in USD (6 decimals)."
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "buyback_vault_balance",
+            "docs": [
+              "Buyback vault balance after the trade (quote token amount)."
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "base_ui_amount_multiplier",
+            "docs": [
+              "ScaledUiAmount multiplier for the base token (1.0 if no extension)."
+            ],
+            "type": "f64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "TokenCreated",
+      "docs": [
+        "Event emitted after a successful token creation on a bonding curve."
+      ],
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "name",
+            "docs": [
+              "Name of the token."
+            ],
+            "type": "string"
+          },
+          {
+            "name": "symbol",
+            "docs": [
+              "Symbol of the token."
+            ],
+            "type": "string"
+          },
+          {
+            "name": "uri",
+            "docs": [
+              "URI of the token metadata."
+            ],
+            "type": "string"
+          },
+          {
+            "name": "mint",
+            "docs": [
+              "Mint address of the new token."
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "quote_mint",
+            "docs": [
+              "Quote mint for the curve. None for native SOL curves."
+            ],
+            "type": {
+              "option": "pubkey"
+            }
+          },
+          {
+            "name": "bonding_curve",
+            "docs": [
+              "Bonding curve PDA address."
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "creator",
+            "docs": [
+              "Creator of the token."
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "creator_referrer",
+            "docs": [
+              "Creator's referrer address (earns creator_referral_fee). None if no referrer."
+            ],
+            "type": {
+              "option": "pubkey"
+            }
+          },
+          {
+            "name": "initial_virtual_reserve_usd",
+            "docs": [
+              "Initial virtual reserves in USD (6 decimals)."
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "initial_virtual_token_reserves",
+            "docs": [
+              "Initial virtual token reserves."
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "initial_real_token_reserves",
+            "docs": [
+              "Initial real token reserves."
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "total_token_supply",
+            "docs": [
+              "Total token supply."
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "token_program",
+            "docs": [
+              "Token program ID."
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "sol_price_usd",
+            "docs": [
+              "SOL price in USD at creation (6 decimals). None for stable curves."
+            ],
+            "type": {
+              "option": "u64"
+            }
+          },
+          {
+            "name": "timestamp",
+            "docs": [
+              "Timestamp of creation."
+            ],
+            "type": "i64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "TradeAmounts",
+      "docs": [
+        "Trade amount variants for bonding curve and AMM trades."
+      ],
+      "type": {
+        "kind": "enum",
+        "variants": [
+          {
+            "name": "Buy",
+            "fields": [
+              {
+                "defined": {
+                  "name": "BuyAmounts"
+                }
+              }
+            ]
+          },
+          {
+            "name": "Sell",
+            "fields": [
+              {
+                "defined": {
+                  "name": "SellAmounts"
+                }
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "TradeEvent",
+      "docs": [
+        "Event emitted after a successful bonding curve trade."
+      ],
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "mint",
+            "docs": [
+              "Mint of the token traded."
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "bonding_curve",
+            "docs": [
+              "The bonding curve PDA address."
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "quote_mint",
+            "docs": [
+              "Quote mint. None for native SOL trades."
+            ],
+            "type": {
+              "option": "pubkey"
+            }
+          },
+          {
+            "name": "trade_amounts",
+            "docs": [
+              "Trade in and out amounts."
+            ],
+            "type": {
+              "defined": {
+                "name": "TradeAmounts"
+              }
+            }
+          },
+          {
+            "name": "cashback",
+            "docs": [
+              "Cashback earned (positive) or spent (negative) by the user."
+            ],
+            "type": "i64"
+          },
+          {
+            "name": "cashback_bps",
+            "docs": [
+              "Cashback fee basis points."
+            ],
+            "type": "u16"
+          },
+          {
+            "name": "creator_fee",
+            "docs": [
+              "Creator fee paid."
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "creator_fee_bps",
+            "docs": [
+              "Creator fee basis points."
+            ],
+            "type": "u16"
+          },
+          {
+            "name": "protocol_fee",
+            "docs": [
+              "Protocol fee paid."
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "protocol_fee_bps",
+            "docs": [
+              "Protocol fee basis points."
+            ],
+            "type": "u16"
+          },
+          {
+            "name": "fee_recipient",
+            "docs": [
+              "Fee recipient."
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "creator_referral_fee",
+            "docs": [
+              "Creator referral fee paid."
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "creator_referral_fee_bps",
+            "docs": [
+              "Creator referral fee basis points."
+            ],
+            "type": "u16"
+          },
+          {
+            "name": "trader_referral_fee",
+            "docs": [
+              "Trader referral fee paid."
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "trader_referral_fee_bps",
+            "docs": [
+              "Trader referral fee basis points."
+            ],
+            "type": "u16"
+          },
+          {
+            "name": "creator_referrer",
+            "docs": [
+              "Creator's referrer address (earns creator_referral_fee). None if no referrer."
+            ],
+            "type": {
+              "option": "pubkey"
+            }
+          },
+          {
+            "name": "trader_referrer",
+            "docs": [
+              "Trader's referrer address (earns trader_referral_fee). None if no referrer."
+            ],
+            "type": {
+              "option": "pubkey"
+            }
+          },
+          {
+            "name": "user",
+            "docs": [
+              "User who performed the trade."
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "creator",
+            "docs": [
+              "Creator of the token."
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "creator_fee_mode",
+            "docs": [
+              "Creator fee mode."
+            ],
+            "type": {
+              "defined": {
+                "name": "FeeMode"
+              }
+            }
+          },
+          {
+            "name": "virtual_token_reserves",
+            "docs": [
+              "Virtual token reserves after the trade."
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "virtual_quote_reserves",
+            "docs": [
+              "Virtual quote reserves after the trade (SOL lamports or quote token amount)."
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "real_token_reserves",
+            "docs": [
+              "Real token reserves after the trade."
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "real_quote_reserves",
+            "docs": [
+              "Real quote reserves after the trade (SOL lamports or quote token amount)."
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "total_quote_volume",
+            "docs": [
+              "Total quote volume (SOL or quote token)."
+            ],
+            "type": "u128"
+          },
+          {
+            "name": "total_token_volume",
+            "docs": [
+              "Token volume after the trade."
+            ],
+            "type": "u128"
+          },
+          {
+            "name": "market_cap_usd",
+            "docs": [
+              "Current market cap in USD (6 decimals)."
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "sol_price_usd",
+            "docs": [
+              "SOL/USD price at trade time (6 decimals). None for stable curves."
+            ],
+            "type": {
+              "option": "u64"
+            }
+          },
+          {
+            "name": "buyback_vault_balance",
+            "docs": [
+              "Buyback vault balance after the trade (lamports for native, token amount for stable)."
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "is_curve_complete",
+            "docs": [
+              "Whether the curve is complete (ready for migration) after this trade."
+            ],
+            "type": "bool"
+          },
+          {
+            "name": "timestamp",
+            "docs": [
+              "Timestamp of the trade."
+            ],
+            "type": "i64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "UserUpdatedByAdmin",
+      "docs": [
+        "Event emitted when an admin updates a user's state."
+      ],
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "user",
+            "docs": [
+              "The user whose state was updated."
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "admin",
+            "docs": [
+              "The admin who performed the update."
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "snapshot_index",
+            "docs": [
+              "The snapshot index after update."
+            ],
+            "type": "u32"
+          },
+          {
+            "name": "timestamp",
+            "docs": [
+              "Timestamp of update."
+            ],
+            "type": "i64"
+          }
+        ]
+      }
+    }
+  ]
+}
