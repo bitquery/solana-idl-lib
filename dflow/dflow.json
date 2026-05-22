@@ -1,0 +1,3134 @@
+{
+  "address": "DF1ow4tspfHX9JwWJsAb9epbkA8hmpSEAtxXy1V27QBH",
+  "metadata": {
+    "name": "dflow",
+    "version": "0.1.0",
+    "spec": "0.1.0",
+    "description": "DFlow Aggregator program"
+  },
+  "instructions": [
+    {
+      "name": "close_order",
+      "docs": [
+        "Closes an order, returning tokens from the order vault"
+      ],
+      "discriminator": [
+        90,
+        103,
+        209,
+        28,
+        7,
+        63,
+        168,
+        4
+      ],
+      "accounts": [
+        {
+          "name": "order",
+          "writable": true
+        },
+        {
+          "name": "order_vault",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  111,
+                  114,
+                  100,
+                  101,
+                  114,
+                  95,
+                  118,
+                  97,
+                  117,
+                  108,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "order"
+              }
+            ]
+          }
+        },
+        {
+          "name": "return_input_token_account",
+          "docs": [
+            "Account to which leftover tokens in the order vault should be returned."
+          ],
+          "writable": true,
+          "relations": [
+            "order"
+          ]
+        },
+        {
+          "name": "return_rent_to",
+          "docs": [
+            "Account to which rent for the order account and vault should be returned."
+          ],
+          "writable": true,
+          "relations": [
+            "order"
+          ]
+        },
+        {
+          "name": "closer",
+          "docs": [
+            "Account that is authorized to close the order"
+          ],
+          "signer": true
+        },
+        {
+          "name": "token_program",
+          "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "create_referral_token_account_idempotent",
+      "docs": [
+        "Create a referral token account if it doesn't already exist"
+      ],
+      "discriminator": [
+        46,
+        232,
+        41,
+        144,
+        85,
+        37,
+        170,
+        175
+      ],
+      "accounts": [
+        {
+          "name": "payer",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "project"
+        },
+        {
+          "name": "referral_account"
+        },
+        {
+          "name": "referral_token_account",
+          "docs": [
+            "The referral token account to create. This is a PDA of the Referral program whose seeds are",
+            "[b\"referral_ata\", referral_account, mint]."
+          ],
+          "writable": true
+        },
+        {
+          "name": "mint"
+        },
+        {
+          "name": "system_program"
+        },
+        {
+          "name": "token_program"
+        },
+        {
+          "name": "referral_program"
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "fill_order",
+      "docs": [
+        "Fills an order, closing the order after filling it"
+      ],
+      "discriminator": [
+        232,
+        122,
+        115,
+        25,
+        199,
+        143,
+        136,
+        162
+      ],
+      "accounts": [
+        {
+          "name": "order",
+          "writable": true
+        },
+        {
+          "name": "order_vault",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  111,
+                  114,
+                  100,
+                  101,
+                  114,
+                  95,
+                  118,
+                  97,
+                  117,
+                  108,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "order"
+              }
+            ]
+          }
+        },
+        {
+          "name": "output_token_account",
+          "docs": [
+            "Account to which output from the fill should be sent."
+          ],
+          "writable": true,
+          "relations": [
+            "order"
+          ]
+        },
+        {
+          "name": "return_input_token_account",
+          "docs": [
+            "Account to which leftover tokens in the order vault should be returned."
+          ],
+          "writable": true,
+          "relations": [
+            "order"
+          ]
+        },
+        {
+          "name": "return_rent_to",
+          "docs": [
+            "Account to which rent for the order account and vault should be returned."
+          ],
+          "writable": true,
+          "relations": [
+            "order"
+          ]
+        },
+        {
+          "name": "filler_input_token_account",
+          "writable": true
+        },
+        {
+          "name": "input_mint",
+          "docs": [
+            "Input mint for the swap. Must be specified if the order inputs a mint for which the filler's",
+            "associated token account doesn't exist."
+          ],
+          "optional": true
+        },
+        {
+          "name": "filler_output_token_account",
+          "writable": true
+        },
+        {
+          "name": "output_mint",
+          "docs": [
+            "Output mint for the swap. Must be specified if the order outputs native SOL or a mint for",
+            "which the filler's associated token account doesn't exist."
+          ],
+          "optional": true
+        },
+        {
+          "name": "filler",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "token_program",
+          "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+        },
+        {
+          "name": "associated_token_program",
+          "address": "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL"
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        },
+        {
+          "name": "event_authority",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  95,
+                  95,
+                  101,
+                  118,
+                  101,
+                  110,
+                  116,
+                  95,
+                  97,
+                  117,
+                  116,
+                  104,
+                  111,
+                  114,
+                  105,
+                  116,
+                  121
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "program"
+        }
+      ],
+      "args": [
+        {
+          "name": "params",
+          "type": {
+            "defined": {
+              "name": "FillOrderParams"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "open_order",
+      "docs": [
+        "Opens an order, escrowing the input tokens in the order vault"
+      ],
+      "discriminator": [
+        206,
+        88,
+        88,
+        143,
+        38,
+        136,
+        50,
+        224
+      ],
+      "accounts": [
+        {
+          "name": "order",
+          "docs": [
+            "Order account that the instruction will create to store the order details"
+          ],
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  111,
+                  114,
+                  100,
+                  101,
+                  114
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "return_input_token_account"
+              },
+              {
+                "kind": "arg",
+                "path": "params.order_account_id"
+              }
+            ]
+          }
+        },
+        {
+          "name": "order_vault",
+          "docs": [
+            "Token account that the instruction will create to escrow the input tokens for the order"
+          ],
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  111,
+                  114,
+                  100,
+                  101,
+                  114,
+                  95,
+                  118,
+                  97,
+                  117,
+                  108,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "order"
+              }
+            ]
+          }
+        },
+        {
+          "name": "input_token_account",
+          "docs": [
+            "Token account from which input tokens should be withdrawn to fund the order"
+          ],
+          "writable": true
+        },
+        {
+          "name": "output_token_account",
+          "docs": [
+            "Account to which output from the fill should be sent. If the order specifies that it should",
+            "output native SOL, then this should be the user's wallet, although any account is allowed.",
+            "If the order doesn't specify that it should output native SOL, then this must be an SPL",
+            "token account, and the token account's mint determines the order's output mint."
+          ]
+        },
+        {
+          "name": "return_input_token_account",
+          "docs": [
+            "Account to which leftover tokens in the order vault should be returned when the order is",
+            "filled or closed. If the input is native SOL, this should be the user's wallet, although any",
+            "account is allowed. If the input is wrapped SOL or an SPL token, this must be an SPL token",
+            "account for the input mint."
+          ]
+        },
+        {
+          "name": "input_mint"
+        },
+        {
+          "name": "user_token_authority",
+          "docs": [
+            "Authority of the input token account"
+          ],
+          "signer": true
+        },
+        {
+          "name": "fee_payer",
+          "docs": [
+            "Account that pays the fee budget for the order"
+          ],
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "fee_receiver",
+          "docs": [
+            "Account that receives the fee budget funds"
+          ],
+          "writable": true
+        },
+        {
+          "name": "rent_depositor",
+          "docs": [
+            "Depositor for the order account and vault account rent"
+          ],
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "token_program",
+          "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        },
+        {
+          "name": "rent",
+          "address": "SysvarRent111111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "params",
+          "type": {
+            "defined": {
+              "name": "OpenOrderParams"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "swap",
+      "docs": [
+        "Executes a token swap"
+      ],
+      "discriminator": [
+        248,
+        198,
+        158,
+        145,
+        225,
+        117,
+        135,
+        200
+      ],
+      "accounts": [
+        {
+          "name": "token_program",
+          "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+        },
+        {
+          "name": "associated_token_program",
+          "address": "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL"
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        },
+        {
+          "name": "user_token_authority",
+          "signer": true
+        },
+        {
+          "name": "event_authority",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  95,
+                  95,
+                  101,
+                  118,
+                  101,
+                  110,
+                  116,
+                  95,
+                  97,
+                  117,
+                  116,
+                  104,
+                  111,
+                  114,
+                  105,
+                  116,
+                  121
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "program"
+        }
+      ],
+      "args": [
+        {
+          "name": "params",
+          "type": {
+            "defined": {
+              "name": "SwapParams"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "swap2",
+      "docs": [
+        "Executes a token swap with a slippage fee"
+      ],
+      "discriminator": [
+        65,
+        75,
+        63,
+        76,
+        235,
+        91,
+        91,
+        136
+      ],
+      "accounts": [
+        {
+          "name": "token_program",
+          "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+        },
+        {
+          "name": "associated_token_program",
+          "address": "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL"
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        },
+        {
+          "name": "user_token_authority",
+          "signer": true
+        },
+        {
+          "name": "event_authority",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  95,
+                  95,
+                  101,
+                  118,
+                  101,
+                  110,
+                  116,
+                  95,
+                  97,
+                  117,
+                  116,
+                  104,
+                  111,
+                  114,
+                  105,
+                  116,
+                  121
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "program"
+        }
+      ],
+      "args": [
+        {
+          "name": "params",
+          "type": {
+            "defined": {
+              "name": "Swap2Params"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "swap2_with_destination",
+      "docs": [
+        "Executes a token swap with a slippage fee. Outputs to the specified destination account."
+      ],
+      "discriminator": [
+        95,
+        123,
+        213,
+        246,
+        122,
+        1,
+        86,
+        231
+      ],
+      "accounts": [
+        {
+          "name": "token_program",
+          "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+        },
+        {
+          "name": "associated_token_program",
+          "address": "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL"
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        },
+        {
+          "name": "user_token_authority",
+          "signer": true
+        },
+        {
+          "name": "destination_token_account",
+          "writable": true
+        },
+        {
+          "name": "destination_token_authority"
+        },
+        {
+          "name": "destination_mint"
+        },
+        {
+          "name": "event_authority",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  95,
+                  95,
+                  101,
+                  118,
+                  101,
+                  110,
+                  116,
+                  95,
+                  97,
+                  117,
+                  116,
+                  104,
+                  111,
+                  114,
+                  105,
+                  116,
+                  121
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "program"
+        }
+      ],
+      "args": [
+        {
+          "name": "params",
+          "type": {
+            "defined": {
+              "name": "Swap2Params"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "swap2_with_destination_native",
+      "docs": [
+        "Executes a token swap with a slippage fee. Outputs native SOL to the specified destination",
+        "account by unwrapping WSOL."
+      ],
+      "discriminator": [
+        222,
+        100,
+        184,
+        146,
+        186,
+        196,
+        105,
+        165
+      ],
+      "accounts": [
+        {
+          "name": "token_program",
+          "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+        },
+        {
+          "name": "associated_token_program",
+          "address": "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL"
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        },
+        {
+          "name": "user_token_authority",
+          "signer": true
+        },
+        {
+          "name": "destination_account",
+          "docs": [
+            "The destination account that will receive the native SOL"
+          ],
+          "writable": true
+        },
+        {
+          "name": "event_authority",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  95,
+                  95,
+                  101,
+                  118,
+                  101,
+                  110,
+                  116,
+                  95,
+                  97,
+                  117,
+                  116,
+                  104,
+                  111,
+                  114,
+                  105,
+                  116,
+                  121
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "program"
+        }
+      ],
+      "args": [
+        {
+          "name": "params",
+          "type": {
+            "defined": {
+              "name": "Swap2Params"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "swap_with_destination",
+      "docs": [
+        "Executes a token swap. Outputs to the specified destination account."
+      ],
+      "discriminator": [
+        168,
+        172,
+        24,
+        77,
+        197,
+        156,
+        135,
+        101
+      ],
+      "accounts": [
+        {
+          "name": "token_program",
+          "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+        },
+        {
+          "name": "associated_token_program",
+          "address": "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL"
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        },
+        {
+          "name": "user_token_authority",
+          "signer": true
+        },
+        {
+          "name": "destination_token_account",
+          "writable": true
+        },
+        {
+          "name": "destination_token_authority"
+        },
+        {
+          "name": "destination_mint"
+        },
+        {
+          "name": "event_authority",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  95,
+                  95,
+                  101,
+                  118,
+                  101,
+                  110,
+                  116,
+                  95,
+                  97,
+                  117,
+                  116,
+                  104,
+                  111,
+                  114,
+                  105,
+                  116,
+                  121
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "program"
+        }
+      ],
+      "args": [
+        {
+          "name": "params",
+          "type": {
+            "defined": {
+              "name": "SwapParams"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "swap_with_destination_native",
+      "docs": [
+        "Executes a token swap. Outputs native SOL to the specified destination account by unwrapping",
+        "WSOL."
+      ],
+      "discriminator": [
+        205,
+        77,
+        127,
+        108,
+        241,
+        32,
+        196,
+        195
+      ],
+      "accounts": [
+        {
+          "name": "token_program",
+          "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+        },
+        {
+          "name": "associated_token_program",
+          "address": "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL"
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        },
+        {
+          "name": "user_token_authority",
+          "signer": true
+        },
+        {
+          "name": "destination_account",
+          "docs": [
+            "The destination account that will receive the native SOL"
+          ],
+          "writable": true
+        },
+        {
+          "name": "event_authority",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  95,
+                  95,
+                  101,
+                  118,
+                  101,
+                  110,
+                  116,
+                  95,
+                  97,
+                  117,
+                  116,
+                  104,
+                  111,
+                  114,
+                  105,
+                  116,
+                  121
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "program"
+        }
+      ],
+      "args": [
+        {
+          "name": "params",
+          "type": {
+            "defined": {
+              "name": "SwapParams"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "transfer_fee",
+      "docs": [
+        "Transfer an SPL token fee if the receiving account can receive it"
+      ],
+      "discriminator": [
+        129,
+        164,
+        196,
+        21,
+        177,
+        48,
+        180,
+        162
+      ],
+      "accounts": [
+        {
+          "name": "from"
+        },
+        {
+          "name": "to"
+        },
+        {
+          "name": "authority"
+        },
+        {
+          "name": "token_program"
+        },
+        {
+          "name": "event_authority",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  95,
+                  95,
+                  101,
+                  118,
+                  101,
+                  110,
+                  116,
+                  95,
+                  97,
+                  117,
+                  116,
+                  104,
+                  111,
+                  114,
+                  105,
+                  116,
+                  121
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "program"
+        }
+      ],
+      "args": [
+        {
+          "name": "amount",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "transfer_sol",
+      "docs": [
+        "Transfer native SOL from one account to another"
+      ],
+      "discriminator": [
+        78,
+        10,
+        236,
+        247,
+        109,
+        117,
+        21,
+        76
+      ],
+      "accounts": [
+        {
+          "name": "from"
+        },
+        {
+          "name": "to"
+        },
+        {
+          "name": "system_program"
+        }
+      ],
+      "args": [
+        {
+          "name": "lamports",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "transfer_to_sponsor",
+      "docs": [
+        "Transfer an SPL token to a sponsor's token account, creating the sponsor's token account if",
+        "necessary."
+      ],
+      "discriminator": [
+        155,
+        179,
+        130,
+        151,
+        196,
+        139,
+        253,
+        163
+      ],
+      "accounts": [
+        {
+          "name": "user_token_authority"
+        },
+        {
+          "name": "user_token_account"
+        },
+        {
+          "name": "sponsor"
+        },
+        {
+          "name": "sponsor_token_account"
+        },
+        {
+          "name": "mint"
+        },
+        {
+          "name": "token_program"
+        },
+        {
+          "name": "associated_token_program"
+        },
+        {
+          "name": "system_program"
+        }
+      ],
+      "args": [
+        {
+          "name": "amount",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "unwrap_sol",
+      "docs": [
+        "Unwrap all SOL in the provided wrapped SOL token account"
+      ],
+      "discriminator": [
+        99,
+        40,
+        14,
+        105,
+        45,
+        107,
+        172,
+        201
+      ],
+      "accounts": [
+        {
+          "name": "owner"
+        },
+        {
+          "name": "wrapped_sol_associated_token_account"
+        },
+        {
+          "name": "token_program"
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "wrap_sol",
+      "docs": [
+        "Wrap SOL, creating a wrapped SOL associated token account if necessary"
+      ],
+      "discriminator": [
+        47,
+        62,
+        155,
+        172,
+        131,
+        205,
+        37,
+        201
+      ],
+      "accounts": [
+        {
+          "name": "from"
+        },
+        {
+          "name": "wrapped_sol_associated_token_account"
+        },
+        {
+          "name": "native_mint"
+        },
+        {
+          "name": "token_program"
+        },
+        {
+          "name": "associated_token_program"
+        },
+        {
+          "name": "system_program"
+        }
+      ],
+      "args": [
+        {
+          "name": "lamports",
+          "type": "u64"
+        }
+      ]
+    }
+  ],
+  "accounts": [
+    {
+      "name": "Order",
+      "discriminator": [
+        134,
+        173,
+        223,
+        185,
+        77,
+        86,
+        28,
+        51
+      ]
+    }
+  ],
+  "events": [
+    {
+      "name": "FeeEvent",
+      "discriminator": [
+        73,
+        79,
+        78,
+        127,
+        184,
+        213,
+        13,
+        220
+      ]
+    },
+    {
+      "name": "SwapEvent",
+      "discriminator": [
+        64,
+        198,
+        205,
+        232,
+        38,
+        8,
+        113,
+        226
+      ]
+    }
+  ],
+  "errors": [
+    {
+      "code": 15000,
+      "name": "SwapCpiFailed",
+      "msg": "Swap CPI failed"
+    },
+    {
+      "code": 15001,
+      "name": "SlippageLimitExceeded",
+      "msg": "Slippage limit exceeded"
+    },
+    {
+      "code": 15002,
+      "name": "FeeAccountNotSpecified",
+      "msg": "Fee account must be specified when platform_fee_bps is nonzero"
+    },
+    {
+      "code": 15003,
+      "name": "InvalidFeeAccountOwner",
+      "msg": "Invalid fee account owner"
+    },
+    {
+      "code": 15004,
+      "name": "InputAmountIsZero",
+      "msg": "input_amount must be greater than 0"
+    },
+    {
+      "code": 15005,
+      "name": "OutputTokenAccountMismatch",
+      "msg": "Swap output token account did not match the order's output_token_account"
+    },
+    {
+      "code": 15006,
+      "name": "OrderNotFillableAfterLastFillableSlot",
+      "msg": "Order's last_fillable_slot has passed"
+    },
+    {
+      "code": 15007,
+      "name": "FillOrderNotAuthorized",
+      "msg": "filler is not authorized to fill the order"
+    },
+    {
+      "code": 15008,
+      "name": "MintAccountNotSpecified",
+      "msg": "Instruction must specify mint account"
+    },
+    {
+      "code": 15009,
+      "name": "ReturnInputTokenAccountMismatch",
+      "msg": "return_input_token_account did not match the order's return_input_token_account"
+    },
+    {
+      "code": 15010,
+      "name": "ReturnRentToMismatch",
+      "msg": "return_rent_to did not match the order's return_rent_to"
+    },
+    {
+      "code": 15011,
+      "name": "CloseOrderNotAuthorized",
+      "msg": "closer is not authorized to close the order"
+    },
+    {
+      "code": 15012,
+      "name": "InvalidReturnInputTokenAccount",
+      "msg": "Invalid return_input_token_account"
+    },
+    {
+      "code": 15013,
+      "name": "InvalidOutputTokenAccount",
+      "msg": "Invalid output_token_account"
+    },
+    {
+      "code": 15014,
+      "name": "CouldNotReturnInput",
+      "msg": "Couldn't return input from vault"
+    },
+    {
+      "code": 15015,
+      "name": "LegInputOverconsumption",
+      "msg": "Leg consumed more than allowed input amount"
+    },
+    {
+      "code": 15016,
+      "name": "RouteInputUnderconsumption",
+      "msg": "Route consumed less than minimum allowed amount of input"
+    },
+    {
+      "code": 15017,
+      "name": "LegConsumedOutput",
+      "msg": "Leg consumed output"
+    },
+    {
+      "code": 15018,
+      "name": "LegConsumedLamports",
+      "msg": "Leg consumed lamports"
+    },
+    {
+      "code": 15019,
+      "name": "PumpFunAmmCreatedFeeAta",
+      "msg": "Pump.fun AMM leg created the protocol fee ATA"
+    },
+    {
+      "code": 15020,
+      "name": "SkippedLeg",
+      "msg": "A leg in the route was skipped"
+    },
+    {
+      "code": 15021,
+      "name": "DestinationTokenAccountDoesNotExist",
+      "msg": "Destination token account does not exist"
+    },
+    {
+      "code": 15022,
+      "name": "Token2022ProgramNotProvided",
+      "msg": "Token 2022 Program account not provided"
+    },
+    {
+      "code": 15023,
+      "name": "InvalidLegInputTokenAccount",
+      "msg": "Invalid leg input token account"
+    },
+    {
+      "code": 15024,
+      "name": "RaydiumLaunchlabCreatedFeeAta",
+      "msg": "Raydium Launchlab leg created fee ATA"
+    },
+    {
+      "code": 15025,
+      "name": "LegUnderproducedOutput",
+      "msg": "Leg produced less output than expected"
+    }
+  ],
+  "types": [
+    {
+      "name": "Action",
+      "type": {
+        "kind": "enum",
+        "variants": [
+          {
+            "name": "WhirlpoolsSwap",
+            "fields": [
+              {
+                "defined": {
+                  "name": "WhirlpoolsSwapOptions"
+                }
+              }
+            ]
+          },
+          {
+            "name": "ClearpoolsSwap",
+            "fields": [
+              {
+                "defined": {
+                  "name": "ClearpoolsSwapOptions"
+                }
+              }
+            ]
+          },
+          {
+            "name": "RaydiumAmmSwap",
+            "fields": [
+              {
+                "defined": {
+                  "name": "RaydiumAmmSwapOptions"
+                }
+              }
+            ]
+          },
+          {
+            "name": "LifinityV2Swap",
+            "fields": [
+              {
+                "defined": {
+                  "name": "LifinityV2SwapOptions"
+                }
+              }
+            ]
+          },
+          {
+            "name": "MeteoraDlmmSwap",
+            "fields": [
+              {
+                "defined": {
+                  "name": "MeteoraDlmmSwapOptions"
+                }
+              }
+            ]
+          },
+          {
+            "name": "RaydiumClmmSwap",
+            "fields": [
+              {
+                "defined": {
+                  "name": "RaydiumClmmSwapOptions"
+                }
+              }
+            ]
+          },
+          {
+            "name": "RaydiumClmmSwapV2",
+            "fields": [
+              {
+                "defined": {
+                  "name": "RaydiumClmmSwapV2Options"
+                }
+              }
+            ]
+          },
+          {
+            "name": "PhoenixSwap",
+            "fields": [
+              {
+                "defined": {
+                  "name": "PhoenixSwapOptions"
+                }
+              }
+            ]
+          },
+          {
+            "name": "PumpFunBuy",
+            "fields": [
+              {
+                "defined": {
+                  "name": "PumpFunBuyOptions"
+                }
+              }
+            ]
+          },
+          {
+            "name": "PumpFunSell",
+            "fields": [
+              {
+                "defined": {
+                  "name": "PumpFunSellOptions"
+                }
+              }
+            ]
+          },
+          {
+            "name": "GammaSwap",
+            "fields": [
+              {
+                "defined": {
+                  "name": "GammaSwapOptions"
+                }
+              }
+            ]
+          },
+          {
+            "name": "ObricV2Swap",
+            "fields": [
+              {
+                "defined": {
+                  "name": "ObricV2SwapOptions"
+                }
+              }
+            ]
+          },
+          {
+            "name": "PumpFunAmmBuy",
+            "fields": [
+              {
+                "defined": {
+                  "name": "PumpFunAmmBuyOptions"
+                }
+              }
+            ]
+          },
+          {
+            "name": "PumpFunAmmSell",
+            "fields": [
+              {
+                "defined": {
+                  "name": "PumpFunAmmSellOptions"
+                }
+              }
+            ]
+          },
+          {
+            "name": "SolFiSwap",
+            "fields": [
+              {
+                "defined": {
+                  "name": "SolFiSwapOptions"
+                }
+              }
+            ]
+          },
+          {
+            "name": "RubiconSwap",
+            "fields": [
+              {
+                "defined": {
+                  "name": "RubiconSwapOptions"
+                }
+              }
+            ]
+          },
+          {
+            "name": "MeteoraDammV1Swap",
+            "fields": [
+              {
+                "defined": {
+                  "name": "MeteoraDammV1SwapOptions"
+                }
+              }
+            ]
+          },
+          {
+            "name": "RaydiumCpSwap",
+            "fields": [
+              {
+                "defined": {
+                  "name": "RaydiumCpSwapOptions"
+                }
+              }
+            ]
+          },
+          {
+            "name": "StabbleStableSwap",
+            "fields": [
+              {
+                "defined": {
+                  "name": "StabbleStableSwapOptions"
+                }
+              }
+            ]
+          },
+          {
+            "name": "TesseraVSwap",
+            "fields": [
+              {
+                "defined": {
+                  "name": "TesseraVSwapOptions"
+                }
+              }
+            ]
+          },
+          {
+            "name": "MeteoraDammV2Swap",
+            "fields": [
+              {
+                "defined": {
+                  "name": "MeteoraDammV2SwapOptions"
+                }
+              }
+            ]
+          },
+          {
+            "name": "RaydiumLaunchlabSwap",
+            "fields": [
+              {
+                "defined": {
+                  "name": "RaydiumLaunchlabSwapOptions"
+                }
+              }
+            ]
+          },
+          {
+            "name": "MeteoraDbcSwap",
+            "fields": [
+              {
+                "defined": {
+                  "name": "MeteoraDbcSwapOptions"
+                }
+              }
+            ]
+          },
+          {
+            "name": "HumidiFiSwap",
+            "fields": [
+              {
+                "defined": {
+                  "name": "HumidiFiSwapOptions"
+                }
+              }
+            ]
+          },
+          {
+            "name": "WhirlpoolsSwapV2",
+            "fields": [
+              {
+                "defined": {
+                  "name": "WhirlpoolsSwapV2Options"
+                }
+              }
+            ]
+          },
+          {
+            "name": "MeteoraDlmmSwapV2",
+            "fields": [
+              {
+                "defined": {
+                  "name": "MeteoraDlmmSwapV2Options"
+                }
+              }
+            ]
+          },
+          {
+            "name": "ZeroFiSwap",
+            "fields": [
+              {
+                "defined": {
+                  "name": "ZeroFiSwapOptions"
+                }
+              }
+            ]
+          },
+          {
+            "name": "AlphaQSwap",
+            "fields": [
+              {
+                "defined": {
+                  "name": "AlphaQSwapOptions"
+                }
+              }
+            ]
+          },
+          {
+            "name": "TokenSwap",
+            "fields": [
+              {
+                "defined": {
+                  "name": "TokenSwapOptions"
+                }
+              }
+            ]
+          },
+          {
+            "name": "SolFiV2Swap",
+            "fields": [
+              {
+                "defined": {
+                  "name": "SolFiV2SwapOptions"
+                }
+              }
+            ]
+          },
+          {
+            "name": "MozartSwap",
+            "fields": [
+              {
+                "defined": {
+                  "name": "MozartSwapOptions"
+                }
+              }
+            ]
+          },
+          {
+            "name": "DFlowDynamicRouteV1",
+            "fields": [
+              {
+                "defined": {
+                  "name": "DFlowDynamicRouteV1Options"
+                }
+              }
+            ]
+          },
+          {
+            "name": "HeavenSwap",
+            "fields": [
+              {
+                "defined": {
+                  "name": "HeavenSwapOptions"
+                }
+              }
+            ]
+          },
+          {
+            "name": "NexusSwap",
+            "fields": [
+              {
+                "defined": {
+                  "name": "NexusSwapOptions"
+                }
+              }
+            ]
+          },
+          {
+            "name": "SarosDlmmSwap",
+            "fields": [
+              {
+                "defined": {
+                  "name": "SarosDlmmSwapOptions"
+                }
+              }
+            ]
+          },
+          {
+            "name": "TransferFee",
+            "fields": [
+              {
+                "defined": {
+                  "name": "TransferFeeOptions"
+                }
+              }
+            ]
+          },
+          {
+            "name": "TransferFeeWithMint",
+            "fields": [
+              {
+                "defined": {
+                  "name": "TransferFeeOptions"
+                }
+              }
+            ]
+          },
+          {
+            "name": "RecordId",
+            "fields": [
+              {
+                "defined": {
+                  "name": "RecordIdOptions"
+                }
+              }
+            ]
+          },
+          {
+            "name": "RecordId2",
+            "fields": [
+              {
+                "defined": {
+                  "name": "RecordId2Options"
+                }
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "AlphaQSwapOptions",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "amount",
+            "type": "u64"
+          },
+          {
+            "name": "orchestrator_flags",
+            "docs": [
+              "Optional flags for the swap"
+            ],
+            "type": {
+              "defined": {
+                "name": "OrchestratorFlags"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "ClearpoolsSwapOptions",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "amount",
+            "type": "u64"
+          },
+          {
+            "name": "a_to_b",
+            "type": "bool"
+          },
+          {
+            "name": "orchestrator_flags",
+            "docs": [
+              "Optional flags for the swap"
+            ],
+            "type": {
+              "defined": {
+                "name": "OrchestratorFlags"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "DFlowDynamicRouteV1Options",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "candidate_actions",
+            "type": {
+              "vec": {
+                "defined": {
+                  "name": "DynamicRouteV1CandidateAction"
+                }
+              }
+            }
+          },
+          {
+            "name": "amount",
+            "type": "u64"
+          },
+          {
+            "name": "orchestrator_flags",
+            "docs": [
+              "Optional flags for the swap"
+            ],
+            "type": {
+              "defined": {
+                "name": "OrchestratorFlags"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "DynamicRouteV1CandidateAction",
+      "type": {
+        "kind": "enum",
+        "variants": [
+          {
+            "name": "SolFi",
+            "fields": [
+              {
+                "defined": {
+                  "name": "SolFiDynamicRouteV1Options"
+                }
+              }
+            ]
+          },
+          {
+            "name": "Rubicon",
+            "fields": [
+              {
+                "defined": {
+                  "name": "RubiconDynamicRouteV1Options"
+                }
+              }
+            ]
+          },
+          {
+            "name": "TesseraV",
+            "fields": [
+              {
+                "defined": {
+                  "name": "TesseraVDynamicRouteV1Options"
+                }
+              }
+            ]
+          },
+          {
+            "name": "HumidiFi",
+            "fields": [
+              {
+                "defined": {
+                  "name": "HumidiFiDynamicRouteV1Options"
+                }
+              }
+            ]
+          },
+          {
+            "name": "SolFiV2",
+            "fields": [
+              {
+                "defined": {
+                  "name": "SolFiV2DynamicRouteV1Options"
+                }
+              }
+            ]
+          },
+          {
+            "name": "Mozart",
+            "fields": [
+              {
+                "defined": {
+                  "name": "MozartDynamicRouteV1Options"
+                }
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "FeeEvent",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "account",
+            "type": "pubkey"
+          },
+          {
+            "name": "mint",
+            "type": "pubkey"
+          },
+          {
+            "name": "amount",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "FillOrderParams",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "swap_actions",
+            "type": {
+              "vec": {
+                "defined": {
+                  "name": "Action"
+                }
+              }
+            }
+          },
+          {
+            "name": "platform_fee_ubps",
+            "type": "u32"
+          }
+        ]
+      }
+    },
+    {
+      "name": "GammaSwapOptions",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "amount",
+            "type": "u64"
+          },
+          {
+            "name": "endorsed",
+            "type": "bool"
+          },
+          {
+            "name": "orchestrator_flags",
+            "docs": [
+              "Optional flags for the swap"
+            ],
+            "type": {
+              "defined": {
+                "name": "OrchestratorFlags"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "HeavenSwapOptions",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "amount",
+            "type": "u64"
+          },
+          {
+            "name": "orchestrator_flags",
+            "docs": [
+              "Optional flags for the swap"
+            ],
+            "type": {
+              "defined": {
+                "name": "OrchestratorFlags"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "HumidiFiDynamicRouteV1Options",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "swap_id",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "HumidiFiSwapOptions",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "amount",
+            "type": "u64"
+          },
+          {
+            "name": "swap_id",
+            "type": "u64"
+          },
+          {
+            "name": "orchestrator_flags",
+            "docs": [
+              "Optional flags for the swap"
+            ],
+            "type": {
+              "defined": {
+                "name": "OrchestratorFlags"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "LifinityV2SwapOptions",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "amount",
+            "type": "u64"
+          },
+          {
+            "name": "orchestrator_flags",
+            "docs": [
+              "Optional flags for the swap"
+            ],
+            "type": {
+              "defined": {
+                "name": "OrchestratorFlags"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "MeteoraDammV1SwapOptions",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "amount",
+            "type": "u64"
+          },
+          {
+            "name": "orchestrator_flags",
+            "docs": [
+              "Optional flags for the swap"
+            ],
+            "type": {
+              "defined": {
+                "name": "OrchestratorFlags"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "MeteoraDammV2SwapOptions",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "amount",
+            "type": "u64"
+          },
+          {
+            "name": "orchestrator_flags",
+            "docs": [
+              "Optional flags for the swap"
+            ],
+            "type": {
+              "defined": {
+                "name": "OrchestratorFlags"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "MeteoraDbcSwapOptions",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "amount",
+            "type": "u64"
+          },
+          {
+            "name": "is_rate_limiter_applied",
+            "type": "bool"
+          },
+          {
+            "name": "orchestrator_flags",
+            "docs": [
+              "Optional flags for the swap"
+            ],
+            "type": {
+              "defined": {
+                "name": "OrchestratorFlags"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "MeteoraDlmmSwapOptions",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "amount",
+            "type": "u64"
+          },
+          {
+            "name": "num_bin_arrays",
+            "type": "u8"
+          },
+          {
+            "name": "orchestrator_flags",
+            "docs": [
+              "Optional flags for the swap"
+            ],
+            "type": {
+              "defined": {
+                "name": "OrchestratorFlags"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "MeteoraDlmmSwapV2Options",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "amount",
+            "type": "u64"
+          },
+          {
+            "name": "num_bin_arrays",
+            "type": "u8"
+          },
+          {
+            "name": "orchestrator_flags",
+            "docs": [
+              "Optional flags for the swap"
+            ],
+            "type": {
+              "defined": {
+                "name": "OrchestratorFlags"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "MozartDynamicRouteV1Options",
+      "type": {
+        "kind": "struct",
+        "fields": []
+      }
+    },
+    {
+      "name": "MozartSwapOptions",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "amount",
+            "type": "u64"
+          },
+          {
+            "name": "orchestrator_flags",
+            "docs": [
+              "Optional flags for the swap"
+            ],
+            "type": {
+              "defined": {
+                "name": "OrchestratorFlags"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "NexusSwapOptions",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "amount",
+            "type": "u64"
+          },
+          {
+            "name": "orchestrator_flags",
+            "docs": [
+              "Optional flags for the swap"
+            ],
+            "type": {
+              "defined": {
+                "name": "OrchestratorFlags"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "ObricV2SwapOptions",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "amount",
+            "type": "u64"
+          },
+          {
+            "name": "orchestrator_flags",
+            "docs": [
+              "Optional flags for the swap"
+            ],
+            "type": {
+              "defined": {
+                "name": "OrchestratorFlags"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "OpenOrderParams",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "input_amount",
+            "type": "u64"
+          },
+          {
+            "name": "quoted_out_amount",
+            "docs": [
+              "Quoted output amount after platform fee"
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "fee_budget",
+            "docs": [
+              "Maximum amount in lamports that the fee payer will pay to have the order filled or closed"
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "order_account_id",
+            "type": "u64"
+          },
+          {
+            "name": "fillable_for_slots",
+            "docs": [
+              "Number of slots after the slot in which the order is opened for which the order is fillable.",
+              "If zero, the order is only fillable in the slot in which the open transaction landed."
+            ],
+            "type": "u32"
+          },
+          {
+            "name": "slippage_bps",
+            "docs": [
+              "Max allowed slippage in basis points. Along with `quoted_out_amount`, this is used to",
+              "calculate the minimum allowed output amount."
+            ],
+            "type": "u16"
+          },
+          {
+            "name": "closer",
+            "docs": [
+              "Account that is authorized to close the order"
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "flags",
+            "docs": [
+              "Flags for the order"
+            ],
+            "type": "u8"
+          }
+        ]
+      }
+    },
+    {
+      "name": "OrchestratorFlags",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "flags",
+            "type": "u8"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Order",
+      "serialization": "bytemuck",
+      "repr": {
+        "kind": "c"
+      },
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "closer",
+            "docs": [
+              "Account that is authorized to close the order"
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "output_token_account",
+            "docs": [
+              "Account to which output from the fill should be sent. If the order specifies that it should",
+              "output native SOL, then this should be the user's wallet, although any account is allowed.",
+              "If the order doesn't specify that it should output native SOL, then this must be an SPL",
+              "token account, and the token account's mint determines the order's output mint."
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "return_input_token_account",
+            "docs": [
+              "Account to which leftover tokens in the order vault should be returned when the order is",
+              "filled or closed. If the input is native SOL, this should be the user's wallet, although any",
+              "account is allowed. If the input is wrapped SOL or an SPL token, this must be an SPL token",
+              "account for the input mint."
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "return_rent_to",
+            "docs": [
+              "Account to which rent for the account should be returned when the account is closed"
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "id",
+            "docs": [
+              "ID used to produce a unique PDA for the order account"
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "quoted_out_amount",
+            "type": "u64"
+          },
+          {
+            "name": "last_fillable_slot",
+            "docs": [
+              "Highest slot at which the order can be filled"
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "slippage_bps",
+            "docs": [
+              "Max allowed slippage in basis points. Along with `quoted_out_amount`, this is used to",
+              "calculate the minimum allowed output amount for the order."
+            ],
+            "type": "u16"
+          },
+          {
+            "name": "bump",
+            "type": "u8"
+          },
+          {
+            "name": "vault_bump",
+            "docs": [
+              "Bump seed for the vault token account associated with the order"
+            ],
+            "type": "u8"
+          },
+          {
+            "name": "flags",
+            "docs": [
+              "Flags for the order"
+            ],
+            "type": "u8"
+          },
+          {
+            "name": "_padding1",
+            "type": "u8"
+          },
+          {
+            "name": "_padding2",
+            "type": "u8"
+          },
+          {
+            "name": "_padding3",
+            "type": "u8"
+          }
+        ]
+      }
+    },
+    {
+      "name": "PhoenixSwapOptions",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "amount",
+            "type": "u64"
+          },
+          {
+            "name": "side",
+            "type": {
+              "defined": {
+                "name": "Side"
+              }
+            }
+          },
+          {
+            "name": "orchestrator_flags",
+            "docs": [
+              "Optional flags for the swap"
+            ],
+            "type": {
+              "defined": {
+                "name": "OrchestratorFlags"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "PumpFunAmmBuyOptions",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "amount",
+            "type": "u64"
+          },
+          {
+            "name": "orchestrator_flags",
+            "docs": [
+              "Optional flags for the swap"
+            ],
+            "type": {
+              "defined": {
+                "name": "OrchestratorFlags"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "PumpFunAmmSellOptions",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "amount",
+            "type": "u64"
+          },
+          {
+            "name": "orchestrator_flags",
+            "docs": [
+              "Optional flags for the swap"
+            ],
+            "type": {
+              "defined": {
+                "name": "OrchestratorFlags"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "PumpFunBuyOptions",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "amount",
+            "type": "u64"
+          },
+          {
+            "name": "orchestrator_flags",
+            "docs": [
+              "Optional flags for the swap"
+            ],
+            "type": {
+              "defined": {
+                "name": "OrchestratorFlags"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "PumpFunSellOptions",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "amount",
+            "type": "u64"
+          },
+          {
+            "name": "orchestrator_flags",
+            "docs": [
+              "Optional flags for the swap"
+            ],
+            "type": {
+              "defined": {
+                "name": "OrchestratorFlags"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "RaydiumAmmSwapOptions",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "amount",
+            "type": "u64"
+          },
+          {
+            "name": "orchestrator_flags",
+            "docs": [
+              "Optional flags for the swap"
+            ],
+            "type": {
+              "defined": {
+                "name": "OrchestratorFlags"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "RaydiumClmmSwapOptions",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "amount",
+            "type": "u64"
+          },
+          {
+            "name": "num_remaining_accounts",
+            "type": "u8"
+          },
+          {
+            "name": "orchestrator_flags",
+            "docs": [
+              "Optional flags for the swap"
+            ],
+            "type": {
+              "defined": {
+                "name": "OrchestratorFlags"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "RaydiumClmmSwapV2Options",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "amount",
+            "type": "u64"
+          },
+          {
+            "name": "num_remaining_accounts",
+            "type": "u8"
+          },
+          {
+            "name": "orchestrator_flags",
+            "docs": [
+              "Optional flags for the swap"
+            ],
+            "type": {
+              "defined": {
+                "name": "OrchestratorFlags"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "RaydiumCpSwapOptions",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "amount",
+            "type": "u64"
+          },
+          {
+            "name": "orchestrator_flags",
+            "docs": [
+              "Optional flags for the swap"
+            ],
+            "type": {
+              "defined": {
+                "name": "OrchestratorFlags"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "RaydiumLaunchlabSwapOptions",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "amount",
+            "type": "u64"
+          },
+          {
+            "name": "orchestrator_flags",
+            "docs": [
+              "Optional flags for the swap"
+            ],
+            "type": {
+              "defined": {
+                "name": "OrchestratorFlags"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "RecordId2Options",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "id",
+            "type": {
+              "array": [
+                "u8",
+                4
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "RecordIdOptions",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "id",
+            "type": {
+              "array": [
+                "u8",
+                76
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "RubiconDynamicRouteV1Options",
+      "type": {
+        "kind": "struct",
+        "fields": []
+      }
+    },
+    {
+      "name": "RubiconSwapOptions",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "amount",
+            "type": "u64"
+          },
+          {
+            "name": "orchestrator_flags",
+            "docs": [
+              "Optional flags for the swap"
+            ],
+            "type": {
+              "defined": {
+                "name": "OrchestratorFlags"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "SarosDlmmSwapOptions",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "amount",
+            "type": "u64"
+          },
+          {
+            "name": "orchestrator_flags",
+            "docs": [
+              "Optional flags for the swap"
+            ],
+            "type": {
+              "defined": {
+                "name": "OrchestratorFlags"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "Side",
+      "type": {
+        "kind": "enum",
+        "variants": [
+          {
+            "name": "Bid"
+          },
+          {
+            "name": "Ask"
+          }
+        ]
+      }
+    },
+    {
+      "name": "SolFiDynamicRouteV1Options",
+      "type": {
+        "kind": "struct",
+        "fields": []
+      }
+    },
+    {
+      "name": "SolFiSwapOptions",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "amount",
+            "type": "u64"
+          },
+          {
+            "name": "orchestrator_flags",
+            "docs": [
+              "Optional flags for the swap"
+            ],
+            "type": {
+              "defined": {
+                "name": "OrchestratorFlags"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "SolFiV2DynamicRouteV1Options",
+      "type": {
+        "kind": "struct",
+        "fields": []
+      }
+    },
+    {
+      "name": "SolFiV2SwapOptions",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "amount",
+            "type": "u64"
+          },
+          {
+            "name": "orchestrator_flags",
+            "docs": [
+              "Optional flags for the swap"
+            ],
+            "type": {
+              "defined": {
+                "name": "OrchestratorFlags"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "StabbleStableSwapOptions",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "amount",
+            "type": "u64"
+          },
+          {
+            "name": "orchestrator_flags",
+            "docs": [
+              "Optional flags for the swap"
+            ],
+            "type": {
+              "defined": {
+                "name": "OrchestratorFlags"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "Swap2Params",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "actions",
+            "type": {
+              "vec": {
+                "defined": {
+                  "name": "Action"
+                }
+              }
+            }
+          },
+          {
+            "name": "quoted_out_amount",
+            "docs": [
+              "Quoted output amount for the swap after platform fee"
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "slippage_bps",
+            "docs": [
+              "Max allowed slippage in basis points. Along with `quoted_out_amount`, this is used to",
+              "calculate the minimum allowed output amount for the swap."
+            ],
+            "type": "u16"
+          },
+          {
+            "name": "platform_fee_bps",
+            "docs": [
+              "Platform fee in basis points. If nonzero, this percentage of the output amount will be",
+              "transferred to the platform fee account, and the instruction must include the platform fee",
+              "account as the last account. The platform fee account must be a valid token account for the",
+              "output mint, and it must specify the public key of the Referral program's DFlow project as",
+              "its owner."
+            ],
+            "type": "u16"
+          },
+          {
+            "name": "positive_slippage_fee_limit_pct",
+            "docs": [
+              "Limit on the positive slippage fee in percent. The positive slippage fee is limited to the",
+              "lesser of (1) the excess actual out amount above the quoted amount and (2) this percentage",
+              "of the actual out amount after platform fee."
+            ],
+            "type": "u8"
+          }
+        ]
+      }
+    },
+    {
+      "name": "SwapEvent",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "amm",
+            "type": "pubkey"
+          },
+          {
+            "name": "input_mint",
+            "type": "pubkey"
+          },
+          {
+            "name": "input_amount",
+            "type": "u64"
+          },
+          {
+            "name": "output_mint",
+            "type": "pubkey"
+          },
+          {
+            "name": "output_amount",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "SwapParams",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "actions",
+            "type": {
+              "vec": {
+                "defined": {
+                  "name": "Action"
+                }
+              }
+            }
+          },
+          {
+            "name": "quoted_out_amount",
+            "docs": [
+              "Quoted output amount for the swap after platform fee"
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "slippage_bps",
+            "docs": [
+              "Max allowed slippage in basis points. Along with `quoted_out_amount`, this is used to",
+              "calculate the minimum allowed output amount for the swap."
+            ],
+            "type": "u16"
+          },
+          {
+            "name": "platform_fee_bps",
+            "docs": [
+              "Platform fee in basis points. If nonzero, this percentage of the output amount will be",
+              "transferred to the platform fee account, and the instruction must include the platform fee",
+              "account as the last account. The platform fee account must be a valid token account for the",
+              "output mint, and it must specify the public key of the Referral program's DFlow project as",
+              "its owner."
+            ],
+            "type": "u16"
+          }
+        ]
+      }
+    },
+    {
+      "name": "TesseraVDynamicRouteV1Options",
+      "type": {
+        "kind": "struct",
+        "fields": []
+      }
+    },
+    {
+      "name": "TesseraVSwapOptions",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "amount",
+            "type": "u64"
+          },
+          {
+            "name": "orchestrator_flags",
+            "docs": [
+              "Optional flags for the swap"
+            ],
+            "type": {
+              "defined": {
+                "name": "OrchestratorFlags"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "TokenSwapOptions",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "amount",
+            "type": "u64"
+          },
+          {
+            "name": "orchestrator_flags",
+            "docs": [
+              "Optional flags for the swap"
+            ],
+            "type": {
+              "defined": {
+                "name": "OrchestratorFlags"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "TransferFeeOptions",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "amount",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "WhirlpoolsSwapOptions",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "amount",
+            "type": "u64"
+          },
+          {
+            "name": "a_to_b",
+            "type": "bool"
+          },
+          {
+            "name": "orchestrator_flags",
+            "docs": [
+              "Optional flags for the swap"
+            ],
+            "type": {
+              "defined": {
+                "name": "OrchestratorFlags"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "WhirlpoolsSwapV2Options",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "amount",
+            "type": "u64"
+          },
+          {
+            "name": "a_to_b",
+            "type": "bool"
+          },
+          {
+            "name": "orchestrator_flags",
+            "docs": [
+              "Optional flags for the swap"
+            ],
+            "type": {
+              "defined": {
+                "name": "OrchestratorFlags"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "ZeroFiSwapOptions",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "amount",
+            "type": "u64"
+          },
+          {
+            "name": "orchestrator_flags",
+            "docs": [
+              "Optional flags for the swap"
+            ],
+            "type": {
+              "defined": {
+                "name": "OrchestratorFlags"
+              }
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

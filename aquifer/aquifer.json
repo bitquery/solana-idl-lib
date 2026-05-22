@@ -1,0 +1,204 @@
+{
+  "version": "0.1.0",
+  "name": "Aquifer",
+  "instructions": [
+    {
+      "name": "swap",
+      "accounts": [
+        {
+          "name": "sysvarInstructions",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "user",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "tokenProgramB",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "userTokenAccountB",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "tokenB",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "tokenProgramA",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "userTokenAccountA",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "tokenA",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "account1",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "account2",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "account3",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "account4",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "vaultB",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "vaultTokenAccountB",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "vaultA",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "vaultTokenAccountA",
+          "isMut": true,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "amountIn",
+          "type": "u64"
+        }
+      ],
+      "discriminant": {
+        "type": "u8",
+        "value": 1
+      }
+    },
+    {
+      "name": "swap2",
+      "accounts": [
+        {
+          "name": "sysvarInstructions",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "user",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "tokenProgramB",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "userTokenAccountB",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "tokenB",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "tokenProgramA",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "userTokenAccountA",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "tokenA",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "account1",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "account2",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "account3",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "account4",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "vaultB",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "vaultTokenAccountB",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "vaultA",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "vaultTokenAccountA",
+          "isMut": true,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "amountIn",
+          "type": "u64"
+        },
+        {
+          "name": "minAmountOut",
+          "type": "u16"
+        }
+      ],
+      "discriminant": {
+        "type": "u8",
+        "value": 19
+      }
+    }
+  ],
+  "metadata": {
+    "origin": "shank",
+    "address": "AQU1FRd7papthgdrwPTTq5JacJh8YtwEXaBfKU3bTz45"
+  }
+}
