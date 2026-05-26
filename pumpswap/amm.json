@@ -386,7 +386,7 @@
         },
         {
           "name": "track_volume",
-          "type": { "option": { "defined": { "name": "OptionBool" } } }
+          "type": "bool"
         }
       ]
     },
@@ -621,7 +621,7 @@
         },
         {
           "name": "track_volume",
-          "type": { "option": { "defined": { "name": "OptionBool" } } }
+          "type": "bool"
         }
       ]
     },
@@ -1272,7 +1272,7 @@
         },
         {
           "name": "is_cashback_coin",
-          "type": { "option": { "defined": { "name": "OptionBool" } } }
+          "type": "bool"
         }
       ]
     },

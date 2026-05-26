@@ -479,7 +479,7 @@
         },
         {
           "name": "track_volume",
-          "type": { "option": { "defined": { "name": "OptionBool" } } }
+          "type": "bool"
         }
       ]
     },
@@ -1085,7 +1085,7 @@
         },
         {
           "name": "track_volume",
-          "type": { "option": { "defined": { "name": "OptionBool" } } }
+          "type": "bool"
         }
       ]
     },
@@ -2340,7 +2340,7 @@
         },
         {
           "name": "is_cashback_enabled",
-          "type": { "option": { "defined": { "name": "OptionBool" } } }
+          "type": "bool"
         }
       ]
     },
