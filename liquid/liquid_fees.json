@@ -1,0 +1,1933 @@
+{
+  "address": "FeesZQLb1xTeZbvaFRGnqzrZYzzmQtwhTYKQphbNGQru",
+  "metadata": {
+    "name": "liquid_fees",
+    "version": "0.1.0",
+    "spec": "0.1.0",
+    "description": "Unified creator fee configuration for liquid programs"
+  },
+  "instructions": [
+    {
+      "name": "accept_admin",
+      "docs": [
+        "Accept a pending admin transfer (step 2 of 2)."
+      ],
+      "discriminator": [
+        112,
+        42,
+        45,
+        90,
+        116,
+        181,
+        13,
+        170
+      ],
+      "accounts": [
+        {
+          "name": "new_admin",
+          "docs": [
+            "The pending admin who is accepting the transfer."
+          ],
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "global_config",
+          "docs": [
+            "Global configuration account to be updated."
+          ],
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  103,
+                  108,
+                  111,
+                  98,
+                  97,
+                  108,
+                  95,
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              }
+            ]
+          }
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "claim_fees",
+      "docs": [
+        "Claim accumulated SOL fees from a recipient's vault PDA."
+      ],
+      "discriminator": [
+        82,
+        251,
+        233,
+        156,
+        12,
+        52,
+        184,
+        202
+      ],
+      "accounts": [
+        {
+          "name": "recipient",
+          "docs": [
+            "The recipient claiming their fees (must match vault PDA derivation)"
+          ],
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "recipient_vault",
+          "docs": [
+            "The recipient's vault PDA holding accumulated SOL fees."
+          ],
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  114,
+                  101,
+                  99,
+                  105,
+                  112,
+                  105,
+                  101,
+                  110,
+                  116,
+                  95,
+                  118,
+                  97,
+                  117,
+                  108,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "recipient"
+              }
+            ]
+          }
+        },
+        {
+          "name": "system_program",
+          "docs": [
+            "The Solana system program."
+          ],
+          "address": "11111111111111111111111111111111"
+        },
+        {
+          "name": "cpi_authority",
+          "docs": [
+            "CPI authority PDA for event emission."
+          ],
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  112,
+                  105,
+                  95,
+                  97,
+                  117,
+                  116,
+                  104,
+                  111,
+                  114,
+                  105,
+                  116,
+                  121
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "liquid_events_program",
+          "docs": [
+            "Liquid events program for centralized event emission."
+          ],
+          "address": "EventsQeXA43nLKR69DhHwNsJ6aM512AweMCgG3wG8zG"
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "claim_token_fees",
+      "docs": [
+        "Claim accumulated token fees from a recipient's vault ATA."
+      ],
+      "discriminator": [
+        205,
+        136,
+        215,
+        209,
+        62,
+        196,
+        69,
+        182
+      ],
+      "accounts": [
+        {
+          "name": "recipient",
+          "docs": [
+            "The recipient claiming their fees (must match vault PDA derivation)"
+          ],
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "recipient_vault_token_account",
+          "docs": [
+            "The vault PDA's token account holding accumulated quote tokens."
+          ],
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "account",
+                "path": "recipient_vault"
+              },
+              {
+                "kind": "const",
+                "value": [
+                  6,
+                  221,
+                  246,
+                  225,
+                  215,
+                  101,
+                  161,
+                  147,
+                  217,
+                  203,
+                  225,
+                  70,
+                  206,
+                  235,
+                  121,
+                  172,
+                  28,
+                  180,
+                  133,
+                  237,
+                  95,
+                  91,
+                  55,
+                  145,
+                  58,
+                  140,
+                  245,
+                  133,
+                  126,
+                  255,
+                  0,
+                  169
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "quote_mint"
+              }
+            ],
+            "program": {
+              "kind": "const",
+              "value": [
+                140,
+                151,
+                37,
+                143,
+                78,
+                36,
+                137,
+                241,
+                187,
+                61,
+                16,
+                41,
+                20,
+                142,
+                13,
+                131,
+                11,
+                90,
+                19,
+                153,
+                218,
+                255,
+                16,
+                132,
+                4,
+                142,
+                123,
+                216,
+                219,
+                233,
+                248,
+                89
+              ]
+            }
+          }
+        },
+        {
+          "name": "recipient_token_account",
+          "docs": [
+            "The recipient's own token account to receive claimed fees."
+          ],
+          "writable": true
+        },
+        {
+          "name": "quote_mint",
+          "docs": [
+            "The quote token mint of the fees to claim (SPL Token only)."
+          ]
+        },
+        {
+          "name": "recipient_vault",
+          "docs": [
+            "The recipient's vault PDA."
+          ],
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  114,
+                  101,
+                  99,
+                  105,
+                  112,
+                  105,
+                  101,
+                  110,
+                  116,
+                  95,
+                  118,
+                  97,
+                  117,
+                  108,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "recipient"
+              }
+            ]
+          }
+        },
+        {
+          "name": "token_program",
+          "docs": [
+            "The SPL Token program."
+          ],
+          "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+        },
+        {
+          "name": "system_program",
+          "docs": [
+            "The Solana system program."
+          ],
+          "address": "11111111111111111111111111111111"
+        },
+        {
+          "name": "cpi_authority",
+          "docs": [
+            "CPI authority PDA for event emission."
+          ],
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  112,
+                  105,
+                  95,
+                  97,
+                  117,
+                  116,
+                  104,
+                  111,
+                  114,
+                  105,
+                  116,
+                  121
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "liquid_events_program",
+          "docs": [
+            "Liquid events program for centralized event emission."
+          ],
+          "address": "EventsQeXA43nLKR69DhHwNsJ6aM512AweMCgG3wG8zG"
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "distribute_fees",
+      "docs": [
+        "Distribute accumulated SOL fees to recipient vault PDAs.",
+        "",
+        "This is permissionless and can be called by anyone when there",
+        "are fees to distribute in the vault. Only valid for configurations",
+        "in Recipients mode. Recipients claim from their vaults separately."
+      ],
+      "discriminator": [
+        120,
+        56,
+        27,
+        7,
+        53,
+        176,
+        113,
+        186
+      ],
+      "accounts": [
+        {
+          "name": "payer",
+          "docs": [
+            "Anyone can trigger distribution (permissionless)"
+          ],
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "fee_vault",
+          "docs": [
+            "The fee vault holding accumulated fees"
+          ],
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  102,
+                  101,
+                  101,
+                  95,
+                  118,
+                  97,
+                  117,
+                  108,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "fee_config"
+              }
+            ]
+          }
+        },
+        {
+          "name": "token_mint",
+          "docs": [
+            "The token mint this fee configuration is for"
+          ]
+        },
+        {
+          "name": "fee_config",
+          "docs": [
+            "The fee configuration"
+          ],
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  102,
+                  101,
+                  101,
+                  95,
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "token_mint"
+              },
+              {
+                "kind": "account",
+                "path": "quote_mint"
+              }
+            ]
+          }
+        },
+        {
+          "name": "quote_mint",
+          "docs": [
+            "The quote token mint for this fee configuration"
+          ]
+        },
+        {
+          "name": "system_program",
+          "docs": [
+            "The Solana system program."
+          ],
+          "address": "11111111111111111111111111111111"
+        },
+        {
+          "name": "cpi_authority",
+          "docs": [
+            "CPI authority PDA for event emission."
+          ],
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  112,
+                  105,
+                  95,
+                  97,
+                  117,
+                  116,
+                  104,
+                  111,
+                  114,
+                  105,
+                  116,
+                  121
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "liquid_events_program",
+          "docs": [
+            "Liquid events program for centralized event emission."
+          ],
+          "address": "EventsQeXA43nLKR69DhHwNsJ6aM512AweMCgG3wG8zG"
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "distribute_token_fees",
+      "docs": [
+        "Distribute accumulated token fees to recipient vault ATAs.",
+        "",
+        "This is permissionless and can be called by anyone when there",
+        "are token fees to distribute. Only valid for configurations",
+        "in Recipients mode. Recipients claim from their vaults separately."
+      ],
+      "discriminator": [
+        44,
+        145,
+        241,
+        189,
+        121,
+        74,
+        228,
+        210
+      ],
+      "accounts": [
+        {
+          "name": "payer",
+          "docs": [
+            "Anyone can trigger distribution (permissionless)."
+          ],
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "fee_vault_token_account",
+          "docs": [
+            "The fee vault's token account holding accumulated quote tokens."
+          ],
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "account",
+                "path": "fee_vault"
+              },
+              {
+                "kind": "const",
+                "value": [
+                  6,
+                  221,
+                  246,
+                  225,
+                  215,
+                  101,
+                  161,
+                  147,
+                  217,
+                  203,
+                  225,
+                  70,
+                  206,
+                  235,
+                  121,
+                  172,
+                  28,
+                  180,
+                  133,
+                  237,
+                  95,
+                  91,
+                  55,
+                  145,
+                  58,
+                  140,
+                  245,
+                  133,
+                  126,
+                  255,
+                  0,
+                  169
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "quote_mint"
+              }
+            ],
+            "program": {
+              "kind": "const",
+              "value": [
+                140,
+                151,
+                37,
+                143,
+                78,
+                36,
+                137,
+                241,
+                187,
+                61,
+                16,
+                41,
+                20,
+                142,
+                13,
+                131,
+                11,
+                90,
+                19,
+                153,
+                218,
+                255,
+                16,
+                132,
+                4,
+                142,
+                123,
+                216,
+                219,
+                233,
+                248,
+                89
+              ]
+            }
+          }
+        },
+        {
+          "name": "token_mint",
+          "docs": [
+            "The token mint this fee configuration is for."
+          ]
+        },
+        {
+          "name": "quote_mint",
+          "docs": [
+            "The quote token mint of the accumulated fees (SPL Token only)."
+          ],
+          "relations": [
+            "fee_config"
+          ]
+        },
+        {
+          "name": "fee_config",
+          "docs": [
+            "The fee configuration."
+          ],
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  102,
+                  101,
+                  101,
+                  95,
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "token_mint"
+              },
+              {
+                "kind": "account",
+                "path": "quote_mint"
+              }
+            ]
+          }
+        },
+        {
+          "name": "fee_vault",
+          "docs": [
+            "The fee vault PDA (authority for the token account)."
+          ],
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  102,
+                  101,
+                  101,
+                  95,
+                  118,
+                  97,
+                  117,
+                  108,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "fee_config"
+              }
+            ]
+          }
+        },
+        {
+          "name": "token_program",
+          "docs": [
+            "The SPL Token program."
+          ],
+          "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+        },
+        {
+          "name": "associated_token_program",
+          "docs": [
+            "The Associated Token program for creating recipient vault ATAs."
+          ],
+          "address": "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL"
+        },
+        {
+          "name": "system_program",
+          "docs": [
+            "The Solana system program."
+          ],
+          "address": "11111111111111111111111111111111"
+        },
+        {
+          "name": "cpi_authority",
+          "docs": [
+            "CPI authority PDA for event emission."
+          ],
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  112,
+                  105,
+                  95,
+                  97,
+                  117,
+                  116,
+                  104,
+                  111,
+                  114,
+                  105,
+                  116,
+                  121
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "liquid_events_program",
+          "docs": [
+            "Liquid events program for centralized event emission."
+          ],
+          "address": "EventsQeXA43nLKR69DhHwNsJ6aM512AweMCgG3wG8zG"
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "initialize_fee_config",
+      "docs": [
+        "Initialize a new fee configuration for a token.",
+        "",
+        "This should be called when creating a new bonding curve.",
+        "The fee configuration is keyed by token_mint, so it persists",
+        "across migration from bonding curve to AMM.",
+        "",
+        "# Arguments",
+        "* `args` - Fee recipients, basis points, and update authority."
+      ],
+      "discriminator": [
+        62,
+        162,
+        20,
+        133,
+        121,
+        65,
+        145,
+        27
+      ],
+      "accounts": [
+        {
+          "name": "creator",
+          "docs": [
+            "The creator who will own this fee configuration"
+          ],
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "cpi_authority",
+          "docs": [
+            "CPI authority PDA from the calling program (must be liquid or liquid-swap).",
+            "Only the owning program can produce a valid signature for its PDA."
+          ],
+          "signer": true
+        },
+        {
+          "name": "fee_config",
+          "docs": [
+            "The unified fee configuration account to create"
+          ],
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  102,
+                  101,
+                  101,
+                  95,
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "token_mint"
+              },
+              {
+                "kind": "account",
+                "path": "quote_mint"
+              }
+            ]
+          }
+        },
+        {
+          "name": "fee_vault",
+          "docs": [
+            "The fee vault for accumulating fees (for Recipients mode).",
+            "This is a SystemAccount that will hold SOL fees before distribution."
+          ],
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  102,
+                  101,
+                  101,
+                  95,
+                  118,
+                  97,
+                  117,
+                  108,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "fee_config"
+              }
+            ]
+          }
+        },
+        {
+          "name": "token_mint",
+          "docs": [
+            "The token mint this fee configuration is for.",
+            "Validated as a real SPL Token or Token-2022 mint via InterfaceAccount."
+          ]
+        },
+        {
+          "name": "quote_mint",
+          "docs": [
+            "The quote token mint for fee accumulation (SPL Token only)."
+          ]
+        },
+        {
+          "name": "system_program",
+          "docs": [
+            "The Solana system program."
+          ],
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "args",
+          "type": {
+            "defined": {
+              "name": "InitializeFeeConfigArgs"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "initialize_global_config",
+      "docs": [
+        "Initialize the global configuration for the liquid-fees program."
+      ],
+      "discriminator": [
+        113,
+        216,
+        122,
+        131,
+        225,
+        209,
+        22,
+        55
+      ],
+      "accounts": [
+        {
+          "name": "admin",
+          "docs": [
+            "The admin initializing the protocol (becomes admin)."
+          ],
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "global_config",
+          "docs": [
+            "Global configuration PDA."
+          ],
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  103,
+                  108,
+                  111,
+                  98,
+                  97,
+                  108,
+                  95,
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "system_program",
+          "docs": [
+            "The Solana system program."
+          ],
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "override_update_authority",
+      "docs": [
+        "Override the update authority on a fee configuration.",
+        "",
+        "# Arguments",
+        "* `args` - Contains the new update authority public key."
+      ],
+      "discriminator": [
+        159,
+        248,
+        132,
+        11,
+        167,
+        62,
+        220,
+        46
+      ],
+      "accounts": [
+        {
+          "name": "admin",
+          "docs": [
+            "The protocol admin authorizing the override."
+          ],
+          "signer": true
+        },
+        {
+          "name": "global_config",
+          "docs": [
+            "Global configuration proving admin authority."
+          ],
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  103,
+                  108,
+                  111,
+                  98,
+                  97,
+                  108,
+                  95,
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "fee_config",
+          "docs": [
+            "The fee configuration whose update authority will be overridden."
+          ],
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  102,
+                  101,
+                  101,
+                  95,
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "token_mint"
+              },
+              {
+                "kind": "account",
+                "path": "quote_mint"
+              }
+            ]
+          }
+        },
+        {
+          "name": "token_mint"
+        },
+        {
+          "name": "quote_mint"
+        },
+        {
+          "name": "cpi_authority",
+          "docs": [
+            "CPI authority PDA for event emission."
+          ],
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  112,
+                  105,
+                  95,
+                  97,
+                  117,
+                  116,
+                  104,
+                  111,
+                  114,
+                  105,
+                  116,
+                  121
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "liquid_events_program",
+          "docs": [
+            "Liquid events program for centralized event emission."
+          ],
+          "address": "EventsQeXA43nLKR69DhHwNsJ6aM512AweMCgG3wG8zG"
+        }
+      ],
+      "args": [
+        {
+          "name": "args",
+          "type": {
+            "defined": {
+              "name": "OverrideUpdateAuthorityArgs"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "revoke_fee_config",
+      "docs": [
+        "Permanently revoke creator fees for a token.",
+        "",
+        "Once revoked, creator fees will trigger buy-and-burn instead",
+        "of being distributed. This action cannot be undone."
+      ],
+      "discriminator": [
+        37,
+        222,
+        206,
+        127,
+        248,
+        204,
+        199,
+        186
+      ],
+      "accounts": [
+        {
+          "name": "authority",
+          "docs": [
+            "The current update authority (must be the one who can revoke)"
+          ],
+          "signer": true
+        },
+        {
+          "name": "fee_config",
+          "docs": [
+            "The fee configuration to revoke"
+          ],
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  102,
+                  101,
+                  101,
+                  95,
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "token_mint"
+              },
+              {
+                "kind": "account",
+                "path": "quote_mint"
+              }
+            ]
+          }
+        },
+        {
+          "name": "token_mint",
+          "docs": [
+            "The token mint this fee configuration is for"
+          ]
+        },
+        {
+          "name": "quote_mint",
+          "docs": [
+            "The quote token mint for this fee configuration"
+          ]
+        },
+        {
+          "name": "fee_vault",
+          "docs": [
+            "The fee vault holding accumulated fees â€” must be drained before revocation."
+          ],
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  102,
+                  101,
+                  101,
+                  95,
+                  118,
+                  97,
+                  117,
+                  108,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "fee_config"
+              }
+            ]
+          }
+        },
+        {
+          "name": "token_fee_vault",
+          "docs": [
+            "The fee vault's token ATA for quote_mint â€” must be empty or non-existent before revocation."
+          ]
+        },
+        {
+          "name": "cpi_authority",
+          "docs": [
+            "CPI authority PDA for event emission."
+          ],
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  112,
+                  105,
+                  95,
+                  97,
+                  117,
+                  116,
+                  104,
+                  111,
+                  114,
+                  105,
+                  116,
+                  121
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "liquid_events_program",
+          "docs": [
+            "Liquid events program for centralized event emission."
+          ],
+          "address": "EventsQeXA43nLKR69DhHwNsJ6aM512AweMCgG3wG8zG"
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "transfer_admin",
+      "docs": [
+        "Transfer admin authority to a new address (step 1 of 2).",
+        "",
+        "# Arguments",
+        "* `new_admin` - The new admin authority public key."
+      ],
+      "discriminator": [
+        42,
+        242,
+        66,
+        106,
+        228,
+        10,
+        111,
+        156
+      ],
+      "accounts": [
+        {
+          "name": "admin",
+          "docs": [
+            "The current admin authorizing the transfer."
+          ],
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "global_config",
+          "docs": [
+            "Global configuration account to be updated."
+          ],
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  103,
+                  108,
+                  111,
+                  98,
+                  97,
+                  108,
+                  95,
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              }
+            ]
+          }
+        }
+      ],
+      "args": [
+        {
+          "name": "new_admin",
+          "type": "pubkey"
+        }
+      ]
+    },
+    {
+      "name": "update_fee_config",
+      "docs": [
+        "Update an existing fee configuration.",
+        "",
+        "Can update recipients or transfer update authority.",
+        "Cannot be used to revoke - use `revoke_fee_config` instead.",
+        "Cannot be called on revoked configurations.",
+        "",
+        "# Arguments",
+        "* `args` - New recipients and/or new update authority."
+      ],
+      "discriminator": [
+        104,
+        184,
+        103,
+        242,
+        88,
+        151,
+        107,
+        20
+      ],
+      "accounts": [
+        {
+          "name": "authority",
+          "docs": [
+            "The current update authority"
+          ],
+          "signer": true
+        },
+        {
+          "name": "fee_config",
+          "docs": [
+            "The fee configuration to update"
+          ],
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  102,
+                  101,
+                  101,
+                  95,
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "token_mint"
+              },
+              {
+                "kind": "account",
+                "path": "quote_mint"
+              }
+            ]
+          }
+        },
+        {
+          "name": "token_mint",
+          "docs": [
+            "The token mint this fee configuration is for"
+          ]
+        },
+        {
+          "name": "quote_mint",
+          "docs": [
+            "The quote token mint for this fee configuration"
+          ]
+        },
+        {
+          "name": "fee_vault",
+          "docs": [
+            "The fee vault â€” must be drained before changing recipients."
+          ],
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  102,
+                  101,
+                  101,
+                  95,
+                  118,
+                  97,
+                  117,
+                  108,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "fee_config"
+              }
+            ]
+          }
+        },
+        {
+          "name": "token_fee_vault",
+          "docs": [
+            "The token fee vault ATA for the fee vault.",
+            "Required when updating recipients to verify token fees have been drained."
+          ],
+          "optional": true
+        },
+        {
+          "name": "cpi_authority",
+          "docs": [
+            "CPI authority PDA for event emission."
+          ],
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  112,
+                  105,
+                  95,
+                  97,
+                  117,
+                  116,
+                  104,
+                  111,
+                  114,
+                  105,
+                  116,
+                  121
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "liquid_events_program",
+          "docs": [
+            "Liquid events program for centralized event emission."
+          ],
+          "address": "EventsQeXA43nLKR69DhHwNsJ6aM512AweMCgG3wG8zG"
+        }
+      ],
+      "args": [
+        {
+          "name": "args",
+          "type": {
+            "defined": {
+              "name": "UpdateFeeConfigArgs"
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "accounts": [
+    {
+      "name": "FeeGlobalConfig",
+      "discriminator": [
+        173,
+        146,
+        211,
+        93,
+        199,
+        231,
+        185,
+        23
+      ]
+    },
+    {
+      "name": "UnifiedFeeConfiguration",
+      "discriminator": [
+        88,
+        134,
+        79,
+        0,
+        82,
+        145,
+        69,
+        108
+      ]
+    }
+  ],
+  "errors": [
+    {
+      "code": 6000,
+      "name": "ArithmeticOverflow",
+      "msg": "Arithmetic overflow"
+    },
+    {
+      "code": 6001,
+      "name": "InvalidFeeConfiguration",
+      "msg": "Invalid fee configuration: recipients must sum to 10,000 basis points"
+    },
+    {
+      "code": 6002,
+      "name": "TooManyFeeRecipients",
+      "msg": "Too many fee recipients: maximum is 10"
+    },
+    {
+      "code": 6003,
+      "name": "DuplicateFeeRecipient",
+      "msg": "Duplicate fee recipient"
+    },
+    {
+      "code": 6004,
+      "name": "ConfigurationLocked",
+      "msg": "Fee configuration is locked and cannot be modified"
+    },
+    {
+      "code": 6005,
+      "name": "AlreadyRevoked",
+      "msg": "Creator fees are already revoked"
+    },
+    {
+      "code": 6006,
+      "name": "CannotUnrevoke",
+      "msg": "Cannot un-revoke creator fees"
+    },
+    {
+      "code": 6007,
+      "name": "Unauthorized",
+      "msg": "Unauthorized: only update authority can perform this action"
+    },
+    {
+      "code": 6008,
+      "name": "FeesMustBeWithdrawn",
+      "msg": "Fee vault has undistributed fees that must be withdrawn first"
+    },
+    {
+      "code": 6009,
+      "name": "NotRecipientsMode",
+      "msg": "Not in multi-recipient mode"
+    },
+    {
+      "code": 6010,
+      "name": "InvalidRemainingAccounts",
+      "msg": "Invalid remaining accounts count"
+    },
+    {
+      "code": 6011,
+      "name": "InvalidRecipientVault",
+      "msg": "Invalid recipient vault"
+    },
+    {
+      "code": 6012,
+      "name": "ConfigurationAlreadyExists",
+      "msg": "Fee configuration already exists for this token"
+    },
+    {
+      "code": 6013,
+      "name": "UnauthorizedCaller",
+      "msg": "Unauthorized caller: only the liquid program can initialize fee configs"
+    },
+    {
+      "code": 6014,
+      "name": "NothingToClaim",
+      "msg": "Nothing to claim"
+    },
+    {
+      "code": 6015,
+      "name": "TokenFeeVaultRequired",
+      "msg": "Token fee vault must be provided and match expected ATA"
+    },
+    {
+      "code": 6016,
+      "name": "InvalidQuoteMint",
+      "msg": "Invalid quote mint"
+    },
+    {
+      "code": 6017,
+      "name": "InvalidAdminAuthority",
+      "msg": "Invalid admin authority"
+    },
+    {
+      "code": 6018,
+      "name": "NoPendingAdminTransfer",
+      "msg": "No pending admin transfer"
+    },
+    {
+      "code": 6019,
+      "name": "NotPendingAdmin",
+      "msg": "Not the pending admin"
+    },
+    {
+      "code": 6020,
+      "name": "RecipientAccountsMismatch",
+      "msg": "Remaining accounts count must match recipient basis points count"
+    }
+  ],
+  "types": [
+    {
+      "name": "FeeGlobalConfig",
+      "docs": [
+        "Global configuration for the liquid-fees program.",
+        "",
+        "Stores the protocol admin authority who can override fee config",
+        "update authorities and manage the program at the protocol level."
+      ],
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "admin_authority",
+            "docs": [
+              "Admin authority who can manage fee configurations at the protocol level."
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "pending_admin",
+            "docs": [
+              "Pending admin authority for two-step transfer. None if no transfer is in progress."
+            ],
+            "type": {
+              "option": "pubkey"
+            }
+          },
+          {
+            "name": "bump",
+            "docs": [
+              "Bump seed for PDA derivation."
+            ],
+            "type": "u8"
+          }
+        ]
+      }
+    },
+    {
+      "name": "FeeMode",
+      "docs": [
+        "The fee distribution mode for a token's fee configuration."
+      ],
+      "repr": {
+        "kind": "rust"
+      },
+      "type": {
+        "kind": "enum",
+        "variants": [
+          {
+            "name": "Recipients"
+          },
+          {
+            "name": "Revoked"
+          }
+        ]
+      }
+    },
+    {
+      "name": "FeeRecipient",
+      "docs": [
+        "A fee recipient with their allocation and vault PDA bump."
+      ],
+      "repr": {
+        "kind": "c"
+      },
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "pubkey",
+            "docs": [
+              "The public key of the fee recipient."
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "basis_points",
+            "docs": [
+              "The recipient's share of fees in basis points (out of 10,000)."
+            ],
+            "type": "u16"
+          },
+          {
+            "name": "vault_bump",
+            "docs": [
+              "The bump seed for the recipient's vault PDA."
+            ],
+            "type": "u8"
+          },
+          {
+            "name": "_padding",
+            "docs": [
+              "Padding to align to 8-byte boundary (32 + 2 + 1 + 5 = 40 bytes)."
+            ],
+            "type": {
+              "array": [
+                "u8",
+                5
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "InitFeeRecipient",
+      "docs": [
+        "A fee recipient entry used during fee configuration initialization."
+      ],
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "pubkey",
+            "docs": [
+              "The public key of the fee recipient."
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "basis_points",
+            "docs": [
+              "The recipient's share of fees in basis points (out of 10,000)."
+            ],
+            "type": "u16"
+          }
+        ]
+      }
+    },
+    {
+      "name": "InitializeFeeConfigArgs",
+      "docs": [
+        "Arguments for initializing a fee configuration, selecting the fee mode."
+      ],
+      "type": {
+        "kind": "enum",
+        "variants": [
+          {
+            "name": "Recipients",
+            "fields": [
+              {
+                "name": "recipients",
+                "docs": [
+                  "The list of fee recipients with their basis point allocations."
+                ],
+                "type": {
+                  "vec": {
+                    "defined": {
+                      "name": "InitFeeRecipient"
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "name": "Revoked"
+          }
+        ]
+      }
+    },
+    {
+      "name": "OverrideUpdateAuthorityArgs",
+      "docs": [
+        "Arguments for overriding a fee config's update authority."
+      ],
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "new_update_authority",
+            "docs": [
+              "The new update authority public key to set on the fee configuration."
+            ],
+            "type": "pubkey"
+          }
+        ]
+      }
+    },
+    {
+      "name": "UnifiedFeeConfiguration",
+      "docs": [
+        "Unified fee configuration for a token, supporting both Recipients and Revoked modes.",
+        "",
+        "Stored as a zero-copy account for efficient access in hot paths."
+      ],
+      "serialization": "bytemuckunsafe",
+      "repr": {
+        "kind": "c",
+        "packed": true
+      },
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "creator",
+            "docs": [
+              "The creator who owns this fee configuration"
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "token_mint",
+            "docs": [
+              "The token mint this configuration applies to.",
+              "This is the key identifier that persists across migration from bonding curve to AMM."
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "quote_mint",
+            "docs": [
+              "The quote token mint used for fee accumulation (e.g., WSOL for native curves, USDC for stable).",
+              "`Pubkey::default()` indicates no token fee vault (Revoked-only configs)."
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "fee_mode",
+            "docs": [
+              "Current fee mode"
+            ],
+            "type": {
+              "defined": {
+                "name": "FeeMode"
+              }
+            }
+          },
+          {
+            "name": "recipients_count",
+            "docs": [
+              "Number of active recipients in the recipients array"
+            ],
+            "type": "u8"
+          },
+          {
+            "name": "recipients",
+            "docs": [
+              "Recipients for Recipients mode (fixed array, use recipients_count for active length)"
+            ],
+            "type": {
+              "array": [
+                {
+                  "defined": {
+                    "name": "FeeRecipient"
+                  }
+                },
+                10
+              ]
+            }
+          },
+          {
+            "name": "update_authority",
+            "docs": [
+              "Authority that can modify this configuration (initially creator)"
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "bump",
+            "docs": [
+              "Bump seed for PDA derivation"
+            ],
+            "type": "u8"
+          }
+        ]
+      }
+    },
+    {
+      "name": "UpdateFeeConfigArgs",
+      "docs": [
+        "Arguments for updating a fee configuration."
+      ],
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "recipient_basis_points",
+            "docs": [
+              "New recipient basis points (optional, only valid for Recipients mode).",
+              "Recipient pubkeys are passed via remaining accounts in matching order."
+            ],
+            "type": {
+              "option": {
+                "vec": "u16"
+              }
+            }
+          },
+          {
+            "name": "new_update_authority",
+            "docs": [
+              "New update authority (optional)."
+            ],
+            "type": {
+              "option": "pubkey"
+            }
+          }
+        ]
+      }
+    }
+  ]
+}
