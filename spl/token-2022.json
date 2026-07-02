@@ -983,6 +983,26 @@
           }
         }
       ]
+    },
+    {
+      "name": "scaledUiAmountExtension",
+      "accounts": [
+        {
+          "name": "mint",
+          "isMut": true,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "instructionType",
+          "type": "u8"
+        }
+      ],
+      "discriminant": {
+        "type": "u8",
+        "value": 43
+      }
     }
   ],
   "accounts": [
