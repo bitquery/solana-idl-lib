@@ -1,0 +1,280 @@
+{
+  "address": "prediCtPZCttYMvm2W3PtxmMxLmT1dtN7riU6Cxh6tM",
+  "metadata": {
+    "name": "predict",
+    "version": "0.1.0",
+    "spec": "0.1.0",
+    "description": "World (world.xyz) prediction-markets core program. REVERSE-ENGINEERED from live mainnet data on 2026-07-02 (no official IDL exists). Discriminators (all 12 instructions + 5 events) re-derived via sha256('global:'/'event:')[:8] and byte-verified. Items marked (VERIFIED) in docs are byte-checked against live txs; items marked (INFERRED) are best-effort and need a verification pass before production use. CASH collateral has 6 decimals. Sibling router program 'Janus' is NOT Anchor and is not covered by this IDL; user trades are best read from DFlow SwapEvents (see dflow/dflow.json)."
+  },
+  "instructions": [
+    {
+      "name": "split",
+      "docs": [
+        "VERIFIED. Lock `amount` CASH collateral and mint an equal `amount` of BOTH outcome tokens (A and B). Emits no event; derive effects from args + token balance deltas.",
+        "NOTE: authority is the trader on direct calls, or the Janus global vault PDA (FuNgUdjWtHTQq6mEzGjcfTcmCZWbESrBoK8ywyADV5tu) when CPI-routed during market making."
+      ],
+      "discriminator": [124, 189, 27, 43, 216, 40, 147, 66],
+      "accounts": [
+        { "name": "authority", "writable": true, "signer": true },
+        { "name": "market", "docs": ["Market state PDA — use as the market key."], "writable": true },
+        { "name": "collateral_mint", "address": "CASHx9KJUStyftLFWGvEVf59SGeG9sh5FfcnZMVPCASH" },
+        { "name": "outcome_mint_a", "writable": true },
+        { "name": "outcome_mint_b", "writable": true },
+        { "name": "authority_collateral_account", "writable": true },
+        { "name": "market_collateral_vault", "writable": true },
+        { "name": "authority_outcome_a_account", "writable": true },
+        { "name": "authority_outcome_b_account", "writable": true },
+        { "name": "token_program", "address": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb" },
+        { "name": "token_program_2", "address": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb" }
+      ],
+      "args": [{ "name": "amount", "docs": ["CASH base units (6 decimals)."], "type": "u64" }]
+    },
+    {
+      "name": "merge",
+      "docs": ["VERIFIED. Exact inverse of `split`: burn `amount` of BOTH outcome tokens and release `amount` CASH. Emits no event."],
+      "discriminator": [148, 141, 236, 47, 174, 126, 69, 111],
+      "accounts": [
+        { "name": "authority", "writable": true, "signer": true },
+        { "name": "market", "writable": true },
+        { "name": "collateral_mint", "address": "CASHx9KJUStyftLFWGvEVf59SGeG9sh5FfcnZMVPCASH" },
+        { "name": "outcome_mint_a", "writable": true },
+        { "name": "outcome_mint_b", "writable": true },
+        { "name": "authority_collateral_account", "writable": true },
+        { "name": "market_collateral_vault", "writable": true },
+        { "name": "authority_outcome_a_account", "writable": true },
+        { "name": "authority_outcome_b_account", "writable": true },
+        { "name": "token_program", "address": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb" },
+        { "name": "token_program_2", "address": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb" }
+      ],
+      "args": [{ "name": "amount", "docs": ["CASH base units (6 decimals)."], "type": "u64" }]
+    },
+    {
+      "name": "redeem_outcome",
+      "docs": ["VERIFIED. Redeem `amount` of the winning outcome token 1:1 for CASH after resolution. Emits OutcomeRedeemed."],
+      "discriminator": [132, 231, 109, 20, 197, 172, 180, 32],
+      "accounts": [
+        { "name": "authority", "writable": true, "signer": true },
+        { "name": "market", "writable": true },
+        { "name": "collateral_mint", "address": "CASHx9KJUStyftLFWGvEVf59SGeG9sh5FfcnZMVPCASH" },
+        { "name": "outcome_mint_a", "writable": true },
+        { "name": "outcome_mint_b", "writable": true },
+        { "name": "authority_collateral_account", "writable": true },
+        { "name": "market_collateral_vault", "writable": true },
+        { "name": "authority_outcome_a_account", "writable": true },
+        { "name": "authority_outcome_b_account", "writable": true },
+        { "name": "token_program", "address": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb" },
+        { "name": "token_program_2", "address": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb" }
+      ],
+      "args": [{ "name": "amount", "docs": ["Winning outcome tokens to redeem (6 decimals)."], "type": "u64" }]
+    },
+    {
+      "name": "redeem_outcome_for_user",
+      "docs": [
+        "VERIFIED discriminator; args = none. Ops-triggered redemption on behalf of a user. Emits OutcomeRedeemed.",
+        "INFERRED: 15-account layout not fully reverse-engineered; accounts intentionally left empty."
+      ],
+      "discriminator": [0, 17, 167, 98, 233, 28, 107, 52],
+      "accounts": [],
+      "args": []
+    },
+    {
+      "name": "burn_worthless_outcome",
+      "docs": [
+        "VERIFIED discriminator; args = none. Burns losing (worthless) outcome tokens after resolution. Emits no event.",
+        "INFERRED: 5-account layout not fully reverse-engineered; accounts intentionally left empty."
+      ],
+      "discriminator": [176, 128, 206, 1, 110, 32, 90, 45],
+      "accounts": [],
+      "args": []
+    },
+    {
+      "name": "initialize_market",
+      "docs": [
+        "Ops-only. Creates the market PDA + two outcome mints. Emits MarketInitialized.",
+        "VERIFIED: header fields (nonce, oracle_type, feed_id, window_start_ms, window_end_ms) and the outcome vec {name, symbol, uri}.",
+        "INFERRED / NOT BYTE-EXACT: the `reserved` region (Option::None fields) between window_end_ms and the outcome vec, plus ~6 trailing bytes, are not modeled precisely — a strict borsh round-trip is not guaranteed. In practice parse the outcome mint from the last path segment of each uri (https://m.world.xyz/<outcome_mint>).",
+        "Cadence observed: a fresh 'BTC Up / BTC Down' market every 15 minutes (:00/:15/:30/:45)."
+      ],
+      "discriminator": [35, 35, 189, 193, 155, 48, 170, 203],
+      "accounts": [
+        { "name": "authority", "docs": ["Ops wallet DDucv2DeUsTsg1rfAcWAnUSUVpqfdHEzxX66ARB2JYVg."], "writable": true, "signer": true },
+        { "name": "collateral_mint", "address": "CASHx9KJUStyftLFWGvEVf59SGeG9sh5FfcnZMVPCASH" },
+        { "name": "market", "writable": true },
+        { "name": "outcome_mint_a", "writable": true },
+        { "name": "outcome_mint_b", "writable": true },
+        { "name": "market_collateral_vault", "writable": true },
+        { "name": "system_program", "address": "11111111111111111111111111111111" },
+        { "name": "token_program", "address": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb" },
+        { "name": "token_program_2", "address": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb" },
+        { "name": "event_authority", "address": "3szuQmavzLtzPitk9LbuUtcRd6W3299f7zNGNKD5vK82" },
+        { "name": "program", "address": "prediCtPZCttYMvm2W3PtxmMxLmT1dtN7riU6Cxh6tM" }
+      ],
+      "args": [
+        { "name": "nonce", "docs": ["Unique per-market seed."], "type": "u64" },
+        { "name": "oracle_type", "docs": ["1 = Chainlink Data Streams."], "type": "u8" },
+        { "name": "padding", "type": "u8" },
+        { "name": "feed_id", "docs": ["Chainlink Data Streams feed id. BTC/USD = 0x00039d9e45394f473ab1f050a1b963e6b05351e52d71e507509ada0c95ed75b8."], "type": { "array": ["u8", 32] } },
+        { "name": "window_start_ms", "docs": ["Market window start, unix milliseconds."], "type": "u64" },
+        { "name": "window_end_ms", "docs": ["Market window end, unix ms (start + 900000 for 15-min markets)."], "type": "u64" },
+        { "name": "reserved", "docs": ["INFERRED filler for Option::None fields; not byte-exact."], "type": { "array": ["u8", 42] } },
+        { "name": "outcomes", "docs": ["Do not assume exactly 2 — parse the vec length (layout supports N outcomes)."], "type": { "vec": { "defined": { "name": "Outcome" } } } }
+      ]
+    },
+    {
+      "name": "determine_outcome",
+      "docs": [
+        "Ops-only. Records the resolution result. Emits MarketDetermined.",
+        "VERIFIED: arg is `payout_bps: u16` (payout numerator per 10,000). Observed 0 and 10000 — 10000 = one side pays in full, 0 = the other. This is NOT an outcome index.",
+        "INFERRED: which outcome (A vs B) the numerator refers to — pin once via a resolved market's redemptions (OutcomeRedeemed.outcome_mint)."
+      ],
+      "discriminator": [24, 113, 22, 102, 49, 149, 109, 82],
+      "accounts": [
+        { "name": "authority", "writable": true, "signer": true },
+        { "name": "market", "writable": true },
+        { "name": "event_authority", "address": "3szuQmavzLtzPitk9LbuUtcRd6W3299f7zNGNKD5vK82" },
+        { "name": "program", "address": "prediCtPZCttYMvm2W3PtxmMxLmT1dtN7riU6Cxh6tM" }
+      ],
+      "args": [{ "name": "payout_bps", "docs": ["Payout numerator per 10,000 (0 or 10000 observed)."], "type": "u16" }]
+    },
+    {
+      "name": "close_market",
+      "docs": [
+        "VERIFIED discriminator; args = none. Closes a resolved market. Emits MarketClosed.",
+        "INFERRED: full 11-account layout not reverse-engineered; only the trailing Anchor emit_cpi accounts are known."
+      ],
+      "discriminator": [88, 154, 248, 186, 48, 14, 123, 244],
+      "accounts": [
+        { "name": "authority", "writable": true, "signer": true },
+        { "name": "market", "writable": true },
+        { "name": "event_authority", "address": "3szuQmavzLtzPitk9LbuUtcRd6W3299f7zNGNKD5vK82" },
+        { "name": "program", "address": "prediCtPZCttYMvm2W3PtxmMxLmT1dtN7riU6Cxh6tM" }
+      ],
+      "args": []
+    },
+    {
+      "name": "update_metadata",
+      "docs": [
+        "VERIFIED discriminator. Emits MarketMetadataUpdated.",
+        "INFERRED: 96-byte arg blob only partially decoded — version/kind/feed_id are readable, the remainder (oracle checkpoint values + flags) is not resolved. Modeled as fixed bytes; not needed for trade/market indexing."
+      ],
+      "discriminator": [170, 182, 43, 239, 97, 78, 225, 186],
+      "accounts": [
+        { "name": "authority", "writable": true, "signer": true },
+        { "name": "market", "writable": true },
+        { "name": "event_authority", "address": "3szuQmavzLtzPitk9LbuUtcRd6W3299f7zNGNKD5vK82" },
+        { "name": "program", "address": "prediCtPZCttYMvm2W3PtxmMxLmT1dtN7riU6Cxh6tM" }
+      ],
+      "args": [
+        { "name": "version", "type": "u8" },
+        { "name": "kind", "type": "u8" },
+        { "name": "feed_id", "type": { "array": ["u8", 32] } },
+        { "name": "rest", "docs": ["INFERRED: oracle checkpoint values + flags, not decoded."], "type": { "array": ["u8", 62] } }
+      ]
+    },
+    {
+      "name": "create_user_settings",
+      "docs": ["VERIFIED discriminator; args = none. INFERRED: 4-account layout not reverse-engineered."],
+      "discriminator": [170, 217, 196, 189, 42, 127, 228, 201],
+      "accounts": [],
+      "args": []
+    },
+    {
+      "name": "update_user_settings",
+      "docs": ["VERIFIED discriminator; 1-byte arg. INFERRED: field meaning + 2-account layout not reverse-engineered."],
+      "discriminator": [58, 38, 137, 232, 236, 93, 175, 234],
+      "accounts": [],
+      "args": [{ "name": "value", "type": "u8" }]
+    },
+    {
+      "name": "close_user_settings",
+      "docs": ["VERIFIED discriminator; args = none. INFERRED: 3-account layout not reverse-engineered."],
+      "discriminator": [17, 136, 165, 178, 158, 116, 173, 101],
+      "accounts": [],
+      "args": []
+    }
+  ],
+  "events": [
+    { "name": "MarketInitialized", "discriminator": [134, 160, 122, 87, 50, 3, 255, 81] },
+    { "name": "MarketClosed", "discriminator": [86, 91, 119, 43, 94, 0, 217, 113] },
+    { "name": "MarketDetermined", "discriminator": [126, 73, 40, 238, 238, 81, 53, 241] },
+    { "name": "OutcomeRedeemed", "discriminator": [110, 31, 124, 53, 63, 101, 155, 232] },
+    { "name": "MarketMetadataUpdated", "discriminator": [73, 62, 227, 194, 19, 8, 166, 237] }
+  ],
+  "types": [
+    {
+      "name": "Outcome",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          { "name": "name", "type": "string" },
+          { "name": "symbol", "type": "string" },
+          { "name": "uri", "docs": ["https://m.world.xyz/<outcome_mint>; last path segment is the outcome mint."], "type": "string" }
+        ]
+      }
+    },
+    {
+      "name": "MarketInitialized",
+      "docs": ["270-byte payload. First 5 pubkeys VERIFIED; oracle-config tail INFERRED (mirrors initialize_market header)."],
+      "type": {
+        "kind": "struct",
+        "fields": [
+          { "name": "market", "type": "pubkey" },
+          { "name": "authority", "type": "pubkey" },
+          { "name": "collateral_mint", "type": "pubkey" },
+          { "name": "outcome_mint_a", "type": "pubkey" },
+          { "name": "outcome_mint_b", "type": "pubkey" },
+          { "name": "oracle_type", "type": "u8" },
+          { "name": "padding", "type": "u8" },
+          { "name": "feed_id", "type": { "array": ["u8", 32] } },
+          { "name": "window_start_ms", "type": "u64" },
+          { "name": "window_end_ms", "type": "u64" },
+          { "name": "reserved", "type": { "array": ["u8", 60] } }
+        ]
+      }
+    },
+    {
+      "name": "MarketClosed",
+      "docs": ["32-byte payload. VERIFIED."],
+      "type": { "kind": "struct", "fields": [{ "name": "market", "type": "pubkey" }] }
+    },
+    {
+      "name": "MarketDetermined",
+      "docs": ["34-byte payload. VERIFIED. payout_bps mirrors the determine_outcome arg (0 or 10000)."],
+      "type": {
+        "kind": "struct",
+        "fields": [
+          { "name": "market", "type": "pubkey" },
+          { "name": "payout_bps", "type": "u16" }
+        ]
+      }
+    },
+    {
+      "name": "OutcomeRedeemed",
+      "docs": ["177-byte payload. VERIFIED. cash_paid_out == outcome_tokens_burned when payout_bps=10000."],
+      "type": {
+        "kind": "struct",
+        "fields": [
+          { "name": "market", "type": "pubkey" },
+          { "name": "outcome_mint", "type": "pubkey" },
+          { "name": "user", "type": "pubkey" },
+          { "name": "owner", "type": "pubkey" },
+          { "name": "user_outcome_account", "type": "pubkey" },
+          { "name": "outcome_tokens_burned", "docs": ["6 decimals."], "type": "u64" },
+          { "name": "cash_paid_out", "docs": ["6 decimals."], "type": "u64" },
+          { "name": "success", "type": "bool" }
+        ]
+      }
+    },
+    {
+      "name": "MarketMetadataUpdated",
+      "docs": ["144-byte payload. INFERRED: only the leading market pubkey is resolved; remainder left as raw bytes."],
+      "type": {
+        "kind": "struct",
+        "fields": [
+          { "name": "market", "type": "pubkey" },
+          { "name": "data", "type": { "array": ["u8", 112] } }
+        ]
+      }
+    }
+  ]
+}
