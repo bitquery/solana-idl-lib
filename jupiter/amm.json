@@ -86,6 +86,17 @@
       "args": [{ "name": "bump", "type": "u8" }]
     },
     {
+      "name": "close_wsol_token_account",
+      "discriminator": [203, 129, 103, 133, 197, 125, 107, 86],
+      "accounts": [
+        { "name": "token_account", "writable": true },
+        { "name": "user", "writable": true, "signer": true },
+        { "name": "token_program", "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA" },
+        { "name": "system_program", "address": "11111111111111111111111111111111" }
+      ],
+      "args": []
+    },
+    {
       "name": "exact_out_route",
       "discriminator": [208, 51, 239, 151, 123, 43, 237, 92],
       "accounts": [
@@ -359,6 +370,7 @@
     { "name": "SwapEvent", "discriminator": [64, 198, 205, 232, 38, 8, 113, 226] },
     { "name": "SwapsEvent", "discriminator": [152, 47, 78, 235, 192, 96, 110, 106] },
     { "name": "CandidateSwapResults", "discriminator": [45, 9, 244, 30, 229, 52, 168, 123] },
+    { "name": "CandidateSwapQuoteError", "discriminator": [248, 134, 37, 55, 145, 177, 114, 79] },
     { "name": "BestSwapOutAmountViolation", "discriminator": [124, 66, 196, 51, 218, 173, 46, 93] }
   ],
   "errors": [
@@ -485,6 +497,7 @@
       }
     },
     { "name": "Side", "type": { "kind": "enum", "variants": [{ "name": "Bid" }, { "name": "Ask" }] } },
+    { "name": "BisonFiPredictSide", "type": { "kind": "enum", "variants": [{ "name": "Yes" }, { "name": "No" }] } },
     {
       "name": "Swap",
       "type": {
@@ -733,7 +746,113 @@
               { "name": "auth_amount_in", "type": "u64" },
               { "name": "auth", "type": "u64" }
             ]
+          },
+          { "name": "Riptide", "fields": [{ "name": "amount_is_token_a", "type": "bool" }] },
+          { "name": "RunnerRodeo" },
+          { "name": "TaurusFi", "fields": [{ "name": "is_base_in", "type": "bool" }] },
+          { "name": "Omnipair" },
+          { "name": "MSwap" },
+          {
+            "name": "Hylo",
+            "fields": [{ "name": "swap_type", "type": { "defined": { "name": "HyloSwapType" } } }]
+          },
+          { "name": "VoltrDeposit" },
+          { "name": "VoltrWithdraw" },
+          {
+            "name": "SanctumSV2",
+            "fields": [
+              { "name": "src_lst_value_calc_accs", "type": "u8" },
+              { "name": "dst_lst_value_calc_accs", "type": "u8" },
+              { "name": "src_lst_index", "type": "u32" },
+              { "name": "dst_lst_index", "type": "u32" }
+            ]
+          },
+          { "name": "LemmingsFi", "fields": [{ "name": "is_base_in", "type": "bool" }] },
+          { "name": "ScaleVmmBuy" },
+          { "name": "ScaleVmmSell" },
+          { "name": "ScaleAmmBuy" },
+          { "name": "ScaleAmmSell" },
+          { "name": "BisonFiV2", "fields": [{ "name": "a_to_b", "type": "bool" }] },
+          { "name": "Trends" },
+          { "name": "HumaDeposit" },
+          { "name": "HumaInstantWithdraw" },
+          { "name": "Kipseli", "fields": [{ "name": "is_base_to_quote", "type": "bool" }] },
+          {
+            "name": "DynamicV2",
+            "fields": [
+              {
+                "name": "candidate_swaps",
+                "type": { "vec": { "defined": { "name": "CandidateSwapWithBps" } } }
+              },
+              { "name": "max_split_quote_calls", "type": "u8" },
+              { "name": "max_split_candidates", "type": "u8" }
+            ]
+          },
+          { "name": "PumpSwapBuyV3WithCashbackClaim" },
+          { "name": "PumpSwapSellV3WithCashbackClaim" },
+          { "name": "PumpWrappedBuyV4WithCashbackClaim" },
+          { "name": "PumpWrappedSellV4WithCashbackClaim" },
+          { "name": "GoonFiV3", "fields": [{ "name": "is_bid", "type": "bool" }] },
+          { "name": "PumpWrappedBuyV5", "fields": [{ "name": "claim_cashback", "type": "bool" }] },
+          { "name": "PumpWrappedSellV5", "fields": [{ "name": "claim_cashback", "type": "bool" }] },
+          { "name": "ZeroFiSwapV2" },
+          {
+            "name": "BisonFiPredict",
+            "fields": [
+              { "name": "side", "type": { "defined": { "name": "BisonFiPredictSide" } } },
+              { "name": "is_buy", "type": "bool" }
+            ]
+          },
+          { "name": "ByrealDynamicV3" },
+          {
+            "name": "Flux",
+            "fields": [
+              { "name": "swap_id", "type": "u64" },
+              { "name": "base_to_quote", "type": "bool" }
+            ]
+          },
+          { "name": "VaultLiquidSellLst" },
+          { "name": "VaultLiquidBuyLst", "fields": [{ "name": "lst_amount", "type": "u64" }] },
+          { "name": "KipseliV2", "fields": [{ "name": "is_base_to_quote", "type": "bool" }] },
+          {
+            "name": "Deriverse",
+            "fields": [
+              { "name": "side", "type": { "defined": { "name": "Side" } } },
+              { "name": "instr_id", "type": "u32" }
+            ]
+          },
+          { "name": "Hadron", "fields": [{ "name": "is_x", "type": "bool" }] },
+          { "name": "BinaryFi" },
+          { "name": "Metric", "fields": [{ "name": "zero_for_one", "type": "bool" }] },
+          { "name": "JupiterLendDexSwap", "fields": [{ "name": "swap0to1", "type": "bool" }] },
+          { "name": "Gatorswap", "fields": [{ "name": "base_to_quote", "type": "bool" }] },
+          {
+            "name": "Flint",
+            "fields": [
+              { "name": "is_global", "type": "bool" },
+              { "name": "taker_buy", "type": "bool" }
+            ]
+          },
+          { "name": "Denali", "fields": [{ "name": "base_to_quote", "type": "bool" }] },
+          { "name": "PerenaStarV2Deposit" },
+          {
+            "name": "PerenaStarV2WithdrawFromExternal",
+            "fields": [{ "name": "external_liquidity_source", "type": "u8" }]
+          },
+          {
+            "name": "SanctumSols",
+            "fields": [{ "name": "swap_type", "type": { "defined": { "name": "SanctumSolsSwapType" } } }]
           }
+        ]
+      }
+    },
+    {
+      "name": "CandidateSwapWithBps",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          { "name": "candidate_swap", "type": { "defined": { "name": "CandidateSwap" } } },
+          { "name": "bps", "type": "u32" }
         ]
       }
     },
@@ -756,7 +875,48 @@
               { "name": "swap_id", "type": "u64" },
               { "name": "is_base_to_quote", "type": "bool" }
             ]
-          }
+          },
+          { "name": "RaydiumV2" },
+          { "name": "RaydiumClmm" },
+          { "name": "Whirlpool", "fields": [{ "name": "a_to_b", "type": "bool" }] },
+          { "name": "ZeroFi" },
+          { "name": "BisonFiV2", "fields": [{ "name": "a_to_b", "type": "bool" }] },
+          { "name": "GoonFiV2", "fields": [{ "name": "is_bid", "type": "bool" }] },
+          { "name": "GoonFiV3", "fields": [{ "name": "is_bid", "type": "bool" }] },
+          {
+            "name": "WhirlpoolV2",
+            "fields": [
+              { "name": "a_to_b", "type": "bool" },
+              {
+                "name": "remaining_accounts_info",
+                "type": { "option": { "defined": { "name": "RemainingAccountsInfo" } } }
+              }
+            ]
+          },
+          { "name": "ZeroFiSwapV2" }
+        ]
+      }
+    },
+    {
+      "name": "SanctumSolsSwapType",
+      "type": {
+        "kind": "enum",
+        "variants": [{ "name": "Mint" }, { "name": "Claim" }, { "name": "ClaimHolding" }]
+      }
+    },
+    {
+      "name": "HyloSwapType",
+      "type": {
+        "kind": "enum",
+        "variants": [
+          { "name": "MintStable" },
+          { "name": "RedeemStable" },
+          { "name": "MintLever" },
+          { "name": "RedeemLever" },
+          { "name": "SwapStableToLever" },
+          { "name": "SwapLeverToStable" },
+          { "name": "StabilityPoolDeposit" },
+          { "name": "StabilityPoolWithdraw" }
         ]
       }
     },
@@ -781,7 +941,8 @@
           { "name": "input_mint", "type": "pubkey" },
           { "name": "input_amount", "type": "u64" },
           { "name": "output_mint", "type": "pubkey" },
-          { "name": "output_amount", "type": "u64" }
+          { "name": "output_amount", "type": "u64" },
+          { "name": "amm", "type": "pubkey" }
         ]
       }
     },
@@ -827,6 +988,17 @@
       "type": {
         "kind": "struct",
         "fields": [{ "name": "results", "type": { "vec": { "defined": { "name": "CandidateSwapResult" } } } }]
+      }
+    },
+    {
+      "name": "CandidateSwapQuoteError",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          { "name": "candidate_index", "type": "u64" },
+          { "name": "in_amount", "type": "u64" },
+          { "name": "error_code", "type": "u64" }
+        ]
       }
     }
   ]
