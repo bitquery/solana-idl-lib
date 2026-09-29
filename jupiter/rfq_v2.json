@@ -1,0 +1,182 @@
+{
+  "address": "fd3nMFYTQjX1yr5ER8u7tPdHJB7qt8RpDpNtLQX2Br5",
+  "metadata": {
+    "name": "rfq_v2",
+    "version": "0.1.0",
+    "spec": "0.1.0",
+    "description": "Created with Anchor"
+  },
+  "instructions": [
+    {
+      "name": "fill_exact_in",
+      "discriminator": [
+        222,
+        208,
+        6,
+        209,
+        154,
+        163,
+        54,
+        94
+      ],
+      "accounts": [
+        {
+          "name": "user",
+          "signer": true
+        },
+        {
+          "name": "fill_authority",
+          "signer": true
+        },
+        {
+          "name": "user_base_token_account",
+          "writable": true
+        },
+        {
+          "name": "user_quote_token_account",
+          "writable": true
+        },
+        {
+          "name": "maker_base_token_account",
+          "writable": true
+        },
+        {
+          "name": "maker_quote_token_account",
+          "writable": true
+        },
+        {
+          "name": "base_mint"
+        },
+        {
+          "name": "quote_mint"
+        },
+        {
+          "name": "base_token_program"
+        },
+        {
+          "name": "quote_token_program"
+        },
+        {
+          "name": "instructions_sysvar",
+          "address": "Sysvar1nstructions1111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "taker_side",
+          "type": {
+            "defined": {
+              "name": "Side"
+            }
+          }
+        },
+        {
+          "name": "amount_in_atoms",
+          "type": "u64"
+        },
+        {
+          "name": "params",
+          "type": {
+            "defined": {
+              "name": "FillExactInParams"
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "errors": [
+    {
+      "code": 6000,
+      "name": "Overflow",
+      "msg": "Arithmetic overflow"
+    },
+    {
+      "code": 6001,
+      "name": "NoFill",
+      "msg": "No fill occurred"
+    },
+    {
+      "code": 6002,
+      "name": "StaleOrderbook",
+      "msg": "Orderbook is stale"
+    },
+    {
+      "code": 6003,
+      "name": "InvalidLevelOrdering",
+      "msg": "Orderbook levels must be sorted best-to-worst for the given side"
+    },
+    {
+      "code": 6004,
+      "name": "InvalidCaller",
+      "msg": "Invalid caller"
+    },
+    {
+      "code": 6005,
+      "name": "MakerAppearsInOtherInstruction",
+      "msg": "Maker authority appears in other instructions"
+    }
+  ],
+  "types": [
+    {
+      "name": "FillExactInParams",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "expire_at",
+            "type": "u64"
+          },
+          {
+            "name": "tick_size_qpb",
+            "type": "u64"
+          },
+          {
+            "name": "lot_size_base",
+            "type": "u64"
+          },
+          {
+            "name": "levels",
+            "type": {
+              "vec": {
+                "defined": {
+                  "name": "Level"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "Level",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "px_ticks",
+            "type": "u64"
+          },
+          {
+            "name": "qty_lots",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Side",
+      "type": {
+        "kind": "enum",
+        "variants": [
+          {
+            "name": "Bid"
+          },
+          {
+            "name": "Ask"
+          }
+        ]
+      }
+    }
+  ]
+}
