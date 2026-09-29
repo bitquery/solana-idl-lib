@@ -1,0 +1,83 @@
+{
+  "version": "0.1.0",
+  "name": "quantum_amm",
+  "instructions": [
+    {
+      "name": "swap",
+      "accounts": [
+        {
+          "name": "trader",
+          "isMut": false,
+          "isSigner": true
+        },
+        {
+          "name": "traderTokenAccountA",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "traderTokenAccountB",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "pool",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "poolVaultA",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "poolVaultB",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "account6",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "tokenProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "clock",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "sysvarInstructions",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "amountIn",
+          "type": "u64"
+        },
+        {
+          "name": "minAmountOut",
+          "type": "u64"
+        },
+        {
+          "name": "flag",
+          "type": "u8"
+        }
+      ],
+      "discriminant": {
+        "type": "u8",
+        "value": 7
+      }
+    }
+  ],
+  "metadata": {
+    "origin": "shank",
+    "address": "QuaNtZsgYRe5Z9Bk4LZ4cTD9tbkVoyCNf1R2BN9bBDv"
+  }
+}
