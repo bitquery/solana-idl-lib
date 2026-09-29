@@ -1,0 +1,487 @@
+{
+  "version": "0.1.0",
+  "name": "humidifi",
+  "instructions": [
+    {
+      "name": "swap",
+      "accounts": [
+        {
+          "name": "userTransferAuthority",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "pool",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "baseVault",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "quoteVault",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "userBaseTokenAccount",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "userQuoteTokenAccount",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "clock",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "tokenProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "sysvarInstructions",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "account9",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "swapId",
+          "type": "u64"
+        },
+        {
+          "name": "amountIn",
+          "type": "u64"
+        },
+        {
+          "name": "isBaseToQuote",
+          "type": "u8",
+          "docs": [
+            "Named as in the public SDKs, but 1 means the trader pays quote (quote -> base)."
+          ]
+        }
+      ],
+      "discriminant": {
+        "type": "u8",
+        "value": 4
+      }
+    },
+    {
+      "name": "swapV2",
+      "accounts": [
+        {
+          "name": "userTransferAuthority",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "pool",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "baseVault",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "quoteVault",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "userBaseTokenAccount",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "userQuoteTokenAccount",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "clock",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "baseTokenProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "quoteTokenProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "account9",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "baseMint",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "quoteMint",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "account12",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "account13",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "swapId",
+          "type": "u64"
+        },
+        {
+          "name": "amountIn",
+          "type": "u64"
+        },
+        {
+          "name": "isBaseToQuote",
+          "type": "u8",
+          "docs": [
+            "Named as in the public SDKs, but 1 means the trader pays quote (quote -> base)."
+          ]
+        }
+      ],
+      "discriminant": {
+        "type": "u8",
+        "value": 15
+      }
+    },
+    {
+      "name": "swapV3",
+      "accounts": [
+        {
+          "name": "userTransferAuthority",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "pool",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "baseVault",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "quoteVault",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "userBaseTokenAccount",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "userQuoteTokenAccount",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "clock",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "baseTokenProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "quoteTokenProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "account9",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "baseMint",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "quoteMint",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "account12",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "account13",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "swapId",
+          "type": "u64"
+        },
+        {
+          "name": "amountIn",
+          "type": "u64"
+        },
+        {
+          "name": "isBaseToQuote",
+          "type": "u8",
+          "docs": [
+            "Named as in the public SDKs, but 1 means the trader pays quote (quote -> base)."
+          ]
+        }
+      ],
+      "discriminant": {
+        "type": "u8",
+        "value": 20
+      }
+    },
+    {
+      "name": "swapV4",
+      "accounts": [
+        {
+          "name": "userTransferAuthority",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "pool",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "baseVault",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "quoteVault",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "userBaseTokenAccount",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "userQuoteTokenAccount",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "clock",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "baseTokenProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "quoteTokenProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "account9",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "baseMint",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "quoteMint",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "account12",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "account13",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "swapId",
+          "type": "u64"
+        },
+        {
+          "name": "amountIn",
+          "type": "u64"
+        },
+        {
+          "name": "isBaseToQuote",
+          "type": "u8",
+          "docs": [
+            "Named as in the public SDKs, but 1 means the trader pays quote (quote -> base)."
+          ]
+        }
+      ],
+      "discriminant": {
+        "type": "u8",
+        "value": 48
+      }
+    },
+    {
+      "name": "swapV5",
+      "accounts": [
+        {
+          "name": "userTransferAuthority",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "pool",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "baseVault",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "quoteVault",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "userBaseTokenAccount",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "userQuoteTokenAccount",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "clock",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "baseTokenProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "quoteTokenProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "account9",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "baseMint",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "quoteMint",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "account12",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "account13",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "amountIn",
+          "type": "u64"
+        },
+        {
+          "name": "field1",
+          "type": "u64"
+        },
+        {
+          "name": "deadlineMs",
+          "type": "u64"
+        }
+      ],
+      "discriminant": {
+        "type": "u8",
+        "value": 28
+      }
+    }
+  ],
+  "metadata": {
+    "address": "9H6tua7jkLhdm3w8BvgpTn5LZNU7g4ZynDmCiNN3q6Rp",
+    "instruction_selector_type": "xor-last-byte",
+    "xor_key": [
+      58,
+      255,
+      47,
+      255,
+      226,
+      186,
+      235,
+      195
+    ],
+    "xor_step": [
+      1,
+      0,
+      1,
+      0,
+      1,
+      0,
+      1,
+      0
+    ]
+  }
+}
