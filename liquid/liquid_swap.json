@@ -1,0 +1,7697 @@
+{
+  "address": "SwapMXcpJdXgnFG9BZak2fBZUiNeR2qYxzexF2ZxdW8",
+  "metadata": {
+    "name": "liquid_swap",
+    "version": "0.1.0",
+    "spec": "0.1.0",
+    "description": "Liquid CPMM swap"
+  },
+  "instructions": [
+    {
+      "name": "accept_admin",
+      "docs": [
+        "Accepts a pending admin transfer. Only callable by the pending admin."
+      ],
+      "discriminator": [
+        112,
+        42,
+        45,
+        90,
+        116,
+        181,
+        13,
+        170
+      ],
+      "accounts": [
+        {
+          "name": "new_admin",
+          "docs": [
+            "The pending admin who is accepting the transfer."
+          ],
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "global_config",
+          "docs": [
+            "Global configuration account to be updated."
+          ],
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  103,
+                  108,
+                  111,
+                  98,
+                  97,
+                  108,
+                  95,
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              }
+            ]
+          }
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "buy_exact_in",
+      "docs": [
+        "Buys base tokens by providing an exact amount of quote tokens (exact input).",
+        "",
+        "# Arguments",
+        "* `amount_in` - Exact quote tokens to spend (before transfer fees).",
+        "* `minimum_amount_out` - Minimum base tokens to receive (after transfer fees; slippage protection)."
+      ],
+      "discriminator": [
+        250,
+        234,
+        13,
+        123,
+        213,
+        156,
+        19,
+        236
+      ],
+      "accounts": [
+        {
+          "name": "payer",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "pool",
+          "docs": [
+            "The program account of the pool in which the swap will be performed."
+          ],
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  112,
+                  111,
+                  111,
+                  108
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "base_mint"
+              },
+              {
+                "kind": "account",
+                "path": "quote_mint"
+              }
+            ]
+          }
+        },
+        {
+          "name": "base_token_account",
+          "docs": [
+            "The user token account for input token."
+          ],
+          "writable": true
+        },
+        {
+          "name": "quote_token_account",
+          "docs": [
+            "The user token account for output token."
+          ],
+          "writable": true
+        },
+        {
+          "name": "base_vault",
+          "docs": [
+            "The vault token account for input token."
+          ],
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  112,
+                  111,
+                  111,
+                  108,
+                  95,
+                  118,
+                  97,
+                  117,
+                  108,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "pool"
+              },
+              {
+                "kind": "account",
+                "path": "base_mint"
+              }
+            ]
+          }
+        },
+        {
+          "name": "quote_vault",
+          "docs": [
+            "The vault token account for output token."
+          ],
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  112,
+                  111,
+                  111,
+                  108,
+                  95,
+                  118,
+                  97,
+                  117,
+                  108,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "pool"
+              },
+              {
+                "kind": "account",
+                "path": "quote_mint"
+              }
+            ]
+          }
+        },
+        {
+          "name": "observation_state",
+          "docs": [
+            "The program account for the most recent oracle observation."
+          ],
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  111,
+                  98,
+                  115,
+                  101,
+                  114,
+                  118,
+                  97,
+                  116,
+                  105,
+                  111,
+                  110
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "pool"
+              }
+            ]
+          }
+        },
+        {
+          "name": "fee_recipient",
+          "docs": [
+            "The protocol fee recipient. Must be one of the allowed recipients in Config.",
+            "",
+            "NOTE: Validation happens in handler by checking against global_config.fee_recipients.",
+            "Fee recipients are admin-controlled pubkeys stored in AmmConfig, so an attacker",
+            "cannot pass an arbitrary account - it must match one of the configured recipients."
+          ],
+          "writable": true
+        },
+        {
+          "name": "protocol_fee_vault",
+          "docs": [
+            "The protocol fee vault."
+          ],
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  103,
+                  108,
+                  111,
+                  98,
+                  97,
+                  108,
+                  95,
+                  102,
+                  101,
+                  101
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "fee_recipient"
+              },
+              {
+                "kind": "account",
+                "path": "quote_mint"
+              }
+            ]
+          }
+        },
+        {
+          "name": "fee_vault",
+          "docs": [
+            "Fee vault PDA from liquid-fees (authority for fee_vault_token_account)."
+          ],
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  102,
+                  101,
+                  101,
+                  95,
+                  118,
+                  97,
+                  117,
+                  108,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "fee_config"
+              }
+            ],
+            "program": {
+              "kind": "const",
+              "value": [
+                217,
+                168,
+                237,
+                183,
+                0,
+                44,
+                187,
+                171,
+                53,
+                87,
+                202,
+                162,
+                64,
+                131,
+                189,
+                106,
+                187,
+                249,
+                130,
+                171,
+                56,
+                202,
+                127,
+                190,
+                143,
+                121,
+                30,
+                195,
+                25,
+                86,
+                241,
+                242
+              ]
+            }
+          }
+        },
+        {
+          "name": "fee_vault_token_account",
+          "docs": [
+            "Fee vault token account for Recipients mode â€” accumulates quote tokens."
+          ],
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "account",
+                "path": "fee_vault"
+              },
+              {
+                "kind": "account",
+                "path": "quote_token_program"
+              },
+              {
+                "kind": "account",
+                "path": "quote_mint"
+              }
+            ],
+            "program": {
+              "kind": "const",
+              "value": [
+                140,
+                151,
+                37,
+                143,
+                78,
+                36,
+                137,
+                241,
+                187,
+                61,
+                16,
+                41,
+                20,
+                142,
+                13,
+                131,
+                11,
+                90,
+                19,
+                153,
+                218,
+                255,
+                16,
+                132,
+                4,
+                142,
+                123,
+                216,
+                219,
+                233,
+                248,
+                89
+              ]
+            }
+          }
+        },
+        {
+          "name": "buyback_vault",
+          "docs": [
+            "Buyback vault (for Revoked mode) â€” accumulates quote tokens for buy-and-burn.",
+            "Initialized during pool creation."
+          ],
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  98,
+                  117,
+                  121,
+                  98,
+                  97,
+                  99,
+                  107,
+                  95,
+                  118,
+                  97,
+                  117,
+                  108,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "pool"
+              },
+              {
+                "kind": "account",
+                "path": "quote_mint"
+              }
+            ]
+          }
+        },
+        {
+          "name": "authority",
+          "docs": [
+            "Pool vault and LP mint authority."
+          ],
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  118,
+                  97,
+                  117,
+                  108,
+                  116,
+                  95,
+                  97,
+                  110,
+                  100,
+                  95,
+                  108,
+                  112,
+                  95,
+                  109,
+                  105,
+                  110,
+                  116,
+                  95,
+                  97,
+                  117,
+                  116,
+                  104,
+                  95,
+                  115,
+                  101,
+                  101,
+                  100
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "global_config",
+          "docs": [
+            "Global configuration for the protocol."
+          ],
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  103,
+                  108,
+                  111,
+                  98,
+                  97,
+                  108,
+                  95,
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "creator",
+          "docs": [
+            "Pool creator (needed for fee vault derivation).",
+            "",
+            "NOTE: Validation relies on `has_one = creator` constraint on pool state.",
+            "The creator is whoever signed the original pool creation transaction,",
+            "stored immutably in PoolState. No separate ownership check is needed",
+            "as the pool state is the source of truth for creator identity."
+          ],
+          "relations": [
+            "pool"
+          ]
+        },
+        {
+          "name": "base_mint",
+          "docs": [
+            "The mint of input token."
+          ]
+        },
+        {
+          "name": "quote_mint",
+          "docs": [
+            "The mint of output token."
+          ]
+        },
+        {
+          "name": "fee_config",
+          "docs": [
+            "The fee configuration for this token (from liquid-fees program).",
+            "base_mint is typically the token that was launched on the bonding curve."
+          ],
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  102,
+                  101,
+                  101,
+                  95,
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "base_mint"
+              },
+              {
+                "kind": "account",
+                "path": "quote_mint"
+              }
+            ],
+            "program": {
+              "kind": "const",
+              "value": [
+                217,
+                168,
+                237,
+                183,
+                0,
+                44,
+                187,
+                171,
+                53,
+                87,
+                202,
+                162,
+                64,
+                131,
+                189,
+                106,
+                187,
+                249,
+                130,
+                171,
+                56,
+                202,
+                127,
+                190,
+                143,
+                121,
+                30,
+                195,
+                25,
+                86,
+                241,
+                242
+              ]
+            }
+          }
+        },
+        {
+          "name": "liquid_state",
+          "accounts": [
+            {
+              "name": "user_properties",
+              "docs": [
+                "User properties from liquid-state."
+              ],
+              "writable": true,
+              "pda": {
+                "seeds": [
+                  {
+                    "kind": "const",
+                    "value": [
+                      117,
+                      115,
+                      101,
+                      114,
+                      95,
+                      112,
+                      114,
+                      111,
+                      112,
+                      101,
+                      114,
+                      116,
+                      105,
+                      101,
+                      115
+                    ]
+                  },
+                  {
+                    "kind": "account",
+                    "path": "user"
+                  }
+                ],
+                "program": {
+                  "kind": "const",
+                  "value": [
+                    6,
+                    161,
+                    216,
+                    199,
+                    206,
+                    40,
+                    40,
+                    163,
+                    177,
+                    19,
+                    1,
+                    21,
+                    164,
+                    67,
+                    81,
+                    132,
+                    164,
+                    22,
+                    81,
+                    177,
+                    201,
+                    45,
+                    170,
+                    138,
+                    70,
+                    214,
+                    218,
+                    76,
+                    85,
+                    222,
+                    216,
+                    214
+                  ]
+                }
+              }
+            },
+            {
+              "name": "global_amm_volume",
+              "docs": [
+                "Global AMM volume accumulator from liquid-state."
+              ],
+              "writable": true,
+              "pda": {
+                "seeds": [
+                  {
+                    "kind": "const",
+                    "value": [
+                      103,
+                      108,
+                      111,
+                      98,
+                      97,
+                      108,
+                      95,
+                      97,
+                      109,
+                      109,
+                      95,
+                      118,
+                      111,
+                      108,
+                      117,
+                      109,
+                      101
+                    ]
+                  }
+                ],
+                "program": {
+                  "kind": "const",
+                  "value": [
+                    6,
+                    161,
+                    216,
+                    199,
+                    206,
+                    40,
+                    40,
+                    163,
+                    177,
+                    19,
+                    1,
+                    21,
+                    164,
+                    67,
+                    81,
+                    132,
+                    164,
+                    22,
+                    81,
+                    177,
+                    201,
+                    45,
+                    170,
+                    138,
+                    70,
+                    214,
+                    218,
+                    76,
+                    85,
+                    222,
+                    216,
+                    214
+                  ]
+                }
+              }
+            },
+            {
+              "name": "token_volume",
+              "docs": [
+                "Token volume accumulator from liquid-state (for base_mint)."
+              ],
+              "writable": true,
+              "pda": {
+                "seeds": [
+                  {
+                    "kind": "const",
+                    "value": [
+                      116,
+                      111,
+                      107,
+                      101,
+                      110,
+                      95,
+                      118,
+                      111,
+                      108,
+                      117,
+                      109,
+                      101
+                    ]
+                  },
+                  {
+                    "kind": "account",
+                    "path": "token_mint"
+                  }
+                ],
+                "program": {
+                  "kind": "const",
+                  "value": [
+                    6,
+                    161,
+                    216,
+                    199,
+                    206,
+                    40,
+                    40,
+                    163,
+                    177,
+                    19,
+                    1,
+                    21,
+                    164,
+                    67,
+                    81,
+                    132,
+                    164,
+                    22,
+                    81,
+                    177,
+                    201,
+                    45,
+                    170,
+                    138,
+                    70,
+                    214,
+                    218,
+                    76,
+                    85,
+                    222,
+                    216,
+                    214
+                  ]
+                }
+              }
+            },
+            {
+              "name": "user",
+              "docs": [
+                "The user performing the trade."
+              ]
+            },
+            {
+              "name": "token_mint",
+              "docs": [
+                "The token mint, used for token_volume PDA derivation."
+              ]
+            },
+            {
+              "name": "cashback_config",
+              "docs": [
+                "Cashback configuration from liquid-state."
+              ],
+              "pda": {
+                "seeds": [
+                  {
+                    "kind": "const",
+                    "value": [
+                      99,
+                      97,
+                      115,
+                      104,
+                      98,
+                      97,
+                      99,
+                      107,
+                      95,
+                      99,
+                      111,
+                      110,
+                      102,
+                      105,
+                      103
+                    ]
+                  }
+                ],
+                "program": {
+                  "kind": "const",
+                  "value": [
+                    6,
+                    161,
+                    216,
+                    199,
+                    206,
+                    40,
+                    40,
+                    163,
+                    177,
+                    19,
+                    1,
+                    21,
+                    164,
+                    67,
+                    81,
+                    132,
+                    164,
+                    22,
+                    81,
+                    177,
+                    201,
+                    45,
+                    170,
+                    138,
+                    70,
+                    214,
+                    218,
+                    76,
+                    85,
+                    222,
+                    216,
+                    214
+                  ]
+                }
+              }
+            },
+            {
+              "name": "liquid_state_program",
+              "docs": [
+                "liquid-state program for unified state management."
+              ],
+              "address": "State3HtEfi7cXdsTpAtRoBvrij8zSFCiGTAVWmYH2d"
+            },
+            {
+              "name": "state_events_cpi_authority",
+              "docs": [
+                "CPI authority PDA owned by liquid-state for emitting events via liquid-events."
+              ],
+              "pda": {
+                "seeds": [
+                  {
+                    "kind": "const",
+                    "value": [
+                      99,
+                      112,
+                      105,
+                      95,
+                      97,
+                      117,
+                      116,
+                      104,
+                      111,
+                      114,
+                      105,
+                      116,
+                      121
+                    ]
+                  }
+                ],
+                "program": {
+                  "kind": "const",
+                  "value": [
+                    6,
+                    161,
+                    216,
+                    199,
+                    206,
+                    40,
+                    40,
+                    163,
+                    177,
+                    19,
+                    1,
+                    21,
+                    164,
+                    67,
+                    81,
+                    132,
+                    164,
+                    22,
+                    81,
+                    177,
+                    201,
+                    45,
+                    170,
+                    138,
+                    70,
+                    214,
+                    218,
+                    76,
+                    85,
+                    222,
+                    216,
+                    214
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        {
+          "name": "base_token_program",
+          "docs": [
+            "SPL program for input token transfers."
+          ]
+        },
+        {
+          "name": "quote_token_program",
+          "docs": [
+            "SPL program for output token transfers."
+          ]
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        },
+        {
+          "name": "token_program",
+          "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+        },
+        {
+          "name": "associated_token_program",
+          "address": "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL"
+        },
+        {
+          "name": "cpi_authority",
+          "docs": [
+            "CPI authority PDA â€” proves this program's identity in cross-program calls."
+          ],
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  112,
+                  105,
+                  95,
+                  97,
+                  117,
+                  116,
+                  104,
+                  111,
+                  114,
+                  105,
+                  116,
+                  121
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "liquid_events_program",
+          "docs": [
+            "Liquid events program for CPI event emission."
+          ],
+          "address": "EventsQeXA43nLKR69DhHwNsJ6aM512AweMCgG3wG8zG"
+        },
+        {
+          "name": "oracle_price_feed",
+          "docs": [
+            "Pyth SOL/USD price feed (required for tiered fees)."
+          ],
+          "optional": true
+        }
+      ],
+      "args": [
+        {
+          "name": "amount_in",
+          "type": "u64"
+        },
+        {
+          "name": "minimum_amount_out",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "buy_exact_out",
+      "docs": [
+        "Buys base tokens by providing quote tokens to the pool (exact output).",
+        "",
+        "# Arguments",
+        "* `max_amount_in` - Maximum quote tokens willing to spend (including transfer fees; slippage protection).",
+        "* `amount_out` - Exact base tokens the user wants to receive (after transfer fees)."
+      ],
+      "discriminator": [
+        24,
+        211,
+        116,
+        40,
+        105,
+        3,
+        153,
+        56
+      ],
+      "accounts": [
+        {
+          "name": "payer",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "pool",
+          "docs": [
+            "The program account of the pool in which the swap will be performed."
+          ],
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  112,
+                  111,
+                  111,
+                  108
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "base_mint"
+              },
+              {
+                "kind": "account",
+                "path": "quote_mint"
+              }
+            ]
+          }
+        },
+        {
+          "name": "base_token_account",
+          "docs": [
+            "The user token account for input token."
+          ],
+          "writable": true
+        },
+        {
+          "name": "quote_token_account",
+          "docs": [
+            "The user token account for output token."
+          ],
+          "writable": true
+        },
+        {
+          "name": "base_vault",
+          "docs": [
+            "The vault token account for input token."
+          ],
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  112,
+                  111,
+                  111,
+                  108,
+                  95,
+                  118,
+                  97,
+                  117,
+                  108,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "pool"
+              },
+              {
+                "kind": "account",
+                "path": "base_mint"
+              }
+            ]
+          }
+        },
+        {
+          "name": "quote_vault",
+          "docs": [
+            "The vault token account for output token."
+          ],
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  112,
+                  111,
+                  111,
+                  108,
+                  95,
+                  118,
+                  97,
+                  117,
+                  108,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "pool"
+              },
+              {
+                "kind": "account",
+                "path": "quote_mint"
+              }
+            ]
+          }
+        },
+        {
+          "name": "observation_state",
+          "docs": [
+            "The program account for the most recent oracle observation."
+          ],
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  111,
+                  98,
+                  115,
+                  101,
+                  114,
+                  118,
+                  97,
+                  116,
+                  105,
+                  111,
+                  110
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "pool"
+              }
+            ]
+          }
+        },
+        {
+          "name": "fee_recipient",
+          "docs": [
+            "The protocol fee recipient. Must be one of the allowed recipients in Config.",
+            "",
+            "NOTE: Validation happens in handler by checking against global_config.fee_recipients.",
+            "Fee recipients are admin-controlled pubkeys stored in AmmConfig, so an attacker",
+            "cannot pass an arbitrary account - it must match one of the configured recipients."
+          ],
+          "writable": true
+        },
+        {
+          "name": "protocol_fee_vault",
+          "docs": [
+            "The protocol fee vault."
+          ],
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  103,
+                  108,
+                  111,
+                  98,
+                  97,
+                  108,
+                  95,
+                  102,
+                  101,
+                  101
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "fee_recipient"
+              },
+              {
+                "kind": "account",
+                "path": "quote_mint"
+              }
+            ]
+          }
+        },
+        {
+          "name": "fee_vault",
+          "docs": [
+            "Fee vault PDA from liquid-fees (authority for fee_vault_token_account)."
+          ],
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  102,
+                  101,
+                  101,
+                  95,
+                  118,
+                  97,
+                  117,
+                  108,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "fee_config"
+              }
+            ],
+            "program": {
+              "kind": "const",
+              "value": [
+                217,
+                168,
+                237,
+                183,
+                0,
+                44,
+                187,
+                171,
+                53,
+                87,
+                202,
+                162,
+                64,
+                131,
+                189,
+                106,
+                187,
+                249,
+                130,
+                171,
+                56,
+                202,
+                127,
+                190,
+                143,
+                121,
+                30,
+                195,
+                25,
+                86,
+                241,
+                242
+              ]
+            }
+          }
+        },
+        {
+          "name": "fee_vault_token_account",
+          "docs": [
+            "Fee vault token account for Recipients mode â€” accumulates quote tokens."
+          ],
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "account",
+                "path": "fee_vault"
+              },
+              {
+                "kind": "account",
+                "path": "quote_token_program"
+              },
+              {
+                "kind": "account",
+                "path": "quote_mint"
+              }
+            ],
+            "program": {
+              "kind": "const",
+              "value": [
+                140,
+                151,
+                37,
+                143,
+                78,
+                36,
+                137,
+                241,
+                187,
+                61,
+                16,
+                41,
+                20,
+                142,
+                13,
+                131,
+                11,
+                90,
+                19,
+                153,
+                218,
+                255,
+                16,
+                132,
+                4,
+                142,
+                123,
+                216,
+                219,
+                233,
+                248,
+                89
+              ]
+            }
+          }
+        },
+        {
+          "name": "buyback_vault",
+          "docs": [
+            "Buyback vault (for Revoked mode) â€” accumulates quote tokens for buy-and-burn.",
+            "Initialized during pool creation."
+          ],
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  98,
+                  117,
+                  121,
+                  98,
+                  97,
+                  99,
+                  107,
+                  95,
+                  118,
+                  97,
+                  117,
+                  108,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "pool"
+              },
+              {
+                "kind": "account",
+                "path": "quote_mint"
+              }
+            ]
+          }
+        },
+        {
+          "name": "authority",
+          "docs": [
+            "Pool vault and LP mint authority."
+          ],
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  118,
+                  97,
+                  117,
+                  108,
+                  116,
+                  95,
+                  97,
+                  110,
+                  100,
+                  95,
+                  108,
+                  112,
+                  95,
+                  109,
+                  105,
+                  110,
+                  116,
+                  95,
+                  97,
+                  117,
+                  116,
+                  104,
+                  95,
+                  115,
+                  101,
+                  101,
+                  100
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "global_config",
+          "docs": [
+            "Global configuration for the protocol."
+          ],
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  103,
+                  108,
+                  111,
+                  98,
+                  97,
+                  108,
+                  95,
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "creator",
+          "docs": [
+            "Pool creator (needed for fee vault derivation).",
+            "",
+            "NOTE: Validation relies on `has_one = creator` constraint on pool state.",
+            "The creator is whoever signed the original pool creation transaction,",
+            "stored immutably in PoolState. No separate ownership check is needed",
+            "as the pool state is the source of truth for creator identity."
+          ],
+          "relations": [
+            "pool"
+          ]
+        },
+        {
+          "name": "base_mint",
+          "docs": [
+            "The mint of input token."
+          ]
+        },
+        {
+          "name": "quote_mint",
+          "docs": [
+            "The mint of output token."
+          ]
+        },
+        {
+          "name": "fee_config",
+          "docs": [
+            "The fee configuration for this token (from liquid-fees program).",
+            "base_mint is typically the token that was launched on the bonding curve."
+          ],
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  102,
+                  101,
+                  101,
+                  95,
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "base_mint"
+              },
+              {
+                "kind": "account",
+                "path": "quote_mint"
+              }
+            ],
+            "program": {
+              "kind": "const",
+              "value": [
+                217,
+                168,
+                237,
+                183,
+                0,
+                44,
+                187,
+                171,
+                53,
+                87,
+                202,
+                162,
+                64,
+                131,
+                189,
+                106,
+                187,
+                249,
+                130,
+                171,
+                56,
+                202,
+                127,
+                190,
+                143,
+                121,
+                30,
+                195,
+                25,
+                86,
+                241,
+                242
+              ]
+            }
+          }
+        },
+        {
+          "name": "liquid_state",
+          "accounts": [
+            {
+              "name": "user_properties",
+              "docs": [
+                "User properties from liquid-state."
+              ],
+              "writable": true,
+              "pda": {
+                "seeds": [
+                  {
+                    "kind": "const",
+                    "value": [
+                      117,
+                      115,
+                      101,
+                      114,
+                      95,
+                      112,
+                      114,
+                      111,
+                      112,
+                      101,
+                      114,
+                      116,
+                      105,
+                      101,
+                      115
+                    ]
+                  },
+                  {
+                    "kind": "account",
+                    "path": "user"
+                  }
+                ],
+                "program": {
+                  "kind": "const",
+                  "value": [
+                    6,
+                    161,
+                    216,
+                    199,
+                    206,
+                    40,
+                    40,
+                    163,
+                    177,
+                    19,
+                    1,
+                    21,
+                    164,
+                    67,
+                    81,
+                    132,
+                    164,
+                    22,
+                    81,
+                    177,
+                    201,
+                    45,
+                    170,
+                    138,
+                    70,
+                    214,
+                    218,
+                    76,
+                    85,
+                    222,
+                    216,
+                    214
+                  ]
+                }
+              }
+            },
+            {
+              "name": "global_amm_volume",
+              "docs": [
+                "Global AMM volume accumulator from liquid-state."
+              ],
+              "writable": true,
+              "pda": {
+                "seeds": [
+                  {
+                    "kind": "const",
+                    "value": [
+                      103,
+                      108,
+                      111,
+                      98,
+                      97,
+                      108,
+                      95,
+                      97,
+                      109,
+                      109,
+                      95,
+                      118,
+                      111,
+                      108,
+                      117,
+                      109,
+                      101
+                    ]
+                  }
+                ],
+                "program": {
+                  "kind": "const",
+                  "value": [
+                    6,
+                    161,
+                    216,
+                    199,
+                    206,
+                    40,
+                    40,
+                    163,
+                    177,
+                    19,
+                    1,
+                    21,
+                    164,
+                    67,
+                    81,
+                    132,
+                    164,
+                    22,
+                    81,
+                    177,
+                    201,
+                    45,
+                    170,
+                    138,
+                    70,
+                    214,
+                    218,
+                    76,
+                    85,
+                    222,
+                    216,
+                    214
+                  ]
+                }
+              }
+            },
+            {
+              "name": "token_volume",
+              "docs": [
+                "Token volume accumulator from liquid-state (for base_mint)."
+              ],
+              "writable": true,
+              "pda": {
+                "seeds": [
+                  {
+                    "kind": "const",
+                    "value": [
+                      116,
+                      111,
+                      107,
+                      101,
+                      110,
+                      95,
+                      118,
+                      111,
+                      108,
+                      117,
+                      109,
+                      101
+                    ]
+                  },
+                  {
+                    "kind": "account",
+                    "path": "token_mint"
+                  }
+                ],
+                "program": {
+                  "kind": "const",
+                  "value": [
+                    6,
+                    161,
+                    216,
+                    199,
+                    206,
+                    40,
+                    40,
+                    163,
+                    177,
+                    19,
+                    1,
+                    21,
+                    164,
+                    67,
+                    81,
+                    132,
+                    164,
+                    22,
+                    81,
+                    177,
+                    201,
+                    45,
+                    170,
+                    138,
+                    70,
+                    214,
+                    218,
+                    76,
+                    85,
+                    222,
+                    216,
+                    214
+                  ]
+                }
+              }
+            },
+            {
+              "name": "user",
+              "docs": [
+                "The user performing the trade."
+              ]
+            },
+            {
+              "name": "token_mint",
+              "docs": [
+                "The token mint, used for token_volume PDA derivation."
+              ]
+            },
+            {
+              "name": "cashback_config",
+              "docs": [
+                "Cashback configuration from liquid-state."
+              ],
+              "pda": {
+                "seeds": [
+                  {
+                    "kind": "const",
+                    "value": [
+                      99,
+                      97,
+                      115,
+                      104,
+                      98,
+                      97,
+                      99,
+                      107,
+                      95,
+                      99,
+                      111,
+                      110,
+                      102,
+                      105,
+                      103
+                    ]
+                  }
+                ],
+                "program": {
+                  "kind": "const",
+                  "value": [
+                    6,
+                    161,
+                    216,
+                    199,
+                    206,
+                    40,
+                    40,
+                    163,
+                    177,
+                    19,
+                    1,
+                    21,
+                    164,
+                    67,
+                    81,
+                    132,
+                    164,
+                    22,
+                    81,
+                    177,
+                    201,
+                    45,
+                    170,
+                    138,
+                    70,
+                    214,
+                    218,
+                    76,
+                    85,
+                    222,
+                    216,
+                    214
+                  ]
+                }
+              }
+            },
+            {
+              "name": "liquid_state_program",
+              "docs": [
+                "liquid-state program for unified state management."
+              ],
+              "address": "State3HtEfi7cXdsTpAtRoBvrij8zSFCiGTAVWmYH2d"
+            },
+            {
+              "name": "state_events_cpi_authority",
+              "docs": [
+                "CPI authority PDA owned by liquid-state for emitting events via liquid-events."
+              ],
+              "pda": {
+                "seeds": [
+                  {
+                    "kind": "const",
+                    "value": [
+                      99,
+                      112,
+                      105,
+                      95,
+                      97,
+                      117,
+                      116,
+                      104,
+                      111,
+                      114,
+                      105,
+                      116,
+                      121
+                    ]
+                  }
+                ],
+                "program": {
+                  "kind": "const",
+                  "value": [
+                    6,
+                    161,
+                    216,
+                    199,
+                    206,
+                    40,
+                    40,
+                    163,
+                    177,
+                    19,
+                    1,
+                    21,
+                    164,
+                    67,
+                    81,
+                    132,
+                    164,
+                    22,
+                    81,
+                    177,
+                    201,
+                    45,
+                    170,
+                    138,
+                    70,
+                    214,
+                    218,
+                    76,
+                    85,
+                    222,
+                    216,
+                    214
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        {
+          "name": "base_token_program",
+          "docs": [
+            "SPL program for input token transfers."
+          ]
+        },
+        {
+          "name": "quote_token_program",
+          "docs": [
+            "SPL program for output token transfers."
+          ]
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        },
+        {
+          "name": "token_program",
+          "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+        },
+        {
+          "name": "associated_token_program",
+          "address": "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL"
+        },
+        {
+          "name": "cpi_authority",
+          "docs": [
+            "CPI authority PDA â€” proves this program's identity in cross-program calls."
+          ],
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  112,
+                  105,
+                  95,
+                  97,
+                  117,
+                  116,
+                  104,
+                  111,
+                  114,
+                  105,
+                  116,
+                  121
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "liquid_events_program",
+          "docs": [
+            "Liquid events program for CPI event emission."
+          ],
+          "address": "EventsQeXA43nLKR69DhHwNsJ6aM512AweMCgG3wG8zG"
+        },
+        {
+          "name": "oracle_price_feed",
+          "docs": [
+            "Pyth SOL/USD price feed (required for tiered fees)."
+          ],
+          "optional": true
+        }
+      ],
+      "args": [
+        {
+          "name": "max_amount_in",
+          "type": "u64"
+        },
+        {
+          "name": "amount_out",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "cancel_admin_transfer",
+      "docs": [
+        "Cancels a pending admin transfer. Callable by either the current admin or the pending admin."
+      ],
+      "discriminator": [
+        38,
+        131,
+        157,
+        31,
+        240,
+        137,
+        44,
+        215
+      ],
+      "accounts": [
+        {
+          "name": "authority",
+          "docs": [
+            "The authority cancelling the transfer (current admin or pending admin)."
+          ],
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "global_config",
+          "docs": [
+            "Global configuration account to be updated."
+          ],
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  103,
+                  108,
+                  111,
+                  98,
+                  97,
+                  108,
+                  95,
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              }
+            ]
+          }
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "create",
+      "docs": [
+        "Creates an AMM pool for the given token pair with an initial deposit.",
+        "",
+        "# Arguments",
+        "* `init_amount_base` - Initial base token amount to deposit into the pool.",
+        "* `init_amount_quote` - Initial quote token amount to deposit into the pool.",
+        "* `creator` - Optional creator pubkey (for program-initiated migration pools)."
+      ],
+      "discriminator": [
+        24,
+        30,
+        200,
+        40,
+        5,
+        28,
+        7,
+        119
+      ],
+      "accounts": [
+        {
+          "name": "signer",
+          "docs": [
+            "Token authority for the pool creator.",
+            "Must be Global Admin OR Allowed CPI Authority.",
+            "Signs for token transfers (base, quote) and LP burn."
+          ],
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "payer",
+          "docs": [
+            "Rent payer for account initialization.",
+            "Separate from signer to support CPI where the token authority (signer)",
+            "is a PDA that cannot pay rent via system transfers."
+          ],
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "pool_state",
+          "docs": [
+            "Account to store the pool state."
+          ],
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  112,
+                  111,
+                  111,
+                  108
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "base_mint"
+              },
+              {
+                "kind": "account",
+                "path": "quote_mint"
+              }
+            ]
+          }
+        },
+        {
+          "name": "lp_mint",
+          "docs": [
+            "Pool LP mint."
+          ],
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  112,
+                  111,
+                  111,
+                  108,
+                  95,
+                  108,
+                  112,
+                  95,
+                  109,
+                  105,
+                  110,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "pool_state"
+              }
+            ]
+          }
+        },
+        {
+          "name": "creator_base",
+          "docs": [
+            "Creator base account."
+          ],
+          "writable": true
+        },
+        {
+          "name": "creator_quote",
+          "docs": [
+            "Creator quote account."
+          ],
+          "writable": true
+        },
+        {
+          "name": "creator_lp_token",
+          "docs": [
+            "Creator LP token account."
+          ],
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "account",
+                "path": "signer"
+              },
+              {
+                "kind": "const",
+                "value": [
+                  6,
+                  221,
+                  246,
+                  225,
+                  215,
+                  101,
+                  161,
+                  147,
+                  217,
+                  203,
+                  225,
+                  70,
+                  206,
+                  235,
+                  121,
+                  172,
+                  28,
+                  180,
+                  133,
+                  237,
+                  95,
+                  91,
+                  55,
+                  145,
+                  58,
+                  140,
+                  245,
+                  133,
+                  126,
+                  255,
+                  0,
+                  169
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "lp_mint"
+              }
+            ],
+            "program": {
+              "kind": "const",
+              "value": [
+                140,
+                151,
+                37,
+                143,
+                78,
+                36,
+                137,
+                241,
+                187,
+                61,
+                16,
+                41,
+                20,
+                142,
+                13,
+                131,
+                11,
+                90,
+                19,
+                153,
+                218,
+                255,
+                16,
+                132,
+                4,
+                142,
+                123,
+                216,
+                219,
+                233,
+                248,
+                89
+              ]
+            }
+          }
+        },
+        {
+          "name": "base_vault",
+          "docs": [
+            "Base vault for the pool."
+          ],
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  112,
+                  111,
+                  111,
+                  108,
+                  95,
+                  118,
+                  97,
+                  117,
+                  108,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "pool_state"
+              },
+              {
+                "kind": "account",
+                "path": "base_mint"
+              }
+            ]
+          }
+        },
+        {
+          "name": "quote_vault",
+          "docs": [
+            "Quote vault for the pool."
+          ],
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  112,
+                  111,
+                  111,
+                  108,
+                  95,
+                  118,
+                  97,
+                  117,
+                  108,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "pool_state"
+              },
+              {
+                "kind": "account",
+                "path": "quote_mint"
+              }
+            ]
+          }
+        },
+        {
+          "name": "observation_state",
+          "docs": [
+            "Account to store oracle observations."
+          ],
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  111,
+                  98,
+                  115,
+                  101,
+                  114,
+                  118,
+                  97,
+                  116,
+                  105,
+                  111,
+                  110
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "pool_state"
+              }
+            ]
+          }
+        },
+        {
+          "name": "buyback_vault",
+          "docs": [
+            "Buyback vault for Revoked-mode creator fee accumulation (buy-and-burn)."
+          ],
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  98,
+                  117,
+                  121,
+                  98,
+                  97,
+                  99,
+                  107,
+                  95,
+                  118,
+                  97,
+                  117,
+                  108,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "pool_state"
+              },
+              {
+                "kind": "account",
+                "path": "quote_mint"
+              }
+            ]
+          }
+        },
+        {
+          "name": "token_volume",
+          "docs": [
+            "Token volume accumulator from liquid-state."
+          ],
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  116,
+                  111,
+                  107,
+                  101,
+                  110,
+                  95,
+                  118,
+                  111,
+                  108,
+                  117,
+                  109,
+                  101
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "base_mint"
+              }
+            ],
+            "program": {
+              "kind": "const",
+              "value": [
+                6,
+                161,
+                216,
+                199,
+                206,
+                40,
+                40,
+                163,
+                177,
+                19,
+                1,
+                21,
+                164,
+                67,
+                81,
+                132,
+                164,
+                22,
+                81,
+                177,
+                201,
+                45,
+                170,
+                138,
+                70,
+                214,
+                218,
+                76,
+                85,
+                222,
+                216,
+                214
+              ]
+            }
+          }
+        },
+        {
+          "name": "fee_config",
+          "docs": [
+            "Fee config PDA (from liquid-fees). Initialized via CPI for user-created pools."
+          ],
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  102,
+                  101,
+                  101,
+                  95,
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "base_mint"
+              },
+              {
+                "kind": "account",
+                "path": "quote_mint"
+              }
+            ],
+            "program": {
+              "kind": "const",
+              "value": [
+                217,
+                168,
+                237,
+                183,
+                0,
+                44,
+                187,
+                171,
+                53,
+                87,
+                202,
+                162,
+                64,
+                131,
+                189,
+                106,
+                187,
+                249,
+                130,
+                171,
+                56,
+                202,
+                127,
+                190,
+                143,
+                121,
+                30,
+                195,
+                25,
+                86,
+                241,
+                242
+              ]
+            }
+          }
+        },
+        {
+          "name": "fee_vault",
+          "docs": [
+            "Fee vault PDA (from liquid-fees)."
+          ],
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  102,
+                  101,
+                  101,
+                  95,
+                  118,
+                  97,
+                  117,
+                  108,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "fee_config"
+              }
+            ],
+            "program": {
+              "kind": "const",
+              "value": [
+                217,
+                168,
+                237,
+                183,
+                0,
+                44,
+                187,
+                171,
+                53,
+                87,
+                202,
+                162,
+                64,
+                131,
+                189,
+                106,
+                187,
+                249,
+                130,
+                171,
+                56,
+                202,
+                127,
+                190,
+                143,
+                121,
+                30,
+                195,
+                25,
+                86,
+                241,
+                242
+              ]
+            }
+          }
+        },
+        {
+          "name": "global_config",
+          "docs": [
+            "Global configuration for the protocol."
+          ],
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  103,
+                  108,
+                  111,
+                  98,
+                  97,
+                  108,
+                  95,
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "authority",
+          "docs": [
+            "Pool vault and LP mint authority."
+          ],
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  118,
+                  97,
+                  117,
+                  108,
+                  116,
+                  95,
+                  97,
+                  110,
+                  100,
+                  95,
+                  108,
+                  112,
+                  95,
+                  109,
+                  105,
+                  110,
+                  116,
+                  95,
+                  97,
+                  117,
+                  116,
+                  104,
+                  95,
+                  115,
+                  101,
+                  101,
+                  100
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "base_mint",
+          "docs": [
+            "Base mint (Variable token)."
+          ]
+        },
+        {
+          "name": "quote_mint",
+          "docs": [
+            "Quote mint"
+          ]
+        },
+        {
+          "name": "cpi_authority",
+          "docs": [
+            "CPI authority PDA â€” proves this program's identity in cross-program calls."
+          ],
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  112,
+                  105,
+                  95,
+                  97,
+                  117,
+                  116,
+                  104,
+                  111,
+                  114,
+                  105,
+                  116,
+                  121
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "liquid_state_program",
+          "docs": [
+            "Liquid state program for token volume CPI."
+          ],
+          "address": "State3HtEfi7cXdsTpAtRoBvrij8zSFCiGTAVWmYH2d"
+        },
+        {
+          "name": "liquid_fees_program",
+          "docs": [
+            "Liquid fees program for fee configuration CPI."
+          ],
+          "address": "FeesZQLb1xTeZbvaFRGnqzrZYzzmQtwhTYKQphbNGQru"
+        },
+        {
+          "name": "liquid_events_program",
+          "docs": [
+            "Liquid events program for CPI event emission."
+          ],
+          "address": "EventsQeXA43nLKR69DhHwNsJ6aM512AweMCgG3wG8zG"
+        },
+        {
+          "name": "token_program",
+          "docs": [
+            "Program to create mint account and mint tokens."
+          ],
+          "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+        },
+        {
+          "name": "base_token_program",
+          "docs": [
+            "SPL token program or token program 2022 for base."
+          ]
+        },
+        {
+          "name": "quote_token_program",
+          "docs": [
+            "SPL token program or token program 2022 for quote."
+          ]
+        },
+        {
+          "name": "associated_token_program",
+          "docs": [
+            "Program to create an ATA for receiving position NFT."
+          ],
+          "address": "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL"
+        },
+        {
+          "name": "system_program",
+          "docs": [
+            "To create a new program account."
+          ],
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "init_amount_base",
+          "type": "u64"
+        },
+        {
+          "name": "init_amount_quote",
+          "type": "u64"
+        },
+        {
+          "name": "creator",
+          "type": {
+            "option": "pubkey"
+          }
+        }
+      ]
+    },
+    {
+      "name": "deposit",
+      "docs": [
+        "Deposits liquidity into the pool, minting LP tokens to the owner.",
+        "",
+        "# Arguments",
+        "* `lp_token_amount` - Number of LP tokens to mint.",
+        "* `maximum_base_token_amount` - Maximum base tokens willing to deposit (slippage protection).",
+        "* `maximum_quote_token_amount` - Maximum quote tokens willing to deposit (slippage protection)."
+      ],
+      "discriminator": [
+        242,
+        35,
+        198,
+        137,
+        82,
+        225,
+        242,
+        182
+      ],
+      "accounts": [
+        {
+          "name": "owner",
+          "docs": [
+            "The owner depositing liquidity into the pool."
+          ],
+          "signer": true
+        },
+        {
+          "name": "pool_state",
+          "docs": [
+            "Pool state account validated against base/quote vaults and LP mint."
+          ],
+          "writable": true
+        },
+        {
+          "name": "owner_lp_token",
+          "docs": [
+            "Owner LP token account."
+          ],
+          "writable": true
+        },
+        {
+          "name": "base_account",
+          "docs": [
+            "The payer's token account for base token."
+          ],
+          "writable": true
+        },
+        {
+          "name": "quote_account",
+          "docs": [
+            "The payer's token account for quote token."
+          ],
+          "writable": true
+        },
+        {
+          "name": "base_vault",
+          "docs": [
+            "The address that holds pool tokens for base token."
+          ],
+          "writable": true,
+          "relations": [
+            "pool_state"
+          ]
+        },
+        {
+          "name": "quote_vault",
+          "docs": [
+            "The address that holds pool tokens for quote token."
+          ],
+          "writable": true,
+          "relations": [
+            "pool_state"
+          ]
+        },
+        {
+          "name": "lp_mint",
+          "docs": [
+            "LP token mint."
+          ],
+          "writable": true,
+          "relations": [
+            "pool_state"
+          ]
+        },
+        {
+          "name": "global_config",
+          "docs": [
+            "Global configuration for the protocol."
+          ],
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  103,
+                  108,
+                  111,
+                  98,
+                  97,
+                  108,
+                  95,
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "authority",
+          "docs": [
+            "Pool vault and LP mint authority."
+          ],
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  118,
+                  97,
+                  117,
+                  108,
+                  116,
+                  95,
+                  97,
+                  110,
+                  100,
+                  95,
+                  108,
+                  112,
+                  95,
+                  109,
+                  105,
+                  110,
+                  116,
+                  95,
+                  97,
+                  117,
+                  116,
+                  104,
+                  95,
+                  115,
+                  101,
+                  101,
+                  100
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "base_mint",
+          "docs": [
+            "The mint of base vault."
+          ]
+        },
+        {
+          "name": "quote_mint",
+          "docs": [
+            "The mint of quote vault."
+          ]
+        },
+        {
+          "name": "cpi_authority",
+          "docs": [
+            "CPI authority PDA â€” proves this program's identity in cross-program calls."
+          ],
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  112,
+                  105,
+                  95,
+                  97,
+                  117,
+                  116,
+                  104,
+                  111,
+                  114,
+                  105,
+                  116,
+                  121
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "liquid_events_program",
+          "docs": [
+            "Liquid events program for CPI event emission."
+          ],
+          "address": "EventsQeXA43nLKR69DhHwNsJ6aM512AweMCgG3wG8zG"
+        },
+        {
+          "name": "token_program",
+          "docs": [
+            "Token program."
+          ],
+          "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+        },
+        {
+          "name": "token_program_2022",
+          "docs": [
+            "Token program 2022."
+          ],
+          "address": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb"
+        }
+      ],
+      "args": [
+        {
+          "name": "lp_token_amount",
+          "type": "u64"
+        },
+        {
+          "name": "maximum_base_token_amount",
+          "type": "u64"
+        },
+        {
+          "name": "maximum_quote_token_amount",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "execute_buyback",
+      "docs": [
+        "Executes a buyback operation using accumulated revoked creator fees.",
+        "This is a permissionless instruction that swaps quote tokens from the",
+        "buyback vault for base tokens and burns them."
+      ],
+      "discriminator": [
+        47,
+        32,
+        19,
+        100,
+        184,
+        96,
+        144,
+        49
+      ],
+      "accounts": [
+        {
+          "name": "payer",
+          "docs": [
+            "Anyone can trigger the buyback (permissionless)."
+          ],
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "pool",
+          "docs": [
+            "The program account of the pool."
+          ],
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  112,
+                  111,
+                  111,
+                  108
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "base_mint"
+              },
+              {
+                "kind": "account",
+                "path": "quote_mint"
+              }
+            ]
+          }
+        },
+        {
+          "name": "base_mint",
+          "docs": [
+            "The base token mint (the token that will be bought and burned)."
+          ],
+          "writable": true
+        },
+        {
+          "name": "base_vault",
+          "docs": [
+            "The vault token account for base tokens."
+          ],
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  112,
+                  111,
+                  111,
+                  108,
+                  95,
+                  118,
+                  97,
+                  117,
+                  108,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "pool"
+              },
+              {
+                "kind": "account",
+                "path": "base_mint"
+              }
+            ]
+          }
+        },
+        {
+          "name": "quote_vault",
+          "docs": [
+            "The vault token account for quote tokens."
+          ],
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  112,
+                  111,
+                  111,
+                  108,
+                  95,
+                  118,
+                  97,
+                  117,
+                  108,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "pool"
+              },
+              {
+                "kind": "account",
+                "path": "quote_mint"
+              }
+            ]
+          }
+        },
+        {
+          "name": "observation_state",
+          "docs": [
+            "The program account for the most recent oracle observation."
+          ],
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  111,
+                  98,
+                  115,
+                  101,
+                  114,
+                  118,
+                  97,
+                  116,
+                  105,
+                  111,
+                  110
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "pool"
+              }
+            ]
+          }
+        },
+        {
+          "name": "buyback_vault",
+          "docs": [
+            "The buyback vault holding accumulated quote tokens for buyback."
+          ],
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  98,
+                  117,
+                  121,
+                  98,
+                  97,
+                  99,
+                  107,
+                  95,
+                  118,
+                  97,
+                  117,
+                  108,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "pool"
+              },
+              {
+                "kind": "account",
+                "path": "quote_mint"
+              }
+            ]
+          }
+        },
+        {
+          "name": "global_config",
+          "docs": [
+            "Global configuration for the protocol."
+          ],
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  103,
+                  108,
+                  111,
+                  98,
+                  97,
+                  108,
+                  95,
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "authority",
+          "docs": [
+            "Pool vault and LP mint authority."
+          ],
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  118,
+                  97,
+                  117,
+                  108,
+                  116,
+                  95,
+                  97,
+                  110,
+                  100,
+                  95,
+                  108,
+                  112,
+                  95,
+                  109,
+                  105,
+                  110,
+                  116,
+                  95,
+                  97,
+                  117,
+                  116,
+                  104,
+                  95,
+                  115,
+                  101,
+                  101,
+                  100
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "quote_mint",
+          "docs": [
+            "The quote token mint."
+          ]
+        },
+        {
+          "name": "fee_config",
+          "docs": [
+            "The fee configuration for this token (must be in Revoked mode)."
+          ],
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  102,
+                  101,
+                  101,
+                  95,
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "base_mint"
+              },
+              {
+                "kind": "account",
+                "path": "quote_mint"
+              }
+            ],
+            "program": {
+              "kind": "const",
+              "value": [
+                217,
+                168,
+                237,
+                183,
+                0,
+                44,
+                187,
+                171,
+                53,
+                87,
+                202,
+                162,
+                64,
+                131,
+                189,
+                106,
+                187,
+                249,
+                130,
+                171,
+                56,
+                202,
+                127,
+                190,
+                143,
+                121,
+                30,
+                195,
+                25,
+                86,
+                241,
+                242
+              ]
+            }
+          }
+        },
+        {
+          "name": "cpi_authority",
+          "docs": [
+            "CPI authority PDA â€” proves this program's identity in cross-program calls."
+          ],
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  112,
+                  105,
+                  95,
+                  97,
+                  117,
+                  116,
+                  104,
+                  111,
+                  114,
+                  105,
+                  116,
+                  121
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "liquid_events_program",
+          "docs": [
+            "Liquid events program for CPI event emission."
+          ],
+          "address": "EventsQeXA43nLKR69DhHwNsJ6aM512AweMCgG3wG8zG"
+        },
+        {
+          "name": "base_token_program",
+          "docs": [
+            "SPL program for base token operations."
+          ]
+        },
+        {
+          "name": "quote_token_program",
+          "docs": [
+            "SPL program for quote token operations."
+          ]
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "initialize",
+      "docs": [
+        "Initializes the protocol's global configuration.",
+        "",
+        "Note: Fee recipients are NOT set during initialization. Call `set_fee_recipients`",
+        "after initialization to configure the protocol's fee recipients.",
+        "",
+        "# Arguments",
+        "* `fee_tiers` - Market cap-based fee tiers (at least one required).",
+        "* `oracle_price_feed` - Pyth SOL/USD price feed address.",
+        "* `quote_mints` - List of valid quote mints."
+      ],
+      "discriminator": [
+        175,
+        175,
+        109,
+        31,
+        13,
+        152,
+        155,
+        237
+      ],
+      "accounts": [
+        {
+          "name": "admin",
+          "docs": [
+            "The admin initializing the protocol (becomes admin)."
+          ],
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "global_config",
+          "docs": [
+            "Initialize config state account to store protocol owner address and fee rates."
+          ],
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  103,
+                  108,
+                  111,
+                  98,
+                  97,
+                  108,
+                  95,
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "fee_tiers",
+          "type": {
+            "vec": {
+              "defined": {
+                "name": "FeeTier"
+              }
+            }
+          }
+        },
+        {
+          "name": "oracle_price_feed",
+          "type": "pubkey"
+        },
+        {
+          "name": "quote_mints",
+          "type": {
+            "vec": "pubkey"
+          }
+        }
+      ]
+    },
+    {
+      "name": "initialize_fee_recipient_vaults",
+      "docs": [
+        "Initializes token vaults for all fee recipients for a given quote mint.",
+        "",
+        "This is a permissionless, idempotent instruction that creates token accounts",
+        "for fee recipients. Anyone can call this to ensure protocol fees can be collected",
+        "for token-based trading pairs."
+      ],
+      "discriminator": [
+        251,
+        228,
+        40,
+        120,
+        132,
+        6,
+        80,
+        120
+      ],
+      "accounts": [
+        {
+          "name": "payer",
+          "docs": [
+            "Payer for account creation (permissionless - anyone can pay)."
+          ],
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "global_config",
+          "docs": [
+            "Global configuration (read-only, to validate fee_recipients)."
+          ],
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  103,
+                  108,
+                  111,
+                  98,
+                  97,
+                  108,
+                  95,
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "quote_mint",
+          "docs": [
+            "The quote mint to create token accounts for."
+          ]
+        },
+        {
+          "name": "fee_recipient_1"
+        },
+        {
+          "name": "fee_recipient_2"
+        },
+        {
+          "name": "fee_recipient_3"
+        },
+        {
+          "name": "fee_recipient_4"
+        },
+        {
+          "name": "fee_recipient_5"
+        },
+        {
+          "name": "fee_recipient_6"
+        },
+        {
+          "name": "fee_recipient_7"
+        },
+        {
+          "name": "fee_recipient_8"
+        },
+        {
+          "name": "fee_recipient_vault_1",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "account",
+                "path": "fee_recipient_1"
+              },
+              {
+                "kind": "account",
+                "path": "token_program"
+              },
+              {
+                "kind": "account",
+                "path": "quote_mint"
+              }
+            ],
+            "program": {
+              "kind": "const",
+              "value": [
+                140,
+                151,
+                37,
+                143,
+                78,
+                36,
+                137,
+                241,
+                187,
+                61,
+                16,
+                41,
+                20,
+                142,
+                13,
+                131,
+                11,
+                90,
+                19,
+                153,
+                218,
+                255,
+                16,
+                132,
+                4,
+                142,
+                123,
+                216,
+                219,
+                233,
+                248,
+                89
+              ]
+            }
+          }
+        },
+        {
+          "name": "fee_recipient_vault_2",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "account",
+                "path": "fee_recipient_2"
+              },
+              {
+                "kind": "account",
+                "path": "token_program"
+              },
+              {
+                "kind": "account",
+                "path": "quote_mint"
+              }
+            ],
+            "program": {
+              "kind": "const",
+              "value": [
+                140,
+                151,
+                37,
+                143,
+                78,
+                36,
+                137,
+                241,
+                187,
+                61,
+                16,
+                41,
+                20,
+                142,
+                13,
+                131,
+                11,
+                90,
+                19,
+                153,
+                218,
+                255,
+                16,
+                132,
+                4,
+                142,
+                123,
+                216,
+                219,
+                233,
+                248,
+                89
+              ]
+            }
+          }
+        },
+        {
+          "name": "fee_recipient_vault_3",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "account",
+                "path": "fee_recipient_3"
+              },
+              {
+                "kind": "account",
+                "path": "token_program"
+              },
+              {
+                "kind": "account",
+                "path": "quote_mint"
+              }
+            ],
+            "program": {
+              "kind": "const",
+              "value": [
+                140,
+                151,
+                37,
+                143,
+                78,
+                36,
+                137,
+                241,
+                187,
+                61,
+                16,
+                41,
+                20,
+                142,
+                13,
+                131,
+                11,
+                90,
+                19,
+                153,
+                218,
+                255,
+                16,
+                132,
+                4,
+                142,
+                123,
+                216,
+                219,
+                233,
+                248,
+                89
+              ]
+            }
+          }
+        },
+        {
+          "name": "fee_recipient_vault_4",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "account",
+                "path": "fee_recipient_4"
+              },
+              {
+                "kind": "account",
+                "path": "token_program"
+              },
+              {
+                "kind": "account",
+                "path": "quote_mint"
+              }
+            ],
+            "program": {
+              "kind": "const",
+              "value": [
+                140,
+                151,
+                37,
+                143,
+                78,
+                36,
+                137,
+                241,
+                187,
+                61,
+                16,
+                41,
+                20,
+                142,
+                13,
+                131,
+                11,
+                90,
+                19,
+                153,
+                218,
+                255,
+                16,
+                132,
+                4,
+                142,
+                123,
+                216,
+                219,
+                233,
+                248,
+                89
+              ]
+            }
+          }
+        },
+        {
+          "name": "fee_recipient_vault_5",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "account",
+                "path": "fee_recipient_5"
+              },
+              {
+                "kind": "account",
+                "path": "token_program"
+              },
+              {
+                "kind": "account",
+                "path": "quote_mint"
+              }
+            ],
+            "program": {
+              "kind": "const",
+              "value": [
+                140,
+                151,
+                37,
+                143,
+                78,
+                36,
+                137,
+                241,
+                187,
+                61,
+                16,
+                41,
+                20,
+                142,
+                13,
+                131,
+                11,
+                90,
+                19,
+                153,
+                218,
+                255,
+                16,
+                132,
+                4,
+                142,
+                123,
+                216,
+                219,
+                233,
+                248,
+                89
+              ]
+            }
+          }
+        },
+        {
+          "name": "fee_recipient_vault_6",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "account",
+                "path": "fee_recipient_6"
+              },
+              {
+                "kind": "account",
+                "path": "token_program"
+              },
+              {
+                "kind": "account",
+                "path": "quote_mint"
+              }
+            ],
+            "program": {
+              "kind": "const",
+              "value": [
+                140,
+                151,
+                37,
+                143,
+                78,
+                36,
+                137,
+                241,
+                187,
+                61,
+                16,
+                41,
+                20,
+                142,
+                13,
+                131,
+                11,
+                90,
+                19,
+                153,
+                218,
+                255,
+                16,
+                132,
+                4,
+                142,
+                123,
+                216,
+                219,
+                233,
+                248,
+                89
+              ]
+            }
+          }
+        },
+        {
+          "name": "fee_recipient_vault_7",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "account",
+                "path": "fee_recipient_7"
+              },
+              {
+                "kind": "account",
+                "path": "token_program"
+              },
+              {
+                "kind": "account",
+                "path": "quote_mint"
+              }
+            ],
+            "program": {
+              "kind": "const",
+              "value": [
+                140,
+                151,
+                37,
+                143,
+                78,
+                36,
+                137,
+                241,
+                187,
+                61,
+                16,
+                41,
+                20,
+                142,
+                13,
+                131,
+                11,
+                90,
+                19,
+                153,
+                218,
+                255,
+                16,
+                132,
+                4,
+                142,
+                123,
+                216,
+                219,
+                233,
+                248,
+                89
+              ]
+            }
+          }
+        },
+        {
+          "name": "fee_recipient_vault_8",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "account",
+                "path": "fee_recipient_8"
+              },
+              {
+                "kind": "account",
+                "path": "token_program"
+              },
+              {
+                "kind": "account",
+                "path": "quote_mint"
+              }
+            ],
+            "program": {
+              "kind": "const",
+              "value": [
+                140,
+                151,
+                37,
+                143,
+                78,
+                36,
+                137,
+                241,
+                187,
+                61,
+                16,
+                41,
+                20,
+                142,
+                13,
+                131,
+                11,
+                90,
+                19,
+                153,
+                218,
+                255,
+                16,
+                132,
+                4,
+                142,
+                123,
+                216,
+                219,
+                233,
+                248,
+                89
+              ]
+            }
+          }
+        },
+        {
+          "name": "token_program",
+          "docs": [
+            "Token program for the quote mint."
+          ],
+          "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+        },
+        {
+          "name": "associated_token_program",
+          "docs": [
+            "Associated token program for ATA creation."
+          ],
+          "address": "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL"
+        },
+        {
+          "name": "system_program",
+          "docs": [
+            "System program for account creation."
+          ],
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "pause",
+      "docs": [
+        "Pauses the protocol. Only callable by admin.",
+        "When paused, buy and sell operations are disabled."
+      ],
+      "discriminator": [
+        211,
+        22,
+        221,
+        251,
+        74,
+        121,
+        193,
+        47
+      ],
+      "accounts": [
+        {
+          "name": "admin",
+          "docs": [
+            "The admin authorized to pause the protocol."
+          ],
+          "signer": true
+        },
+        {
+          "name": "global_config",
+          "docs": [
+            "Global configuration account to be updated."
+          ],
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  103,
+                  108,
+                  111,
+                  98,
+                  97,
+                  108,
+                  95,
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "cpi_authority",
+          "docs": [
+            "CPI authority PDA â€” proves this program's identity in cross-program calls."
+          ],
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  112,
+                  105,
+                  95,
+                  97,
+                  117,
+                  116,
+                  104,
+                  111,
+                  114,
+                  105,
+                  116,
+                  121
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "liquid_events_program",
+          "docs": [
+            "Liquid events program for CPI event emission."
+          ],
+          "address": "EventsQeXA43nLKR69DhHwNsJ6aM512AweMCgG3wG8zG"
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "sell_exact_in",
+      "docs": [
+        "Sells base tokens by providing them to the pool and receiving quote tokens (exact input).",
+        "",
+        "# Arguments",
+        "* `amount_in` - Exact amount of base tokens to sell (before transfer fees).",
+        "* `minimum_amount_out` - Minimum quote tokens expected (after transfer fees; slippage protection)."
+      ],
+      "discriminator": [
+        149,
+        39,
+        222,
+        155,
+        211,
+        124,
+        152,
+        26
+      ],
+      "accounts": [
+        {
+          "name": "payer",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "pool",
+          "docs": [
+            "The program account of the pool in which the swap will be performed."
+          ],
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  112,
+                  111,
+                  111,
+                  108
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "base_mint"
+              },
+              {
+                "kind": "account",
+                "path": "quote_mint"
+              }
+            ]
+          }
+        },
+        {
+          "name": "base_token_account",
+          "docs": [
+            "The user token account for input token."
+          ],
+          "writable": true
+        },
+        {
+          "name": "quote_token_account",
+          "docs": [
+            "The user token account for output token."
+          ],
+          "writable": true
+        },
+        {
+          "name": "base_vault",
+          "docs": [
+            "The vault token account for input token."
+          ],
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  112,
+                  111,
+                  111,
+                  108,
+                  95,
+                  118,
+                  97,
+                  117,
+                  108,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "pool"
+              },
+              {
+                "kind": "account",
+                "path": "base_mint"
+              }
+            ]
+          }
+        },
+        {
+          "name": "quote_vault",
+          "docs": [
+            "The vault token account for output token."
+          ],
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  112,
+                  111,
+                  111,
+                  108,
+                  95,
+                  118,
+                  97,
+                  117,
+                  108,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "pool"
+              },
+              {
+                "kind": "account",
+                "path": "quote_mint"
+              }
+            ]
+          }
+        },
+        {
+          "name": "observation_state",
+          "docs": [
+            "The program account for the most recent oracle observation."
+          ],
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  111,
+                  98,
+                  115,
+                  101,
+                  114,
+                  118,
+                  97,
+                  116,
+                  105,
+                  111,
+                  110
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "pool"
+              }
+            ]
+          }
+        },
+        {
+          "name": "fee_recipient",
+          "docs": [
+            "The protocol fee recipient. Must be one of the allowed recipients in Config.",
+            "",
+            "NOTE: Validation happens in handler by checking against global_config.fee_recipients.",
+            "Fee recipients are admin-controlled pubkeys stored in AmmConfig, so an attacker",
+            "cannot pass an arbitrary account - it must match one of the configured recipients."
+          ],
+          "writable": true
+        },
+        {
+          "name": "protocol_fee_vault",
+          "docs": [
+            "The protocol fee vault."
+          ],
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  103,
+                  108,
+                  111,
+                  98,
+                  97,
+                  108,
+                  95,
+                  102,
+                  101,
+                  101
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "fee_recipient"
+              },
+              {
+                "kind": "account",
+                "path": "quote_mint"
+              }
+            ]
+          }
+        },
+        {
+          "name": "fee_vault",
+          "docs": [
+            "Fee vault PDA from liquid-fees (authority for fee_vault_token_account)."
+          ],
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  102,
+                  101,
+                  101,
+                  95,
+                  118,
+                  97,
+                  117,
+                  108,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "fee_config"
+              }
+            ],
+            "program": {
+              "kind": "const",
+              "value": [
+                217,
+                168,
+                237,
+                183,
+                0,
+                44,
+                187,
+                171,
+                53,
+                87,
+                202,
+                162,
+                64,
+                131,
+                189,
+                106,
+                187,
+                249,
+                130,
+                171,
+                56,
+                202,
+                127,
+                190,
+                143,
+                121,
+                30,
+                195,
+                25,
+                86,
+                241,
+                242
+              ]
+            }
+          }
+        },
+        {
+          "name": "fee_vault_token_account",
+          "docs": [
+            "Fee vault token account for Recipients mode â€” accumulates quote tokens."
+          ],
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "account",
+                "path": "fee_vault"
+              },
+              {
+                "kind": "account",
+                "path": "quote_token_program"
+              },
+              {
+                "kind": "account",
+                "path": "quote_mint"
+              }
+            ],
+            "program": {
+              "kind": "const",
+              "value": [
+                140,
+                151,
+                37,
+                143,
+                78,
+                36,
+                137,
+                241,
+                187,
+                61,
+                16,
+                41,
+                20,
+                142,
+                13,
+                131,
+                11,
+                90,
+                19,
+                153,
+                218,
+                255,
+                16,
+                132,
+                4,
+                142,
+                123,
+                216,
+                219,
+                233,
+                248,
+                89
+              ]
+            }
+          }
+        },
+        {
+          "name": "buyback_vault",
+          "docs": [
+            "Buyback vault (for Revoked mode) â€” accumulates quote tokens for buy-and-burn.",
+            "Initialized during pool creation."
+          ],
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  98,
+                  117,
+                  121,
+                  98,
+                  97,
+                  99,
+                  107,
+                  95,
+                  118,
+                  97,
+                  117,
+                  108,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "pool"
+              },
+              {
+                "kind": "account",
+                "path": "quote_mint"
+              }
+            ]
+          }
+        },
+        {
+          "name": "authority",
+          "docs": [
+            "Pool vault and LP mint authority."
+          ],
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  118,
+                  97,
+                  117,
+                  108,
+                  116,
+                  95,
+                  97,
+                  110,
+                  100,
+                  95,
+                  108,
+                  112,
+                  95,
+                  109,
+                  105,
+                  110,
+                  116,
+                  95,
+                  97,
+                  117,
+                  116,
+                  104,
+                  95,
+                  115,
+                  101,
+                  101,
+                  100
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "global_config",
+          "docs": [
+            "Global configuration for the protocol."
+          ],
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  103,
+                  108,
+                  111,
+                  98,
+                  97,
+                  108,
+                  95,
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "creator",
+          "docs": [
+            "Pool creator (needed for fee vault derivation).",
+            "",
+            "NOTE: Validation relies on `has_one = creator` constraint on pool state.",
+            "The creator is whoever signed the original pool creation transaction,",
+            "stored immutably in PoolState. No separate ownership check is needed",
+            "as the pool state is the source of truth for creator identity."
+          ],
+          "relations": [
+            "pool"
+          ]
+        },
+        {
+          "name": "base_mint",
+          "docs": [
+            "The mint of input token."
+          ]
+        },
+        {
+          "name": "quote_mint",
+          "docs": [
+            "The mint of output token."
+          ]
+        },
+        {
+          "name": "fee_config",
+          "docs": [
+            "The fee configuration for this token (from liquid-fees program).",
+            "base_mint is typically the token that was launched on the bonding curve."
+          ],
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  102,
+                  101,
+                  101,
+                  95,
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "base_mint"
+              },
+              {
+                "kind": "account",
+                "path": "quote_mint"
+              }
+            ],
+            "program": {
+              "kind": "const",
+              "value": [
+                217,
+                168,
+                237,
+                183,
+                0,
+                44,
+                187,
+                171,
+                53,
+                87,
+                202,
+                162,
+                64,
+                131,
+                189,
+                106,
+                187,
+                249,
+                130,
+                171,
+                56,
+                202,
+                127,
+                190,
+                143,
+                121,
+                30,
+                195,
+                25,
+                86,
+                241,
+                242
+              ]
+            }
+          }
+        },
+        {
+          "name": "liquid_state",
+          "accounts": [
+            {
+              "name": "user_properties",
+              "docs": [
+                "User properties from liquid-state."
+              ],
+              "writable": true,
+              "pda": {
+                "seeds": [
+                  {
+                    "kind": "const",
+                    "value": [
+                      117,
+                      115,
+                      101,
+                      114,
+                      95,
+                      112,
+                      114,
+                      111,
+                      112,
+                      101,
+                      114,
+                      116,
+                      105,
+                      101,
+                      115
+                    ]
+                  },
+                  {
+                    "kind": "account",
+                    "path": "user"
+                  }
+                ],
+                "program": {
+                  "kind": "const",
+                  "value": [
+                    6,
+                    161,
+                    216,
+                    199,
+                    206,
+                    40,
+                    40,
+                    163,
+                    177,
+                    19,
+                    1,
+                    21,
+                    164,
+                    67,
+                    81,
+                    132,
+                    164,
+                    22,
+                    81,
+                    177,
+                    201,
+                    45,
+                    170,
+                    138,
+                    70,
+                    214,
+                    218,
+                    76,
+                    85,
+                    222,
+                    216,
+                    214
+                  ]
+                }
+              }
+            },
+            {
+              "name": "global_amm_volume",
+              "docs": [
+                "Global AMM volume accumulator from liquid-state."
+              ],
+              "writable": true,
+              "pda": {
+                "seeds": [
+                  {
+                    "kind": "const",
+                    "value": [
+                      103,
+                      108,
+                      111,
+                      98,
+                      97,
+                      108,
+                      95,
+                      97,
+                      109,
+                      109,
+                      95,
+                      118,
+                      111,
+                      108,
+                      117,
+                      109,
+                      101
+                    ]
+                  }
+                ],
+                "program": {
+                  "kind": "const",
+                  "value": [
+                    6,
+                    161,
+                    216,
+                    199,
+                    206,
+                    40,
+                    40,
+                    163,
+                    177,
+                    19,
+                    1,
+                    21,
+                    164,
+                    67,
+                    81,
+                    132,
+                    164,
+                    22,
+                    81,
+                    177,
+                    201,
+                    45,
+                    170,
+                    138,
+                    70,
+                    214,
+                    218,
+                    76,
+                    85,
+                    222,
+                    216,
+                    214
+                  ]
+                }
+              }
+            },
+            {
+              "name": "token_volume",
+              "docs": [
+                "Token volume accumulator from liquid-state (for base_mint)."
+              ],
+              "writable": true,
+              "pda": {
+                "seeds": [
+                  {
+                    "kind": "const",
+                    "value": [
+                      116,
+                      111,
+                      107,
+                      101,
+                      110,
+                      95,
+                      118,
+                      111,
+                      108,
+                      117,
+                      109,
+                      101
+                    ]
+                  },
+                  {
+                    "kind": "account",
+                    "path": "token_mint"
+                  }
+                ],
+                "program": {
+                  "kind": "const",
+                  "value": [
+                    6,
+                    161,
+                    216,
+                    199,
+                    206,
+                    40,
+                    40,
+                    163,
+                    177,
+                    19,
+                    1,
+                    21,
+                    164,
+                    67,
+                    81,
+                    132,
+                    164,
+                    22,
+                    81,
+                    177,
+                    201,
+                    45,
+                    170,
+                    138,
+                    70,
+                    214,
+                    218,
+                    76,
+                    85,
+                    222,
+                    216,
+                    214
+                  ]
+                }
+              }
+            },
+            {
+              "name": "user",
+              "docs": [
+                "The user performing the trade."
+              ]
+            },
+            {
+              "name": "token_mint",
+              "docs": [
+                "The token mint, used for token_volume PDA derivation."
+              ]
+            },
+            {
+              "name": "cashback_config",
+              "docs": [
+                "Cashback configuration from liquid-state."
+              ],
+              "pda": {
+                "seeds": [
+                  {
+                    "kind": "const",
+                    "value": [
+                      99,
+                      97,
+                      115,
+                      104,
+                      98,
+                      97,
+                      99,
+                      107,
+                      95,
+                      99,
+                      111,
+                      110,
+                      102,
+                      105,
+                      103
+                    ]
+                  }
+                ],
+                "program": {
+                  "kind": "const",
+                  "value": [
+                    6,
+                    161,
+                    216,
+                    199,
+                    206,
+                    40,
+                    40,
+                    163,
+                    177,
+                    19,
+                    1,
+                    21,
+                    164,
+                    67,
+                    81,
+                    132,
+                    164,
+                    22,
+                    81,
+                    177,
+                    201,
+                    45,
+                    170,
+                    138,
+                    70,
+                    214,
+                    218,
+                    76,
+                    85,
+                    222,
+                    216,
+                    214
+                  ]
+                }
+              }
+            },
+            {
+              "name": "liquid_state_program",
+              "docs": [
+                "liquid-state program for unified state management."
+              ],
+              "address": "State3HtEfi7cXdsTpAtRoBvrij8zSFCiGTAVWmYH2d"
+            },
+            {
+              "name": "state_events_cpi_authority",
+              "docs": [
+                "CPI authority PDA owned by liquid-state for emitting events via liquid-events."
+              ],
+              "pda": {
+                "seeds": [
+                  {
+                    "kind": "const",
+                    "value": [
+                      99,
+                      112,
+                      105,
+                      95,
+                      97,
+                      117,
+                      116,
+                      104,
+                      111,
+                      114,
+                      105,
+                      116,
+                      121
+                    ]
+                  }
+                ],
+                "program": {
+                  "kind": "const",
+                  "value": [
+                    6,
+                    161,
+                    216,
+                    199,
+                    206,
+                    40,
+                    40,
+                    163,
+                    177,
+                    19,
+                    1,
+                    21,
+                    164,
+                    67,
+                    81,
+                    132,
+                    164,
+                    22,
+                    81,
+                    177,
+                    201,
+                    45,
+                    170,
+                    138,
+                    70,
+                    214,
+                    218,
+                    76,
+                    85,
+                    222,
+                    216,
+                    214
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        {
+          "name": "base_token_program",
+          "docs": [
+            "SPL program for input token transfers."
+          ]
+        },
+        {
+          "name": "quote_token_program",
+          "docs": [
+            "SPL program for output token transfers."
+          ]
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        },
+        {
+          "name": "token_program",
+          "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+        },
+        {
+          "name": "associated_token_program",
+          "address": "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL"
+        },
+        {
+          "name": "cpi_authority",
+          "docs": [
+            "CPI authority PDA â€” proves this program's identity in cross-program calls."
+          ],
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  112,
+                  105,
+                  95,
+                  97,
+                  117,
+                  116,
+                  104,
+                  111,
+                  114,
+                  105,
+                  116,
+                  121
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "liquid_events_program",
+          "docs": [
+            "Liquid events program for CPI event emission."
+          ],
+          "address": "EventsQeXA43nLKR69DhHwNsJ6aM512AweMCgG3wG8zG"
+        },
+        {
+          "name": "oracle_price_feed",
+          "docs": [
+            "Pyth SOL/USD price feed (required for tiered fees)."
+          ],
+          "optional": true
+        }
+      ],
+      "args": [
+        {
+          "name": "amount_in",
+          "type": "u64"
+        },
+        {
+          "name": "minimum_amount_out",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "sell_exact_out",
+      "docs": [
+        "Sells base tokens to receive an exact amount of quote tokens.",
+        "",
+        "# Arguments",
+        "* `max_amount_in` - Maximum base tokens willing to sell (slippage protection).",
+        "* `exact_amount_out` - Exact net quote tokens to receive."
+      ],
+      "discriminator": [
+        95,
+        200,
+        71,
+        34,
+        8,
+        9,
+        11,
+        166
+      ],
+      "accounts": [
+        {
+          "name": "payer",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "pool",
+          "docs": [
+            "The program account of the pool in which the swap will be performed."
+          ],
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  112,
+                  111,
+                  111,
+                  108
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "base_mint"
+              },
+              {
+                "kind": "account",
+                "path": "quote_mint"
+              }
+            ]
+          }
+        },
+        {
+          "name": "base_token_account",
+          "docs": [
+            "The user token account for input token."
+          ],
+          "writable": true
+        },
+        {
+          "name": "quote_token_account",
+          "docs": [
+            "The user token account for output token."
+          ],
+          "writable": true
+        },
+        {
+          "name": "base_vault",
+          "docs": [
+            "The vault token account for input token."
+          ],
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  112,
+                  111,
+                  111,
+                  108,
+                  95,
+                  118,
+                  97,
+                  117,
+                  108,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "pool"
+              },
+              {
+                "kind": "account",
+                "path": "base_mint"
+              }
+            ]
+          }
+        },
+        {
+          "name": "quote_vault",
+          "docs": [
+            "The vault token account for output token."
+          ],
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  112,
+                  111,
+                  111,
+                  108,
+                  95,
+                  118,
+                  97,
+                  117,
+                  108,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "pool"
+              },
+              {
+                "kind": "account",
+                "path": "quote_mint"
+              }
+            ]
+          }
+        },
+        {
+          "name": "observation_state",
+          "docs": [
+            "The program account for the most recent oracle observation."
+          ],
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  111,
+                  98,
+                  115,
+                  101,
+                  114,
+                  118,
+                  97,
+                  116,
+                  105,
+                  111,
+                  110
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "pool"
+              }
+            ]
+          }
+        },
+        {
+          "name": "fee_recipient",
+          "docs": [
+            "The protocol fee recipient. Must be one of the allowed recipients in Config.",
+            "",
+            "NOTE: Validation happens in handler by checking against global_config.fee_recipients.",
+            "Fee recipients are admin-controlled pubkeys stored in AmmConfig, so an attacker",
+            "cannot pass an arbitrary account - it must match one of the configured recipients."
+          ],
+          "writable": true
+        },
+        {
+          "name": "protocol_fee_vault",
+          "docs": [
+            "The protocol fee vault."
+          ],
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  103,
+                  108,
+                  111,
+                  98,
+                  97,
+                  108,
+                  95,
+                  102,
+                  101,
+                  101
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "fee_recipient"
+              },
+              {
+                "kind": "account",
+                "path": "quote_mint"
+              }
+            ]
+          }
+        },
+        {
+          "name": "fee_vault",
+          "docs": [
+            "Fee vault PDA from liquid-fees (authority for fee_vault_token_account)."
+          ],
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  102,
+                  101,
+                  101,
+                  95,
+                  118,
+                  97,
+                  117,
+                  108,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "fee_config"
+              }
+            ],
+            "program": {
+              "kind": "const",
+              "value": [
+                217,
+                168,
+                237,
+                183,
+                0,
+                44,
+                187,
+                171,
+                53,
+                87,
+                202,
+                162,
+                64,
+                131,
+                189,
+                106,
+                187,
+                249,
+                130,
+                171,
+                56,
+                202,
+                127,
+                190,
+                143,
+                121,
+                30,
+                195,
+                25,
+                86,
+                241,
+                242
+              ]
+            }
+          }
+        },
+        {
+          "name": "fee_vault_token_account",
+          "docs": [
+            "Fee vault token account for Recipients mode â€” accumulates quote tokens."
+          ],
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "account",
+                "path": "fee_vault"
+              },
+              {
+                "kind": "account",
+                "path": "quote_token_program"
+              },
+              {
+                "kind": "account",
+                "path": "quote_mint"
+              }
+            ],
+            "program": {
+              "kind": "const",
+              "value": [
+                140,
+                151,
+                37,
+                143,
+                78,
+                36,
+                137,
+                241,
+                187,
+                61,
+                16,
+                41,
+                20,
+                142,
+                13,
+                131,
+                11,
+                90,
+                19,
+                153,
+                218,
+                255,
+                16,
+                132,
+                4,
+                142,
+                123,
+                216,
+                219,
+                233,
+                248,
+                89
+              ]
+            }
+          }
+        },
+        {
+          "name": "buyback_vault",
+          "docs": [
+            "Buyback vault (for Revoked mode) â€” accumulates quote tokens for buy-and-burn.",
+            "Initialized during pool creation."
+          ],
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  98,
+                  117,
+                  121,
+                  98,
+                  97,
+                  99,
+                  107,
+                  95,
+                  118,
+                  97,
+                  117,
+                  108,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "pool"
+              },
+              {
+                "kind": "account",
+                "path": "quote_mint"
+              }
+            ]
+          }
+        },
+        {
+          "name": "authority",
+          "docs": [
+            "Pool vault and LP mint authority."
+          ],
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  118,
+                  97,
+                  117,
+                  108,
+                  116,
+                  95,
+                  97,
+                  110,
+                  100,
+                  95,
+                  108,
+                  112,
+                  95,
+                  109,
+                  105,
+                  110,
+                  116,
+                  95,
+                  97,
+                  117,
+                  116,
+                  104,
+                  95,
+                  115,
+                  101,
+                  101,
+                  100
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "global_config",
+          "docs": [
+            "Global configuration for the protocol."
+          ],
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  103,
+                  108,
+                  111,
+                  98,
+                  97,
+                  108,
+                  95,
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "creator",
+          "docs": [
+            "Pool creator (needed for fee vault derivation).",
+            "",
+            "NOTE: Validation relies on `has_one = creator` constraint on pool state.",
+            "The creator is whoever signed the original pool creation transaction,",
+            "stored immutably in PoolState. No separate ownership check is needed",
+            "as the pool state is the source of truth for creator identity."
+          ],
+          "relations": [
+            "pool"
+          ]
+        },
+        {
+          "name": "base_mint",
+          "docs": [
+            "The mint of input token."
+          ]
+        },
+        {
+          "name": "quote_mint",
+          "docs": [
+            "The mint of output token."
+          ]
+        },
+        {
+          "name": "fee_config",
+          "docs": [
+            "The fee configuration for this token (from liquid-fees program).",
+            "base_mint is typically the token that was launched on the bonding curve."
+          ],
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  102,
+                  101,
+                  101,
+                  95,
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "base_mint"
+              },
+              {
+                "kind": "account",
+                "path": "quote_mint"
+              }
+            ],
+            "program": {
+              "kind": "const",
+              "value": [
+                217,
+                168,
+                237,
+                183,
+                0,
+                44,
+                187,
+                171,
+                53,
+                87,
+                202,
+                162,
+                64,
+                131,
+                189,
+                106,
+                187,
+                249,
+                130,
+                171,
+                56,
+                202,
+                127,
+                190,
+                143,
+                121,
+                30,
+                195,
+                25,
+                86,
+                241,
+                242
+              ]
+            }
+          }
+        },
+        {
+          "name": "liquid_state",
+          "accounts": [
+            {
+              "name": "user_properties",
+              "docs": [
+                "User properties from liquid-state."
+              ],
+              "writable": true,
+              "pda": {
+                "seeds": [
+                  {
+                    "kind": "const",
+                    "value": [
+                      117,
+                      115,
+                      101,
+                      114,
+                      95,
+                      112,
+                      114,
+                      111,
+                      112,
+                      101,
+                      114,
+                      116,
+                      105,
+                      101,
+                      115
+                    ]
+                  },
+                  {
+                    "kind": "account",
+                    "path": "user"
+                  }
+                ],
+                "program": {
+                  "kind": "const",
+                  "value": [
+                    6,
+                    161,
+                    216,
+                    199,
+                    206,
+                    40,
+                    40,
+                    163,
+                    177,
+                    19,
+                    1,
+                    21,
+                    164,
+                    67,
+                    81,
+                    132,
+                    164,
+                    22,
+                    81,
+                    177,
+                    201,
+                    45,
+                    170,
+                    138,
+                    70,
+                    214,
+                    218,
+                    76,
+                    85,
+                    222,
+                    216,
+                    214
+                  ]
+                }
+              }
+            },
+            {
+              "name": "global_amm_volume",
+              "docs": [
+                "Global AMM volume accumulator from liquid-state."
+              ],
+              "writable": true,
+              "pda": {
+                "seeds": [
+                  {
+                    "kind": "const",
+                    "value": [
+                      103,
+                      108,
+                      111,
+                      98,
+                      97,
+                      108,
+                      95,
+                      97,
+                      109,
+                      109,
+                      95,
+                      118,
+                      111,
+                      108,
+                      117,
+                      109,
+                      101
+                    ]
+                  }
+                ],
+                "program": {
+                  "kind": "const",
+                  "value": [
+                    6,
+                    161,
+                    216,
+                    199,
+                    206,
+                    40,
+                    40,
+                    163,
+                    177,
+                    19,
+                    1,
+                    21,
+                    164,
+                    67,
+                    81,
+                    132,
+                    164,
+                    22,
+                    81,
+                    177,
+                    201,
+                    45,
+                    170,
+                    138,
+                    70,
+                    214,
+                    218,
+                    76,
+                    85,
+                    222,
+                    216,
+                    214
+                  ]
+                }
+              }
+            },
+            {
+              "name": "token_volume",
+              "docs": [
+                "Token volume accumulator from liquid-state (for base_mint)."
+              ],
+              "writable": true,
+              "pda": {
+                "seeds": [
+                  {
+                    "kind": "const",
+                    "value": [
+                      116,
+                      111,
+                      107,
+                      101,
+                      110,
+                      95,
+                      118,
+                      111,
+                      108,
+                      117,
+                      109,
+                      101
+                    ]
+                  },
+                  {
+                    "kind": "account",
+                    "path": "token_mint"
+                  }
+                ],
+                "program": {
+                  "kind": "const",
+                  "value": [
+                    6,
+                    161,
+                    216,
+                    199,
+                    206,
+                    40,
+                    40,
+                    163,
+                    177,
+                    19,
+                    1,
+                    21,
+                    164,
+                    67,
+                    81,
+                    132,
+                    164,
+                    22,
+                    81,
+                    177,
+                    201,
+                    45,
+                    170,
+                    138,
+                    70,
+                    214,
+                    218,
+                    76,
+                    85,
+                    222,
+                    216,
+                    214
+                  ]
+                }
+              }
+            },
+            {
+              "name": "user",
+              "docs": [
+                "The user performing the trade."
+              ]
+            },
+            {
+              "name": "token_mint",
+              "docs": [
+                "The token mint, used for token_volume PDA derivation."
+              ]
+            },
+            {
+              "name": "cashback_config",
+              "docs": [
+                "Cashback configuration from liquid-state."
+              ],
+              "pda": {
+                "seeds": [
+                  {
+                    "kind": "const",
+                    "value": [
+                      99,
+                      97,
+                      115,
+                      104,
+                      98,
+                      97,
+                      99,
+                      107,
+                      95,
+                      99,
+                      111,
+                      110,
+                      102,
+                      105,
+                      103
+                    ]
+                  }
+                ],
+                "program": {
+                  "kind": "const",
+                  "value": [
+                    6,
+                    161,
+                    216,
+                    199,
+                    206,
+                    40,
+                    40,
+                    163,
+                    177,
+                    19,
+                    1,
+                    21,
+                    164,
+                    67,
+                    81,
+                    132,
+                    164,
+                    22,
+                    81,
+                    177,
+                    201,
+                    45,
+                    170,
+                    138,
+                    70,
+                    214,
+                    218,
+                    76,
+                    85,
+                    222,
+                    216,
+                    214
+                  ]
+                }
+              }
+            },
+            {
+              "name": "liquid_state_program",
+              "docs": [
+                "liquid-state program for unified state management."
+              ],
+              "address": "State3HtEfi7cXdsTpAtRoBvrij8zSFCiGTAVWmYH2d"
+            },
+            {
+              "name": "state_events_cpi_authority",
+              "docs": [
+                "CPI authority PDA owned by liquid-state for emitting events via liquid-events."
+              ],
+              "pda": {
+                "seeds": [
+                  {
+                    "kind": "const",
+                    "value": [
+                      99,
+                      112,
+                      105,
+                      95,
+                      97,
+                      117,
+                      116,
+                      104,
+                      111,
+                      114,
+                      105,
+                      116,
+                      121
+                    ]
+                  }
+                ],
+                "program": {
+                  "kind": "const",
+                  "value": [
+                    6,
+                    161,
+                    216,
+                    199,
+                    206,
+                    40,
+                    40,
+                    163,
+                    177,
+                    19,
+                    1,
+                    21,
+                    164,
+                    67,
+                    81,
+                    132,
+                    164,
+                    22,
+                    81,
+                    177,
+                    201,
+                    45,
+                    170,
+                    138,
+                    70,
+                    214,
+                    218,
+                    76,
+                    85,
+                    222,
+                    216,
+                    214
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        {
+          "name": "base_token_program",
+          "docs": [
+            "SPL program for input token transfers."
+          ]
+        },
+        {
+          "name": "quote_token_program",
+          "docs": [
+            "SPL program for output token transfers."
+          ]
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        },
+        {
+          "name": "token_program",
+          "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+        },
+        {
+          "name": "associated_token_program",
+          "address": "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL"
+        },
+        {
+          "name": "cpi_authority",
+          "docs": [
+            "CPI authority PDA â€” proves this program's identity in cross-program calls."
+          ],
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  112,
+                  105,
+                  95,
+                  97,
+                  117,
+                  116,
+                  104,
+                  111,
+                  114,
+                  105,
+                  116,
+                  121
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "liquid_events_program",
+          "docs": [
+            "Liquid events program for CPI event emission."
+          ],
+          "address": "EventsQeXA43nLKR69DhHwNsJ6aM512AweMCgG3wG8zG"
+        },
+        {
+          "name": "oracle_price_feed",
+          "docs": [
+            "Pyth SOL/USD price feed (required for tiered fees)."
+          ],
+          "optional": true
+        }
+      ],
+      "args": [
+        {
+          "name": "max_amount_in",
+          "type": "u64"
+        },
+        {
+          "name": "exact_amount_out",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "set_fee_recipients",
+      "docs": [
+        "Sets the protocol's fee recipients. Only callable by the admin.",
+        "",
+        "# Arguments",
+        "* `fee_recipients` - List of protocol fee recipients (must be exactly NUM_FEE_RECIPIENTS)."
+      ],
+      "discriminator": [
+        49,
+        149,
+        195,
+        192,
+        109,
+        40,
+        213,
+        123
+      ],
+      "accounts": [
+        {
+          "name": "admin",
+          "docs": [
+            "The admin authorized to update the global config."
+          ],
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "global_config",
+          "docs": [
+            "Global configuration account to be updated."
+          ],
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  103,
+                  108,
+                  111,
+                  98,
+                  97,
+                  108,
+                  95,
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "fee_recipient_1",
+          "writable": true
+        },
+        {
+          "name": "fee_recipient_2",
+          "writable": true
+        },
+        {
+          "name": "fee_recipient_3",
+          "writable": true
+        },
+        {
+          "name": "fee_recipient_4",
+          "writable": true
+        },
+        {
+          "name": "fee_recipient_5",
+          "writable": true
+        },
+        {
+          "name": "fee_recipient_6",
+          "writable": true
+        },
+        {
+          "name": "fee_recipient_7",
+          "writable": true
+        },
+        {
+          "name": "fee_recipient_8",
+          "writable": true
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "fee_recipients",
+          "type": {
+            "vec": "pubkey"
+          }
+        }
+      ]
+    },
+    {
+      "name": "transfer_admin",
+      "docs": [
+        "Proposes an admin transfer to a new address. Only callable by the current admin.",
+        "The new admin must call `accept_admin` to complete the transfer.",
+        "",
+        "# Arguments",
+        "* `new_admin` - The proposed new admin authority public key."
+      ],
+      "discriminator": [
+        42,
+        242,
+        66,
+        106,
+        228,
+        10,
+        111,
+        156
+      ],
+      "accounts": [
+        {
+          "name": "admin",
+          "docs": [
+            "The current admin authorizing the transfer."
+          ],
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "global_config",
+          "docs": [
+            "Global configuration account to be updated."
+          ],
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  103,
+                  108,
+                  111,
+                  98,
+                  97,
+                  108,
+                  95,
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              }
+            ]
+          }
+        }
+      ],
+      "args": [
+        {
+          "name": "new_admin",
+          "type": "pubkey"
+        }
+      ]
+    },
+    {
+      "name": "unpause",
+      "docs": [
+        "Unpauses the protocol. Only callable by admin."
+      ],
+      "discriminator": [
+        169,
+        144,
+        4,
+        38,
+        10,
+        141,
+        188,
+        255
+      ],
+      "accounts": [
+        {
+          "name": "admin",
+          "docs": [
+            "The admin authorized to unpause the protocol."
+          ],
+          "signer": true
+        },
+        {
+          "name": "global_config",
+          "docs": [
+            "Global configuration account to be updated."
+          ],
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  103,
+                  108,
+                  111,
+                  98,
+                  97,
+                  108,
+                  95,
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "cpi_authority",
+          "docs": [
+            "CPI authority PDA â€” proves this program's identity in cross-program calls."
+          ],
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  112,
+                  105,
+                  95,
+                  97,
+                  117,
+                  116,
+                  104,
+                  111,
+                  114,
+                  105,
+                  116,
+                  121
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "liquid_events_program",
+          "docs": [
+            "Liquid events program for CPI event emission."
+          ],
+          "address": "EventsQeXA43nLKR69DhHwNsJ6aM512AweMCgG3wG8zG"
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "update",
+      "docs": [
+        "Updates the AMM configuration. Must be called by the admin.",
+        "",
+        "# Arguments",
+        "* `quote_mints` - Optional new list of valid quote mints.",
+        "* `fee_tiers` - Optional new fee tiers (at least one required if provided).",
+        "* `oracle_price_feed` - Optional new Pyth SOL/USD price feed address."
+      ],
+      "discriminator": [
+        219,
+        200,
+        88,
+        176,
+        158,
+        63,
+        253,
+        127
+      ],
+      "accounts": [
+        {
+          "name": "admin",
+          "docs": [
+            "The admin authorized to update the config."
+          ],
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "global_config",
+          "docs": [
+            "Amm config account to be changed"
+          ],
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  103,
+                  108,
+                  111,
+                  98,
+                  97,
+                  108,
+                  95,
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              }
+            ]
+          }
+        }
+      ],
+      "args": [
+        {
+          "name": "quote_mints",
+          "type": {
+            "option": {
+              "vec": "pubkey"
+            }
+          }
+        },
+        {
+          "name": "fee_tiers",
+          "type": {
+            "option": {
+              "vec": {
+                "defined": {
+                  "name": "FeeTier"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "oracle_price_feed",
+          "type": {
+            "option": "pubkey"
+          }
+        }
+      ]
+    },
+    {
+      "name": "withdraw",
+      "docs": [
+        "Withdraws liquidity from the pool, burning LP tokens and returning base and quote tokens.",
+        "",
+        "# Arguments",
+        "* `lp_token_amount` - Number of LP tokens to burn.",
+        "* `minimum_base_amount` - Minimum base tokens expected to receive (slippage protection).",
+        "* `minimum_quote_amount` - Minimum quote tokens expected to receive (slippage protection)."
+      ],
+      "discriminator": [
+        183,
+        18,
+        70,
+        156,
+        148,
+        109,
+        161,
+        34
+      ],
+      "accounts": [
+        {
+          "name": "owner",
+          "docs": [
+            "The owner withdrawing liquidity from the pool."
+          ],
+          "signer": true
+        },
+        {
+          "name": "pool_state",
+          "docs": [
+            "Pool state account validated against base/quote vaults and LP mint."
+          ],
+          "writable": true
+        },
+        {
+          "name": "owner_lp_token",
+          "docs": [
+            "Owner LP token account."
+          ],
+          "writable": true
+        },
+        {
+          "name": "base_account",
+          "docs": [
+            "The token account to receive base token."
+          ],
+          "writable": true
+        },
+        {
+          "name": "quote_account",
+          "docs": [
+            "The token account to receive quote token."
+          ],
+          "writable": true
+        },
+        {
+          "name": "base_vault",
+          "docs": [
+            "The address that holds pool tokens for base token."
+          ],
+          "writable": true,
+          "relations": [
+            "pool_state"
+          ]
+        },
+        {
+          "name": "quote_vault",
+          "docs": [
+            "The address that holds pool tokens for quote token."
+          ],
+          "writable": true,
+          "relations": [
+            "pool_state"
+          ]
+        },
+        {
+          "name": "lp_mint",
+          "docs": [
+            "Pool LP token mint."
+          ],
+          "writable": true,
+          "relations": [
+            "pool_state"
+          ]
+        },
+        {
+          "name": "global_config",
+          "docs": [
+            "Global configuration for the protocol."
+          ],
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  103,
+                  108,
+                  111,
+                  98,
+                  97,
+                  108,
+                  95,
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "authority",
+          "docs": [
+            "Pool vault and LP mint authority."
+          ],
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  118,
+                  97,
+                  117,
+                  108,
+                  116,
+                  95,
+                  97,
+                  110,
+                  100,
+                  95,
+                  108,
+                  112,
+                  95,
+                  109,
+                  105,
+                  110,
+                  116,
+                  95,
+                  97,
+                  117,
+                  116,
+                  104,
+                  95,
+                  115,
+                  101,
+                  101,
+                  100
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "base_mint",
+          "docs": [
+            "The mint of base vault."
+          ]
+        },
+        {
+          "name": "quote_mint",
+          "docs": [
+            "The mint of quote vault."
+          ]
+        },
+        {
+          "name": "cpi_authority",
+          "docs": [
+            "CPI authority PDA â€” proves this program's identity in cross-program calls."
+          ],
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  112,
+                  105,
+                  95,
+                  97,
+                  117,
+                  116,
+                  104,
+                  111,
+                  114,
+                  105,
+                  116,
+                  121
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "liquid_events_program",
+          "docs": [
+            "Liquid events program for CPI event emission."
+          ],
+          "address": "EventsQeXA43nLKR69DhHwNsJ6aM512AweMCgG3wG8zG"
+        },
+        {
+          "name": "token_program",
+          "docs": [
+            "Token program."
+          ],
+          "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+        },
+        {
+          "name": "token_program_2022",
+          "docs": [
+            "Token program 2022."
+          ],
+          "address": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb"
+        }
+      ],
+      "args": [
+        {
+          "name": "lp_token_amount",
+          "type": "u64"
+        },
+        {
+          "name": "minimum_base_amount",
+          "type": "u64"
+        },
+        {
+          "name": "minimum_quote_amount",
+          "type": "u64"
+        }
+      ]
+    }
+  ],
+  "accounts": [
+    {
+      "name": "AmmConfig",
+      "discriminator": [
+        218,
+        244,
+        33,
+        104,
+        203,
+        203,
+        43,
+        111
+      ]
+    },
+    {
+      "name": "CashbackConfiguration",
+      "discriminator": [
+        85,
+        221,
+        143,
+        214,
+        41,
+        44,
+        50,
+        22
+      ]
+    },
+    {
+      "name": "GlobalAmmVolumeAccumulator",
+      "discriminator": [
+        248,
+        251,
+        192,
+        145,
+        91,
+        181,
+        97,
+        143
+      ]
+    },
+    {
+      "name": "ObservationState",
+      "discriminator": [
+        122,
+        174,
+        197,
+        53,
+        129,
+        9,
+        165,
+        132
+      ]
+    },
+    {
+      "name": "PoolState",
+      "discriminator": [
+        247,
+        237,
+        227,
+        245,
+        215,
+        195,
+        222,
+        70
+      ]
+    },
+    {
+      "name": "TokenVolumeAccumulator",
+      "discriminator": [
+        255,
+        176,
+        53,
+        212,
+        121,
+        72,
+        64,
+        57
+      ]
+    },
+    {
+      "name": "UnifiedFeeConfiguration",
+      "discriminator": [
+        88,
+        134,
+        79,
+        0,
+        82,
+        145,
+        69,
+        108
+      ]
+    }
+  ],
+  "errors": [
+    {
+      "code": 6000,
+      "name": "InvalidAdminAuthority",
+      "msg": "The provided admin authority is invalid"
+    },
+    {
+      "code": 6001,
+      "name": "Unauthorized",
+      "msg": "You are not authorized to perform this action"
+    },
+    {
+      "code": 6002,
+      "name": "NoPendingAdminTransfer",
+      "msg": "No pending admin transfer exists"
+    },
+    {
+      "code": 6003,
+      "name": "NotPendingAdmin",
+      "msg": "Caller is not the pending admin"
+    },
+    {
+      "code": 6004,
+      "name": "ProtocolPaused",
+      "msg": "Protocol is paused"
+    },
+    {
+      "code": 6005,
+      "name": "InvalidInput",
+      "msg": "The provided input parameters are invalid"
+    },
+    {
+      "code": 6006,
+      "name": "InvalidVault",
+      "msg": "Invalid vault"
+    },
+    {
+      "code": 6007,
+      "name": "IncorrectLpMint",
+      "msg": "Address of the provided LP token mint is incorrect"
+    },
+    {
+      "code": 6008,
+      "name": "NotSupportMint",
+      "msg": "Token-2022 mint extension is not supported"
+    },
+    {
+      "code": 6009,
+      "name": "BaseIsQuoteMint",
+      "msg": "Base token mint cannot be a whitelisted quote currency"
+    },
+    {
+      "code": 6010,
+      "name": "InsufficientInitialLiquidity",
+      "msg": "Initial LP amount is too small"
+    },
+    {
+      "code": 6011,
+      "name": "EmptySupply",
+      "msg": "Input token account is empty"
+    },
+    {
+      "code": 6012,
+      "name": "ZeroTradingTokens",
+      "msg": "Given pool token amount results in zero trading tokens"
+    },
+    {
+      "code": 6013,
+      "name": "SlippageExceeded",
+      "msg": "Slippage tolerance exceeded"
+    },
+    {
+      "code": 6014,
+      "name": "InsufficientVault",
+      "msg": "Insufficient tokens in vault"
+    },
+    {
+      "code": 6015,
+      "name": "TransferFeeCalculateNotMatch",
+      "msg": "Transfer fee calculation does not match"
+    },
+    {
+      "code": 6016,
+      "name": "ArithmeticOverflow",
+      "msg": "Arithmetic operation resulted in overflow"
+    },
+    {
+      "code": 6017,
+      "name": "InvalidFeeModel",
+      "msg": "Invalid fee configuration"
+    },
+    {
+      "code": 6018,
+      "name": "NoFeeCollect",
+      "msg": "No fees available to collect"
+    },
+    {
+      "code": 6019,
+      "name": "IncorrectFeeRecipientsCount",
+      "msg": "Incorrect number of protocol fee recipients provided"
+    },
+    {
+      "code": 6020,
+      "name": "TooManyQuoteMints",
+      "msg": "Too many quote mints provided"
+    },
+    {
+      "code": 6021,
+      "name": "InvalidCreatorVault",
+      "msg": "Invalid creator vault"
+    },
+    {
+      "code": 6022,
+      "name": "NotWhitelisted",
+      "msg": "Quote token mint is not allowed"
+    },
+    {
+      "code": 6023,
+      "name": "InvalidFeeRecipient",
+      "msg": "The fee recipient provided is not in the global configuration"
+    },
+    {
+      "code": 6024,
+      "name": "CreatorFeesNotRevoked",
+      "msg": "Creator fees have not been revoked - buyback not available"
+    },
+    {
+      "code": 6025,
+      "name": "NoBuybackFunds",
+      "msg": "No funds available for buyback"
+    },
+    {
+      "code": 6026,
+      "name": "DuplicateQuoteMint",
+      "msg": "Duplicate quote mint provided"
+    },
+    {
+      "code": 6027,
+      "name": "OracleFeedRequired",
+      "msg": "Oracle price feed is required when tiered fees are enabled"
+    },
+    {
+      "code": 6028,
+      "name": "InvalidOracleFeed",
+      "msg": "Oracle price feed address does not match configuration or invalid owner"
+    },
+    {
+      "code": 6029,
+      "name": "StalePriceFeed",
+      "msg": "Oracle price data is too old (stale)"
+    },
+    {
+      "code": 6030,
+      "name": "InvalidPriceFeed",
+      "msg": "Invalid price data received from oracle"
+    },
+    {
+      "code": 6031,
+      "name": "NoFeeTiersConfigured",
+      "msg": "No fee tiers are configured"
+    },
+    {
+      "code": 6032,
+      "name": "InvalidFeeTierConfiguration",
+      "msg": "Invalid fee tier configuration (check ranges, ordering, and contiguity)"
+    },
+    {
+      "code": 6033,
+      "name": "TooManyFeeTiers",
+      "msg": "Too many fee tiers provided (max 32)"
+    },
+    {
+      "code": 6034,
+      "name": "NoFeeTiersProvided",
+      "msg": "At least one fee tier is required"
+    },
+    {
+      "code": 6035,
+      "name": "InvalidPoolState",
+      "msg": "Invalid pool state (empty vaults or invalid reserves)"
+    }
+  ],
+  "types": [
+    {
+      "name": "AmmConfig",
+      "docs": [
+        "Holds the current owner of the factory and global fee configurations."
+      ],
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "admin_authority",
+            "docs": [
+              "Admin authority who can update the config."
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "fee_recipients",
+            "docs": [
+              "List of valid protocol fee recipients."
+            ],
+            "type": {
+              "array": [
+                "pubkey",
+                8
+              ]
+            }
+          },
+          {
+            "name": "quote_mints",
+            "docs": [
+              "List of valid quote mints for liquidity pools."
+            ],
+            "type": {
+              "vec": "pubkey"
+            }
+          },
+          {
+            "name": "fee_tiers",
+            "docs": [
+              "Market cap-based fee tiers."
+            ],
+            "type": {
+              "vec": {
+                "defined": {
+                  "name": "FeeTier"
+                }
+              }
+            }
+          },
+          {
+            "name": "oracle_price_feed",
+            "docs": [
+              "Pyth SOL/USD price feed address."
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "pending_admin",
+            "docs": [
+              "Pending admin authority for two-step transfer. None if no transfer is in progress."
+            ],
+            "type": {
+              "option": "pubkey"
+            }
+          },
+          {
+            "name": "bump",
+            "docs": [
+              "Bump to identify PDA."
+            ],
+            "type": "u8"
+          },
+          {
+            "name": "paused",
+            "docs": [
+              "Whether the protocol is paused (emergency stop)."
+            ],
+            "type": "bool"
+          }
+        ]
+      }
+    },
+    {
+      "name": "CashbackConfiguration",
+      "docs": [
+        "Global cashback configuration",
+        "",
+        "PDA: [b\"cashback_config\"]"
+      ],
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "admin_authority",
+            "docs": [
+              "Admin authority who can update configuration"
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "ranges",
+            "docs": [
+              "Balance-based multiplier ranges (use len() for active count).",
+              "Thresholds refer to the user's cashback credit balance. Multiplier is",
+              "applied progressively as credits are earned, not at mode-switch."
+            ],
+            "type": {
+              "vec": {
+                "defined": {
+                  "name": "CashbackRange"
+                }
+              }
+            }
+          },
+          {
+            "name": "trader_cashback_basis_points",
+            "docs": [
+              "Base trader cashback rate in basis points"
+            ],
+            "type": "u16"
+          },
+          {
+            "name": "pending_admin",
+            "docs": [
+              "Pending admin authority for two-step transfer. None if no transfer is in progress."
+            ],
+            "type": {
+              "option": "pubkey"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "CashbackRange",
+      "docs": [
+        "Cashback range defining balance-based multiplier tiers.",
+        "",
+        "Each range maps a cashback balance interval to a multiplier. When a user earns",
+        "cashback, the earned amount is multiplied by the tier corresponding to their",
+        "current balance. If earning crosses a tier boundary, the amount is split so",
+        "each portion receives its respective tier's multiplier."
+      ],
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "range_start_inclusive",
+            "docs": [
+              "Lower bound of balance range (inclusive), in USD with 6 decimals"
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "range_end_exclusive",
+            "docs": [
+              "Upper bound of balance range (exclusive), in USD with 6 decimals"
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "multiplier_basis_points",
+            "docs": [
+              "Multiplier in basis points (10000 = 1x, 20000 = 2x)"
+            ],
+            "type": "u16"
+          }
+        ]
+      }
+    },
+    {
+      "name": "FeeMode",
+      "docs": [
+        "The fee distribution mode for a token's fee configuration."
+      ],
+      "repr": {
+        "kind": "rust"
+      },
+      "type": {
+        "kind": "enum",
+        "variants": [
+          {
+            "name": "Recipients"
+          },
+          {
+            "name": "Revoked"
+          }
+        ]
+      }
+    },
+    {
+      "name": "FeeRecipient",
+      "docs": [
+        "A fee recipient with their allocation and vault PDA bump."
+      ],
+      "repr": {
+        "kind": "c"
+      },
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "pubkey",
+            "docs": [
+              "The public key of the fee recipient."
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "basis_points",
+            "docs": [
+              "The recipient's share of fees in basis points (out of 10,000)."
+            ],
+            "type": "u16"
+          },
+          {
+            "name": "vault_bump",
+            "docs": [
+              "The bump seed for the recipient's vault PDA."
+            ],
+            "type": "u8"
+          },
+          {
+            "name": "_padding",
+            "docs": [
+              "Padding to align to 8-byte boundary (32 + 2 + 1 + 5 = 40 bytes)."
+            ],
+            "type": {
+              "array": [
+                "u8",
+                5
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "FeeTier",
+      "docs": [
+        "Market cap-based fee tier definition.",
+        "",
+        "Defines a market cap range and the corresponding fee rates to apply",
+        "when the pool's fully diluted valuation (FDV) falls within that range."
+      ],
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "range_start_inclusive",
+            "docs": [
+              "Market cap range start (inclusive) in USD with 6 decimals."
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "range_end_exclusive",
+            "docs": [
+              "Market cap range end (exclusive) in USD with 6 decimals."
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "lp_fee_rate",
+            "docs": [
+              "LP fee rate in basis points for this tier."
+            ],
+            "type": "u16"
+          },
+          {
+            "name": "protocol_fee_rate",
+            "docs": [
+              "Protocol fee rate in basis points for this tier."
+            ],
+            "type": "u16"
+          },
+          {
+            "name": "creator_fee_rate",
+            "docs": [
+              "Creator fee rate in basis points for this tier."
+            ],
+            "type": "u16"
+          }
+        ]
+      }
+    },
+    {
+      "name": "GlobalAmmVolumeAccumulator",
+      "docs": [
+        "Global volume accumulator for AMM trades",
+        "",
+        "PDA: [b\"global_amm_volume\"]"
+      ],
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "total_usd_volume",
+            "docs": [
+              "Total USD volume across all AMM trades (6 decimals)"
+            ],
+            "type": "u128"
+          },
+          {
+            "name": "total_token_volume",
+            "docs": [
+              "Total token volume across all AMM trades"
+            ],
+            "type": "u128"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Observation",
+      "docs": [
+        "The element of observations in ObservationState"
+      ],
+      "serialization": "bytemuckunsafe",
+      "repr": {
+        "kind": "c",
+        "packed": true
+      },
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "block_timestamp",
+            "docs": [
+              "The block timestamp of the observation"
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "cumulative_base_price_x32",
+            "docs": [
+              "the cumulative of base price during the duration time, Q32.32, the remaining 64 bit for overflow"
+            ],
+            "type": "u128"
+          },
+          {
+            "name": "cumulative_quote_price_x32",
+            "docs": [
+              "the cumulative of quote price during the duration time, Q32.32, the remaining 64 bit for overflow"
+            ],
+            "type": "u128"
+          }
+        ]
+      }
+    },
+    {
+      "name": "ObservationState",
+      "serialization": "bytemuckunsafe",
+      "repr": {
+        "kind": "c",
+        "packed": true
+      },
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "initialized",
+            "docs": [
+              "Whether the ObservationState is initialized"
+            ],
+            "type": "bool"
+          },
+          {
+            "name": "observation_index",
+            "docs": [
+              "the most-recently updated index of the observations array"
+            ],
+            "type": "u16"
+          },
+          {
+            "name": "pool_id",
+            "type": "pubkey"
+          },
+          {
+            "name": "observations",
+            "docs": [
+              "observation array"
+            ],
+            "type": {
+              "array": [
+                {
+                  "defined": {
+                    "name": "Observation"
+                  }
+                },
+                100
+              ]
+            }
+          },
+          {
+            "name": "last_update_timestamp",
+            "docs": [
+              "the last update timestamp"
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "padding",
+            "docs": [
+              "padding for feature update"
+            ],
+            "type": {
+              "array": [
+                "u64",
+                3
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "PoolState",
+      "serialization": "bytemuckunsafe",
+      "repr": {
+        "kind": "c",
+        "packed": true
+      },
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "base_vault",
+            "docs": [
+              "Base Token Vault"
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "quote_vault",
+            "docs": [
+              "Quote Token Vault"
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "lp_mint",
+            "docs": [
+              "Pool tokens are issued when Base or Quote tokens are deposited."
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "base_mint",
+            "docs": [
+              "Mint information for Base"
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "quote_mint",
+            "docs": [
+              "Mint information for quote"
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "base_token_program",
+            "docs": [
+              "Base program"
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "quote_token_program",
+            "docs": [
+              "Quote program"
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "observation_key",
+            "docs": [
+              "Observation account to store oracle data"
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "lp_mint_decimals",
+            "docs": [
+              "Mint decimals for LP token"
+            ],
+            "type": "u8"
+          },
+          {
+            "name": "base_decimals",
+            "docs": [
+              "Mint base decimals"
+            ],
+            "type": "u8"
+          },
+          {
+            "name": "quote_decimals",
+            "docs": [
+              "Mint quote decimals"
+            ],
+            "type": "u8"
+          },
+          {
+            "name": "lp_supply",
+            "docs": [
+              "True circulating supply without burns and lock ups"
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "creator",
+            "docs": [
+              "Creator of the token"
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "recent_epoch",
+            "docs": [
+              "Recent epoch"
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "bump",
+            "docs": [
+              "Bump for PDA"
+            ],
+            "type": "u8"
+          }
+        ]
+      }
+    },
+    {
+      "name": "TokenVolumeAccumulator",
+      "docs": [
+        "Token-specific volume accumulator (unified across curve and AMM)",
+        "",
+        "PDA: [b\"token_volume\", mint.key()]"
+      ],
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "mint",
+            "docs": [
+              "Token mint this accumulator tracks"
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "total_usd_volume",
+            "docs": [
+              "Total USD volume for this token (curve + AMM, 6 decimals)"
+            ],
+            "type": "u128"
+          },
+          {
+            "name": "total_token_volume",
+            "docs": [
+              "Total token volume for this token (curve + AMM)"
+            ],
+            "type": "u128"
+          },
+          {
+            "name": "curve_usd_volume",
+            "docs": [
+              "USD volume from curve trades (for analytics)"
+            ],
+            "type": "u128"
+          },
+          {
+            "name": "amm_usd_volume",
+            "docs": [
+              "USD volume from AMM trades (for analytics)"
+            ],
+            "type": "u128"
+          }
+        ]
+      }
+    },
+    {
+      "name": "UnifiedFeeConfiguration",
+      "docs": [
+        "Unified fee configuration for a token, supporting both Recipients and Revoked modes.",
+        "",
+        "Stored as a zero-copy account for efficient access in hot paths."
+      ],
+      "serialization": "bytemuckunsafe",
+      "repr": {
+        "kind": "c",
+        "packed": true
+      },
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "creator",
+            "docs": [
+              "The creator who owns this fee configuration"
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "token_mint",
+            "docs": [
+              "The token mint this configuration applies to.",
+              "This is the key identifier that persists across migration from bonding curve to AMM."
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "quote_mint",
+            "docs": [
+              "The quote token mint used for fee accumulation (e.g., WSOL for native curves, USDC for stable).",
+              "`Pubkey::default()` indicates no token fee vault (Revoked-only configs)."
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "fee_mode",
+            "docs": [
+              "Current fee mode"
+            ],
+            "type": {
+              "defined": {
+                "name": "FeeMode"
+              }
+            }
+          },
+          {
+            "name": "recipients_count",
+            "docs": [
+              "Number of active recipients in the recipients array"
+            ],
+            "type": "u8"
+          },
+          {
+            "name": "recipients",
+            "docs": [
+              "Recipients for Recipients mode (fixed array, use recipients_count for active length)"
+            ],
+            "type": {
+              "array": [
+                {
+                  "defined": {
+                    "name": "FeeRecipient"
+                  }
+                },
+                10
+              ]
+            }
+          },
+          {
+            "name": "update_authority",
+            "docs": [
+              "Authority that can modify this configuration (initially creator)"
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "bump",
+            "docs": [
+              "Bump seed for PDA derivation"
+            ],
+            "type": "u8"
+          }
+        ]
+      }
+    }
+  ]
+}

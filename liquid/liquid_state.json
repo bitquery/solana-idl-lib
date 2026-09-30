@@ -1,0 +1,3063 @@
+{
+  "address": "State3HtEfi7cXdsTpAtRoBvrij8zSFCiGTAVWmYH2d",
+  "metadata": {
+    "name": "liquid_state",
+    "version": "0.1.0",
+    "spec": "0.1.0",
+    "description": "Unified state management for liquid programs (user properties, cashback, volume tracking)"
+  },
+  "instructions": [
+    {
+      "name": "accept_admin",
+      "docs": [
+        "Accept a pending admin transfer, completing the two-step handoff."
+      ],
+      "discriminator": [
+        112,
+        42,
+        45,
+        90,
+        116,
+        181,
+        13,
+        170
+      ],
+      "accounts": [
+        {
+          "name": "new_admin",
+          "docs": [
+            "The pending admin who is accepting the transfer."
+          ],
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "cashback_config",
+          "docs": [
+            "Cashback configuration holding the admin authority"
+          ],
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  97,
+                  115,
+                  104,
+                  98,
+                  97,
+                  99,
+                  107,
+                  95,
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              }
+            ]
+          }
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "admin_update_user",
+      "docs": [
+        "Admin updates a user's referrer/multiplier and always takes a snapshot.",
+        "",
+        "# Arguments",
+        "* `args` - Optional new referrer and cashback multiplier override."
+      ],
+      "discriminator": [
+        161,
+        36,
+        48,
+        104,
+        149,
+        187,
+        39,
+        2
+      ],
+      "accounts": [
+        {
+          "name": "payer",
+          "docs": [
+            "Payer for snapshot account creation"
+          ],
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "admin",
+          "docs": [
+            "Admin authority"
+          ],
+          "signer": true
+        },
+        {
+          "name": "user_properties",
+          "docs": [
+            "User properties account"
+          ],
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  117,
+                  115,
+                  101,
+                  114,
+                  95,
+                  112,
+                  114,
+                  111,
+                  112,
+                  101,
+                  114,
+                  116,
+                  105,
+                  101,
+                  115
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "user"
+              }
+            ]
+          }
+        },
+        {
+          "name": "user_snapshot",
+          "docs": [
+            "Snapshot account to create (always taken on admin update)"
+          ],
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  117,
+                  115,
+                  101,
+                  114,
+                  95,
+                  115,
+                  110,
+                  97,
+                  112,
+                  115,
+                  104,
+                  111,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "user"
+              },
+              {
+                "kind": "account",
+                "path": "user_properties.snapshot_count",
+                "account": "UserProperties"
+              }
+            ]
+          }
+        },
+        {
+          "name": "cashback_config",
+          "docs": [
+            "Cashback configuration for admin auth check"
+          ],
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  97,
+                  115,
+                  104,
+                  98,
+                  97,
+                  99,
+                  107,
+                  95,
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "user",
+          "docs": [
+            "The user being updated"
+          ]
+        },
+        {
+          "name": "cpi_authority",
+          "docs": [
+            "CPI authority PDA for event emission."
+          ],
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  112,
+                  105,
+                  95,
+                  97,
+                  117,
+                  116,
+                  104,
+                  111,
+                  114,
+                  105,
+                  116,
+                  121
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "liquid_events_program",
+          "docs": [
+            "Liquid events program for centralized event emission."
+          ],
+          "address": "EventsQeXA43nLKR69DhHwNsJ6aM512AweMCgG3wG8zG"
+        },
+        {
+          "name": "system_program",
+          "docs": [
+            "System program."
+          ],
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "args",
+          "type": {
+            "defined": {
+              "name": "AdminUpdateUserArgs"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "cancel_admin_transfer",
+      "docs": [
+        "Cancel a pending admin transfer (callable by current or pending admin)."
+      ],
+      "discriminator": [
+        38,
+        131,
+        157,
+        31,
+        240,
+        137,
+        44,
+        215
+      ],
+      "accounts": [
+        {
+          "name": "authority",
+          "docs": [
+            "The authority cancelling the transfer (current admin or pending admin)."
+          ],
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "cashback_config",
+          "docs": [
+            "Cashback configuration holding the admin authority"
+          ],
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  97,
+                  115,
+                  104,
+                  98,
+                  97,
+                  99,
+                  107,
+                  95,
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              }
+            ]
+          }
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "close_deal",
+      "docs": [
+        "Admin closes/deletes a deal, returning rent to admin."
+      ],
+      "discriminator": [
+        157,
+        173,
+        33,
+        216,
+        146,
+        16,
+        65,
+        82
+      ],
+      "accounts": [
+        {
+          "name": "admin",
+          "docs": [
+            "Admin authority (receives rent refund)"
+          ],
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "deal",
+          "docs": [
+            "Deal account to close"
+          ],
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  100,
+                  101,
+                  97,
+                  108
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "deal.owner",
+                "account": "Deal"
+              }
+            ]
+          }
+        },
+        {
+          "name": "cashback_config",
+          "docs": [
+            "Cashback configuration for admin auth check"
+          ],
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  97,
+                  115,
+                  104,
+                  98,
+                  97,
+                  99,
+                  107,
+                  95,
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "cpi_authority",
+          "docs": [
+            "CPI authority PDA for event emission."
+          ],
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  112,
+                  105,
+                  95,
+                  97,
+                  117,
+                  116,
+                  104,
+                  111,
+                  114,
+                  105,
+                  116,
+                  121
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "liquid_events_program",
+          "docs": [
+            "Liquid events program for centralized event emission."
+          ],
+          "address": "EventsQeXA43nLKR69DhHwNsJ6aM512AweMCgG3wG8zG"
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "create_deal",
+      "docs": [
+        "Admin creates an exclusive deal for a pubkey.",
+        "",
+        "# Arguments",
+        "* `owner` - The pubkey this deal belongs to.",
+        "* `cashback_multiplier_bps` - Cashback multiplier in basis points (10000 = 1x)."
+      ],
+      "discriminator": [
+        198,
+        212,
+        144,
+        151,
+        97,
+        56,
+        149,
+        113
+      ],
+      "accounts": [
+        {
+          "name": "payer",
+          "docs": [
+            "Payer for account creation"
+          ],
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "admin",
+          "docs": [
+            "Admin authority"
+          ],
+          "signer": true
+        },
+        {
+          "name": "deal",
+          "docs": [
+            "Deal account to create"
+          ],
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  100,
+                  101,
+                  97,
+                  108
+                ]
+              },
+              {
+                "kind": "arg",
+                "path": "owner"
+              }
+            ]
+          }
+        },
+        {
+          "name": "cashback_config",
+          "docs": [
+            "Cashback configuration for admin auth check"
+          ],
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  97,
+                  115,
+                  104,
+                  98,
+                  97,
+                  99,
+                  107,
+                  95,
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "cpi_authority",
+          "docs": [
+            "CPI authority PDA for event emission."
+          ],
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  112,
+                  105,
+                  95,
+                  97,
+                  117,
+                  116,
+                  104,
+                  111,
+                  114,
+                  105,
+                  116,
+                  121
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "liquid_events_program",
+          "docs": [
+            "Liquid events program for centralized event emission."
+          ],
+          "address": "EventsQeXA43nLKR69DhHwNsJ6aM512AweMCgG3wG8zG"
+        },
+        {
+          "name": "system_program",
+          "docs": [
+            "System program."
+          ],
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "owner",
+          "type": "pubkey"
+        },
+        {
+          "name": "cashback_multiplier_bps",
+          "type": "u16"
+        }
+      ]
+    },
+    {
+      "name": "earn_cashback",
+      "docs": [
+        "Earn cashback credits (called via CPI during trades).",
+        "",
+        "# Arguments",
+        "* `cashback_amount` - Base cashback amount in USD (6 decimals) before multiplier adjustment."
+      ],
+      "discriminator": [
+        123,
+        185,
+        10,
+        74,
+        209,
+        80,
+        101,
+        149
+      ],
+      "accounts": [
+        {
+          "name": "cpi_authority",
+          "docs": [
+            "CPI authority PDA from the calling program (must be liquid or liquid-swap).",
+            "Only the owning program can produce a valid signature for its PDA."
+          ],
+          "signer": true
+        },
+        {
+          "name": "user",
+          "docs": [
+            "The user whose cashback is being earned"
+          ]
+        },
+        {
+          "name": "user_properties",
+          "docs": [
+            "User properties account to credit cashback to."
+          ],
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  117,
+                  115,
+                  101,
+                  114,
+                  95,
+                  112,
+                  114,
+                  111,
+                  112,
+                  101,
+                  114,
+                  116,
+                  105,
+                  101,
+                  115
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "user"
+              }
+            ]
+          }
+        },
+        {
+          "name": "events_cpi_authority",
+          "docs": [
+            "CPI authority PDA owned by this program (liquid-state) for emitting events."
+          ],
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  112,
+                  105,
+                  95,
+                  97,
+                  117,
+                  116,
+                  104,
+                  111,
+                  114,
+                  105,
+                  116,
+                  121
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "liquid_events_program",
+          "docs": [
+            "Liquid events program for centralized event emission."
+          ],
+          "address": "EventsQeXA43nLKR69DhHwNsJ6aM512AweMCgG3wG8zG"
+        },
+        {
+          "name": "cashback_config",
+          "docs": [
+            "Cashback configuration for balance-based multiplier tiers."
+          ],
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  97,
+                  115,
+                  104,
+                  98,
+                  97,
+                  99,
+                  107,
+                  95,
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              }
+            ]
+          }
+        }
+      ],
+      "args": [
+        {
+          "name": "cashback_amount",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "initialize_config",
+      "docs": [
+        "Initialize global configuration (cashback config and volume accumulators).",
+        "",
+        "# Arguments",
+        "* `args` - Admin authority, cashback ranges, and trader cashback basis points."
+      ],
+      "discriminator": [
+        208,
+        127,
+        21,
+        1,
+        194,
+        190,
+        196,
+        70
+      ],
+      "accounts": [
+        {
+          "name": "payer",
+          "docs": [
+            "The payer for account creation."
+          ],
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "cashback_config",
+          "docs": [
+            "Cashback configuration account to initialize."
+          ],
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  97,
+                  115,
+                  104,
+                  98,
+                  97,
+                  99,
+                  107,
+                  95,
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "global_curve_volume",
+          "docs": [
+            "Global curve volume accumulator to initialize."
+          ],
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  103,
+                  108,
+                  111,
+                  98,
+                  97,
+                  108,
+                  95,
+                  99,
+                  117,
+                  114,
+                  118,
+                  101,
+                  95,
+                  118,
+                  111,
+                  108,
+                  117,
+                  109,
+                  101
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "global_amm_volume",
+          "docs": [
+            "Global AMM volume accumulator to initialize."
+          ],
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  103,
+                  108,
+                  111,
+                  98,
+                  97,
+                  108,
+                  95,
+                  97,
+                  109,
+                  109,
+                  95,
+                  118,
+                  111,
+                  108,
+                  117,
+                  109,
+                  101
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "system_program",
+          "docs": [
+            "System program."
+          ],
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "args",
+          "type": {
+            "defined": {
+              "name": "InitializeConfigArgs"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "initialize_token_volume",
+      "docs": [
+        "Initialize a token's volume accumulator with default values."
+      ],
+      "discriminator": [
+        98,
+        160,
+        140,
+        145,
+        106,
+        65,
+        10,
+        106
+      ],
+      "accounts": [
+        {
+          "name": "payer",
+          "docs": [
+            "The payer for account creation"
+          ],
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "mint",
+          "docs": [
+            "The mint for which to create the volume accumulator"
+          ]
+        },
+        {
+          "name": "token_volume",
+          "docs": [
+            "Token volume accumulator to be created"
+          ],
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  116,
+                  111,
+                  107,
+                  101,
+                  110,
+                  95,
+                  118,
+                  111,
+                  108,
+                  117,
+                  109,
+                  101
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "mint"
+              }
+            ]
+          }
+        },
+        {
+          "name": "system_program",
+          "docs": [
+            "System program"
+          ],
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "initialize_user",
+      "docs": [
+        "Initialize a user's properties account with default values."
+      ],
+      "discriminator": [
+        111,
+        17,
+        185,
+        250,
+        60,
+        122,
+        38,
+        254
+      ],
+      "accounts": [
+        {
+          "name": "user",
+          "docs": [
+            "The user being initialized"
+          ],
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "user_properties",
+          "docs": [
+            "User properties account to be created"
+          ],
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  117,
+                  115,
+                  101,
+                  114,
+                  95,
+                  112,
+                  114,
+                  111,
+                  112,
+                  101,
+                  114,
+                  116,
+                  105,
+                  101,
+                  115
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "user"
+              }
+            ]
+          }
+        },
+        {
+          "name": "system_program",
+          "docs": [
+            "System program"
+          ],
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "redeem_deal",
+      "docs": [
+        "User redeems their referrer's deal, copying the multiplier."
+      ],
+      "discriminator": [
+        28,
+        120,
+        114,
+        30,
+        76,
+        241,
+        161,
+        235
+      ],
+      "accounts": [
+        {
+          "name": "user",
+          "docs": [
+            "The user redeeming the deal"
+          ],
+          "signer": true
+        },
+        {
+          "name": "user_properties",
+          "docs": [
+            "User properties account"
+          ],
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  117,
+                  115,
+                  101,
+                  114,
+                  95,
+                  112,
+                  114,
+                  111,
+                  112,
+                  101,
+                  114,
+                  116,
+                  105,
+                  101,
+                  115
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "user"
+              }
+            ]
+          }
+        },
+        {
+          "name": "deal",
+          "docs": [
+            "The deal to redeem (must belong to user's referrer)"
+          ],
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  100,
+                  101,
+                  97,
+                  108
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "deal.owner",
+                "account": "Deal"
+              }
+            ]
+          }
+        },
+        {
+          "name": "cpi_authority",
+          "docs": [
+            "CPI authority PDA for event emission."
+          ],
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  112,
+                  105,
+                  95,
+                  97,
+                  117,
+                  116,
+                  104,
+                  111,
+                  114,
+                  105,
+                  116,
+                  121
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "liquid_events_program",
+          "docs": [
+            "Liquid events program for centralized event emission."
+          ],
+          "address": "EventsQeXA43nLKR69DhHwNsJ6aM512AweMCgG3wG8zG"
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "set_cashback_mode",
+      "docs": [
+        "Activates cashback spending mode for the caller.",
+        "Applies the volume-based multiplier to accumulated credits."
+      ],
+      "discriminator": [
+        172,
+        30,
+        26,
+        209,
+        48,
+        185,
+        117,
+        148
+      ],
+      "accounts": [
+        {
+          "name": "user",
+          "docs": [
+            "The user activating spending mode."
+          ],
+          "signer": true
+        },
+        {
+          "name": "user_properties",
+          "docs": [
+            "User properties account to toggle spending mode on."
+          ],
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  117,
+                  115,
+                  101,
+                  114,
+                  95,
+                  112,
+                  114,
+                  111,
+                  112,
+                  101,
+                  114,
+                  116,
+                  105,
+                  101,
+                  115
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "user"
+              }
+            ]
+          }
+        },
+        {
+          "name": "cpi_authority",
+          "docs": [
+            "CPI authority PDA for event emission."
+          ],
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  112,
+                  105,
+                  95,
+                  97,
+                  117,
+                  116,
+                  104,
+                  111,
+                  114,
+                  105,
+                  116,
+                  121
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "liquid_events_program",
+          "docs": [
+            "Liquid events program for centralized event emission."
+          ],
+          "address": "EventsQeXA43nLKR69DhHwNsJ6aM512AweMCgG3wG8zG"
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "set_referrer",
+      "docs": [
+        "User sets their referrer (one-time only).",
+        "",
+        "# Arguments",
+        "* `referrer` - The referrer's public key."
+      ],
+      "discriminator": [
+        115,
+        251,
+        55,
+        0,
+        166,
+        189,
+        25,
+        74
+      ],
+      "accounts": [
+        {
+          "name": "user",
+          "docs": [
+            "The user setting their referrer."
+          ],
+          "signer": true
+        },
+        {
+          "name": "cosigner",
+          "docs": [
+            "Protocol co-signer required to authorize referrer assignment."
+          ],
+          "signer": true,
+          "address": "Ref1fKLFiWDro19Am4aSRhXgbWovG6nJFQDH9AhSBzE"
+        },
+        {
+          "name": "user_properties",
+          "docs": [
+            "User properties account to set the referrer on."
+          ],
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  117,
+                  115,
+                  101,
+                  114,
+                  95,
+                  112,
+                  114,
+                  111,
+                  112,
+                  101,
+                  114,
+                  116,
+                  105,
+                  101,
+                  115
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "user"
+              }
+            ]
+          }
+        },
+        {
+          "name": "cpi_authority",
+          "docs": [
+            "CPI authority PDA for event emission."
+          ],
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  112,
+                  105,
+                  95,
+                  97,
+                  117,
+                  116,
+                  104,
+                  111,
+                  114,
+                  105,
+                  116,
+                  121
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "liquid_events_program",
+          "docs": [
+            "Liquid events program for centralized event emission."
+          ],
+          "address": "EventsQeXA43nLKR69DhHwNsJ6aM512AweMCgG3wG8zG"
+        }
+      ],
+      "args": [
+        {
+          "name": "referrer",
+          "type": "pubkey"
+        }
+      ]
+    },
+    {
+      "name": "spend_cashback",
+      "docs": [
+        "Spend cashback credits to offset protocol fees (called via CPI).",
+        "",
+        "# Arguments",
+        "* `amount` - Maximum USD credits to spend (6 decimals)."
+      ],
+      "discriminator": [
+        59,
+        143,
+        28,
+        13,
+        254,
+        250,
+        233,
+        234
+      ],
+      "accounts": [
+        {
+          "name": "cpi_authority",
+          "docs": [
+            "CPI authority PDA from the calling program (must be liquid or liquid-swap).",
+            "Only the owning program can produce a valid signature for its PDA."
+          ],
+          "signer": true
+        },
+        {
+          "name": "user",
+          "docs": [
+            "The user whose cashback is being spent"
+          ]
+        },
+        {
+          "name": "user_properties",
+          "docs": [
+            "User properties account to debit cashback from."
+          ],
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  117,
+                  115,
+                  101,
+                  114,
+                  95,
+                  112,
+                  114,
+                  111,
+                  112,
+                  101,
+                  114,
+                  116,
+                  105,
+                  101,
+                  115
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "user"
+              }
+            ]
+          }
+        },
+        {
+          "name": "events_cpi_authority",
+          "docs": [
+            "CPI authority PDA owned by this program (liquid-state) for emitting events."
+          ],
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  112,
+                  105,
+                  95,
+                  97,
+                  117,
+                  116,
+                  104,
+                  111,
+                  114,
+                  105,
+                  116,
+                  121
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "liquid_events_program",
+          "docs": [
+            "Liquid events program for centralized event emission."
+          ],
+          "address": "EventsQeXA43nLKR69DhHwNsJ6aM512AweMCgG3wG8zG"
+        }
+      ],
+      "args": [
+        {
+          "name": "amount",
+          "type": "u64"
+        }
+      ],
+      "returns": {
+        "defined": {
+          "name": "SpendCashbackResult"
+        }
+      }
+    },
+    {
+      "name": "take_snapshot",
+      "docs": [
+        "Admin takes a snapshot of a user's volume since last snapshot."
+      ],
+      "discriminator": [
+        183,
+        210,
+        251,
+        68,
+        140,
+        132,
+        191,
+        140
+      ],
+      "accounts": [
+        {
+          "name": "payer",
+          "docs": [
+            "Payer for snapshot account creation"
+          ],
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "admin",
+          "docs": [
+            "Admin authority"
+          ],
+          "signer": true
+        },
+        {
+          "name": "user_properties",
+          "docs": [
+            "User properties account"
+          ],
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  117,
+                  115,
+                  101,
+                  114,
+                  95,
+                  112,
+                  114,
+                  111,
+                  112,
+                  101,
+                  114,
+                  116,
+                  105,
+                  101,
+                  115
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "user"
+              }
+            ]
+          }
+        },
+        {
+          "name": "user_snapshot",
+          "docs": [
+            "Snapshot account to create"
+          ],
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  117,
+                  115,
+                  101,
+                  114,
+                  95,
+                  115,
+                  110,
+                  97,
+                  112,
+                  115,
+                  104,
+                  111,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "user"
+              },
+              {
+                "kind": "account",
+                "path": "user_properties.snapshot_count",
+                "account": "UserProperties"
+              }
+            ]
+          }
+        },
+        {
+          "name": "cashback_config",
+          "docs": [
+            "Cashback configuration for admin auth check"
+          ],
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  97,
+                  115,
+                  104,
+                  98,
+                  97,
+                  99,
+                  107,
+                  95,
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "user",
+          "docs": [
+            "The user whose snapshot is being taken"
+          ]
+        },
+        {
+          "name": "cpi_authority",
+          "docs": [
+            "CPI authority PDA for event emission."
+          ],
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  112,
+                  105,
+                  95,
+                  97,
+                  117,
+                  116,
+                  104,
+                  111,
+                  114,
+                  105,
+                  116,
+                  121
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "liquid_events_program",
+          "docs": [
+            "Liquid events program for centralized event emission."
+          ],
+          "address": "EventsQeXA43nLKR69DhHwNsJ6aM512AweMCgG3wG8zG"
+        },
+        {
+          "name": "system_program",
+          "docs": [
+            "System program."
+          ],
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "transfer_admin",
+      "docs": [
+        "Propose transfer of admin authority to a new pubkey (two-step).",
+        "",
+        "# Arguments",
+        "* `new_admin` - The proposed new admin authority public key."
+      ],
+      "discriminator": [
+        42,
+        242,
+        66,
+        106,
+        228,
+        10,
+        111,
+        156
+      ],
+      "accounts": [
+        {
+          "name": "admin",
+          "docs": [
+            "Current admin authority"
+          ],
+          "signer": true
+        },
+        {
+          "name": "cashback_config",
+          "docs": [
+            "Cashback configuration holding the admin authority"
+          ],
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  97,
+                  115,
+                  104,
+                  98,
+                  97,
+                  99,
+                  107,
+                  95,
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              }
+            ]
+          }
+        }
+      ],
+      "args": [
+        {
+          "name": "new_admin",
+          "type": "pubkey"
+        }
+      ]
+    },
+    {
+      "name": "update_amm_volumes",
+      "docs": [
+        "Update volume accumulators for AMM trades.",
+        "Called via CPI from the liquid-swap program.",
+        "",
+        "# Arguments",
+        "* `usd_amount` - Trade volume in USD (6 decimals).",
+        "* `token_amount` - Trade volume in base token units."
+      ],
+      "discriminator": [
+        155,
+        173,
+        47,
+        177,
+        151,
+        135,
+        240,
+        27
+      ],
+      "accounts": [
+        {
+          "name": "payer",
+          "docs": [
+            "The payer for the transaction."
+          ],
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "cpi_authority",
+          "docs": [
+            "CPI authority PDA from the liquid-swap program.",
+            "Only the liquid-swap program can sign for this PDA."
+          ],
+          "signer": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  112,
+                  105,
+                  95,
+                  97,
+                  117,
+                  116,
+                  104,
+                  111,
+                  114,
+                  105,
+                  116,
+                  121
+                ]
+              }
+            ],
+            "program": {
+              "kind": "const",
+              "value": [
+                6,
+                165,
+                60,
+                202,
+                204,
+                17,
+                4,
+                104,
+                249,
+                125,
+                214,
+                143,
+                2,
+                99,
+                165,
+                89,
+                177,
+                218,
+                121,
+                12,
+                23,
+                196,
+                207,
+                105,
+                96,
+                207,
+                2,
+                136,
+                202,
+                45,
+                209,
+                225
+              ]
+            }
+          }
+        },
+        {
+          "name": "user_properties",
+          "docs": [
+            "User properties account to update volumes on."
+          ],
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  117,
+                  115,
+                  101,
+                  114,
+                  95,
+                  112,
+                  114,
+                  111,
+                  112,
+                  101,
+                  114,
+                  116,
+                  105,
+                  101,
+                  115
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "user"
+              }
+            ]
+          }
+        },
+        {
+          "name": "global_amm_volume",
+          "docs": [
+            "Global AMM volume accumulator."
+          ],
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  103,
+                  108,
+                  111,
+                  98,
+                  97,
+                  108,
+                  95,
+                  97,
+                  109,
+                  109,
+                  95,
+                  118,
+                  111,
+                  108,
+                  117,
+                  109,
+                  101
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "token_volume",
+          "docs": [
+            "Token-specific volume accumulator."
+          ],
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  116,
+                  111,
+                  107,
+                  101,
+                  110,
+                  95,
+                  118,
+                  111,
+                  108,
+                  117,
+                  109,
+                  101
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "mint"
+              }
+            ]
+          }
+        },
+        {
+          "name": "user",
+          "docs": [
+            "The user whose volumes are being updated"
+          ]
+        },
+        {
+          "name": "mint",
+          "docs": [
+            "The token mint for token-specific volume tracking"
+          ]
+        },
+        {
+          "name": "system_program",
+          "docs": [
+            "System program."
+          ],
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "usd_amount",
+          "type": "u64"
+        },
+        {
+          "name": "token_amount",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "update_config",
+      "docs": [
+        "Admin updates cashback configuration.",
+        "",
+        "# Arguments",
+        "* `args` - New cashback ranges and/or trader cashback basis points."
+      ],
+      "discriminator": [
+        29,
+        158,
+        252,
+        191,
+        10,
+        83,
+        219,
+        99
+      ],
+      "accounts": [
+        {
+          "name": "admin",
+          "docs": [
+            "Admin authority (must match stored admin_authority)"
+          ],
+          "signer": true
+        },
+        {
+          "name": "cashback_config",
+          "docs": [
+            "Cashback configuration to update"
+          ],
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  97,
+                  115,
+                  104,
+                  98,
+                  97,
+                  99,
+                  107,
+                  95,
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              }
+            ]
+          }
+        }
+      ],
+      "args": [
+        {
+          "name": "args",
+          "type": {
+            "defined": {
+              "name": "UpdateConfigArgs"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "update_curve_volumes",
+      "docs": [
+        "Update volume accumulators for bonding curve trades.",
+        "Called via CPI from the liquid program.",
+        "",
+        "# Arguments",
+        "* `usd_amount` - Trade volume in USD (6 decimals).",
+        "* `token_amount` - Trade volume in base token units."
+      ],
+      "discriminator": [
+        119,
+        220,
+        25,
+        188,
+        176,
+        213,
+        36,
+        73
+      ],
+      "accounts": [
+        {
+          "name": "payer",
+          "docs": [
+            "The payer for the transaction."
+          ],
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "cpi_authority",
+          "docs": [
+            "CPI authority PDA from the liquid program.",
+            "Only the liquid program can sign for this PDA."
+          ],
+          "signer": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  112,
+                  105,
+                  95,
+                  97,
+                  117,
+                  116,
+                  104,
+                  111,
+                  114,
+                  105,
+                  116,
+                  121
+                ]
+              }
+            ],
+            "program": {
+              "kind": "const",
+              "value": [
+                5,
+                13,
+                89,
+                2,
+                127,
+                227,
+                146,
+                196,
+                34,
+                13,
+                249,
+                181,
+                167,
+                33,
+                126,
+                56,
+                182,
+                105,
+                148,
+                219,
+                33,
+                200,
+                131,
+                117,
+                84,
+                120,
+                212,
+                68,
+                166,
+                219,
+                24,
+                119
+              ]
+            }
+          }
+        },
+        {
+          "name": "user_properties",
+          "docs": [
+            "User properties account to update volumes on."
+          ],
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  117,
+                  115,
+                  101,
+                  114,
+                  95,
+                  112,
+                  114,
+                  111,
+                  112,
+                  101,
+                  114,
+                  116,
+                  105,
+                  101,
+                  115
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "user"
+              }
+            ]
+          }
+        },
+        {
+          "name": "global_curve_volume",
+          "docs": [
+            "Global curve volume accumulator."
+          ],
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  103,
+                  108,
+                  111,
+                  98,
+                  97,
+                  108,
+                  95,
+                  99,
+                  117,
+                  114,
+                  118,
+                  101,
+                  95,
+                  118,
+                  111,
+                  108,
+                  117,
+                  109,
+                  101
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "token_volume",
+          "docs": [
+            "Token-specific volume accumulator."
+          ],
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  116,
+                  111,
+                  107,
+                  101,
+                  110,
+                  95,
+                  118,
+                  111,
+                  108,
+                  117,
+                  109,
+                  101
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "mint"
+              }
+            ]
+          }
+        },
+        {
+          "name": "user",
+          "docs": [
+            "The user whose volumes are being updated"
+          ]
+        },
+        {
+          "name": "mint",
+          "docs": [
+            "The token mint for token-specific volume tracking"
+          ]
+        },
+        {
+          "name": "system_program",
+          "docs": [
+            "System program."
+          ],
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "usd_amount",
+          "type": "u64"
+        },
+        {
+          "name": "token_amount",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "update_deal",
+      "docs": [
+        "Admin updates a deal's cashback multiplier.",
+        "",
+        "# Arguments",
+        "* `new_cashback_multiplier_bps` - New cashback multiplier in basis points (10000 = 1x)."
+      ],
+      "discriminator": [
+        244,
+        195,
+        62,
+        95,
+        133,
+        119,
+        244,
+        59
+      ],
+      "accounts": [
+        {
+          "name": "admin",
+          "docs": [
+            "Admin authority"
+          ],
+          "signer": true
+        },
+        {
+          "name": "deal",
+          "docs": [
+            "Deal account to update"
+          ],
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  100,
+                  101,
+                  97,
+                  108
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "deal.owner",
+                "account": "Deal"
+              }
+            ]
+          }
+        },
+        {
+          "name": "cashback_config",
+          "docs": [
+            "Cashback configuration for admin auth check"
+          ],
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  97,
+                  115,
+                  104,
+                  98,
+                  97,
+                  99,
+                  107,
+                  95,
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "cpi_authority",
+          "docs": [
+            "CPI authority PDA for event emission."
+          ],
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  112,
+                  105,
+                  95,
+                  97,
+                  117,
+                  116,
+                  104,
+                  111,
+                  114,
+                  105,
+                  116,
+                  121
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "liquid_events_program",
+          "docs": [
+            "Liquid events program for centralized event emission."
+          ],
+          "address": "EventsQeXA43nLKR69DhHwNsJ6aM512AweMCgG3wG8zG"
+        }
+      ],
+      "args": [
+        {
+          "name": "new_cashback_multiplier_bps",
+          "type": "u16"
+        }
+      ]
+    }
+  ],
+  "accounts": [
+    {
+      "name": "CashbackConfiguration",
+      "discriminator": [
+        85,
+        221,
+        143,
+        214,
+        41,
+        44,
+        50,
+        22
+      ]
+    },
+    {
+      "name": "Deal",
+      "discriminator": [
+        125,
+        223,
+        160,
+        234,
+        71,
+        162,
+        182,
+        219
+      ]
+    },
+    {
+      "name": "GlobalAmmVolumeAccumulator",
+      "discriminator": [
+        248,
+        251,
+        192,
+        145,
+        91,
+        181,
+        97,
+        143
+      ]
+    },
+    {
+      "name": "GlobalCurveVolumeAccumulator",
+      "discriminator": [
+        50,
+        23,
+        212,
+        197,
+        184,
+        191,
+        247,
+        112
+      ]
+    },
+    {
+      "name": "TokenVolumeAccumulator",
+      "discriminator": [
+        255,
+        176,
+        53,
+        212,
+        121,
+        72,
+        64,
+        57
+      ]
+    },
+    {
+      "name": "UserProperties",
+      "discriminator": [
+        131,
+        46,
+        56,
+        35,
+        119,
+        24,
+        76,
+        66
+      ]
+    },
+    {
+      "name": "UserSnapshot",
+      "discriminator": [
+        231,
+        197,
+        40,
+        190,
+        124,
+        25,
+        79,
+        69
+      ]
+    }
+  ],
+  "errors": [
+    {
+      "code": 6000,
+      "name": "ArithmeticOverflow",
+      "msg": "Arithmetic operation resulted in overflow"
+    },
+    {
+      "code": 6001,
+      "name": "AlreadySpending",
+      "msg": "User is already in spending mode"
+    },
+    {
+      "code": 6002,
+      "name": "NoCashbackCredits",
+      "msg": "User has no cashback credits to activate"
+    },
+    {
+      "code": 6003,
+      "name": "InvalidCashbackConfiguration",
+      "msg": "Invalid cashback configuration: ranges must be contiguous and sum to proper coverage"
+    },
+    {
+      "code": 6004,
+      "name": "TooManyCashbackRanges",
+      "msg": "Too many cashback ranges (maximum 10)"
+    },
+    {
+      "code": 6005,
+      "name": "ReferrerCannotBeSelf",
+      "msg": "Referrer cannot be the user themselves"
+    },
+    {
+      "code": 6006,
+      "name": "ReferrerAlreadySet",
+      "msg": "Referrer has already been set"
+    },
+    {
+      "code": 6007,
+      "name": "UnauthorizedCaller",
+      "msg": "Caller is not an authorized program (must be liquid or liquid-swap)"
+    },
+    {
+      "code": 6008,
+      "name": "InvalidCosigner",
+      "msg": "Invalid co-signer: this instruction requires protocol co-signer approval"
+    },
+    {
+      "code": 6009,
+      "name": "ReferrerNotSet",
+      "msg": "User does not have a referrer set"
+    },
+    {
+      "code": 6010,
+      "name": "DealReferrerMismatch",
+      "msg": "Deal does not belong to the user's referrer"
+    },
+    {
+      "code": 6011,
+      "name": "InvalidMultiplier",
+      "msg": "Invalid cashback multiplier value"
+    },
+    {
+      "code": 6012,
+      "name": "InvalidAdminAuthority",
+      "msg": "The provided admin authority is invalid"
+    },
+    {
+      "code": 6013,
+      "name": "NoPendingAdminTransfer",
+      "msg": "No pending admin transfer exists"
+    },
+    {
+      "code": 6014,
+      "name": "NotPendingAdmin",
+      "msg": "Caller is not the pending admin"
+    }
+  ],
+  "types": [
+    {
+      "name": "AdminUpdateUserArgs",
+      "docs": [
+        "Arguments for admin-updating a user's referrer or cashback multiplier."
+      ],
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "new_referrer",
+            "docs": [
+              "New referrer pubkey (if changing). Clears deal + resets multiplier."
+            ],
+            "type": {
+              "option": "pubkey"
+            }
+          },
+          {
+            "name": "new_cashback_multiplier_bps",
+            "docs": [
+              "New cashback multiplier in BPS (if overriding). Requires referrer to exist."
+            ],
+            "type": {
+              "option": "u16"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "CashbackConfiguration",
+      "docs": [
+        "Global cashback configuration",
+        "",
+        "PDA: [b\"cashback_config\"]"
+      ],
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "admin_authority",
+            "docs": [
+              "Admin authority who can update configuration"
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "ranges",
+            "docs": [
+              "Balance-based multiplier ranges (use len() for active count).",
+              "Thresholds refer to the user's cashback credit balance. Multiplier is",
+              "applied progressively as credits are earned, not at mode-switch."
+            ],
+            "type": {
+              "vec": {
+                "defined": {
+                  "name": "CashbackRange"
+                }
+              }
+            }
+          },
+          {
+            "name": "trader_cashback_basis_points",
+            "docs": [
+              "Base trader cashback rate in basis points"
+            ],
+            "type": "u16"
+          },
+          {
+            "name": "pending_admin",
+            "docs": [
+              "Pending admin authority for two-step transfer. None if no transfer is in progress."
+            ],
+            "type": {
+              "option": "pubkey"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "CashbackRange",
+      "docs": [
+        "Cashback range defining balance-based multiplier tiers.",
+        "",
+        "Each range maps a cashback balance interval to a multiplier. When a user earns",
+        "cashback, the earned amount is multiplied by the tier corresponding to their",
+        "current balance. If earning crosses a tier boundary, the amount is split so",
+        "each portion receives its respective tier's multiplier."
+      ],
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "range_start_inclusive",
+            "docs": [
+              "Lower bound of balance range (inclusive), in USD with 6 decimals"
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "range_end_exclusive",
+            "docs": [
+              "Upper bound of balance range (exclusive), in USD with 6 decimals"
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "multiplier_basis_points",
+            "docs": [
+              "Multiplier in basis points (10000 = 1x, 20000 = 2x)"
+            ],
+            "type": "u16"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Deal",
+      "docs": [
+        "Exclusive deal created by admin for a specific pubkey (typically a referrer/influencer).",
+        "Users who are referred by this pubkey can redeem the deal to get a higher cashback multiplier.",
+        "",
+        "PDA: [b\"deal\", owner.key()]"
+      ],
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "owner",
+            "docs": [
+              "The pubkey this deal belongs to (typically a referrer/influencer)"
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "cashback_multiplier_bps",
+            "docs": [
+              "Cashback multiplier in basis points (10000 = 1x, 15000 = 1.5x, etc.)"
+            ],
+            "type": "u16"
+          },
+          {
+            "name": "redemption_count",
+            "docs": [
+              "Number of unique users who have redeemed this deal"
+            ],
+            "type": "u32"
+          }
+        ]
+      }
+    },
+    {
+      "name": "GlobalAmmVolumeAccumulator",
+      "docs": [
+        "Global volume accumulator for AMM trades",
+        "",
+        "PDA: [b\"global_amm_volume\"]"
+      ],
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "total_usd_volume",
+            "docs": [
+              "Total USD volume across all AMM trades (6 decimals)"
+            ],
+            "type": "u128"
+          },
+          {
+            "name": "total_token_volume",
+            "docs": [
+              "Total token volume across all AMM trades"
+            ],
+            "type": "u128"
+          }
+        ]
+      }
+    },
+    {
+      "name": "GlobalCurveVolumeAccumulator",
+      "docs": [
+        "Global volume accumulator for bonding curve trades",
+        "",
+        "PDA: [b\"global_curve_volume\"]"
+      ],
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "total_usd_volume",
+            "docs": [
+              "Total USD volume across all curve trades (6 decimals)"
+            ],
+            "type": "u128"
+          },
+          {
+            "name": "total_token_volume",
+            "docs": [
+              "Total token volume across all curve trades"
+            ],
+            "type": "u128"
+          }
+        ]
+      }
+    },
+    {
+      "name": "InitializeConfigArgs",
+      "docs": [
+        "Arguments for initializing the global cashback and volume configuration."
+      ],
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "admin_authority",
+            "docs": [
+              "The admin authority pubkey for the cashback configuration."
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "ranges",
+            "docs": [
+              "Balance-based multiplier ranges for progressive cashback tiers."
+            ],
+            "type": {
+              "vec": {
+                "defined": {
+                  "name": "CashbackRange"
+                }
+              }
+            }
+          },
+          {
+            "name": "trader_cashback_basis_points",
+            "docs": [
+              "Base trader cashback rate in basis points (10000 = 100%)."
+            ],
+            "type": "u16"
+          }
+        ]
+      }
+    },
+    {
+      "name": "ReferrerInfo",
+      "docs": [
+        "Referrer information attached to a user"
+      ],
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "referrer",
+            "docs": [
+              "The referrer's public key"
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "deal",
+            "docs": [
+              "Deal PDA the user redeemed (None if no deal redeemed)"
+            ],
+            "type": {
+              "option": "pubkey"
+            }
+          },
+          {
+            "name": "cashback_multiplier_bps",
+            "docs": [
+              "Cashback multiplier in basis points (10000 = 1x, default)"
+            ],
+            "type": "u16"
+          }
+        ]
+      }
+    },
+    {
+      "name": "SpendCashbackResult",
+      "docs": [
+        "Result of a cashback spend operation."
+      ],
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "spent",
+            "docs": [
+              "The amount of credits actually spent (may be less than requested)."
+            ],
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "TokenVolumeAccumulator",
+      "docs": [
+        "Token-specific volume accumulator (unified across curve and AMM)",
+        "",
+        "PDA: [b\"token_volume\", mint.key()]"
+      ],
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "mint",
+            "docs": [
+              "Token mint this accumulator tracks"
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "total_usd_volume",
+            "docs": [
+              "Total USD volume for this token (curve + AMM, 6 decimals)"
+            ],
+            "type": "u128"
+          },
+          {
+            "name": "total_token_volume",
+            "docs": [
+              "Total token volume for this token (curve + AMM)"
+            ],
+            "type": "u128"
+          },
+          {
+            "name": "curve_usd_volume",
+            "docs": [
+              "USD volume from curve trades (for analytics)"
+            ],
+            "type": "u128"
+          },
+          {
+            "name": "amm_usd_volume",
+            "docs": [
+              "USD volume from AMM trades (for analytics)"
+            ],
+            "type": "u128"
+          }
+        ]
+      }
+    },
+    {
+      "name": "UpdateConfigArgs",
+      "docs": [
+        "Arguments for updating the cashback configuration."
+      ],
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "new_ranges",
+            "docs": [
+              "Optional new balance-based multiplier ranges."
+            ],
+            "type": {
+              "option": {
+                "vec": {
+                  "defined": {
+                    "name": "CashbackRange"
+                  }
+                }
+              }
+            }
+          },
+          {
+            "name": "new_trader_cashback_basis_points",
+            "docs": [
+              "Optional new trader cashback rate in basis points."
+            ],
+            "type": {
+              "option": "u16"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "UserProperties",
+      "docs": [
+        "User properties account tracking referrals, volumes, cashback, and snapshots",
+        "",
+        "PDA: [b\"user_properties\", user.key()]"
+      ],
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "referrer",
+            "docs": [
+              "Referrer info (pubkey, deal, multiplier)"
+            ],
+            "type": {
+              "option": {
+                "defined": {
+                  "name": "ReferrerInfo"
+                }
+              }
+            }
+          },
+          {
+            "name": "total_usd_volume",
+            "docs": [
+              "Total USD volume traded across both curve and AMM"
+            ],
+            "type": "u128"
+          },
+          {
+            "name": "total_token_volume",
+            "docs": [
+              "Total token volume traded across both curve and AMM"
+            ],
+            "type": "u128"
+          },
+          {
+            "name": "cashback_credits",
+            "docs": [
+              "Cashback credits (abstract credits when earning, SOL lamports when spending)"
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "is_spending",
+            "docs": [
+              "Whether user is in spending mode (true) or earning mode (false)"
+            ],
+            "type": "bool"
+          },
+          {
+            "name": "curve_usd_volume",
+            "docs": [
+              "USD volume from curve trades only (for analytics)"
+            ],
+            "type": "u128"
+          },
+          {
+            "name": "amm_usd_volume",
+            "docs": [
+              "USD volume from AMM trades only (for analytics)"
+            ],
+            "type": "u128"
+          },
+          {
+            "name": "snapshot_usd_volume",
+            "docs": [
+              "USD volume accumulated since the last snapshot (resets on snapshot)"
+            ],
+            "type": "u128"
+          },
+          {
+            "name": "snapshot_token_volume",
+            "docs": [
+              "Token volume accumulated since the last snapshot (resets on snapshot)"
+            ],
+            "type": "u128"
+          },
+          {
+            "name": "snapshot_count",
+            "docs": [
+              "Number of snapshots taken for this user"
+            ],
+            "type": "u32"
+          },
+          {
+            "name": "latest_snapshot",
+            "docs": [
+              "PDA of the latest snapshot (head of linked list, None if no snapshots)"
+            ],
+            "type": {
+              "option": "pubkey"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "UserSnapshot",
+      "docs": [
+        "Snapshot of a user's volume since the previous snapshot.",
+        "Connected in a linked list via `prev_snapshot`.",
+        "",
+        "PDA: [b\"user_snapshot\", user.key(), index.to_le_bytes()]"
+      ],
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "user",
+            "docs": [
+              "The user this snapshot belongs to"
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "index",
+            "docs": [
+              "Sequential snapshot index (0-based)"
+            ],
+            "type": "u32"
+          },
+          {
+            "name": "prev_snapshot",
+            "docs": [
+              "Previous snapshot PDA (None for the first snapshot)"
+            ],
+            "type": {
+              "option": "pubkey"
+            }
+          },
+          {
+            "name": "usd_volume",
+            "docs": [
+              "USD volume accumulated during this snapshot period"
+            ],
+            "type": "u128"
+          },
+          {
+            "name": "token_volume",
+            "docs": [
+              "Token volume accumulated during this snapshot period"
+            ],
+            "type": "u128"
+          },
+          {
+            "name": "created_at",
+            "docs": [
+              "Unix timestamp when the snapshot was taken"
+            ],
+            "type": "i64"
+          }
+        ]
+      }
+    }
+  ]
+}
