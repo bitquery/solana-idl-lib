@@ -81,10 +81,149 @@
         "type": "u8",
         "value": 7
       }
+    },
+    {
+      "name": "swapWithSig",
+      "accounts": [
+        {
+          "name": "user",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "pair",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "accountA",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "accountB",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "poolTokenAccountA",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "poolTokenAccountB",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "userTokenAccountA",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "userTokenAccountB",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "mintA",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "mintB",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "tokenProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "tokenProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "sysvarInstructions",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "amountIn",
+          "type": "u64"
+        },
+        {
+          "name": "unixTimestamp",
+          "type": "u64"
+        },
+        {
+          "name": "msgAmountIn",
+          "type": "u64"
+        },
+        {
+          "name": "expectAmountOut",
+          "type": "u64"
+        },
+        {
+          "name": "slippage",
+          "type": "u16"
+        },
+        {
+          "name": "direction",
+          "type": "u8"
+        },
+        {
+          "name": "padding",
+          "type": {
+            "array": [
+              "u8",
+              5
+            ]
+          }
+        },
+        {
+          "name": "userKey",
+          "type": "publicKey"
+        },
+        {
+          "name": "userRequestSlot",
+          "type": "u64"
+        },
+        {
+          "name": "signature",
+          "type": {
+            "array": [
+              "u8",
+              64
+            ]
+          }
+        },
+        {
+          "name": "recoveryId",
+          "type": "u8"
+        },
+        {
+          "name": "padding2",
+          "type": {
+            "array": [
+              "u8",
+              7
+            ]
+          }
+        }
+      ],
+      "discriminant": {
+        "type": "u8",
+        "value": 14
+      }
     }
   ],
   "metadata": {
-	"origin": "shank",
+    "origin": "shank",
     "address": "SV2EYYJyRz2YhfXwXnhNAevDEui5Q6yrfyo13WtupPF"
   }
 }
