@@ -7672,6 +7672,10 @@
           {
             "name": "creator_fee_unclaimed",
             "type": "u64"
+          },
+          {
+            "name": "quote_transfer_fee",
+            "type": "u64"
           }
         ]
       }
@@ -8023,6 +8027,10 @@
           {
             "name": "user_pool_token_account",
             "type": "pubkey"
+          },
+          {
+            "name": "quote_transfer_fee",
+            "type": "u64"
           }
         ]
       }
@@ -8686,6 +8694,10 @@
           {
             "name": "creator_fee_unclaimed",
             "type": "u64"
+          },
+          {
+            "name": "quote_transfer_fee",
+            "type": "u64"
           }
         ]
       }
@@ -9093,6 +9105,10 @@
           {
             "name": "user_pool_token_account",
             "type": "pubkey"
+          },
+          {
+            "name": "quote_transfer_fee",
+            "type": "u64"
           }
         ]
       }

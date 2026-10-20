@@ -14852,6 +14852,10 @@
           {
             "name": "creator_fee_unclaimed",
             "type": "u64"
+          },
+          {
+            "name": "quote_transfer_fee",
+            "type": "u64"
           }
         ]
       }
