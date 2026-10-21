@@ -4986,7 +4986,7 @@
         "fields": [
           { "name": "updateTimestamp", "type": "u64" },
           { "name": "updates", "type": { "vec": { "defined": { "name": "OraclePriceUpdate" } } } },
-          { "name": "shouldResetTimestamp", "type": "bool" }
+          { "name": "flags", "type": "u8" }
         ]
       }
     },
