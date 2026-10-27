@@ -1,0 +1,478 @@
+{
+  "version": "0.1.0",
+  "name": "fluxbeam",
+  "instructions": [
+    {
+      "name": "initialize",
+      "accounts": [
+        {
+          "name": "swap",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "authority",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "tokenA",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "tokenB",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "poolMint",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "feeAccount",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "destination",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "tokenProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "swap",
+      "accounts": [
+        {
+          "name": "swap",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "authority",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "userTransferAuthority",
+          "isMut": false,
+          "isSigner": true
+        },
+        {
+          "name": "source",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "swapSource",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "swapDestination",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "destination",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "poolMint",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "poolFee",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "sourceMint",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "destinationMint",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "sourceTokenProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "destinationTokenProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "poolTokenProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "hostFeeAccount",
+          "isMut": true,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "amountIn",
+          "type": "u64"
+        },
+        {
+          "name": "minimumAmountOut",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "depositAllTokenTypes",
+      "accounts": [
+        {
+          "name": "swap",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "authority",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "userTransferAuthority",
+          "isMut": false,
+          "isSigner": true
+        },
+        {
+          "name": "depositTokenA",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "depositTokenB",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "swapTokenA",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "swapTokenB",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "poolMint",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "destination",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "tokenAMint",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "tokenBMint",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "tokenAProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "tokenBProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "poolTokenProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "poolTokenAmount",
+          "type": "u64"
+        },
+        {
+          "name": "maximumTokenAAmount",
+          "type": "u64"
+        },
+        {
+          "name": "maximumTokenBAmount",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "withdrawAllTokenTypes",
+      "accounts": [
+        {
+          "name": "swap",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "authority",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "userTransferAuthority",
+          "isMut": false,
+          "isSigner": true
+        },
+        {
+          "name": "poolMint",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "source",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "swapTokenA",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "swapTokenB",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "destinationTokenA",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "destinationTokenB",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "feeAccount",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "tokenAMint",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "tokenBMint",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "poolTokenProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "tokenAProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "tokenBProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "poolTokenAmount",
+          "type": "u64"
+        },
+        {
+          "name": "minimumTokenAAmount",
+          "type": "u64"
+        },
+        {
+          "name": "minimumTokenBAmount",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "depositSingleTokenTypeExactAmountIn",
+      "accounts": [
+        {
+          "name": "swap",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "authority",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "userTransferAuthority",
+          "isMut": false,
+          "isSigner": true
+        },
+        {
+          "name": "sourceToken",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "swapTokenA",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "swapTokenB",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "poolMint",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "destination",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "sourceMint",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "sourceTokenProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "poolTokenProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "sourceTokenAmount",
+          "type": "u64"
+        },
+        {
+          "name": "minimumPoolTokenAmount",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "withdrawSingleTokenTypeExactAmountOut",
+      "accounts": [
+        {
+          "name": "swap",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "authority",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "userTransferAuthority",
+          "isMut": false,
+          "isSigner": true
+        },
+        {
+          "name": "poolMint",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "source",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "swapTokenA",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "swapTokenB",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "destination",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "feeAccount",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "destinationMint",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "poolTokenProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "destinationTokenProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "destinationTokenAmount",
+          "type": "u64"
+        },
+        {
+          "name": "maximumPoolTokenAmount",
+          "type": "u64"
+        }
+      ]
+    }
+  ],
+  "accounts": [],
+  "types": [],
+  "errors": [],
+  "metadata": {
+    "address": "FLUXubRmkEi2q6K3Y9kBPg9248ggaZVsoSFhtJHSrm1X",
+    "instruction_selector_type": "index",
+    "index_size_bytes": 1
+  }
+}

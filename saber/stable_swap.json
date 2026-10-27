@@ -1,0 +1,594 @@
+{
+  "version": "0.1.0",
+  "name": "stable_swap",
+  "instructions": [
+    {
+      "name": "initialize",
+      "accounts": [
+        {
+          "name": "swap",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "authority",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "admin",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "adminFeeA",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "adminFeeB",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "tokenA",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "tokenB",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "poolMint",
+          "isMut": true,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "nonce",
+          "type": "u8"
+        },
+        {
+          "name": "ampFactor",
+          "type": "u64"
+        },
+        {
+          "name": "fees",
+          "type": {
+            "defined": "Fees"
+          }
+        }
+      ],
+      "discriminant": {
+        "type": "u8",
+        "value": 0
+      }
+    },
+    {
+      "name": "swap",
+      "accounts": [
+        {
+          "name": "swap",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "authority",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "userTransferAuthority",
+          "isMut": false,
+          "isSigner": true
+        },
+        {
+          "name": "source",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "swapSource",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "swapDestination",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "destination",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "adminFeeDestination",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "tokenProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "amountIn",
+          "type": "u64"
+        },
+        {
+          "name": "minimumAmountOut",
+          "type": "u64"
+        }
+      ],
+      "discriminant": {
+        "type": "u8",
+        "value": 1
+      }
+    },
+    {
+      "name": "deposit",
+      "accounts": [
+        {
+          "name": "swap",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "authority",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "userTransferAuthority",
+          "isMut": false,
+          "isSigner": true
+        },
+        {
+          "name": "depositTokenA",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "depositTokenB",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "swapTokenA",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "swapTokenB",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "poolMint",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "destination",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "tokenProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "tokenAAmount",
+          "type": "u64"
+        },
+        {
+          "name": "tokenBAmount",
+          "type": "u64"
+        },
+        {
+          "name": "minMintAmount",
+          "type": "u64"
+        }
+      ],
+      "discriminant": {
+        "type": "u8",
+        "value": 2
+      }
+    },
+    {
+      "name": "withdraw",
+      "accounts": [
+        {
+          "name": "swap",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "authority",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "userTransferAuthority",
+          "isMut": false,
+          "isSigner": true
+        },
+        {
+          "name": "poolMint",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "source",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "swapTokenA",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "swapTokenB",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "destinationTokenA",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "destinationTokenB",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "adminFeeA",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "adminFeeB",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "tokenProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "poolTokenAmount",
+          "type": "u64"
+        },
+        {
+          "name": "minimumTokenAAmount",
+          "type": "u64"
+        },
+        {
+          "name": "minimumTokenBAmount",
+          "type": "u64"
+        }
+      ],
+      "discriminant": {
+        "type": "u8",
+        "value": 3
+      }
+    },
+    {
+      "name": "withdrawOne",
+      "accounts": [
+        {
+          "name": "swap",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "authority",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "userTransferAuthority",
+          "isMut": false,
+          "isSigner": true
+        },
+        {
+          "name": "poolMint",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "source",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "swapBaseToken",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "swapQuoteToken",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "destination",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "adminFeeDestination",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "tokenProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "poolTokenAmount",
+          "type": "u64"
+        },
+        {
+          "name": "minimumTokenAmount",
+          "type": "u64"
+        }
+      ],
+      "discriminant": {
+        "type": "u8",
+        "value": 4
+      }
+    },
+    {
+      "name": "rampA",
+      "accounts": [
+        {
+          "name": "swap",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "admin",
+          "isMut": false,
+          "isSigner": true
+        }
+      ],
+      "args": [
+        {
+          "name": "targetAmp",
+          "type": "u64"
+        },
+        {
+          "name": "stopRampTs",
+          "type": "i64"
+        }
+      ],
+      "discriminant": {
+        "type": "u8",
+        "value": 100
+      }
+    },
+    {
+      "name": "stopRampA",
+      "accounts": [
+        {
+          "name": "swap",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "admin",
+          "isMut": false,
+          "isSigner": true
+        }
+      ],
+      "args": [],
+      "discriminant": {
+        "type": "u8",
+        "value": 101
+      }
+    },
+    {
+      "name": "pause",
+      "accounts": [
+        {
+          "name": "swap",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "admin",
+          "isMut": false,
+          "isSigner": true
+        }
+      ],
+      "args": [],
+      "discriminant": {
+        "type": "u8",
+        "value": 102
+      }
+    },
+    {
+      "name": "unpause",
+      "accounts": [
+        {
+          "name": "swap",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "admin",
+          "isMut": false,
+          "isSigner": true
+        }
+      ],
+      "args": [],
+      "discriminant": {
+        "type": "u8",
+        "value": 103
+      }
+    },
+    {
+      "name": "setFeeAccount",
+      "accounts": [
+        {
+          "name": "swap",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "admin",
+          "isMut": false,
+          "isSigner": true
+        },
+        {
+          "name": "feeAccount",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [],
+      "discriminant": {
+        "type": "u8",
+        "value": 104
+      }
+    },
+    {
+      "name": "applyNewAdmin",
+      "accounts": [
+        {
+          "name": "swap",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "admin",
+          "isMut": false,
+          "isSigner": true
+        }
+      ],
+      "args": [],
+      "discriminant": {
+        "type": "u8",
+        "value": 105
+      }
+    },
+    {
+      "name": "commitNewAdmin",
+      "accounts": [
+        {
+          "name": "swap",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "admin",
+          "isMut": false,
+          "isSigner": true
+        },
+        {
+          "name": "newAdmin",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [],
+      "discriminant": {
+        "type": "u8",
+        "value": 106
+      }
+    },
+    {
+      "name": "setNewFees",
+      "accounts": [
+        {
+          "name": "swap",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "admin",
+          "isMut": false,
+          "isSigner": true
+        }
+      ],
+      "args": [
+        {
+          "name": "fees",
+          "type": {
+            "defined": "Fees"
+          }
+        }
+      ],
+      "discriminant": {
+        "type": "u8",
+        "value": 107
+      }
+    }
+  ],
+  "accounts": [],
+  "types": [
+    {
+      "name": "Fees",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "adminTradeFeeNumerator",
+            "type": "u64"
+          },
+          {
+            "name": "adminTradeFeeDenominator",
+            "type": "u64"
+          },
+          {
+            "name": "adminWithdrawFeeNumerator",
+            "type": "u64"
+          },
+          {
+            "name": "adminWithdrawFeeDenominator",
+            "type": "u64"
+          },
+          {
+            "name": "tradeFeeNumerator",
+            "type": "u64"
+          },
+          {
+            "name": "tradeFeeDenominator",
+            "type": "u64"
+          },
+          {
+            "name": "withdrawFeeNumerator",
+            "type": "u64"
+          },
+          {
+            "name": "withdrawFeeDenominator",
+            "type": "u64"
+          }
+        ]
+      }
+    }
+  ],
+  "errors": [],
+  "metadata": {
+    "origin": "shank",
+    "address": "SSwpkEEcbUqx4vtoEByFjSkhKdCT862DNVb52nZg1UZ"
+  }
+}
