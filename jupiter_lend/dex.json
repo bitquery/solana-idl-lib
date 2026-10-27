@@ -1,0 +1,5942 @@
+{
+  "address": "jupZ4m2GqUCJ5iueMfzQf8khFfH31d4XAQt3RzCT9Vd",
+  "metadata": {
+    "name": "dex",
+    "version": "0.1.8",
+    "spec": "0.1.0",
+    "description": "Created with Anchor"
+  },
+  "instructions": [
+    {
+      "name": "borrow",
+      "discriminator": [
+        228,
+        253,
+        131,
+        202,
+        207,
+        116,
+        89,
+        18
+      ],
+      "accounts": [
+        {
+          "name": "signer",
+          "docs": [
+            "The protocol calling the operation (must match position.protocol)"
+          ],
+          "signer": true
+        },
+        {
+          "name": "dex",
+          "docs": [
+            "DEX pool state"
+          ],
+          "writable": true
+        },
+        {
+          "name": "user",
+          "signer": true
+        },
+        {
+          "name": "position",
+          "docs": [
+            "The user's DexPosition (tracks shares and limits)"
+          ],
+          "writable": true
+        },
+        {
+          "name": "user_token_0_account",
+          "writable": true
+        },
+        {
+          "name": "user_token_1_account",
+          "writable": true
+        },
+        {
+          "name": "token_0"
+        },
+        {
+          "name": "token_1"
+        },
+        {
+          "name": "token_0_reserve",
+          "writable": true
+        },
+        {
+          "name": "token_1_reserve",
+          "writable": true
+        },
+        {
+          "name": "token_0_rate_model"
+        },
+        {
+          "name": "token_1_rate_model"
+        },
+        {
+          "name": "token_0_vault",
+          "docs": [
+            "Liquidity vault token account for tokens"
+          ],
+          "writable": true
+        },
+        {
+          "name": "token_1_vault",
+          "writable": true
+        },
+        {
+          "name": "dex_supply_position_token_0",
+          "docs": [
+            "DEX's supply position for tokens on liquidity"
+          ],
+          "writable": true,
+          "optional": true
+        },
+        {
+          "name": "dex_supply_position_token_1",
+          "writable": true,
+          "optional": true
+        },
+        {
+          "name": "dex_borrow_position_token_0",
+          "docs": [
+            "DEX's borrow position for tokens on liquidity"
+          ],
+          "writable": true,
+          "optional": true
+        },
+        {
+          "name": "dex_borrow_position_token_1",
+          "writable": true,
+          "optional": true
+        },
+        {
+          "name": "liquidity"
+        },
+        {
+          "name": "liquidity_program"
+        },
+        {
+          "name": "oracle_program"
+        },
+        {
+          "name": "token_0_program"
+        },
+        {
+          "name": "token_1_program"
+        },
+        {
+          "name": "recipient",
+          "optional": true
+        },
+        {
+          "name": "recipient_token_0_account",
+          "writable": true,
+          "optional": true
+        },
+        {
+          "name": "recipient_token_1_account",
+          "writable": true,
+          "optional": true
+        }
+      ],
+      "args": [
+        {
+          "name": "token0_amt",
+          "type": "u64"
+        },
+        {
+          "name": "token1_amt",
+          "type": "u64"
+        },
+        {
+          "name": "max_shares",
+          "type": "u64"
+        }
+      ],
+      "returns": "u128"
+    },
+    {
+      "name": "borrow_perfect",
+      "discriminator": [
+        210,
+        67,
+        245,
+        255,
+        134,
+        200,
+        153,
+        58
+      ],
+      "accounts": [
+        {
+          "name": "signer",
+          "docs": [
+            "The protocol calling the operation (must match position.protocol)"
+          ],
+          "signer": true
+        },
+        {
+          "name": "dex",
+          "docs": [
+            "DEX pool state"
+          ],
+          "writable": true
+        },
+        {
+          "name": "user",
+          "signer": true
+        },
+        {
+          "name": "position",
+          "docs": [
+            "The user's DexPosition (tracks shares and limits)"
+          ],
+          "writable": true
+        },
+        {
+          "name": "user_token_0_account",
+          "writable": true
+        },
+        {
+          "name": "user_token_1_account",
+          "writable": true
+        },
+        {
+          "name": "token_0"
+        },
+        {
+          "name": "token_1"
+        },
+        {
+          "name": "token_0_reserve",
+          "writable": true
+        },
+        {
+          "name": "token_1_reserve",
+          "writable": true
+        },
+        {
+          "name": "token_0_rate_model"
+        },
+        {
+          "name": "token_1_rate_model"
+        },
+        {
+          "name": "token_0_vault",
+          "docs": [
+            "Liquidity vault token account for tokens"
+          ],
+          "writable": true
+        },
+        {
+          "name": "token_1_vault",
+          "writable": true
+        },
+        {
+          "name": "dex_supply_position_token_0",
+          "docs": [
+            "DEX's supply position for tokens on liquidity"
+          ],
+          "writable": true,
+          "optional": true
+        },
+        {
+          "name": "dex_supply_position_token_1",
+          "writable": true,
+          "optional": true
+        },
+        {
+          "name": "dex_borrow_position_token_0",
+          "docs": [
+            "DEX's borrow position for tokens on liquidity"
+          ],
+          "writable": true,
+          "optional": true
+        },
+        {
+          "name": "dex_borrow_position_token_1",
+          "writable": true,
+          "optional": true
+        },
+        {
+          "name": "liquidity"
+        },
+        {
+          "name": "liquidity_program"
+        },
+        {
+          "name": "oracle_program"
+        },
+        {
+          "name": "token_0_program"
+        },
+        {
+          "name": "token_1_program"
+        },
+        {
+          "name": "recipient",
+          "optional": true
+        },
+        {
+          "name": "recipient_token_0_account",
+          "writable": true,
+          "optional": true
+        },
+        {
+          "name": "recipient_token_1_account",
+          "writable": true,
+          "optional": true
+        }
+      ],
+      "args": [
+        {
+          "name": "shares",
+          "type": "u64"
+        },
+        {
+          "name": "min_token0",
+          "type": "u64"
+        },
+        {
+          "name": "min_token1",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "deposit",
+      "discriminator": [
+        242,
+        35,
+        198,
+        137,
+        82,
+        225,
+        242,
+        182
+      ],
+      "accounts": [
+        {
+          "name": "signer",
+          "docs": [
+            "The protocol calling the operation (must match position.protocol)"
+          ],
+          "signer": true
+        },
+        {
+          "name": "dex",
+          "docs": [
+            "DEX pool state"
+          ],
+          "writable": true
+        },
+        {
+          "name": "user",
+          "signer": true
+        },
+        {
+          "name": "position",
+          "docs": [
+            "The user's DexPosition (tracks shares and limits)"
+          ],
+          "writable": true
+        },
+        {
+          "name": "user_token_0_account",
+          "writable": true
+        },
+        {
+          "name": "user_token_1_account",
+          "writable": true
+        },
+        {
+          "name": "token_0"
+        },
+        {
+          "name": "token_1"
+        },
+        {
+          "name": "token_0_reserve",
+          "writable": true
+        },
+        {
+          "name": "token_1_reserve",
+          "writable": true
+        },
+        {
+          "name": "token_0_rate_model"
+        },
+        {
+          "name": "token_1_rate_model"
+        },
+        {
+          "name": "token_0_vault",
+          "docs": [
+            "Liquidity vault token account for tokens"
+          ],
+          "writable": true
+        },
+        {
+          "name": "token_1_vault",
+          "writable": true
+        },
+        {
+          "name": "dex_supply_position_token_0",
+          "docs": [
+            "DEX's supply position for tokens on liquidity"
+          ],
+          "writable": true,
+          "optional": true
+        },
+        {
+          "name": "dex_supply_position_token_1",
+          "writable": true,
+          "optional": true
+        },
+        {
+          "name": "dex_borrow_position_token_0",
+          "docs": [
+            "DEX's borrow position for tokens on liquidity"
+          ],
+          "writable": true,
+          "optional": true
+        },
+        {
+          "name": "dex_borrow_position_token_1",
+          "writable": true,
+          "optional": true
+        },
+        {
+          "name": "liquidity"
+        },
+        {
+          "name": "liquidity_program"
+        },
+        {
+          "name": "oracle_program"
+        },
+        {
+          "name": "token_0_program"
+        },
+        {
+          "name": "token_1_program"
+        },
+        {
+          "name": "recipient",
+          "optional": true
+        },
+        {
+          "name": "recipient_token_0_account",
+          "writable": true,
+          "optional": true
+        },
+        {
+          "name": "recipient_token_1_account",
+          "writable": true,
+          "optional": true
+        }
+      ],
+      "args": [
+        {
+          "name": "token0_amt",
+          "type": "u64"
+        },
+        {
+          "name": "token1_amt",
+          "type": "u64"
+        },
+        {
+          "name": "min_shares",
+          "type": "u64"
+        }
+      ],
+      "returns": "u128"
+    },
+    {
+      "name": "deposit_perfect",
+      "discriminator": [
+        4,
+        98,
+        66,
+        216,
+        110,
+        126,
+        154,
+        8
+      ],
+      "accounts": [
+        {
+          "name": "signer",
+          "docs": [
+            "The protocol calling the operation (must match position.protocol)"
+          ],
+          "signer": true
+        },
+        {
+          "name": "dex",
+          "docs": [
+            "DEX pool state"
+          ],
+          "writable": true
+        },
+        {
+          "name": "user",
+          "signer": true
+        },
+        {
+          "name": "position",
+          "docs": [
+            "The user's DexPosition (tracks shares and limits)"
+          ],
+          "writable": true
+        },
+        {
+          "name": "user_token_0_account",
+          "writable": true
+        },
+        {
+          "name": "user_token_1_account",
+          "writable": true
+        },
+        {
+          "name": "token_0"
+        },
+        {
+          "name": "token_1"
+        },
+        {
+          "name": "token_0_reserve",
+          "writable": true
+        },
+        {
+          "name": "token_1_reserve",
+          "writable": true
+        },
+        {
+          "name": "token_0_rate_model"
+        },
+        {
+          "name": "token_1_rate_model"
+        },
+        {
+          "name": "token_0_vault",
+          "docs": [
+            "Liquidity vault token account for tokens"
+          ],
+          "writable": true
+        },
+        {
+          "name": "token_1_vault",
+          "writable": true
+        },
+        {
+          "name": "dex_supply_position_token_0",
+          "docs": [
+            "DEX's supply position for tokens on liquidity"
+          ],
+          "writable": true,
+          "optional": true
+        },
+        {
+          "name": "dex_supply_position_token_1",
+          "writable": true,
+          "optional": true
+        },
+        {
+          "name": "dex_borrow_position_token_0",
+          "docs": [
+            "DEX's borrow position for tokens on liquidity"
+          ],
+          "writable": true,
+          "optional": true
+        },
+        {
+          "name": "dex_borrow_position_token_1",
+          "writable": true,
+          "optional": true
+        },
+        {
+          "name": "liquidity"
+        },
+        {
+          "name": "liquidity_program"
+        },
+        {
+          "name": "oracle_program"
+        },
+        {
+          "name": "token_0_program"
+        },
+        {
+          "name": "token_1_program"
+        },
+        {
+          "name": "recipient",
+          "optional": true
+        },
+        {
+          "name": "recipient_token_0_account",
+          "writable": true,
+          "optional": true
+        },
+        {
+          "name": "recipient_token_1_account",
+          "writable": true,
+          "optional": true
+        }
+      ],
+      "args": [
+        {
+          "name": "shares",
+          "type": "u64"
+        },
+        {
+          "name": "max_token0",
+          "type": "u64"
+        },
+        {
+          "name": "max_token1",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "force_set_price",
+      "discriminator": [
+        146,
+        177,
+        235,
+        49,
+        193,
+        159,
+        187,
+        16
+      ],
+      "accounts": [
+        {
+          "name": "authority",
+          "signer": true
+        },
+        {
+          "name": "dex_admin"
+        },
+        {
+          "name": "dex",
+          "writable": true
+        },
+        {
+          "name": "oracle_program",
+          "docs": [
+            "verified against dex.center_price_address in the load helper"
+          ],
+          "address": "jupnw4B6Eqs7ft6rxpzYLJZYSnrpRgPcr589n5Kv4oc"
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "init_dex",
+      "discriminator": [
+        222,
+        187,
+        81,
+        48,
+        89,
+        117,
+        230,
+        164
+      ],
+      "accounts": [
+        {
+          "name": "authority",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "dex_admin",
+          "writable": true
+        },
+        {
+          "name": "dex",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  100,
+                  101,
+                  120
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "dex_admin.next_dex_id",
+                "account": "DexAdmin"
+              }
+            ]
+          }
+        },
+        {
+          "name": "dex_metadata",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  100,
+                  101,
+                  120,
+                  95,
+                  109,
+                  101,
+                  116,
+                  97,
+                  100,
+                  97,
+                  116,
+                  97
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "dex_admin.next_dex_id",
+                "account": "DexAdmin"
+              }
+            ]
+          }
+        },
+        {
+          "name": "token_0"
+        },
+        {
+          "name": "token_1"
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "params",
+          "type": {
+            "defined": {
+              "name": "InitDexParams"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "init_dex_admin",
+      "discriminator": [
+        16,
+        61,
+        98,
+        61,
+        189,
+        243,
+        52,
+        252
+      ],
+      "accounts": [
+        {
+          "name": "signer",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "dex_admin",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  100,
+                  101,
+                  120,
+                  95,
+                  97,
+                  100,
+                  109,
+                  105,
+                  110
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "liquidity",
+          "type": "pubkey"
+        },
+        {
+          "name": "authority",
+          "type": "pubkey"
+        }
+      ]
+    },
+    {
+      "name": "init_dex_metadata",
+      "discriminator": [
+        114,
+        167,
+        144,
+        220,
+        143,
+        73,
+        224,
+        8
+      ],
+      "accounts": [
+        {
+          "name": "authority",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "dex_admin"
+        },
+        {
+          "name": "dex",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  100,
+                  101,
+                  120
+                ]
+              },
+              {
+                "kind": "arg",
+                "path": "dex_id"
+              }
+            ]
+          }
+        },
+        {
+          "name": "dex_metadata",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  100,
+                  101,
+                  120,
+                  95,
+                  109,
+                  101,
+                  116,
+                  97,
+                  100,
+                  97,
+                  116,
+                  97
+                ]
+              },
+              {
+                "kind": "arg",
+                "path": "dex_id"
+              }
+            ]
+          }
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "dex_id",
+          "type": "u16"
+        },
+        {
+          "name": "lookup_table",
+          "type": "pubkey"
+        }
+      ]
+    },
+    {
+      "name": "init_position",
+      "discriminator": [
+        197,
+        20,
+        10,
+        1,
+        97,
+        160,
+        177,
+        91
+      ],
+      "accounts": [
+        {
+          "name": "authority",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "dex_admin"
+        },
+        {
+          "name": "dex"
+        },
+        {
+          "name": "position",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  100,
+                  101,
+                  120,
+                  95,
+                  112,
+                  111,
+                  115,
+                  105,
+                  116,
+                  105,
+                  111,
+                  110
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "dex"
+              },
+              {
+                "kind": "arg",
+                "path": "protocol"
+              }
+            ]
+          }
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "protocol",
+          "type": "pubkey"
+        }
+      ]
+    },
+    {
+      "name": "pause_dex",
+      "discriminator": [
+        138,
+        255,
+        101,
+        0,
+        116,
+        202,
+        128,
+        100
+      ],
+      "accounts": [
+        {
+          "name": "authority",
+          "signer": true
+        },
+        {
+          "name": "dex_admin"
+        },
+        {
+          "name": "dex",
+          "writable": true
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "pause_swap_and_arbitrage",
+      "discriminator": [
+        252,
+        67,
+        166,
+        62,
+        45,
+        136,
+        88,
+        76
+      ],
+      "accounts": [
+        {
+          "name": "authority",
+          "signer": true
+        },
+        {
+          "name": "dex_admin"
+        },
+        {
+          "name": "dex",
+          "writable": true
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "pause_user",
+      "discriminator": [
+        18,
+        63,
+        43,
+        94,
+        239,
+        53,
+        101,
+        14
+      ],
+      "accounts": [
+        {
+          "name": "authority",
+          "signer": true
+        },
+        {
+          "name": "dex_admin"
+        },
+        {
+          "name": "dex"
+        },
+        {
+          "name": "position",
+          "writable": true
+        }
+      ],
+      "args": [
+        {
+          "name": "pause_supply",
+          "type": "bool"
+        },
+        {
+          "name": "pause_borrow",
+          "type": "bool"
+        }
+      ]
+    },
+    {
+      "name": "payback",
+      "discriminator": [
+        148,
+        144,
+        50,
+        144,
+        8,
+        112,
+        203,
+        3
+      ],
+      "accounts": [
+        {
+          "name": "signer",
+          "docs": [
+            "The protocol calling the operation (must match position.protocol)"
+          ],
+          "signer": true
+        },
+        {
+          "name": "dex",
+          "docs": [
+            "DEX pool state"
+          ],
+          "writable": true
+        },
+        {
+          "name": "user",
+          "signer": true
+        },
+        {
+          "name": "position",
+          "docs": [
+            "The user's DexPosition (tracks shares and limits)"
+          ],
+          "writable": true
+        },
+        {
+          "name": "user_token_0_account",
+          "writable": true
+        },
+        {
+          "name": "user_token_1_account",
+          "writable": true
+        },
+        {
+          "name": "token_0"
+        },
+        {
+          "name": "token_1"
+        },
+        {
+          "name": "token_0_reserve",
+          "writable": true
+        },
+        {
+          "name": "token_1_reserve",
+          "writable": true
+        },
+        {
+          "name": "token_0_rate_model"
+        },
+        {
+          "name": "token_1_rate_model"
+        },
+        {
+          "name": "token_0_vault",
+          "docs": [
+            "Liquidity vault token account for tokens"
+          ],
+          "writable": true
+        },
+        {
+          "name": "token_1_vault",
+          "writable": true
+        },
+        {
+          "name": "dex_supply_position_token_0",
+          "docs": [
+            "DEX's supply position for tokens on liquidity"
+          ],
+          "writable": true,
+          "optional": true
+        },
+        {
+          "name": "dex_supply_position_token_1",
+          "writable": true,
+          "optional": true
+        },
+        {
+          "name": "dex_borrow_position_token_0",
+          "docs": [
+            "DEX's borrow position for tokens on liquidity"
+          ],
+          "writable": true,
+          "optional": true
+        },
+        {
+          "name": "dex_borrow_position_token_1",
+          "writable": true,
+          "optional": true
+        },
+        {
+          "name": "liquidity"
+        },
+        {
+          "name": "liquidity_program"
+        },
+        {
+          "name": "oracle_program"
+        },
+        {
+          "name": "token_0_program"
+        },
+        {
+          "name": "token_1_program"
+        },
+        {
+          "name": "recipient",
+          "optional": true
+        },
+        {
+          "name": "recipient_token_0_account",
+          "writable": true,
+          "optional": true
+        },
+        {
+          "name": "recipient_token_1_account",
+          "writable": true,
+          "optional": true
+        }
+      ],
+      "args": [
+        {
+          "name": "token0_amt",
+          "type": "u64"
+        },
+        {
+          "name": "token1_amt",
+          "type": "u64"
+        },
+        {
+          "name": "min_shares",
+          "type": "u64"
+        }
+      ],
+      "returns": "u128"
+    },
+    {
+      "name": "payback_perfect",
+      "discriminator": [
+        39,
+        2,
+        197,
+        102,
+        11,
+        186,
+        97,
+        1
+      ],
+      "accounts": [
+        {
+          "name": "signer",
+          "docs": [
+            "The protocol calling the operation (must match position.protocol)"
+          ],
+          "signer": true
+        },
+        {
+          "name": "dex",
+          "docs": [
+            "DEX pool state"
+          ],
+          "writable": true
+        },
+        {
+          "name": "user",
+          "signer": true
+        },
+        {
+          "name": "position",
+          "docs": [
+            "The user's DexPosition (tracks shares and limits)"
+          ],
+          "writable": true
+        },
+        {
+          "name": "user_token_0_account",
+          "writable": true
+        },
+        {
+          "name": "user_token_1_account",
+          "writable": true
+        },
+        {
+          "name": "token_0"
+        },
+        {
+          "name": "token_1"
+        },
+        {
+          "name": "token_0_reserve",
+          "writable": true
+        },
+        {
+          "name": "token_1_reserve",
+          "writable": true
+        },
+        {
+          "name": "token_0_rate_model"
+        },
+        {
+          "name": "token_1_rate_model"
+        },
+        {
+          "name": "token_0_vault",
+          "docs": [
+            "Liquidity vault token account for tokens"
+          ],
+          "writable": true
+        },
+        {
+          "name": "token_1_vault",
+          "writable": true
+        },
+        {
+          "name": "dex_supply_position_token_0",
+          "docs": [
+            "DEX's supply position for tokens on liquidity"
+          ],
+          "writable": true,
+          "optional": true
+        },
+        {
+          "name": "dex_supply_position_token_1",
+          "writable": true,
+          "optional": true
+        },
+        {
+          "name": "dex_borrow_position_token_0",
+          "docs": [
+            "DEX's borrow position for tokens on liquidity"
+          ],
+          "writable": true,
+          "optional": true
+        },
+        {
+          "name": "dex_borrow_position_token_1",
+          "writable": true,
+          "optional": true
+        },
+        {
+          "name": "liquidity"
+        },
+        {
+          "name": "liquidity_program"
+        },
+        {
+          "name": "oracle_program"
+        },
+        {
+          "name": "token_0_program"
+        },
+        {
+          "name": "token_1_program"
+        },
+        {
+          "name": "recipient",
+          "optional": true
+        },
+        {
+          "name": "recipient_token_0_account",
+          "writable": true,
+          "optional": true
+        },
+        {
+          "name": "recipient_token_1_account",
+          "writable": true,
+          "optional": true
+        }
+      ],
+      "args": [
+        {
+          "name": "shares",
+          "type": "u64"
+        },
+        {
+          "name": "max_token0",
+          "type": "u64"
+        },
+        {
+          "name": "max_token1",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "payback_perfect_in_one_token",
+      "discriminator": [
+        134,
+        210,
+        96,
+        6,
+        127,
+        183,
+        182,
+        146
+      ],
+      "accounts": [
+        {
+          "name": "signer",
+          "docs": [
+            "The protocol calling the operation (must match position.protocol)"
+          ],
+          "signer": true
+        },
+        {
+          "name": "dex",
+          "docs": [
+            "DEX pool state"
+          ],
+          "writable": true
+        },
+        {
+          "name": "user",
+          "signer": true
+        },
+        {
+          "name": "position",
+          "docs": [
+            "The user's DexPosition (tracks shares and limits)"
+          ],
+          "writable": true
+        },
+        {
+          "name": "user_token_0_account",
+          "writable": true
+        },
+        {
+          "name": "user_token_1_account",
+          "writable": true
+        },
+        {
+          "name": "token_0"
+        },
+        {
+          "name": "token_1"
+        },
+        {
+          "name": "token_0_reserve",
+          "writable": true
+        },
+        {
+          "name": "token_1_reserve",
+          "writable": true
+        },
+        {
+          "name": "token_0_rate_model"
+        },
+        {
+          "name": "token_1_rate_model"
+        },
+        {
+          "name": "token_0_vault",
+          "docs": [
+            "Liquidity vault token account for tokens"
+          ],
+          "writable": true
+        },
+        {
+          "name": "token_1_vault",
+          "writable": true
+        },
+        {
+          "name": "dex_supply_position_token_0",
+          "docs": [
+            "DEX's supply position for tokens on liquidity"
+          ],
+          "writable": true,
+          "optional": true
+        },
+        {
+          "name": "dex_supply_position_token_1",
+          "writable": true,
+          "optional": true
+        },
+        {
+          "name": "dex_borrow_position_token_0",
+          "docs": [
+            "DEX's borrow position for tokens on liquidity"
+          ],
+          "writable": true,
+          "optional": true
+        },
+        {
+          "name": "dex_borrow_position_token_1",
+          "writable": true,
+          "optional": true
+        },
+        {
+          "name": "liquidity"
+        },
+        {
+          "name": "liquidity_program"
+        },
+        {
+          "name": "oracle_program"
+        },
+        {
+          "name": "token_0_program"
+        },
+        {
+          "name": "token_1_program"
+        },
+        {
+          "name": "recipient",
+          "optional": true
+        },
+        {
+          "name": "recipient_token_0_account",
+          "writable": true,
+          "optional": true
+        },
+        {
+          "name": "recipient_token_1_account",
+          "writable": true,
+          "optional": true
+        }
+      ],
+      "args": [
+        {
+          "name": "shares",
+          "type": "u64"
+        },
+        {
+          "name": "max_token0",
+          "type": "u64"
+        },
+        {
+          "name": "max_token1",
+          "type": "u64"
+        }
+      ],
+      "returns": "u64"
+    },
+    {
+      "name": "preview_dex_shares",
+      "docs": [
+        "Read-only: returns the exact collateral/debt share deltas a real operate",
+        "would produce for the given (signed) token amounts, via `return_data`.",
+        "Mutates nothing; meant to be run through `simulateTransaction` so an SDK",
+        "can attach the correct vault tick / branch accounts. See `preview.rs`."
+      ],
+      "discriminator": [
+        246,
+        97,
+        50,
+        171,
+        63,
+        142,
+        62,
+        229
+      ],
+      "accounts": [
+        {
+          "name": "dex"
+        },
+        {
+          "name": "position",
+          "docs": [
+            "The protocol's DEX position (holds the share balances / withdrawal limits",
+            "that gate the operation). Only read here; mutated on a local copy."
+          ]
+        },
+        {
+          "name": "token_0_reserve"
+        },
+        {
+          "name": "token_1_reserve"
+        },
+        {
+          "name": "dex_supply_position_token_0",
+          "optional": true
+        },
+        {
+          "name": "dex_supply_position_token_1",
+          "optional": true
+        },
+        {
+          "name": "dex_borrow_position_token_0",
+          "optional": true
+        },
+        {
+          "name": "dex_borrow_position_token_1",
+          "optional": true
+        },
+        {
+          "name": "oracle_program"
+        }
+      ],
+      "args": [
+        {
+          "name": "col_token0",
+          "type": "i64"
+        },
+        {
+          "name": "col_token1",
+          "type": "i64"
+        },
+        {
+          "name": "debt_token0",
+          "type": "i64"
+        },
+        {
+          "name": "debt_token1",
+          "type": "i64"
+        }
+      ]
+    },
+    {
+      "name": "swap_in",
+      "discriminator": [
+        141,
+        172,
+        10,
+        208,
+        69,
+        9,
+        56,
+        154
+      ],
+      "accounts": [
+        {
+          "name": "signer",
+          "docs": [
+            "The caller initiating the operation (transfer authority for inbound tokens)"
+          ],
+          "signer": true
+        },
+        {
+          "name": "dex",
+          "writable": true
+        },
+        {
+          "name": "user_token_0_account",
+          "writable": true
+        },
+        {
+          "name": "user_token_1_account",
+          "writable": true
+        },
+        {
+          "name": "recipient",
+          "optional": true
+        },
+        {
+          "name": "recipient_token_0_account",
+          "writable": true,
+          "optional": true
+        },
+        {
+          "name": "recipient_token_1_account",
+          "writable": true,
+          "optional": true
+        },
+        {
+          "name": "token_0"
+        },
+        {
+          "name": "token_1"
+        },
+        {
+          "name": "token_0_reserve",
+          "writable": true
+        },
+        {
+          "name": "token_1_reserve",
+          "writable": true
+        },
+        {
+          "name": "token_0_rate_model"
+        },
+        {
+          "name": "token_1_rate_model"
+        },
+        {
+          "name": "token_0_vault",
+          "docs": [
+            "Liquidity vault token account for tokens"
+          ],
+          "writable": true
+        },
+        {
+          "name": "token_1_vault",
+          "writable": true
+        },
+        {
+          "name": "dex_supply_position_token_0",
+          "docs": [
+            "DEX's supply position for tokens on liquidity"
+          ],
+          "writable": true,
+          "optional": true
+        },
+        {
+          "name": "dex_supply_position_token_1",
+          "writable": true,
+          "optional": true
+        },
+        {
+          "name": "dex_borrow_position_token_0",
+          "docs": [
+            "DEX's borrow position for tokens on liquidity"
+          ],
+          "writable": true,
+          "optional": true
+        },
+        {
+          "name": "dex_borrow_position_token_1",
+          "writable": true,
+          "optional": true
+        },
+        {
+          "name": "liquidity"
+        },
+        {
+          "name": "liquidity_program"
+        },
+        {
+          "name": "token_0_program"
+        },
+        {
+          "name": "token_1_program"
+        },
+        {
+          "name": "oracle_program"
+        }
+      ],
+      "args": [
+        {
+          "name": "swap0to1",
+          "type": "bool"
+        },
+        {
+          "name": "amount_in",
+          "type": "u64"
+        },
+        {
+          "name": "amount_out_min",
+          "type": "u64"
+        }
+      ],
+      "returns": "u64"
+    },
+    {
+      "name": "swap_out",
+      "discriminator": [
+        206,
+        36,
+        149,
+        14,
+        163,
+        132,
+        148,
+        1
+      ],
+      "accounts": [
+        {
+          "name": "signer",
+          "docs": [
+            "The caller initiating the operation (transfer authority for inbound tokens)"
+          ],
+          "signer": true
+        },
+        {
+          "name": "dex",
+          "writable": true
+        },
+        {
+          "name": "user_token_0_account",
+          "writable": true
+        },
+        {
+          "name": "user_token_1_account",
+          "writable": true
+        },
+        {
+          "name": "recipient",
+          "optional": true
+        },
+        {
+          "name": "recipient_token_0_account",
+          "writable": true,
+          "optional": true
+        },
+        {
+          "name": "recipient_token_1_account",
+          "writable": true,
+          "optional": true
+        },
+        {
+          "name": "token_0"
+        },
+        {
+          "name": "token_1"
+        },
+        {
+          "name": "token_0_reserve",
+          "writable": true
+        },
+        {
+          "name": "token_1_reserve",
+          "writable": true
+        },
+        {
+          "name": "token_0_rate_model"
+        },
+        {
+          "name": "token_1_rate_model"
+        },
+        {
+          "name": "token_0_vault",
+          "docs": [
+            "Liquidity vault token account for tokens"
+          ],
+          "writable": true
+        },
+        {
+          "name": "token_1_vault",
+          "writable": true
+        },
+        {
+          "name": "dex_supply_position_token_0",
+          "docs": [
+            "DEX's supply position for tokens on liquidity"
+          ],
+          "writable": true,
+          "optional": true
+        },
+        {
+          "name": "dex_supply_position_token_1",
+          "writable": true,
+          "optional": true
+        },
+        {
+          "name": "dex_borrow_position_token_0",
+          "docs": [
+            "DEX's borrow position for tokens on liquidity"
+          ],
+          "writable": true,
+          "optional": true
+        },
+        {
+          "name": "dex_borrow_position_token_1",
+          "writable": true,
+          "optional": true
+        },
+        {
+          "name": "liquidity"
+        },
+        {
+          "name": "liquidity_program"
+        },
+        {
+          "name": "token_0_program"
+        },
+        {
+          "name": "token_1_program"
+        },
+        {
+          "name": "oracle_program"
+        }
+      ],
+      "args": [
+        {
+          "name": "swap0to1",
+          "type": "bool"
+        },
+        {
+          "name": "amount_out",
+          "type": "u64"
+        },
+        {
+          "name": "amount_in_max",
+          "type": "u64"
+        }
+      ],
+      "returns": "u64"
+    },
+    {
+      "name": "turn_on_smart_col",
+      "discriminator": [
+        143,
+        236,
+        131,
+        173,
+        22,
+        90,
+        214,
+        202
+      ],
+      "accounts": [
+        {
+          "name": "authority",
+          "signer": true
+        },
+        {
+          "name": "dex_admin"
+        },
+        {
+          "name": "dex",
+          "writable": true
+        },
+        {
+          "name": "admin_token_0_account",
+          "writable": true
+        },
+        {
+          "name": "admin_token_1_account",
+          "writable": true
+        },
+        {
+          "name": "token_0"
+        },
+        {
+          "name": "token_1"
+        },
+        {
+          "name": "token_0_reserve",
+          "writable": true
+        },
+        {
+          "name": "token_1_reserve",
+          "writable": true
+        },
+        {
+          "name": "token_0_rate_model"
+        },
+        {
+          "name": "token_1_rate_model"
+        },
+        {
+          "name": "token_0_vault",
+          "writable": true
+        },
+        {
+          "name": "token_1_vault",
+          "writable": true
+        },
+        {
+          "name": "dex_supply_position_token_0",
+          "writable": true,
+          "optional": true
+        },
+        {
+          "name": "dex_supply_position_token_1",
+          "writable": true,
+          "optional": true
+        },
+        {
+          "name": "dex_borrow_position_token_0",
+          "writable": true,
+          "optional": true
+        },
+        {
+          "name": "dex_borrow_position_token_1",
+          "writable": true,
+          "optional": true
+        },
+        {
+          "name": "liquidity"
+        },
+        {
+          "name": "liquidity_program"
+        },
+        {
+          "name": "token_0_program"
+        },
+        {
+          "name": "token_1_program"
+        }
+      ],
+      "args": [
+        {
+          "name": "token_0_amt",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "turn_on_smart_debt",
+      "discriminator": [
+        177,
+        184,
+        215,
+        221,
+        92,
+        231,
+        153,
+        83
+      ],
+      "accounts": [
+        {
+          "name": "authority",
+          "signer": true
+        },
+        {
+          "name": "dex_admin"
+        },
+        {
+          "name": "dex",
+          "writable": true
+        },
+        {
+          "name": "admin_token_0_account",
+          "writable": true
+        },
+        {
+          "name": "admin_token_1_account",
+          "writable": true
+        },
+        {
+          "name": "token_0"
+        },
+        {
+          "name": "token_1"
+        },
+        {
+          "name": "token_0_reserve",
+          "writable": true
+        },
+        {
+          "name": "token_1_reserve",
+          "writable": true
+        },
+        {
+          "name": "token_0_rate_model"
+        },
+        {
+          "name": "token_1_rate_model"
+        },
+        {
+          "name": "token_0_vault",
+          "writable": true
+        },
+        {
+          "name": "token_1_vault",
+          "writable": true
+        },
+        {
+          "name": "dex_supply_position_token_0",
+          "writable": true,
+          "optional": true
+        },
+        {
+          "name": "dex_supply_position_token_1",
+          "writable": true,
+          "optional": true
+        },
+        {
+          "name": "dex_borrow_position_token_0",
+          "writable": true,
+          "optional": true
+        },
+        {
+          "name": "dex_borrow_position_token_1",
+          "writable": true,
+          "optional": true
+        },
+        {
+          "name": "liquidity"
+        },
+        {
+          "name": "liquidity_program"
+        },
+        {
+          "name": "token_0_program"
+        },
+        {
+          "name": "token_1_program"
+        }
+      ],
+      "args": [
+        {
+          "name": "token_0_amt",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "unpause_dex",
+      "discriminator": [
+        88,
+        52,
+        175,
+        105,
+        210,
+        116,
+        178,
+        218
+      ],
+      "accounts": [
+        {
+          "name": "authority",
+          "signer": true
+        },
+        {
+          "name": "dex_admin"
+        },
+        {
+          "name": "dex",
+          "writable": true
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "unpause_swap_and_arbitrage",
+      "discriminator": [
+        241,
+        4,
+        197,
+        110,
+        244,
+        255,
+        172,
+        184
+      ],
+      "accounts": [
+        {
+          "name": "authority",
+          "signer": true
+        },
+        {
+          "name": "dex_admin"
+        },
+        {
+          "name": "dex",
+          "writable": true
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "unpause_user",
+      "discriminator": [
+        71,
+        115,
+        128,
+        252,
+        182,
+        126,
+        234,
+        62
+      ],
+      "accounts": [
+        {
+          "name": "authority",
+          "signer": true
+        },
+        {
+          "name": "dex_admin"
+        },
+        {
+          "name": "dex"
+        },
+        {
+          "name": "position",
+          "writable": true
+        }
+      ],
+      "args": [
+        {
+          "name": "unpause_supply",
+          "type": "bool"
+        },
+        {
+          "name": "unpause_borrow",
+          "type": "bool"
+        }
+      ]
+    },
+    {
+      "name": "update_authority",
+      "discriminator": [
+        32,
+        46,
+        64,
+        28,
+        149,
+        75,
+        243,
+        88
+      ],
+      "accounts": [
+        {
+          "name": "authority",
+          "signer": true
+        },
+        {
+          "name": "dex_admin",
+          "writable": true
+        }
+      ],
+      "args": [
+        {
+          "name": "new_authority",
+          "type": "pubkey"
+        }
+      ]
+    },
+    {
+      "name": "update_auths",
+      "discriminator": [
+        93,
+        96,
+        178,
+        156,
+        57,
+        117,
+        253,
+        209
+      ],
+      "accounts": [
+        {
+          "name": "authority",
+          "signer": true
+        },
+        {
+          "name": "dex_admin",
+          "writable": true
+        }
+      ],
+      "args": [
+        {
+          "name": "auth_status",
+          "type": {
+            "vec": {
+              "defined": {
+                "name": "AddressBool"
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "update_center_price_address",
+      "discriminator": [
+        45,
+        110,
+        96,
+        39,
+        201,
+        250,
+        142,
+        1
+      ],
+      "accounts": [
+        {
+          "name": "authority",
+          "signer": true
+        },
+        {
+          "name": "dex_admin"
+        },
+        {
+          "name": "dex",
+          "writable": true
+        }
+      ],
+      "args": [
+        {
+          "name": "center_price_address",
+          "type": "pubkey"
+        },
+        {
+          "name": "percent",
+          "type": "u32"
+        },
+        {
+          "name": "time",
+          "type": "u32"
+        }
+      ]
+    },
+    {
+      "name": "update_center_price_limits",
+      "discriminator": [
+        17,
+        23,
+        56,
+        200,
+        237,
+        163,
+        24,
+        152
+      ],
+      "accounts": [
+        {
+          "name": "authority",
+          "signer": true
+        },
+        {
+          "name": "dex_admin"
+        },
+        {
+          "name": "dex",
+          "writable": true
+        }
+      ],
+      "args": [
+        {
+          "name": "max_center_price",
+          "type": "u64"
+        },
+        {
+          "name": "min_center_price",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "update_dex_lookup_table",
+      "discriminator": [
+        87,
+        149,
+        96,
+        95,
+        24,
+        20,
+        211,
+        43
+      ],
+      "accounts": [
+        {
+          "name": "authority",
+          "signer": true
+        },
+        {
+          "name": "dex_admin"
+        },
+        {
+          "name": "dex_metadata",
+          "docs": [
+            "@dev Verification inside instruction logic"
+          ],
+          "writable": true
+        }
+      ],
+      "args": [
+        {
+          "name": "dex_id",
+          "type": "u16"
+        },
+        {
+          "name": "lookup_table",
+          "type": "pubkey"
+        }
+      ]
+    },
+    {
+      "name": "update_fee_and_revenue_cut",
+      "discriminator": [
+        223,
+        251,
+        181,
+        7,
+        34,
+        61,
+        183,
+        122
+      ],
+      "accounts": [
+        {
+          "name": "authority",
+          "signer": true
+        },
+        {
+          "name": "dex_admin"
+        },
+        {
+          "name": "dex",
+          "writable": true
+        }
+      ],
+      "args": [
+        {
+          "name": "fee",
+          "type": "u32"
+        },
+        {
+          "name": "revenue_cut",
+          "type": "u32"
+        }
+      ]
+    },
+    {
+      "name": "update_guardians",
+      "discriminator": [
+        43,
+        62,
+        250,
+        138,
+        141,
+        117,
+        132,
+        97
+      ],
+      "accounts": [
+        {
+          "name": "authority",
+          "signer": true
+        },
+        {
+          "name": "dex_admin",
+          "writable": true
+        }
+      ],
+      "args": [
+        {
+          "name": "guardian_status",
+          "type": {
+            "vec": {
+              "defined": {
+                "name": "AddressBool"
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "update_max_borrow_shares",
+      "discriminator": [
+        176,
+        13,
+        121,
+        189,
+        225,
+        225,
+        238,
+        78
+      ],
+      "accounts": [
+        {
+          "name": "authority",
+          "signer": true
+        },
+        {
+          "name": "dex_admin"
+        },
+        {
+          "name": "dex",
+          "writable": true
+        }
+      ],
+      "args": [
+        {
+          "name": "max_borrow_shares",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "update_max_supply_shares",
+      "discriminator": [
+        179,
+        157,
+        37,
+        206,
+        176,
+        51,
+        37,
+        79
+      ],
+      "accounts": [
+        {
+          "name": "authority",
+          "signer": true
+        },
+        {
+          "name": "dex_admin"
+        },
+        {
+          "name": "dex",
+          "writable": true
+        }
+      ],
+      "args": [
+        {
+          "name": "max_supply_shares",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "update_range_percents",
+      "discriminator": [
+        51,
+        233,
+        228,
+        43,
+        91,
+        7,
+        62,
+        20
+      ],
+      "accounts": [
+        {
+          "name": "authority",
+          "signer": true
+        },
+        {
+          "name": "dex_admin"
+        },
+        {
+          "name": "dex",
+          "writable": true
+        }
+      ],
+      "args": [
+        {
+          "name": "upper_percent",
+          "type": "u32"
+        },
+        {
+          "name": "lower_percent",
+          "type": "u32"
+        },
+        {
+          "name": "shift_time",
+          "type": "u32"
+        }
+      ]
+    },
+    {
+      "name": "update_threshold_percent",
+      "discriminator": [
+        177,
+        125,
+        99,
+        134,
+        42,
+        254,
+        140,
+        234
+      ],
+      "accounts": [
+        {
+          "name": "authority",
+          "signer": true
+        },
+        {
+          "name": "dex_admin"
+        },
+        {
+          "name": "dex",
+          "writable": true
+        }
+      ],
+      "args": [
+        {
+          "name": "upper_threshold_percent",
+          "type": "u32"
+        },
+        {
+          "name": "lower_threshold_percent",
+          "type": "u32"
+        },
+        {
+          "name": "threshold_shift_time",
+          "type": "u32"
+        },
+        {
+          "name": "shift_time",
+          "type": "u32"
+        }
+      ]
+    },
+    {
+      "name": "update_user_borrow_config",
+      "discriminator": [
+        100,
+        176,
+        201,
+        174,
+        247,
+        2,
+        54,
+        168
+      ],
+      "accounts": [
+        {
+          "name": "authority",
+          "signer": true
+        },
+        {
+          "name": "dex_admin"
+        },
+        {
+          "name": "dex"
+        },
+        {
+          "name": "position",
+          "writable": true
+        }
+      ],
+      "args": [
+        {
+          "name": "config",
+          "type": {
+            "defined": {
+              "name": "UserBorrowConfigParams"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "update_user_supply_config",
+      "discriminator": [
+        217,
+        239,
+        225,
+        218,
+        33,
+        49,
+        234,
+        183
+      ],
+      "accounts": [
+        {
+          "name": "authority",
+          "signer": true
+        },
+        {
+          "name": "dex_admin"
+        },
+        {
+          "name": "dex"
+        },
+        {
+          "name": "position",
+          "writable": true
+        }
+      ],
+      "args": [
+        {
+          "name": "config",
+          "type": {
+            "defined": {
+              "name": "UserSupplyConfigParams"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "update_user_withdrawal_limit",
+      "discriminator": [
+        162,
+        9,
+        186,
+        9,
+        213,
+        30,
+        173,
+        78
+      ],
+      "accounts": [
+        {
+          "name": "authority",
+          "signer": true
+        },
+        {
+          "name": "dex_admin"
+        },
+        {
+          "name": "dex"
+        },
+        {
+          "name": "position",
+          "writable": true
+        }
+      ],
+      "args": [
+        {
+          "name": "new_limit",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "update_utilization_limit",
+      "discriminator": [
+        48,
+        145,
+        0,
+        235,
+        118,
+        59,
+        55,
+        207
+      ],
+      "accounts": [
+        {
+          "name": "authority",
+          "signer": true
+        },
+        {
+          "name": "dex_admin"
+        },
+        {
+          "name": "dex",
+          "writable": true
+        }
+      ],
+      "args": [
+        {
+          "name": "token_0_utilization_limit",
+          "type": "u16"
+        },
+        {
+          "name": "token_1_utilization_limit",
+          "type": "u16"
+        }
+      ]
+    },
+    {
+      "name": "withdraw",
+      "discriminator": [
+        183,
+        18,
+        70,
+        156,
+        148,
+        109,
+        161,
+        34
+      ],
+      "accounts": [
+        {
+          "name": "signer",
+          "docs": [
+            "The protocol calling the operation (must match position.protocol)"
+          ],
+          "signer": true
+        },
+        {
+          "name": "dex",
+          "docs": [
+            "DEX pool state"
+          ],
+          "writable": true
+        },
+        {
+          "name": "user",
+          "signer": true
+        },
+        {
+          "name": "position",
+          "docs": [
+            "The user's DexPosition (tracks shares and limits)"
+          ],
+          "writable": true
+        },
+        {
+          "name": "user_token_0_account",
+          "writable": true
+        },
+        {
+          "name": "user_token_1_account",
+          "writable": true
+        },
+        {
+          "name": "token_0"
+        },
+        {
+          "name": "token_1"
+        },
+        {
+          "name": "token_0_reserve",
+          "writable": true
+        },
+        {
+          "name": "token_1_reserve",
+          "writable": true
+        },
+        {
+          "name": "token_0_rate_model"
+        },
+        {
+          "name": "token_1_rate_model"
+        },
+        {
+          "name": "token_0_vault",
+          "docs": [
+            "Liquidity vault token account for tokens"
+          ],
+          "writable": true
+        },
+        {
+          "name": "token_1_vault",
+          "writable": true
+        },
+        {
+          "name": "dex_supply_position_token_0",
+          "docs": [
+            "DEX's supply position for tokens on liquidity"
+          ],
+          "writable": true,
+          "optional": true
+        },
+        {
+          "name": "dex_supply_position_token_1",
+          "writable": true,
+          "optional": true
+        },
+        {
+          "name": "dex_borrow_position_token_0",
+          "docs": [
+            "DEX's borrow position for tokens on liquidity"
+          ],
+          "writable": true,
+          "optional": true
+        },
+        {
+          "name": "dex_borrow_position_token_1",
+          "writable": true,
+          "optional": true
+        },
+        {
+          "name": "liquidity"
+        },
+        {
+          "name": "liquidity_program"
+        },
+        {
+          "name": "oracle_program"
+        },
+        {
+          "name": "token_0_program"
+        },
+        {
+          "name": "token_1_program"
+        },
+        {
+          "name": "recipient",
+          "optional": true
+        },
+        {
+          "name": "recipient_token_0_account",
+          "writable": true,
+          "optional": true
+        },
+        {
+          "name": "recipient_token_1_account",
+          "writable": true,
+          "optional": true
+        }
+      ],
+      "args": [
+        {
+          "name": "token0_amt",
+          "type": "u64"
+        },
+        {
+          "name": "token1_amt",
+          "type": "u64"
+        },
+        {
+          "name": "max_shares",
+          "type": "u64"
+        }
+      ],
+      "returns": "u128"
+    },
+    {
+      "name": "withdraw_perfect",
+      "discriminator": [
+        41,
+        170,
+        122,
+        166,
+        20,
+        154,
+        180,
+        245
+      ],
+      "accounts": [
+        {
+          "name": "signer",
+          "docs": [
+            "The protocol calling the operation (must match position.protocol)"
+          ],
+          "signer": true
+        },
+        {
+          "name": "dex",
+          "docs": [
+            "DEX pool state"
+          ],
+          "writable": true
+        },
+        {
+          "name": "user",
+          "signer": true
+        },
+        {
+          "name": "position",
+          "docs": [
+            "The user's DexPosition (tracks shares and limits)"
+          ],
+          "writable": true
+        },
+        {
+          "name": "user_token_0_account",
+          "writable": true
+        },
+        {
+          "name": "user_token_1_account",
+          "writable": true
+        },
+        {
+          "name": "token_0"
+        },
+        {
+          "name": "token_1"
+        },
+        {
+          "name": "token_0_reserve",
+          "writable": true
+        },
+        {
+          "name": "token_1_reserve",
+          "writable": true
+        },
+        {
+          "name": "token_0_rate_model"
+        },
+        {
+          "name": "token_1_rate_model"
+        },
+        {
+          "name": "token_0_vault",
+          "docs": [
+            "Liquidity vault token account for tokens"
+          ],
+          "writable": true
+        },
+        {
+          "name": "token_1_vault",
+          "writable": true
+        },
+        {
+          "name": "dex_supply_position_token_0",
+          "docs": [
+            "DEX's supply position for tokens on liquidity"
+          ],
+          "writable": true,
+          "optional": true
+        },
+        {
+          "name": "dex_supply_position_token_1",
+          "writable": true,
+          "optional": true
+        },
+        {
+          "name": "dex_borrow_position_token_0",
+          "docs": [
+            "DEX's borrow position for tokens on liquidity"
+          ],
+          "writable": true,
+          "optional": true
+        },
+        {
+          "name": "dex_borrow_position_token_1",
+          "writable": true,
+          "optional": true
+        },
+        {
+          "name": "liquidity"
+        },
+        {
+          "name": "liquidity_program"
+        },
+        {
+          "name": "oracle_program"
+        },
+        {
+          "name": "token_0_program"
+        },
+        {
+          "name": "token_1_program"
+        },
+        {
+          "name": "recipient",
+          "optional": true
+        },
+        {
+          "name": "recipient_token_0_account",
+          "writable": true,
+          "optional": true
+        },
+        {
+          "name": "recipient_token_1_account",
+          "writable": true,
+          "optional": true
+        }
+      ],
+      "args": [
+        {
+          "name": "shares",
+          "type": "u64"
+        },
+        {
+          "name": "min_token0",
+          "type": "u64"
+        },
+        {
+          "name": "min_token1",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "withdraw_perfect_in_one_token",
+      "discriminator": [
+        200,
+        72,
+        151,
+        197,
+        24,
+        15,
+        243,
+        165
+      ],
+      "accounts": [
+        {
+          "name": "signer",
+          "docs": [
+            "The protocol calling the operation (must match position.protocol)"
+          ],
+          "signer": true
+        },
+        {
+          "name": "dex",
+          "docs": [
+            "DEX pool state"
+          ],
+          "writable": true
+        },
+        {
+          "name": "user",
+          "signer": true
+        },
+        {
+          "name": "position",
+          "docs": [
+            "The user's DexPosition (tracks shares and limits)"
+          ],
+          "writable": true
+        },
+        {
+          "name": "user_token_0_account",
+          "writable": true
+        },
+        {
+          "name": "user_token_1_account",
+          "writable": true
+        },
+        {
+          "name": "token_0"
+        },
+        {
+          "name": "token_1"
+        },
+        {
+          "name": "token_0_reserve",
+          "writable": true
+        },
+        {
+          "name": "token_1_reserve",
+          "writable": true
+        },
+        {
+          "name": "token_0_rate_model"
+        },
+        {
+          "name": "token_1_rate_model"
+        },
+        {
+          "name": "token_0_vault",
+          "docs": [
+            "Liquidity vault token account for tokens"
+          ],
+          "writable": true
+        },
+        {
+          "name": "token_1_vault",
+          "writable": true
+        },
+        {
+          "name": "dex_supply_position_token_0",
+          "docs": [
+            "DEX's supply position for tokens on liquidity"
+          ],
+          "writable": true,
+          "optional": true
+        },
+        {
+          "name": "dex_supply_position_token_1",
+          "writable": true,
+          "optional": true
+        },
+        {
+          "name": "dex_borrow_position_token_0",
+          "docs": [
+            "DEX's borrow position for tokens on liquidity"
+          ],
+          "writable": true,
+          "optional": true
+        },
+        {
+          "name": "dex_borrow_position_token_1",
+          "writable": true,
+          "optional": true
+        },
+        {
+          "name": "liquidity"
+        },
+        {
+          "name": "liquidity_program"
+        },
+        {
+          "name": "oracle_program"
+        },
+        {
+          "name": "token_0_program"
+        },
+        {
+          "name": "token_1_program"
+        },
+        {
+          "name": "recipient",
+          "optional": true
+        },
+        {
+          "name": "recipient_token_0_account",
+          "writable": true,
+          "optional": true
+        },
+        {
+          "name": "recipient_token_1_account",
+          "writable": true,
+          "optional": true
+        }
+      ],
+      "args": [
+        {
+          "name": "shares",
+          "type": "u64"
+        },
+        {
+          "name": "min_token0",
+          "type": "u64"
+        },
+        {
+          "name": "min_token1",
+          "type": "u64"
+        }
+      ],
+      "returns": "u64"
+    }
+  ],
+  "accounts": [
+    {
+      "name": "Dex",
+      "discriminator": [
+        236,
+        30,
+        181,
+        80,
+        209,
+        217,
+        25,
+        163
+      ]
+    },
+    {
+      "name": "DexAdmin",
+      "discriminator": [
+        82,
+        155,
+        122,
+        221,
+        230,
+        96,
+        118,
+        155
+      ]
+    },
+    {
+      "name": "DexMetadata",
+      "discriminator": [
+        177,
+        231,
+        57,
+        253,
+        64,
+        12,
+        205,
+        37
+      ]
+    },
+    {
+      "name": "DexPosition",
+      "discriminator": [
+        30,
+        36,
+        219,
+        78,
+        189,
+        173,
+        170,
+        47
+      ]
+    },
+    {
+      "name": "TokenReserve",
+      "discriminator": [
+        21,
+        18,
+        59,
+        135,
+        120,
+        20,
+        31,
+        12
+      ]
+    },
+    {
+      "name": "UserBorrowPosition",
+      "discriminator": [
+        73,
+        126,
+        65,
+        123,
+        220,
+        126,
+        197,
+        24
+      ]
+    },
+    {
+      "name": "UserSupplyPosition",
+      "discriminator": [
+        202,
+        219,
+        136,
+        118,
+        61,
+        177,
+        21,
+        146
+      ]
+    }
+  ],
+  "events": [
+    {
+      "name": "LogArbitrage",
+      "discriminator": [
+        105,
+        165,
+        52,
+        9,
+        218,
+        211,
+        46,
+        13
+      ]
+    },
+    {
+      "name": "LogBorrowDebtLiquidity",
+      "discriminator": [
+        70,
+        124,
+        172,
+        119,
+        252,
+        91,
+        62,
+        4
+      ]
+    },
+    {
+      "name": "LogBorrowPerfectDebtLiquidity",
+      "discriminator": [
+        164,
+        250,
+        16,
+        192,
+        152,
+        3,
+        238,
+        107
+      ]
+    },
+    {
+      "name": "LogDepositColLiquidity",
+      "discriminator": [
+        162,
+        105,
+        100,
+        76,
+        89,
+        95,
+        69,
+        189
+      ]
+    },
+    {
+      "name": "LogDepositPerfectColLiquidity",
+      "discriminator": [
+        33,
+        91,
+        169,
+        231,
+        163,
+        83,
+        37,
+        254
+      ]
+    },
+    {
+      "name": "LogInitDex",
+      "discriminator": [
+        170,
+        65,
+        241,
+        125,
+        34,
+        194,
+        79,
+        132
+      ]
+    },
+    {
+      "name": "LogInitDexMetadata",
+      "discriminator": [
+        53,
+        61,
+        248,
+        111,
+        245,
+        219,
+        167,
+        73
+      ]
+    },
+    {
+      "name": "LogInitDexPriceParams",
+      "discriminator": [
+        154,
+        98,
+        101,
+        72,
+        8,
+        203,
+        37,
+        200
+      ]
+    },
+    {
+      "name": "LogPauseDex",
+      "discriminator": [
+        107,
+        202,
+        204,
+        255,
+        100,
+        73,
+        92,
+        117
+      ]
+    },
+    {
+      "name": "LogPauseSwapAndArbitrage",
+      "discriminator": [
+        103,
+        184,
+        228,
+        52,
+        0,
+        229,
+        4,
+        154
+      ]
+    },
+    {
+      "name": "LogPauseUser",
+      "discriminator": [
+        100,
+        17,
+        114,
+        224,
+        180,
+        30,
+        52,
+        170
+      ]
+    },
+    {
+      "name": "LogPaybackDebtInOneToken",
+      "discriminator": [
+        123,
+        31,
+        108,
+        14,
+        12,
+        201,
+        20,
+        83
+      ]
+    },
+    {
+      "name": "LogPaybackDebtLiquidity",
+      "discriminator": [
+        230,
+        190,
+        245,
+        114,
+        113,
+        92,
+        173,
+        27
+      ]
+    },
+    {
+      "name": "LogPaybackPerfectDebtLiquidity",
+      "discriminator": [
+        75,
+        233,
+        232,
+        38,
+        153,
+        31,
+        239,
+        109
+      ]
+    },
+    {
+      "name": "LogSwap",
+      "discriminator": [
+        202,
+        242,
+        228,
+        28,
+        37,
+        194,
+        52,
+        34
+      ]
+    },
+    {
+      "name": "LogSwapInfo",
+      "discriminator": [
+        147,
+        245,
+        134,
+        184,
+        71,
+        33,
+        116,
+        246
+      ]
+    },
+    {
+      "name": "LogTurnOnSmartCol",
+      "discriminator": [
+        108,
+        254,
+        255,
+        147,
+        80,
+        55,
+        98,
+        86
+      ]
+    },
+    {
+      "name": "LogTurnOnSmartDebt",
+      "discriminator": [
+        23,
+        36,
+        134,
+        104,
+        91,
+        138,
+        126,
+        124
+      ]
+    },
+    {
+      "name": "LogUnpauseDex",
+      "discriminator": [
+        6,
+        190,
+        255,
+        207,
+        165,
+        71,
+        170,
+        212
+      ]
+    },
+    {
+      "name": "LogUnpauseSwapAndArbitrage",
+      "discriminator": [
+        229,
+        120,
+        123,
+        188,
+        146,
+        222,
+        159,
+        255
+      ]
+    },
+    {
+      "name": "LogUnpauseUser",
+      "discriminator": [
+        170,
+        91,
+        132,
+        96,
+        179,
+        77,
+        168,
+        26
+      ]
+    },
+    {
+      "name": "LogUpdateAuthority",
+      "discriminator": [
+        150,
+        152,
+        157,
+        143,
+        6,
+        135,
+        193,
+        101
+      ]
+    },
+    {
+      "name": "LogUpdateAuths",
+      "discriminator": [
+        88,
+        80,
+        109,
+        48,
+        111,
+        203,
+        76,
+        251
+      ]
+    },
+    {
+      "name": "LogUpdateCenterPrice",
+      "discriminator": [
+        85,
+        235,
+        95,
+        215,
+        205,
+        203,
+        253,
+        120
+      ]
+    },
+    {
+      "name": "LogUpdateCenterPriceAddress",
+      "discriminator": [
+        96,
+        24,
+        207,
+        2,
+        38,
+        203,
+        43,
+        145
+      ]
+    },
+    {
+      "name": "LogUpdateCenterPriceLimits",
+      "discriminator": [
+        111,
+        228,
+        61,
+        31,
+        234,
+        76,
+        5,
+        17
+      ]
+    },
+    {
+      "name": "LogUpdateDexLookupTable",
+      "discriminator": [
+        135,
+        31,
+        232,
+        96,
+        2,
+        64,
+        116,
+        229
+      ]
+    },
+    {
+      "name": "LogUpdateFeeAndRevenueCut",
+      "discriminator": [
+        187,
+        9,
+        16,
+        229,
+        8,
+        231,
+        7,
+        171
+      ]
+    },
+    {
+      "name": "LogUpdateGuardians",
+      "discriminator": [
+        231,
+        28,
+        191,
+        51,
+        53,
+        140,
+        79,
+        142
+      ]
+    },
+    {
+      "name": "LogUpdateMaxBorrowShares",
+      "discriminator": [
+        22,
+        124,
+        242,
+        112,
+        255,
+        39,
+        100,
+        206
+      ]
+    },
+    {
+      "name": "LogUpdateMaxSupplyShares",
+      "discriminator": [
+        209,
+        150,
+        112,
+        193,
+        243,
+        63,
+        233,
+        212
+      ]
+    },
+    {
+      "name": "LogUpdateRangePercents",
+      "discriminator": [
+        149,
+        47,
+        161,
+        6,
+        129,
+        240,
+        48,
+        100
+      ]
+    },
+    {
+      "name": "LogUpdateThresholdPercent",
+      "discriminator": [
+        44,
+        46,
+        70,
+        115,
+        25,
+        38,
+        92,
+        99
+      ]
+    },
+    {
+      "name": "LogUpdateUserBorrowConfig",
+      "discriminator": [
+        70,
+        142,
+        184,
+        48,
+        44,
+        158,
+        166,
+        3
+      ]
+    },
+    {
+      "name": "LogUpdateUserConfigOnPausedPosition",
+      "discriminator": [
+        116,
+        70,
+        45,
+        227,
+        16,
+        114,
+        90,
+        251
+      ]
+    },
+    {
+      "name": "LogUpdateUserSupplyConfig",
+      "discriminator": [
+        86,
+        139,
+        35,
+        235,
+        30,
+        42,
+        192,
+        245
+      ]
+    },
+    {
+      "name": "LogUpdateUserWithdrawalLimit",
+      "discriminator": [
+        114,
+        131,
+        152,
+        189,
+        120,
+        253,
+        88,
+        105
+      ]
+    },
+    {
+      "name": "LogUpdateUtilizationLimit",
+      "discriminator": [
+        153,
+        239,
+        227,
+        172,
+        250,
+        247,
+        155,
+        69
+      ]
+    },
+    {
+      "name": "LogWithdrawColInOneToken",
+      "discriminator": [
+        86,
+        6,
+        224,
+        183,
+        211,
+        209,
+        199,
+        232
+      ]
+    },
+    {
+      "name": "LogWithdrawColLiquidity",
+      "discriminator": [
+        29,
+        6,
+        184,
+        148,
+        156,
+        65,
+        164,
+        228
+      ]
+    },
+    {
+      "name": "LogWithdrawPerfectColLiquidity",
+      "discriminator": [
+        199,
+        40,
+        242,
+        90,
+        55,
+        165,
+        41,
+        105
+      ]
+    }
+  ],
+  "errors": [
+    {
+      "code": 6000,
+      "name": "DexCpiToOracleFailed",
+      "msg": "DEX_CPI_TO_ORACLE_FAILED"
+    },
+    {
+      "code": 6001,
+      "name": "DexUserNotDefined",
+      "msg": "DEX_USER_NOT_DEFINED"
+    },
+    {
+      "code": 6002,
+      "name": "DexUserMustSign",
+      "msg": "DEX_USER_MUST_SIGN"
+    },
+    {
+      "code": 6003,
+      "name": "DexAdminLiquidityProgramMismatch",
+      "msg": "DEX_ADMIN_LIQUIDITY_PROGRAM_MISMATCH"
+    },
+    {
+      "code": 6004,
+      "name": "DexAdminAddressZeroNotAllowed",
+      "msg": "DEX_ADMIN_ADDRESS_ZERO_NOT_ALLOWED"
+    },
+    {
+      "code": 6005,
+      "name": "DexAdminNotAnAuth",
+      "msg": "DEX_ADMIN_NOT_AN_AUTH"
+    },
+    {
+      "code": 6006,
+      "name": "DexAdminPoolNotInitialized",
+      "msg": "DEX_ADMIN_POOL_NOT_INITIALIZED"
+    },
+    {
+      "code": 6007,
+      "name": "DexAdminSmartColAlreadyOn",
+      "msg": "DEX_ADMIN_SMART_COL_ALREADY_ON"
+    },
+    {
+      "code": 6008,
+      "name": "DexAdminSmartDebtAlreadyOn",
+      "msg": "DEX_ADMIN_SMART_DEBT_ALREADY_ON"
+    },
+    {
+      "code": 6009,
+      "name": "DexAdminConfigOverflow",
+      "msg": "DEX_ADMIN_CONFIG_OVERFLOW"
+    },
+    {
+      "code": 6010,
+      "name": "DexAdminInvalidParams",
+      "msg": "DEX_ADMIN_INVALID_PARAMS"
+    },
+    {
+      "code": 6011,
+      "name": "DexAdminUserNotDefined",
+      "msg": "DEX_ADMIN_USER_NOT_DEFINED"
+    },
+    {
+      "code": 6012,
+      "name": "DexAdminInvalidPauseToggle",
+      "msg": "DEX_ADMIN_INVALID_PAUSE_TOGGLE"
+    },
+    {
+      "code": 6013,
+      "name": "DexAdminUnexpectedPoolState",
+      "msg": "DEX_ADMIN_UNEXPECTED_POOL_STATE"
+    },
+    {
+      "code": 6014,
+      "name": "DexAdminAddressNotAProgram",
+      "msg": "DEX_ADMIN_ADDRESS_NOT_A_PROGRAM"
+    },
+    {
+      "code": 6015,
+      "name": "DexAdminInvalidTokenDecimals",
+      "msg": "DEX_ADMIN_INVALID_TOKEN_DECIMALS"
+    },
+    {
+      "code": 6016,
+      "name": "DexAdminPreviousShiftStillActive",
+      "msg": "DEX_ADMIN_PREVIOUS_SHIFT_STILL_ACTIVE"
+    },
+    {
+      "code": 6017,
+      "name": "DexAlreadyEntered",
+      "msg": "DEX_ALREADY_ENTERED"
+    },
+    {
+      "code": 6018,
+      "name": "DexNotAnAuth",
+      "msg": "DEX_NOT_AN_AUTH"
+    },
+    {
+      "code": 6019,
+      "name": "DexSmartColNotEnabled",
+      "msg": "DEX_SMART_COL_NOT_ENABLED"
+    },
+    {
+      "code": 6020,
+      "name": "DexSmartDebtNotEnabled",
+      "msg": "DEX_SMART_DEBT_NOT_ENABLED"
+    },
+    {
+      "code": 6021,
+      "name": "DexPoolNotInitialized",
+      "msg": "DEX_POOL_NOT_INITIALIZED"
+    },
+    {
+      "code": 6022,
+      "name": "DexTokenReservesTooLow",
+      "msg": "DEX_TOKEN_RESERVES_TOO_LOW"
+    },
+    {
+      "code": 6023,
+      "name": "DexNoSwapRoute",
+      "msg": "DEX_NO_SWAP_ROUTE"
+    },
+    {
+      "code": 6024,
+      "name": "DexNotEnoughAmountOut",
+      "msg": "DEX_NOT_ENOUGH_AMOUNT_OUT"
+    },
+    {
+      "code": 6025,
+      "name": "DexUtilizationCapReached",
+      "msg": "DEX_UTILIZATION_CAP_REACHED"
+    },
+    {
+      "code": 6026,
+      "name": "DexUserSupplyNotOn",
+      "msg": "DEX_USER_SUPPLY_NOT_ON"
+    },
+    {
+      "code": 6027,
+      "name": "DexUserDebtNotOn",
+      "msg": "DEX_USER_DEBT_NOT_ON"
+    },
+    {
+      "code": 6028,
+      "name": "DexAboveDepositMax",
+      "msg": "DEX_ABOVE_DEPOSIT_MAX"
+    },
+    {
+      "code": 6029,
+      "name": "DexWithdrawalLimitReached",
+      "msg": "DEX_WITHDRAWAL_LIMIT_REACHED"
+    },
+    {
+      "code": 6030,
+      "name": "DexBelowWithdrawMin",
+      "msg": "DEX_BELOW_WITHDRAW_MIN"
+    },
+    {
+      "code": 6031,
+      "name": "DexDebtLimitReached",
+      "msg": "DEX_DEBT_LIMIT_REACHED"
+    },
+    {
+      "code": 6032,
+      "name": "DexBelowBorrowMin",
+      "msg": "DEX_BELOW_BORROW_MIN"
+    },
+    {
+      "code": 6033,
+      "name": "DexAbovePaybackMax",
+      "msg": "DEX_ABOVE_PAYBACK_MAX"
+    },
+    {
+      "code": 6034,
+      "name": "DexInvalidDepositAmounts",
+      "msg": "DEX_INVALID_DEPOSIT_AMOUNTS"
+    },
+    {
+      "code": 6035,
+      "name": "DexDepositAmountsZero",
+      "msg": "DEX_DEPOSIT_AMOUNTS_ZERO"
+    },
+    {
+      "code": 6036,
+      "name": "DexSharesMintedLess",
+      "msg": "DEX_SHARES_MINTED_LESS"
+    },
+    {
+      "code": 6037,
+      "name": "DexWithdrawalNotEnough",
+      "msg": "DEX_WITHDRAWAL_NOT_ENOUGH"
+    },
+    {
+      "code": 6038,
+      "name": "DexInvalidWithdrawAmounts",
+      "msg": "DEX_INVALID_WITHDRAW_AMOUNTS"
+    },
+    {
+      "code": 6039,
+      "name": "DexWithdrawAmountsZero",
+      "msg": "DEX_WITHDRAW_AMOUNTS_ZERO"
+    },
+    {
+      "code": 6040,
+      "name": "DexWithdrawExcessSharesBurn",
+      "msg": "DEX_WITHDRAW_EXCESS_SHARES_BURN"
+    },
+    {
+      "code": 6041,
+      "name": "DexInvalidBorrowAmounts",
+      "msg": "DEX_INVALID_BORROW_AMOUNTS"
+    },
+    {
+      "code": 6042,
+      "name": "DexBorrowAmountsZero",
+      "msg": "DEX_BORROW_AMOUNTS_ZERO"
+    },
+    {
+      "code": 6043,
+      "name": "DexBorrowExcessSharesMinted",
+      "msg": "DEX_BORROW_EXCESS_SHARES_MINTED"
+    },
+    {
+      "code": 6044,
+      "name": "DexInvalidPaybackAmounts",
+      "msg": "DEX_INVALID_PAYBACK_AMOUNTS"
+    },
+    {
+      "code": 6045,
+      "name": "DexPaybackAmountsZero",
+      "msg": "DEX_PAYBACK_AMOUNTS_ZERO"
+    },
+    {
+      "code": 6046,
+      "name": "DexPaybackSharesBurnedLess",
+      "msg": "DEX_PAYBACK_SHARES_BURNED_LESS"
+    },
+    {
+      "code": 6047,
+      "name": "DexNothingToArbitrage",
+      "msg": "DEX_NOTHING_TO_ARBITRAGE"
+    },
+    {
+      "code": 6048,
+      "name": "DexOracleUpdateHugeSwapDiff",
+      "msg": "DEX_ORACLE_UPDATE_HUGE_SWAP_DIFF"
+    },
+    {
+      "code": 6049,
+      "name": "DexToken0ShouldBeSmallerThanToken1",
+      "msg": "DEX_TOKEN0_SHOULD_BE_SMALLER_THAN_TOKEN1"
+    },
+    {
+      "code": 6050,
+      "name": "DexSwapAndArbitragePaused",
+      "msg": "DEX_SWAP_AND_ARBITRAGE_PAUSED"
+    },
+    {
+      "code": 6051,
+      "name": "DexExceedsAmountInMax",
+      "msg": "DEX_EXCEEDS_AMOUNT_IN_MAX"
+    },
+    {
+      "code": 6052,
+      "name": "DexSwapInLimitingAmounts",
+      "msg": "DEX_SWAP_IN_LIMITING_AMOUNTS"
+    },
+    {
+      "code": 6053,
+      "name": "DexSwapOutLimitingAmounts",
+      "msg": "DEX_SWAP_OUT_LIMITING_AMOUNTS"
+    },
+    {
+      "code": 6054,
+      "name": "DexSupplySharesOverflow",
+      "msg": "DEX_SUPPLY_SHARES_OVERFLOW"
+    },
+    {
+      "code": 6055,
+      "name": "DexBorrowSharesOverflow",
+      "msg": "DEX_BORROW_SHARES_OVERFLOW"
+    },
+    {
+      "code": 6056,
+      "name": "DexCenterPriceOutOfRange",
+      "msg": "DEX_CENTER_PRICE_OUT_OF_RANGE"
+    },
+    {
+      "code": 6057,
+      "name": "DexDebtReservesTooLow",
+      "msg": "DEX_DEBT_RESERVES_TOO_LOW"
+    },
+    {
+      "code": 6058,
+      "name": "DexInvalidCollateralReserves",
+      "msg": "DEX_INVALID_COLLATERAL_RESERVES"
+    },
+    {
+      "code": 6059,
+      "name": "DexInvalidDebtReserves",
+      "msg": "DEX_INVALID_DEBT_RESERVES"
+    },
+    {
+      "code": 6060,
+      "name": "DexLimitingAmountsSwapAndNonPerfect",
+      "msg": "DEX_LIMITING_AMOUNTS_SWAP_AND_NON_PERFECT"
+    },
+    {
+      "code": 6061,
+      "name": "DexMintOverflow",
+      "msg": "DEX_MINT_OVERFLOW"
+    },
+    {
+      "code": 6062,
+      "name": "DexBurnOverflow",
+      "msg": "DEX_BURN_OVERFLOW"
+    },
+    {
+      "code": 6063,
+      "name": "DexSharesAmountInsufficient",
+      "msg": "DEX_SHARES_AMOUNT_INSUFFICIENT"
+    },
+    {
+      "code": 6064,
+      "name": "DexPerfectNativeAmountsRoundToZero",
+      "msg": "DEX_PERFECT_NATIVE_AMOUNTS_ROUND_TO_ZERO"
+    },
+    {
+      "code": 6065,
+      "name": "DexCpiToLiquidityFailed",
+      "msg": "DEX_CPI_TO_LIQUIDITY_FAILED"
+    },
+    {
+      "code": 6066,
+      "name": "DexInvalidTokenAccount",
+      "msg": "DEX_INVALID_TOKEN_ACCOUNT"
+    },
+    {
+      "code": 6067,
+      "name": "DexMissingExternalCenterPrice",
+      "msg": "DEX_MISSING_EXTERNAL_CENTER_PRICE"
+    },
+    {
+      "code": 6068,
+      "name": "DexInvalidExternalCenterPrice",
+      "msg": "DEX_INVALID_EXTERNAL_CENTER_PRICE"
+    },
+    {
+      "code": 6069,
+      "name": "DexPaybackAmtTooHigh",
+      "msg": "DEX_PAYBACK_AMT_TOO_HIGH"
+    },
+    {
+      "code": 6070,
+      "name": "DexSwapAndPaybackTooLowOrTooHigh",
+      "msg": "DEX_SWAP_AND_PAYBACK_TOO_LOW_OR_TOO_HIGH"
+    },
+    {
+      "code": 6071,
+      "name": "DexValidateInvalidDexId",
+      "msg": "DEX_INVALID_DEX_ID"
+    },
+    {
+      "code": 6072,
+      "name": "DexValidateInvalidToken0",
+      "msg": "DEX_INVALID_TOKEN0"
+    },
+    {
+      "code": 6073,
+      "name": "DexValidateInvalidToken1",
+      "msg": "DEX_INVALID_TOKEN1"
+    },
+    {
+      "code": 6074,
+      "name": "DexValidateInvalidPosition",
+      "msg": "DEX_INVALID_POSITION"
+    },
+    {
+      "code": 6075,
+      "name": "DexValidateInvalidLiquidityProgram",
+      "msg": "DEX_INVALID_LIQUIDITY_PROGRAM"
+    },
+    {
+      "code": 6076,
+      "name": "DexValidateInvalidOracleProgram",
+      "msg": "DEX_INVALID_ORACLE_PROGRAM"
+    },
+    {
+      "code": 6077,
+      "name": "DexValidateInvalidLiquidityPosition",
+      "msg": "DEX_INVALID_LIQUIDITY_POSITION"
+    },
+    {
+      "code": 6078,
+      "name": "DexValidateMissingLiquidityPosition",
+      "msg": "DEX_MISSING_LIQUIDITY_POSITION"
+    },
+    {
+      "code": 6079,
+      "name": "DexInvalidRecipientPositionWithdraw",
+      "msg": "DEX_INVALID_RECIPIENT_POSITION_WITHDRAW"
+    },
+    {
+      "code": 6080,
+      "name": "DexInvalidRecipientPositionBorrow",
+      "msg": "DEX_INVALID_RECIPIENT_POSITION_BORROW"
+    },
+    {
+      "code": 6081,
+      "name": "DexSwapInResult",
+      "msg": "DEX_SWAP_IN_RESULT"
+    },
+    {
+      "code": 6082,
+      "name": "DexSwapOutResult",
+      "msg": "DEX_SWAP_OUT_RESULT"
+    },
+    {
+      "code": 6083,
+      "name": "DexAdminDexIdMismatch",
+      "msg": "DEX_ADMIN_DEX_ID_MISMATCH"
+    },
+    {
+      "code": 6084,
+      "name": "DexAdminNotAnAuthOrGuardian",
+      "msg": "DEX_ADMIN_NOT_AN_AUTH_OR_GUARDIAN"
+    },
+    {
+      "code": 6085,
+      "name": "DexAdminSwapsNotPaused",
+      "msg": "DEX_ADMIN_SWAPS_NOT_PAUSED"
+    },
+    {
+      "code": 6086,
+      "name": "DexAdminCenterPriceAddressNotSet",
+      "msg": "DEX_ADMIN_CENTER_PRICE_ADDRESS_NOT_SET"
+    },
+    {
+      "code": 6087,
+      "name": "DexAdminFeeRevenueCutProductOverflow",
+      "msg": "DEX_ADMIN_FEE_REVENUE_CUT_PRODUCT_OVERFLOW"
+    }
+  ],
+  "types": [
+    {
+      "name": "AddressBool",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "addr",
+            "type": "pubkey"
+          },
+          {
+            "name": "value",
+            "type": "bool"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Dex",
+      "docs": [
+        "Core DEX pool state. One per trading pair.",
+        "Uses zero_copy for efficient access without deserialization overhead."
+      ],
+      "serialization": "bytemuck",
+      "repr": {
+        "kind": "c",
+        "packed": true
+      },
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "dex_id",
+            "type": "u16"
+          },
+          {
+            "name": "re_entrancy",
+            "type": "u8"
+          },
+          {
+            "name": "token_0",
+            "type": "pubkey"
+          },
+          {
+            "name": "token_1",
+            "type": "pubkey"
+          },
+          {
+            "name": "token_0_decimals",
+            "type": "u8"
+          },
+          {
+            "name": "token_1_decimals",
+            "type": "u8"
+          },
+          {
+            "name": "last_to_last_stored_price",
+            "type": "u128"
+          },
+          {
+            "name": "last_stored_price",
+            "type": "u128"
+          },
+          {
+            "name": "center_price",
+            "type": "u128"
+          },
+          {
+            "name": "last_update_timestamp",
+            "type": "u64"
+          },
+          {
+            "name": "last_update_slot",
+            "type": "u64"
+          },
+          {
+            "name": "is_smart_collateral_enabled",
+            "type": "u8"
+          },
+          {
+            "name": "is_smart_debt_enabled",
+            "type": "u8"
+          },
+          {
+            "name": "fee",
+            "type": "u32"
+          },
+          {
+            "name": "revenue_cut",
+            "type": "u8"
+          },
+          {
+            "name": "percent_change_active",
+            "type": "u8"
+          },
+          {
+            "name": "upper_percent",
+            "type": "u32"
+          },
+          {
+            "name": "lower_percent",
+            "type": "u32"
+          },
+          {
+            "name": "threshold_change_active",
+            "type": "u8"
+          },
+          {
+            "name": "upper_shift_threshold_percent",
+            "type": "u16"
+          },
+          {
+            "name": "lower_shift_threshold_percent",
+            "type": "u16"
+          },
+          {
+            "name": "shifting_time",
+            "type": "u32"
+          },
+          {
+            "name": "center_price_address",
+            "type": "pubkey"
+          },
+          {
+            "name": "max_center_price",
+            "type": "u64"
+          },
+          {
+            "name": "min_center_price",
+            "type": "u64"
+          },
+          {
+            "name": "token_0_max_utilization",
+            "type": "u16"
+          },
+          {
+            "name": "token_1_max_utilization",
+            "type": "u16"
+          },
+          {
+            "name": "is_center_price_shift_active",
+            "type": "u8"
+          },
+          {
+            "name": "swap_and_arbitrage_paused",
+            "type": "u8"
+          },
+          {
+            "name": "total_supply_shares",
+            "type": "u64"
+          },
+          {
+            "name": "max_supply_shares",
+            "type": "u64"
+          },
+          {
+            "name": "total_borrow_shares",
+            "type": "u64"
+          },
+          {
+            "name": "max_borrow_shares",
+            "type": "u64"
+          },
+          {
+            "name": "range_old_upper_shift",
+            "type": "u32"
+          },
+          {
+            "name": "range_old_lower_shift",
+            "type": "u32"
+          },
+          {
+            "name": "range_shift_duration",
+            "type": "u32"
+          },
+          {
+            "name": "range_shift_start_timestamp",
+            "type": "u32"
+          },
+          {
+            "name": "threshold_old_upper_shift",
+            "type": "u16"
+          },
+          {
+            "name": "threshold_old_lower_shift",
+            "type": "u16"
+          },
+          {
+            "name": "threshold_shift_duration",
+            "type": "u32"
+          },
+          {
+            "name": "threshold_shift_start_timestamp",
+            "type": "u32"
+          },
+          {
+            "name": "threshold_shift_old_timestamp",
+            "type": "u32"
+          },
+          {
+            "name": "center_price_shift_start_timestamp",
+            "type": "u32"
+          },
+          {
+            "name": "center_price_shift_percent",
+            "type": "u32"
+          },
+          {
+            "name": "center_price_shift_time",
+            "type": "u32"
+          },
+          {
+            "name": "_reserved",
+            "type": {
+              "array": [
+                "u8",
+                32
+              ]
+            }
+          },
+          {
+            "name": "bump",
+            "type": "u8"
+          }
+        ]
+      }
+    },
+    {
+      "name": "DexAdmin",
+      "docs": [
+        "DEX factory/admin account."
+      ],
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "authority",
+            "type": "pubkey"
+          },
+          {
+            "name": "liquidity_program",
+            "type": "pubkey"
+          },
+          {
+            "name": "next_dex_id",
+            "type": "u16"
+          },
+          {
+            "name": "auths",
+            "type": {
+              "vec": "pubkey"
+            }
+          },
+          {
+            "name": "guardians",
+            "docs": [
+              "Guardians can pause a dex; unpause remains auth-only."
+            ],
+            "type": {
+              "vec": "pubkey"
+            }
+          },
+          {
+            "name": "_reserved",
+            "type": {
+              "array": [
+                "u8",
+                28
+              ]
+            }
+          },
+          {
+            "name": "bump",
+            "type": "u8"
+          }
+        ]
+      }
+    },
+    {
+      "name": "DexMetadata",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "dex_id",
+            "type": "u16"
+          },
+          {
+            "name": "lookup_table",
+            "type": "pubkey"
+          },
+          {
+            "name": "_reserved",
+            "type": {
+              "array": [
+                "u8",
+                32
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "DexPosition",
+      "docs": [
+        "Per-protocol per-DEX position.",
+        "Seeds: [DEX_POSITION_SEED, dex.key(), protocol.key()]"
+      ],
+      "serialization": "bytemuck",
+      "repr": {
+        "kind": "c",
+        "packed": true
+      },
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "dex_id",
+            "type": "u16"
+          },
+          {
+            "name": "protocol",
+            "type": "pubkey"
+          },
+          {
+            "name": "supply_status",
+            "type": "u8"
+          },
+          {
+            "name": "supply_shares",
+            "type": "u64"
+          },
+          {
+            "name": "withdrawal_limit",
+            "type": "u64"
+          },
+          {
+            "name": "supply_last_update",
+            "type": "u64"
+          },
+          {
+            "name": "supply_expand_pct",
+            "type": "u16"
+          },
+          {
+            "name": "supply_expand_duration",
+            "type": "u64"
+          },
+          {
+            "name": "base_withdrawal_limit",
+            "type": "u64"
+          },
+          {
+            "name": "borrow_status",
+            "type": "u8"
+          },
+          {
+            "name": "borrow_shares",
+            "type": "u64"
+          },
+          {
+            "name": "debt_ceiling",
+            "type": "u64"
+          },
+          {
+            "name": "borrow_last_update",
+            "type": "u64"
+          },
+          {
+            "name": "borrow_expand_pct",
+            "type": "u16"
+          },
+          {
+            "name": "borrow_expand_duration",
+            "type": "u32"
+          },
+          {
+            "name": "base_debt_ceiling",
+            "type": "u64"
+          },
+          {
+            "name": "max_debt_ceiling",
+            "type": "u64"
+          },
+          {
+            "name": "_reserved",
+            "type": {
+              "array": [
+                "u8",
+                32
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "InitDexParams",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "center_price",
+            "docs": [
+              "Initial center price: a normalized ratio scaled by PRICE_PRECISION (10^15)"
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "fee",
+            "docs": [
+              "Fee in 4 decimals: 1% = 10000, max 10% = 100000"
+            ],
+            "type": "u32"
+          },
+          {
+            "name": "revenue_cut",
+            "docs": [
+              "Revenue cut in 4 decimals (e.g., 100000 = 10%). Divided by 10000 for storage."
+            ],
+            "type": "u32"
+          },
+          {
+            "name": "upper_percent",
+            "docs": [
+              "Upper range percent in 4 decimals: 1% = 10000"
+            ],
+            "type": "u32"
+          },
+          {
+            "name": "lower_percent",
+            "docs": [
+              "Lower range percent in 4 decimals: 1% = 10000"
+            ],
+            "type": "u32"
+          },
+          {
+            "name": "upper_shift_threshold",
+            "docs": [
+              "Upper shift threshold percent in 4 decimals. Divided by 1000 for storage."
+            ],
+            "type": "u32"
+          },
+          {
+            "name": "lower_shift_threshold",
+            "docs": [
+              "Lower shift threshold percent in 4 decimals. Divided by 1000 for storage."
+            ],
+            "type": "u32"
+          },
+          {
+            "name": "threshold_shift_time",
+            "docs": [
+              "Time (seconds) for threshold-based center price shift"
+            ],
+            "type": "u32"
+          },
+          {
+            "name": "max_center_price",
+            "docs": [
+              "Maximum center price"
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "min_center_price",
+            "docs": [
+              "Minimum center price"
+            ],
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "LogArbitrage",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "dex_id",
+            "type": "u16"
+          },
+          {
+            "name": "routing",
+            "type": "i128"
+          },
+          {
+            "name": "amt_out",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "LogBorrowDebtLiquidity",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "dex_id",
+            "type": "u16"
+          },
+          {
+            "name": "amount_0",
+            "type": "u64"
+          },
+          {
+            "name": "amount_1",
+            "type": "u64"
+          },
+          {
+            "name": "shares",
+            "type": "u64"
+          },
+          {
+            "name": "user",
+            "type": "pubkey"
+          },
+          {
+            "name": "protocol",
+            "type": "pubkey"
+          }
+        ]
+      }
+    },
+    {
+      "name": "LogBorrowPerfectDebtLiquidity",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "dex_id",
+            "type": "u16"
+          },
+          {
+            "name": "shares",
+            "type": "u64"
+          },
+          {
+            "name": "token_0_amt",
+            "type": "u64"
+          },
+          {
+            "name": "token_1_amt",
+            "type": "u64"
+          },
+          {
+            "name": "user",
+            "type": "pubkey"
+          },
+          {
+            "name": "protocol",
+            "type": "pubkey"
+          }
+        ]
+      }
+    },
+    {
+      "name": "LogDepositColLiquidity",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "dex_id",
+            "type": "u16"
+          },
+          {
+            "name": "amount_0",
+            "type": "u64"
+          },
+          {
+            "name": "amount_1",
+            "type": "u64"
+          },
+          {
+            "name": "shares",
+            "type": "u64"
+          },
+          {
+            "name": "user",
+            "type": "pubkey"
+          },
+          {
+            "name": "protocol",
+            "type": "pubkey"
+          }
+        ]
+      }
+    },
+    {
+      "name": "LogDepositPerfectColLiquidity",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "dex_id",
+            "type": "u16"
+          },
+          {
+            "name": "shares",
+            "type": "u64"
+          },
+          {
+            "name": "token_0_amt",
+            "type": "u64"
+          },
+          {
+            "name": "token_1_amt",
+            "type": "u64"
+          },
+          {
+            "name": "user",
+            "type": "pubkey"
+          },
+          {
+            "name": "protocol",
+            "type": "pubkey"
+          }
+        ]
+      }
+    },
+    {
+      "name": "LogInitDex",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "dex_id",
+            "type": "u16"
+          },
+          {
+            "name": "token_0",
+            "type": "pubkey"
+          },
+          {
+            "name": "token_1",
+            "type": "pubkey"
+          },
+          {
+            "name": "smart_col",
+            "type": "bool"
+          },
+          {
+            "name": "smart_debt",
+            "type": "bool"
+          },
+          {
+            "name": "fee",
+            "type": "u32"
+          },
+          {
+            "name": "revenue_cut",
+            "type": "u32"
+          },
+          {
+            "name": "center_price",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "LogInitDexMetadata",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "dex_id",
+            "type": "u16"
+          },
+          {
+            "name": "lookup_table",
+            "type": "pubkey"
+          }
+        ]
+      }
+    },
+    {
+      "name": "LogInitDexPriceParams",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "dex_id",
+            "type": "u16"
+          },
+          {
+            "name": "upper_percent",
+            "type": "u32"
+          },
+          {
+            "name": "lower_percent",
+            "type": "u32"
+          },
+          {
+            "name": "upper_shift_threshold",
+            "type": "u32"
+          },
+          {
+            "name": "lower_shift_threshold",
+            "type": "u32"
+          },
+          {
+            "name": "threshold_shift_time",
+            "type": "u32"
+          },
+          {
+            "name": "max_center_price",
+            "type": "u64"
+          },
+          {
+            "name": "min_center_price",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "LogPauseDex",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "dex_id",
+            "type": "u16"
+          }
+        ]
+      }
+    },
+    {
+      "name": "LogPauseSwapAndArbitrage",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "dex_id",
+            "type": "u16"
+          }
+        ]
+      }
+    },
+    {
+      "name": "LogPauseUser",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "dex_id",
+            "type": "u16"
+          },
+          {
+            "name": "protocol",
+            "type": "pubkey"
+          },
+          {
+            "name": "pause_supply",
+            "type": "bool"
+          },
+          {
+            "name": "pause_borrow",
+            "type": "bool"
+          }
+        ]
+      }
+    },
+    {
+      "name": "LogPaybackDebtInOneToken",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "dex_id",
+            "type": "u16"
+          },
+          {
+            "name": "shares",
+            "type": "u64"
+          },
+          {
+            "name": "token_0_amt",
+            "type": "u64"
+          },
+          {
+            "name": "token_1_amt",
+            "type": "u64"
+          },
+          {
+            "name": "user",
+            "type": "pubkey"
+          },
+          {
+            "name": "protocol",
+            "type": "pubkey"
+          }
+        ]
+      }
+    },
+    {
+      "name": "LogPaybackDebtLiquidity",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "dex_id",
+            "type": "u16"
+          },
+          {
+            "name": "amount_0",
+            "type": "u64"
+          },
+          {
+            "name": "amount_1",
+            "type": "u64"
+          },
+          {
+            "name": "shares",
+            "type": "u64"
+          },
+          {
+            "name": "user",
+            "type": "pubkey"
+          },
+          {
+            "name": "protocol",
+            "type": "pubkey"
+          }
+        ]
+      }
+    },
+    {
+      "name": "LogPaybackPerfectDebtLiquidity",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "dex_id",
+            "type": "u16"
+          },
+          {
+            "name": "shares",
+            "type": "u64"
+          },
+          {
+            "name": "token_0_amt",
+            "type": "u64"
+          },
+          {
+            "name": "token_1_amt",
+            "type": "u64"
+          },
+          {
+            "name": "user",
+            "type": "pubkey"
+          },
+          {
+            "name": "protocol",
+            "type": "pubkey"
+          }
+        ]
+      }
+    },
+    {
+      "name": "LogSwap",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "dex_id",
+            "type": "u16"
+          },
+          {
+            "name": "swap_0_to_1",
+            "type": "bool"
+          },
+          {
+            "name": "amount_in",
+            "type": "u64"
+          },
+          {
+            "name": "amount_out",
+            "type": "u64"
+          },
+          {
+            "name": "to",
+            "type": "pubkey"
+          }
+        ]
+      }
+    },
+    {
+      "name": "LogSwapInfo",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "dex_id",
+            "type": "u16"
+          },
+          {
+            "name": "swap_0_to_1",
+            "docs": [
+              "`true` = token0 in / token1 out; `false` = token1 in / token0 out."
+            ],
+            "type": "bool"
+          },
+          {
+            "name": "maker",
+            "docs": [
+              "Signer that paid the input tokens — GeckoTerminal's `maker`."
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "to",
+            "docs": [
+              "Account that received the output tokens."
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "amount_in",
+            "docs": [
+              "Total input transferred by `maker`, fee inclusive."
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "amount_out",
+            "docs": [
+              "Total output sent to `to`."
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "fee_amount_in",
+            "docs": [
+              "Swap fee charged on the input token: a subset of `amount_in`, inclusive of",
+              "the protocol revenue cut. Rounded DOWN to native units."
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "reserves_token_0",
+            "docs": [
+              "Pooled token0 after this swap — smart-collateral real reserves plus",
+              "smart-debt real reserves. Rounded DOWN to native units."
+            ],
+            "type": "u128"
+          },
+          {
+            "name": "reserves_token_1",
+            "docs": [
+              "Pooled token1 after this swap. Rounded DOWN to native units."
+            ],
+            "type": "u128"
+          },
+          {
+            "name": "pool_price",
+            "docs": [
+              "Post-swap pool (marginal) price, token1 per token0, 1e15 scale. This is NOT",
+              "the execution price of this swap (`amount_out / amount_in`): it is the ratio",
+              "of the post-swap imaginary reserves on whichever leg routed the larger",
+              "amount, so it excludes the swap fee and the slippage this swap paid.",
+              "Reserves are normalized to 9 decimals internally, so `pool_price / 1e15` is",
+              "already the whole-token price of token0 in token1 — no further decimal",
+              "adjustment is needed."
+            ],
+            "type": "u128"
+          }
+        ]
+      }
+    },
+    {
+      "name": "LogTurnOnSmartCol",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "dex_id",
+            "type": "u16"
+          },
+          {
+            "name": "token_0_amt",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "LogTurnOnSmartDebt",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "dex_id",
+            "type": "u16"
+          },
+          {
+            "name": "token_0_amt",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "LogUnpauseDex",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "dex_id",
+            "type": "u16"
+          }
+        ]
+      }
+    },
+    {
+      "name": "LogUnpauseSwapAndArbitrage",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "dex_id",
+            "type": "u16"
+          }
+        ]
+      }
+    },
+    {
+      "name": "LogUnpauseUser",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "dex_id",
+            "type": "u16"
+          },
+          {
+            "name": "protocol",
+            "type": "pubkey"
+          },
+          {
+            "name": "unpause_supply",
+            "type": "bool"
+          },
+          {
+            "name": "unpause_borrow",
+            "type": "bool"
+          }
+        ]
+      }
+    },
+    {
+      "name": "LogUpdateAuthority",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "new_authority",
+            "type": "pubkey"
+          }
+        ]
+      }
+    },
+    {
+      "name": "LogUpdateAuths",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "auth_status",
+            "type": {
+              "vec": {
+                "defined": {
+                  "name": "AddressBool"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "LogUpdateCenterPrice",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "dex_id",
+            "type": "u16"
+          },
+          {
+            "name": "center_price",
+            "type": "u128"
+          },
+          {
+            "name": "old_center_price",
+            "type": "u128"
+          },
+          {
+            "name": "old_last_stored_price",
+            "type": "u128"
+          }
+        ]
+      }
+    },
+    {
+      "name": "LogUpdateCenterPriceAddress",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "dex_id",
+            "type": "u16"
+          },
+          {
+            "name": "center_price_address",
+            "type": "pubkey"
+          },
+          {
+            "name": "percent",
+            "type": "u32"
+          },
+          {
+            "name": "time",
+            "type": "u32"
+          }
+        ]
+      }
+    },
+    {
+      "name": "LogUpdateCenterPriceLimits",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "dex_id",
+            "type": "u16"
+          },
+          {
+            "name": "max_center_price",
+            "type": "u64"
+          },
+          {
+            "name": "min_center_price",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "LogUpdateDexLookupTable",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "dex_id",
+            "type": "u16"
+          },
+          {
+            "name": "lookup_table",
+            "type": "pubkey"
+          }
+        ]
+      }
+    },
+    {
+      "name": "LogUpdateFeeAndRevenueCut",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "dex_id",
+            "type": "u16"
+          },
+          {
+            "name": "fee",
+            "type": "u32"
+          },
+          {
+            "name": "revenue_cut",
+            "type": "u32"
+          }
+        ]
+      }
+    },
+    {
+      "name": "LogUpdateGuardians",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "guardian_status",
+            "type": {
+              "vec": {
+                "defined": {
+                  "name": "AddressBool"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "LogUpdateMaxBorrowShares",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "dex_id",
+            "type": "u16"
+          },
+          {
+            "name": "max_borrow_shares",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "LogUpdateMaxSupplyShares",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "dex_id",
+            "type": "u16"
+          },
+          {
+            "name": "max_supply_shares",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "LogUpdateRangePercents",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "dex_id",
+            "type": "u16"
+          },
+          {
+            "name": "upper_percent",
+            "type": "u32"
+          },
+          {
+            "name": "lower_percent",
+            "type": "u32"
+          },
+          {
+            "name": "shift_time",
+            "type": "u32"
+          }
+        ]
+      }
+    },
+    {
+      "name": "LogUpdateThresholdPercent",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "dex_id",
+            "type": "u16"
+          },
+          {
+            "name": "upper_threshold_percent",
+            "type": "u32"
+          },
+          {
+            "name": "lower_threshold_percent",
+            "type": "u32"
+          },
+          {
+            "name": "threshold_shift_time",
+            "type": "u32"
+          },
+          {
+            "name": "shift_time",
+            "type": "u32"
+          }
+        ]
+      }
+    },
+    {
+      "name": "LogUpdateUserBorrowConfig",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "dex_id",
+            "type": "u16"
+          },
+          {
+            "name": "protocol",
+            "type": "pubkey"
+          },
+          {
+            "name": "expand_percent",
+            "type": "u16"
+          },
+          {
+            "name": "expand_duration",
+            "type": "u32"
+          },
+          {
+            "name": "base_debt_ceiling",
+            "type": "u64"
+          },
+          {
+            "name": "max_debt_ceiling",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "LogUpdateUserConfigOnPausedPosition",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "dex_id",
+            "type": "u16"
+          },
+          {
+            "name": "protocol",
+            "type": "pubkey"
+          },
+          {
+            "name": "is_supply",
+            "type": "bool"
+          }
+        ]
+      }
+    },
+    {
+      "name": "LogUpdateUserSupplyConfig",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "dex_id",
+            "type": "u16"
+          },
+          {
+            "name": "protocol",
+            "type": "pubkey"
+          },
+          {
+            "name": "expand_percent",
+            "type": "u16"
+          },
+          {
+            "name": "expand_duration",
+            "type": "u64"
+          },
+          {
+            "name": "base_withdrawal_limit",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "LogUpdateUserWithdrawalLimit",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "dex_id",
+            "type": "u16"
+          },
+          {
+            "name": "protocol",
+            "type": "pubkey"
+          },
+          {
+            "name": "new_limit",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "LogUpdateUtilizationLimit",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "dex_id",
+            "type": "u16"
+          },
+          {
+            "name": "token_0_utilization_limit",
+            "type": "u16"
+          },
+          {
+            "name": "token_1_utilization_limit",
+            "type": "u16"
+          }
+        ]
+      }
+    },
+    {
+      "name": "LogWithdrawColInOneToken",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "dex_id",
+            "type": "u16"
+          },
+          {
+            "name": "shares",
+            "type": "u64"
+          },
+          {
+            "name": "token_0_amt",
+            "type": "u64"
+          },
+          {
+            "name": "token_1_amt",
+            "type": "u64"
+          },
+          {
+            "name": "user",
+            "type": "pubkey"
+          },
+          {
+            "name": "protocol",
+            "type": "pubkey"
+          }
+        ]
+      }
+    },
+    {
+      "name": "LogWithdrawColLiquidity",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "dex_id",
+            "type": "u16"
+          },
+          {
+            "name": "amount_0",
+            "type": "u64"
+          },
+          {
+            "name": "amount_1",
+            "type": "u64"
+          },
+          {
+            "name": "shares",
+            "type": "u64"
+          },
+          {
+            "name": "user",
+            "type": "pubkey"
+          },
+          {
+            "name": "protocol",
+            "type": "pubkey"
+          }
+        ]
+      }
+    },
+    {
+      "name": "LogWithdrawPerfectColLiquidity",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "dex_id",
+            "type": "u16"
+          },
+          {
+            "name": "shares",
+            "type": "u64"
+          },
+          {
+            "name": "token_0_amt",
+            "type": "u64"
+          },
+          {
+            "name": "token_1_amt",
+            "type": "u64"
+          },
+          {
+            "name": "user",
+            "type": "pubkey"
+          },
+          {
+            "name": "protocol",
+            "type": "pubkey"
+          }
+        ]
+      }
+    },
+    {
+      "name": "TokenReserve",
+      "docs": [
+        "Token configuration and exchange prices"
+      ],
+      "serialization": "bytemuck",
+      "repr": {
+        "kind": "c",
+        "packed": true
+      },
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "mint",
+            "type": "pubkey"
+          },
+          {
+            "name": "vault",
+            "type": "pubkey"
+          },
+          {
+            "name": "borrow_rate",
+            "type": "u16"
+          },
+          {
+            "name": "fee_on_interest",
+            "type": "u16"
+          },
+          {
+            "name": "last_utilization",
+            "type": "u16"
+          },
+          {
+            "name": "last_update_timestamp",
+            "type": "u64"
+          },
+          {
+            "name": "supply_exchange_price",
+            "type": "u64"
+          },
+          {
+            "name": "borrow_exchange_price",
+            "type": "u64"
+          },
+          {
+            "name": "max_utilization",
+            "type": "u16"
+          },
+          {
+            "name": "total_supply_with_interest",
+            "type": "u64"
+          },
+          {
+            "name": "total_supply_interest_free",
+            "type": "u64"
+          },
+          {
+            "name": "total_borrow_with_interest",
+            "type": "u64"
+          },
+          {
+            "name": "total_borrow_interest_free",
+            "type": "u64"
+          },
+          {
+            "name": "total_claim_amount",
+            "type": "u64"
+          },
+          {
+            "name": "interacting_protocol",
+            "type": "pubkey"
+          },
+          {
+            "name": "interacting_timestamp",
+            "type": "u64"
+          },
+          {
+            "name": "interacting_balance",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "UserBorrowConfigParams",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "expand_percent",
+            "type": "u16"
+          },
+          {
+            "name": "expand_duration",
+            "type": "u32"
+          },
+          {
+            "name": "base_debt_ceiling",
+            "type": "u64"
+          },
+          {
+            "name": "max_debt_ceiling",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "UserBorrowPosition",
+      "docs": [
+        "User borrow position"
+      ],
+      "serialization": "bytemuck",
+      "repr": {
+        "kind": "c",
+        "packed": true
+      },
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "protocol",
+            "type": "pubkey"
+          },
+          {
+            "name": "mint",
+            "type": "pubkey"
+          },
+          {
+            "name": "with_interest",
+            "type": "u8"
+          },
+          {
+            "name": "amount",
+            "type": "u64"
+          },
+          {
+            "name": "debt_ceiling",
+            "type": "u64"
+          },
+          {
+            "name": "last_update",
+            "type": "u64"
+          },
+          {
+            "name": "expand_pct",
+            "type": "u16"
+          },
+          {
+            "name": "expand_duration",
+            "type": "u32"
+          },
+          {
+            "name": "base_debt_ceiling",
+            "type": "u64"
+          },
+          {
+            "name": "max_debt_ceiling",
+            "type": "u64"
+          },
+          {
+            "name": "status",
+            "type": "u8"
+          }
+        ]
+      }
+    },
+    {
+      "name": "UserSupplyConfigParams",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "expand_percent",
+            "type": "u16"
+          },
+          {
+            "name": "expand_duration",
+            "type": "u64"
+          },
+          {
+            "name": "base_withdrawal_limit",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "UserSupplyPosition",
+      "docs": [
+        "User supply position"
+      ],
+      "serialization": "bytemuck",
+      "repr": {
+        "kind": "c",
+        "packed": true
+      },
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "protocol",
+            "type": "pubkey"
+          },
+          {
+            "name": "mint",
+            "type": "pubkey"
+          },
+          {
+            "name": "with_interest",
+            "type": "u8"
+          },
+          {
+            "name": "amount",
+            "type": "u64"
+          },
+          {
+            "name": "withdrawal_limit",
+            "type": "u64"
+          },
+          {
+            "name": "decay_amount",
+            "type": "u64"
+          },
+          {
+            "name": "last_update",
+            "type": "u64"
+          },
+          {
+            "name": "expand_pct",
+            "type": "u16"
+          },
+          {
+            "name": "expand_duration",
+            "type": "u32"
+          },
+          {
+            "name": "decay_duration",
+            "type": "u32"
+          },
+          {
+            "name": "base_withdrawal_limit",
+            "type": "u64"
+          },
+          {
+            "name": "status",
+            "type": "u8"
+          }
+        ]
+      }
+    }
+  ]
+}
