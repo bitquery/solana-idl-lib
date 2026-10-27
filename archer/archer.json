@@ -1,0 +1,1360 @@
+{
+  "version": "0.1.0",
+  "name": "archer",
+  "instructions": [
+    {
+      "name": "InitializeMarket",
+      "accounts": [
+        {
+          "name": "marketAccount",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "adminAccount",
+          "isMut": false,
+          "isSigner": true
+        },
+        {
+          "name": "baseMint",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "quoteMint",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "baseVaultAccount",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "quoteVaultAccount",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "payerAccount",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "baseTokenProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "quoteTokenProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "ataProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "rentAccount",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "initializeMarketParams",
+          "type": {
+            "defined": "InitializeMarketParams"
+          }
+        }
+      ],
+      "discriminant": {
+        "type": "u8",
+        "value": 0
+      }
+    },
+    {
+      "name": "ChangeMarketStatus",
+      "accounts": [
+        {
+          "name": "marketAccount",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "adminAccount",
+          "isMut": false,
+          "isSigner": true
+        }
+      ],
+      "args": [
+        {
+          "name": "changeMarketStatusParams",
+          "type": {
+            "defined": "ChangeMarketStatusParams"
+          }
+        }
+      ],
+      "discriminant": {
+        "type": "u8",
+        "value": 1
+      }
+    },
+    {
+      "name": "UpdateMakerFee",
+      "accounts": [
+        {
+          "name": "marketAccount",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "adminAccount",
+          "isMut": false,
+          "isSigner": true
+        }
+      ],
+      "args": [
+        {
+          "name": "updateMakerFeeParams",
+          "type": {
+            "defined": "UpdateMakerFeeParams"
+          }
+        }
+      ],
+      "discriminant": {
+        "type": "u8",
+        "value": 3
+      }
+    },
+    {
+      "name": "UpdateTakerFee",
+      "accounts": [
+        {
+          "name": "marketAccount",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "adminAccount",
+          "isMut": false,
+          "isSigner": true
+        }
+      ],
+      "args": [
+        {
+          "name": "updateTakerFeeParams",
+          "type": {
+            "defined": "UpdateTakerFeeParams"
+          }
+        }
+      ],
+      "discriminant": {
+        "type": "u8",
+        "value": 4
+      }
+    },
+    {
+      "name": "TransferAdmin",
+      "accounts": [
+        {
+          "name": "marketAccount",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "currentAdminAccount",
+          "isMut": false,
+          "isSigner": true
+        },
+        {
+          "name": "newAdminAccount",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [],
+      "discriminant": {
+        "type": "u8",
+        "value": 5
+      }
+    },
+    {
+      "name": "InitializeMakerBook",
+      "accounts": [
+        {
+          "name": "makerAccount",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "makerBookAccount",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "marketAccount",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "authorityAccount",
+          "isMut": false,
+          "isSigner": true
+        }
+      ],
+      "args": [
+        {
+          "name": "kind",
+          "type": "u8"
+        }
+      ],
+      "discriminant": {
+        "type": "u8",
+        "value": 6
+      }
+    },
+    {
+      "name": "UpdateBook",
+      "accounts": [
+        {
+          "name": "makerAccount",
+          "isMut": false,
+          "isSigner": true
+        },
+        {
+          "name": "makerBookAccount",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "marketAccount",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "archerAccount",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "sequenceNumber",
+          "type": "u64"
+        },
+        {
+          "name": "midPriceTicks",
+          "type": "u64"
+        },
+        {
+          "name": "numBids",
+          "type": "u8"
+        },
+        {
+          "name": "numAsks",
+          "type": "u8"
+        }
+      ],
+      "discriminant": {
+        "type": "u8",
+        "value": 7
+      }
+    },
+    {
+      "name": "UpdateMidPrice",
+      "accounts": [
+        {
+          "name": "makerAccount",
+          "isMut": false,
+          "isSigner": true
+        },
+        {
+          "name": "makerBookAccount",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "clockSysvar",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "archerAccount",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "sequenceNumber",
+          "type": "u64"
+        },
+        {
+          "name": "newMidPriceTicks",
+          "type": "u64"
+        }
+      ],
+      "discriminant": {
+        "type": "u8",
+        "value": 8
+      }
+    },
+    {
+      "name": "ClearBook",
+      "accounts": [
+        {
+          "name": "makerAccount",
+          "isMut": false,
+          "isSigner": true
+        },
+        {
+          "name": "makerBookAccount",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "archerAccount",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "sequenceNumber",
+          "type": "u64"
+        }
+      ],
+      "discriminant": {
+        "type": "u8",
+        "value": 9
+      }
+    },
+    {
+      "name": "SetBookDelegate",
+      "accounts": [
+        {
+          "name": "makerAccount",
+          "isMut": false,
+          "isSigner": true
+        },
+        {
+          "name": "makerBookAccount",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "delegateAccount",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "authorityAccount",
+          "isMut": false,
+          "isSigner": true
+        }
+      ],
+      "args": [],
+      "discriminant": {
+        "type": "u8",
+        "value": 10
+      }
+    },
+    {
+      "name": "MakerDepositFunds",
+      "accounts": [
+        {
+          "name": "marketAccount",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "makerBookAccount",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "makerAccount",
+          "isMut": false,
+          "isSigner": true
+        },
+        {
+          "name": "baseMint",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "quoteMint",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "baseVaultAccount",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "quoteVaultAccount",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "makerBaseTokenAccount",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "makerQuoteTokenAccount",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "baseTokenProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "quoteTokenProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "authorityAccount",
+          "isMut": false,
+          "isSigner": true
+        }
+      ],
+      "args": [
+        {
+          "name": "makerDepositFundsParams",
+          "type": {
+            "defined": "MakerDepositFundsParams"
+          }
+        }
+      ],
+      "discriminant": {
+        "type": "u8",
+        "value": 11
+      }
+    },
+    {
+      "name": "MakerWithdrawFunds",
+      "accounts": [
+        {
+          "name": "marketAccount",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "makerBookAccount",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "makerAccount",
+          "isMut": false,
+          "isSigner": true
+        },
+        {
+          "name": "baseMint",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "quoteMint",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "baseVaultAccount",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "quoteVaultAccount",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "makerBaseTokenAccount",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "makerQuoteTokenAccount",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "baseTokenProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "quoteTokenProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "authorityAccount",
+          "isMut": false,
+          "isSigner": true
+        }
+      ],
+      "args": [
+        {
+          "name": "makerWithdrawFundsParams",
+          "type": {
+            "defined": "MakerWithdrawFundsParams"
+          }
+        }
+      ],
+      "discriminant": {
+        "type": "u8",
+        "value": 12
+      }
+    },
+    {
+      "name": "ToggleBookSuspension",
+      "accounts": [
+        {
+          "name": "marketAccount",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "adminAccount",
+          "isMut": false,
+          "isSigner": true
+        },
+        {
+          "name": "makerBookAccount",
+          "isMut": true,
+          "isSigner": false
+        }
+      ],
+      "args": [],
+      "discriminant": {
+        "type": "u8",
+        "value": 13
+      }
+    },
+    {
+      "name": "CollectProtocolFee",
+      "accounts": [
+        {
+          "name": "adminAccount",
+          "isMut": false,
+          "isSigner": true
+        },
+        {
+          "name": "marketAccount",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "quoteMint",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "quoteVaultAccount",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "adminQuoteTokenAccount",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "archerTreasury",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "treasuryQuoteTokenAccount",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "tokenProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "collectProtocolFeeParams",
+          "type": {
+            "defined": "CollectProtocolFeeParams"
+          }
+        }
+      ],
+      "discriminant": {
+        "type": "u8",
+        "value": 14
+      }
+    },
+    {
+      "name": "Swap",
+      "accounts": [
+        {
+          "name": "taker",
+          "isMut": false,
+          "isSigner": true
+        },
+        {
+          "name": "marketAccount",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "builderFeeWallet",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "baseMint",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "quoteMint",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "baseVault",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "quoteVault",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "takerBaseTokenAccount",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "takerQuoteTokenAccount",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "baseTokenProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "quoteTokenProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "amount",
+          "type": "u64"
+        },
+        {
+          "name": "threshold",
+          "type": "u64"
+        },
+        {
+          "name": "side",
+          "type": "u8"
+        },
+        {
+          "name": "mode",
+          "type": "u8"
+        },
+        {
+          "name": "builderFeePpm",
+          "type": "u32"
+        }
+      ],
+      "discriminant": {
+        "type": "u8",
+        "value": 15
+      }
+    },
+    {
+      "name": "InitializeMakerRegistry",
+      "accounts": [
+        {
+          "name": "adminAccount",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "marketAccount",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "registryAccount",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [],
+      "discriminant": {
+        "type": "u8",
+        "value": 27
+      }
+    },
+    {
+      "name": "RegisterMaker",
+      "accounts": [
+        {
+          "name": "adminAccount",
+          "isMut": false,
+          "isSigner": true
+        },
+        {
+          "name": "marketAccount",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "makerBookAccount",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "registryAccount",
+          "isMut": true,
+          "isSigner": false
+        }
+      ],
+      "args": [],
+      "discriminant": {
+        "type": "u8",
+        "value": 28
+      }
+    },
+    {
+      "name": "DeregisterMaker",
+      "accounts": [
+        {
+          "name": "adminAccount",
+          "isMut": false,
+          "isSigner": true
+        },
+        {
+          "name": "marketAccount",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "makerBookAccount",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "registryAccount",
+          "isMut": true,
+          "isSigner": false
+        }
+      ],
+      "args": [],
+      "discriminant": {
+        "type": "u8",
+        "value": 29
+      }
+    },
+    {
+      "name": "UpdateExpiryInSlots",
+      "accounts": [
+        {
+          "name": "authorityAccount",
+          "isMut": false,
+          "isSigner": true
+        },
+        {
+          "name": "makerBookAccount",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "archerAccount",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "updateExpiryInSlotsParams",
+          "type": {
+            "defined": "UpdateExpiryInSlotsParams"
+          }
+        }
+      ],
+      "discriminant": {
+        "type": "u8",
+        "value": 30
+      }
+    },
+    {
+      "name": "CloseMakerBook",
+      "accounts": [
+        {
+          "name": "makerAccount",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "marketAccount",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "makerBookAccount",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "authorityAccount",
+          "isMut": false,
+          "isSigner": true
+        }
+      ],
+      "args": [],
+      "discriminant": {
+        "type": "u8",
+        "value": 31
+      }
+    },
+    {
+      "name": "InitializeArcherAccount",
+      "accounts": [
+        {
+          "name": "ownerAccount",
+          "isMut": false,
+          "isSigner": true
+        },
+        {
+          "name": "payerAccount",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "archerAccount",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "platform",
+          "type": "u8"
+        }
+      ],
+      "discriminant": {
+        "type": "u8",
+        "value": 32
+      }
+    },
+    {
+      "name": "SetArcherAccountDelegate",
+      "accounts": [
+        {
+          "name": "ownerAccount",
+          "isMut": false,
+          "isSigner": true
+        },
+        {
+          "name": "archerAccount",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "delegateAccount",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "setArcherAccountDelegateParams",
+          "type": {
+            "defined": "SetArcherAccountDelegateParams"
+          }
+        }
+      ],
+      "discriminant": {
+        "type": "u8",
+        "value": 33
+      }
+    },
+    {
+      "name": "ArcherAccountWithdraw",
+      "accounts": [
+        {
+          "name": "ownerAccount",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "archerAccount",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "tokenProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "mint",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "sourceTokenAccount",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "destinationTokenAccount",
+          "isMut": true,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "archerAccountWithdrawParams",
+          "type": {
+            "defined": "ArcherAccountWithdrawParams"
+          }
+        }
+      ],
+      "discriminant": {
+        "type": "u8",
+        "value": 34
+      }
+    },
+    {
+      "name": "SwapFromArcherAccount",
+      "accounts": [
+        {
+          "name": "authorityAccount",
+          "isMut": false,
+          "isSigner": true
+        },
+        {
+          "name": "archerAccount",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "marketAccount",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "builderFeeWallet",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "baseMint",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "quoteMint",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "baseVaultAccount",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "quoteVaultAccount",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "takerBaseTokenAccount",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "takerQuoteTokenAccount",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "baseTokenProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "quoteTokenProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "amount",
+          "type": "u64"
+        },
+        {
+          "name": "threshold",
+          "type": "u64"
+        },
+        {
+          "name": "side",
+          "type": "u8"
+        },
+        {
+          "name": "mode",
+          "type": "u8"
+        },
+        {
+          "name": "builderFeePpm",
+          "type": "u32"
+        }
+      ],
+      "discriminant": {
+        "type": "u8",
+        "value": 35
+      }
+    },
+    {
+      "name": "UpdateBookLimit",
+      "accounts": [
+        {
+          "name": "makerAccount",
+          "isMut": false,
+          "isSigner": true
+        },
+        {
+          "name": "makerBookAccount",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "marketAccount",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "makerRegistry",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "archerAccount",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "crossPolicy",
+          "type": "u8"
+        },
+        {
+          "name": "sequenceNumber",
+          "type": "u64"
+        },
+        {
+          "name": "numOps",
+          "type": "u8"
+        }
+      ],
+      "discriminant": {
+        "type": "u8",
+        "value": 36
+      }
+    },
+    {
+      "name": "UpdateBookRescale",
+      "accounts": [
+        {
+          "name": "makerAccount",
+          "isMut": false,
+          "isSigner": true
+        },
+        {
+          "name": "makerBookAccount",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "marketAccount",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "sequenceNumber",
+          "type": "u64"
+        },
+        {
+          "name": "midPriceTicks",
+          "type": "u64"
+        },
+        {
+          "name": "numBids",
+          "type": "u8"
+        },
+        {
+          "name": "numAsks",
+          "type": "u8"
+        }
+      ],
+      "discriminant": {
+        "type": "u8",
+        "value": 37
+      }
+    },
+    {
+      "name": "UpdateRegistry",
+      "accounts": [
+        {
+          "name": "adminAccount",
+          "isMut": false,
+          "isSigner": true
+        },
+        {
+          "name": "marketAccount",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "registryAccount",
+          "isMut": true,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "expectedVersion",
+          "type": "u32"
+        }
+      ],
+      "discriminant": {
+        "type": "u8",
+        "value": 38
+      }
+    }
+  ],
+  "types": [
+    {
+      "name": "InitializeMarketParams",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "marketId",
+            "type": "publicKey"
+          },
+          {
+            "name": "baseMint",
+            "type": "publicKey"
+          },
+          {
+            "name": "baseTokenProgram",
+            "type": "publicKey"
+          },
+          {
+            "name": "quoteMint",
+            "type": "publicKey"
+          },
+          {
+            "name": "quoteTokenProgram",
+            "type": "publicKey"
+          },
+          {
+            "name": "baseAtomsPerBaseLot",
+            "type": "u64"
+          },
+          {
+            "name": "quoteAtomsPerQuoteLot",
+            "type": "u64"
+          },
+          {
+            "name": "tickSizeInQuoteAtomsPerBaseUnit",
+            "type": "u64"
+          },
+          {
+            "name": "rawBaseUnitsPerBaseUnit",
+            "type": "u64"
+          },
+          {
+            "name": "baseDecimals",
+            "type": "u8"
+          },
+          {
+            "name": "quoteDecimals",
+            "type": "u8"
+          },
+          {
+            "name": "makerFeePpm",
+            "type": "i32"
+          },
+          {
+            "name": "takerFeePpm",
+            "type": "i32"
+          }
+        ]
+      }
+    },
+    {
+      "name": "ChangeMarketStatusParams",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "newStatus",
+            "type": "u8"
+          }
+        ]
+      }
+    },
+    {
+      "name": "UpdateMakerFeeParams",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "makerFeePpm",
+            "type": "i32"
+          }
+        ]
+      }
+    },
+    {
+      "name": "UpdateTakerFeeParams",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "takerFeePpm",
+            "type": "i32"
+          }
+        ]
+      }
+    },
+    {
+      "name": "CollectProtocolFeeParams",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "amount",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "MakerDepositFundsParams",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "baseLots",
+            "type": "u64"
+          },
+          {
+            "name": "quoteLots",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "MakerWithdrawFundsParams",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "baseLots",
+            "type": "u64"
+          },
+          {
+            "name": "quoteLots",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "UpdateExpiryInSlotsParams",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "expiryInSlots",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "SetArcherAccountDelegateParams",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "maxBuilderFeePpm",
+            "type": "u32"
+          }
+        ]
+      }
+    },
+    {
+      "name": "ArcherAccountWithdrawParams",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "tokenAmount",
+            "type": "u64"
+          },
+          {
+            "name": "lamports",
+            "type": "u64"
+          }
+        ]
+      }
+    }
+  ],
+  "metadata": {
+    "origin": "shank",
+    "address": "Archer8kgiavM61GyusMzaaS2ft5sALtNsD1HxkUPMhy"
+  }
+}
