@@ -1,0 +1,2282 @@
+{
+  "version": "0.1.0",
+  "name": "s_controller",
+  "address": "5ocnV1qiCgaQR8Jb8xWnVbApfaygJ8tNoZfgPwsgx9kx",
+  "metadata": {
+    "address": "5ocnV1qiCgaQR8Jb8xWnVbApfaygJ8tNoZfgPwsgx9kx",
+    "origin": "shank",
+    "notes": [
+      "This program uses custom single-byte instruction discriminators, not Anchor sighashes.",
+      "Discriminator 22 was the old Initialize instruction and is intentionally omitted.",
+      "The poolState PDA is versioned on chain and may contain either PoolStateV1 or PoolStateV2. The program migrates V1 to V2 lazily.",
+      "The lstStateList PDA is a raw packed list of LstState entries with no discriminator or length prefix.",
+      "The disablePoolAuthList PDA is a raw packed list of public keys with no discriminator or length prefix.",
+      "Instructions that invoke pricing or SOL value calculator programs require additional trailing CPI accounts after the fixed program account(s). Those dynamic tails are described in instruction docs."
+    ],
+    "source": "igneous-labs/inf-1.5 781fc2e533bfa760a44b80746545de11a19227c3 idl/inf_controller.json"
+  },
+  "instructions": [
+    {
+      "name": "syncSolValue",
+      "docs": [
+        "Discriminator: 0.",
+        "After calcProgram, pass the selected SOL value calculator CPI accounts as remaining accounts."
+      ],
+      "accounts": [
+        {
+          "name": "lstMint",
+          "writable": false,
+          "signer": false,
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "poolState",
+          "writable": true,
+          "signer": false,
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "lstStateList",
+          "writable": true,
+          "signer": false,
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "poolReserves",
+          "writable": false,
+          "signer": false,
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "calcProgram",
+          "writable": false,
+          "signer": false,
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "lstIndex",
+          "type": "u32"
+        }
+      ],
+      "discriminant": {
+        "type": "u8",
+        "value": 0
+      }
+    },
+    {
+      "name": "swapExactIn",
+      "docs": [
+        "Discriminator: 1.",
+        "Dynamic trailing CPI account groups are interleaved on chain as: inpCalcProgram, inp calculator CPI accounts, outCalcProgram, out calculator CPI accounts, pricingProgram, pricing CPI accounts."
+      ],
+      "accounts": [
+        {
+          "name": "signer",
+          "writable": false,
+          "signer": true,
+          "isMut": false,
+          "isSigner": true
+        },
+        {
+          "name": "inpLstMint",
+          "writable": false,
+          "signer": false,
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "outLstMint",
+          "writable": false,
+          "signer": false,
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "inpLstAcc",
+          "writable": true,
+          "signer": false,
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "outLstAcc",
+          "writable": true,
+          "signer": false,
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "protocolFeeAccumulator",
+          "writable": true,
+          "signer": false,
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "inpLstTokenProgram",
+          "writable": false,
+          "signer": false,
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "outLstTokenProgram",
+          "writable": false,
+          "signer": false,
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "poolState",
+          "writable": true,
+          "signer": false,
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "lstStateList",
+          "writable": true,
+          "signer": false,
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "inpPoolReserves",
+          "writable": true,
+          "signer": false,
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "outPoolReserves",
+          "writable": true,
+          "signer": false,
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "inpCalcProgram",
+          "writable": false,
+          "signer": false,
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "inpLstValueCalcAccs",
+          "type": "u8"
+        },
+        {
+          "name": "outLstValueCalcAccs",
+          "type": "u8"
+        },
+        {
+          "name": "inpLstIndex",
+          "type": "u32"
+        },
+        {
+          "name": "outLstIndex",
+          "type": "u32"
+        },
+        {
+          "name": "limit",
+          "type": "u64"
+        },
+        {
+          "name": "amount",
+          "type": "u64"
+        }
+      ],
+      "discriminant": {
+        "type": "u8",
+        "value": 1
+      }
+    },
+    {
+      "name": "swapExactOut",
+      "docs": [
+        "Discriminator: 2.",
+        "Dynamic trailing CPI account groups are interleaved on chain as: inpCalcProgram, inp calculator CPI accounts, outCalcProgram, out calculator CPI accounts, pricingProgram, pricing CPI accounts."
+      ],
+      "accounts": [
+        {
+          "name": "signer",
+          "writable": false,
+          "signer": true,
+          "isMut": false,
+          "isSigner": true
+        },
+        {
+          "name": "inpLstMint",
+          "writable": false,
+          "signer": false,
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "outLstMint",
+          "writable": false,
+          "signer": false,
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "inpLstAcc",
+          "writable": true,
+          "signer": false,
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "outLstAcc",
+          "writable": true,
+          "signer": false,
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "protocolFeeAccumulator",
+          "writable": true,
+          "signer": false,
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "inpLstTokenProgram",
+          "writable": false,
+          "signer": false,
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "outLstTokenProgram",
+          "writable": false,
+          "signer": false,
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "poolState",
+          "writable": true,
+          "signer": false,
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "lstStateList",
+          "writable": true,
+          "signer": false,
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "inpPoolReserves",
+          "writable": true,
+          "signer": false,
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "outPoolReserves",
+          "writable": true,
+          "signer": false,
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "inpCalcProgram",
+          "writable": false,
+          "signer": false,
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "inpLstValueCalcAccs",
+          "type": "u8"
+        },
+        {
+          "name": "outLstValueCalcAccs",
+          "type": "u8"
+        },
+        {
+          "name": "inpLstIndex",
+          "type": "u32"
+        },
+        {
+          "name": "outLstIndex",
+          "type": "u32"
+        },
+        {
+          "name": "limit",
+          "type": "u64"
+        },
+        {
+          "name": "amount",
+          "type": "u64"
+        }
+      ],
+      "discriminant": {
+        "type": "u8",
+        "value": 2
+      }
+    },
+    {
+      "name": "addLiquidity",
+      "docs": [
+        "Discriminator: 3.",
+        "Dynamic trailing CPI account groups are interleaved on chain as: inpCalcProgram, input LST calculator CPI accounts, pricingProgram, pricing CPI accounts.",
+        "The output side is the INF LP mint."
+      ],
+      "accounts": [
+        {
+          "name": "signer",
+          "writable": false,
+          "signer": true,
+          "isMut": false,
+          "isSigner": true
+        },
+        {
+          "name": "lstMint",
+          "writable": false,
+          "signer": false,
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "lstAcc",
+          "writable": true,
+          "signer": false,
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "lpAcc",
+          "writable": true,
+          "signer": false,
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "lpTokenMint",
+          "writable": false,
+          "signer": false,
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "protocolFeeAccumulator",
+          "writable": true,
+          "signer": false,
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "lstTokenProgram",
+          "writable": false,
+          "signer": false,
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "lpTokenProgram",
+          "writable": false,
+          "signer": false,
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "poolState",
+          "writable": true,
+          "signer": false,
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "lstStateList",
+          "writable": true,
+          "signer": false,
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "poolReserves",
+          "writable": true,
+          "signer": false,
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "inpCalcProgram",
+          "writable": false,
+          "signer": false,
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "lstValueCalcAccs",
+          "type": "u8"
+        },
+        {
+          "name": "lstIndex",
+          "type": "u32"
+        },
+        {
+          "name": "amount",
+          "type": "u64"
+        },
+        {
+          "name": "minOut",
+          "type": "u64"
+        }
+      ],
+      "discriminant": {
+        "type": "u8",
+        "value": 3
+      }
+    },
+    {
+      "name": "removeLiquidity",
+      "docs": [
+        "Discriminator: 4.",
+        "Dynamic trailing CPI account groups are interleaved on chain as: outCalcProgram, output LST calculator CPI accounts, pricingProgram, pricing CPI accounts.",
+        "The input side is the INF LP mint."
+      ],
+      "accounts": [
+        {
+          "name": "signer",
+          "writable": false,
+          "signer": true,
+          "isMut": false,
+          "isSigner": true
+        },
+        {
+          "name": "lstMint",
+          "writable": false,
+          "signer": false,
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "lstAcc",
+          "writable": true,
+          "signer": false,
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "lpAcc",
+          "writable": true,
+          "signer": false,
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "lpTokenMint",
+          "writable": false,
+          "signer": false,
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "protocolFeeAccumulator",
+          "writable": true,
+          "signer": false,
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "lstTokenProgram",
+          "writable": false,
+          "signer": false,
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "lpTokenProgram",
+          "writable": false,
+          "signer": false,
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "poolState",
+          "writable": true,
+          "signer": false,
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "lstStateList",
+          "writable": true,
+          "signer": false,
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "poolReserves",
+          "writable": true,
+          "signer": false,
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "outCalcProgram",
+          "writable": false,
+          "signer": false,
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "lstValueCalcAccs",
+          "type": "u8"
+        },
+        {
+          "name": "lstIndex",
+          "type": "u32"
+        },
+        {
+          "name": "amount",
+          "type": "u64"
+        },
+        {
+          "name": "minOut",
+          "type": "u64"
+        }
+      ],
+      "discriminant": {
+        "type": "u8",
+        "value": 4
+      }
+    },
+    {
+      "name": "disableLstInput",
+      "docs": [
+        "Discriminator: 5."
+      ],
+      "accounts": [
+        {
+          "name": "admin",
+          "writable": false,
+          "signer": true,
+          "isMut": false,
+          "isSigner": true
+        },
+        {
+          "name": "lstMint",
+          "writable": false,
+          "signer": false,
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "poolState",
+          "writable": false,
+          "signer": false,
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "lstStateList",
+          "writable": true,
+          "signer": false,
+          "isMut": true,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "lstIndex",
+          "type": "u32"
+        }
+      ],
+      "discriminant": {
+        "type": "u8",
+        "value": 5
+      }
+    },
+    {
+      "name": "enableLstInput",
+      "docs": [
+        "Discriminator: 6."
+      ],
+      "accounts": [
+        {
+          "name": "admin",
+          "writable": false,
+          "signer": true,
+          "isMut": false,
+          "isSigner": true
+        },
+        {
+          "name": "lstMint",
+          "writable": false,
+          "signer": false,
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "poolState",
+          "writable": false,
+          "signer": false,
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "lstStateList",
+          "writable": true,
+          "signer": false,
+          "isMut": true,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "lstIndex",
+          "type": "u32"
+        }
+      ],
+      "discriminant": {
+        "type": "u8",
+        "value": 6
+      }
+    },
+    {
+      "name": "addLst",
+      "docs": [
+        "Discriminator: 7."
+      ],
+      "accounts": [
+        {
+          "name": "admin",
+          "writable": false,
+          "signer": true,
+          "isMut": false,
+          "isSigner": true
+        },
+        {
+          "name": "payer",
+          "writable": true,
+          "signer": true,
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "lstMint",
+          "writable": false,
+          "signer": false,
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "poolReserves",
+          "writable": true,
+          "signer": false,
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "protocolFeeAccumulator",
+          "writable": true,
+          "signer": false,
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "protocolFeeAccumulatorAuth",
+          "writable": false,
+          "signer": false,
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "solValueCalculator",
+          "writable": false,
+          "signer": false,
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "poolState",
+          "writable": false,
+          "signer": false,
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "lstStateList",
+          "writable": true,
+          "signer": false,
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "associatedTokenProgram",
+          "writable": false,
+          "signer": false,
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "systemProgram",
+          "writable": false,
+          "signer": false,
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "lstTokenProgram",
+          "writable": false,
+          "signer": false,
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [],
+      "discriminant": {
+        "type": "u8",
+        "value": 7
+      }
+    },
+    {
+      "name": "removeLst",
+      "docs": [
+        "Discriminator: 8."
+      ],
+      "accounts": [
+        {
+          "name": "admin",
+          "writable": false,
+          "signer": true,
+          "isMut": false,
+          "isSigner": true
+        },
+        {
+          "name": "refundRentTo",
+          "writable": true,
+          "signer": false,
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "lstMint",
+          "writable": false,
+          "signer": false,
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "poolReserves",
+          "writable": true,
+          "signer": false,
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "protocolFeeAccumulator",
+          "writable": true,
+          "signer": false,
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "protocolFeeAccumulatorAuth",
+          "writable": false,
+          "signer": false,
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "poolState",
+          "writable": false,
+          "signer": false,
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "lstStateList",
+          "writable": true,
+          "signer": false,
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "lstTokenProgram",
+          "writable": false,
+          "signer": false,
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "lstIndex",
+          "type": "u32"
+        }
+      ],
+      "discriminant": {
+        "type": "u8",
+        "value": 8
+      }
+    },
+    {
+      "name": "setSolValueCalculator",
+      "docs": [
+        "Discriminator: 9.",
+        "After calcProgram, pass the new calculator's CPI accounts as remaining accounts."
+      ],
+      "accounts": [
+        {
+          "name": "admin",
+          "writable": false,
+          "signer": true,
+          "isMut": false,
+          "isSigner": true
+        },
+        {
+          "name": "lstMint",
+          "writable": false,
+          "signer": false,
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "poolState",
+          "writable": true,
+          "signer": false,
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "poolReserves",
+          "writable": false,
+          "signer": false,
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "lstStateList",
+          "writable": true,
+          "signer": false,
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "calcProgram",
+          "writable": false,
+          "signer": false,
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "lstIndex",
+          "type": "u32"
+        }
+      ],
+      "discriminant": {
+        "type": "u8",
+        "value": 9
+      }
+    },
+    {
+      "name": "setAdmin",
+      "docs": [
+        "Discriminator: 10."
+      ],
+      "accounts": [
+        {
+          "name": "curr",
+          "writable": false,
+          "signer": true,
+          "isMut": false,
+          "isSigner": true
+        },
+        {
+          "name": "new",
+          "writable": false,
+          "signer": true,
+          "isMut": false,
+          "isSigner": true
+        },
+        {
+          "name": "poolState",
+          "writable": true,
+          "signer": false,
+          "isMut": true,
+          "isSigner": false
+        }
+      ],
+      "args": [],
+      "discriminant": {
+        "type": "u8",
+        "value": 10
+      }
+    },
+    {
+      "name": "setProtocolFee",
+      "docs": [
+        "Discriminator: 11."
+      ],
+      "accounts": [
+        {
+          "name": "admin",
+          "writable": false,
+          "signer": true,
+          "isMut": false,
+          "isSigner": true
+        },
+        {
+          "name": "poolState",
+          "writable": true,
+          "signer": false,
+          "isMut": true,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "protocolFeeNanos",
+          "type": "u32"
+        }
+      ],
+      "discriminant": {
+        "type": "u8",
+        "value": 11
+      }
+    },
+    {
+      "name": "setProtocolFeeBeneficiary",
+      "docs": [
+        "Discriminator: 12."
+      ],
+      "accounts": [
+        {
+          "name": "curr",
+          "writable": false,
+          "signer": true,
+          "isMut": false,
+          "isSigner": true
+        },
+        {
+          "name": "new",
+          "writable": false,
+          "signer": false,
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "poolState",
+          "writable": true,
+          "signer": false,
+          "isMut": true,
+          "isSigner": false
+        }
+      ],
+      "args": [],
+      "discriminant": {
+        "type": "u8",
+        "value": 12
+      }
+    },
+    {
+      "name": "setPricingProg",
+      "docs": [
+        "Discriminator: 13."
+      ],
+      "accounts": [
+        {
+          "name": "admin",
+          "writable": false,
+          "signer": true,
+          "isMut": false,
+          "isSigner": true
+        },
+        {
+          "name": "new",
+          "writable": false,
+          "signer": false,
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "poolState",
+          "writable": true,
+          "signer": false,
+          "isMut": true,
+          "isSigner": false
+        }
+      ],
+      "args": [],
+      "discriminant": {
+        "type": "u8",
+        "value": 13
+      }
+    },
+    {
+      "name": "withdrawProtocolFees",
+      "docs": [
+        "Discriminator: 14."
+      ],
+      "accounts": [
+        {
+          "name": "beneficiary",
+          "writable": false,
+          "signer": true,
+          "isMut": false,
+          "isSigner": true
+        },
+        {
+          "name": "withdrawTo",
+          "writable": true,
+          "signer": false,
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "protocolFeeAccumulator",
+          "writable": true,
+          "signer": false,
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "protocolFeeAccumulatorAuth",
+          "writable": false,
+          "signer": false,
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "tokenProgram",
+          "writable": false,
+          "signer": false,
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "poolState",
+          "writable": false,
+          "signer": false,
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "lstMint",
+          "writable": false,
+          "signer": false,
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "amount",
+          "type": "u64"
+        }
+      ],
+      "discriminant": {
+        "type": "u8",
+        "value": 14
+      }
+    },
+    {
+      "name": "addDisablePoolAuth",
+      "docs": [
+        "Discriminator: 15."
+      ],
+      "accounts": [
+        {
+          "name": "payer",
+          "writable": true,
+          "signer": true,
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "admin",
+          "writable": false,
+          "signer": true,
+          "isMut": false,
+          "isSigner": true
+        },
+        {
+          "name": "poolState",
+          "writable": false,
+          "signer": false,
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "new",
+          "writable": false,
+          "signer": false,
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "disablePoolAuthList",
+          "writable": true,
+          "signer": false,
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "systemProgram",
+          "writable": false,
+          "signer": false,
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [],
+      "discriminant": {
+        "type": "u8",
+        "value": 15
+      }
+    },
+    {
+      "name": "removeDisablePoolAuth",
+      "docs": [
+        "Discriminator: 16."
+      ],
+      "accounts": [
+        {
+          "name": "refundRentTo",
+          "writable": true,
+          "signer": false,
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "signer",
+          "writable": false,
+          "signer": true,
+          "isMut": false,
+          "isSigner": true
+        },
+        {
+          "name": "poolState",
+          "writable": false,
+          "signer": false,
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "remove",
+          "writable": false,
+          "signer": false,
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "disablePoolAuthList",
+          "writable": true,
+          "signer": false,
+          "isMut": true,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "index",
+          "type": "u32"
+        }
+      ],
+      "discriminant": {
+        "type": "u8",
+        "value": 16
+      }
+    },
+    {
+      "name": "disablePool",
+      "docs": [
+        "Discriminator: 17."
+      ],
+      "accounts": [
+        {
+          "name": "signer",
+          "writable": false,
+          "signer": true,
+          "isMut": false,
+          "isSigner": true
+        },
+        {
+          "name": "poolState",
+          "writable": true,
+          "signer": false,
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "disablePoolAuthList",
+          "writable": false,
+          "signer": false,
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [],
+      "discriminant": {
+        "type": "u8",
+        "value": 17
+      }
+    },
+    {
+      "name": "enablePool",
+      "docs": [
+        "Discriminator: 18."
+      ],
+      "accounts": [
+        {
+          "name": "admin",
+          "writable": false,
+          "signer": true,
+          "isMut": false,
+          "isSigner": true
+        },
+        {
+          "name": "poolState",
+          "writable": true,
+          "signer": false,
+          "isMut": true,
+          "isSigner": false
+        }
+      ],
+      "args": [],
+      "discriminant": {
+        "type": "u8",
+        "value": 18
+      }
+    },
+    {
+      "name": "startRebalance",
+      "docs": [
+        "Discriminator: 19.",
+        "Dynamic trailing CPI account groups are interleaved on chain as: outCalcProgram, output calculator CPI accounts, inpCalcProgram, input calculator CPI accounts."
+      ],
+      "accounts": [
+        {
+          "name": "rebalanceAuth",
+          "writable": false,
+          "signer": true,
+          "isMut": false,
+          "isSigner": true
+        },
+        {
+          "name": "poolState",
+          "writable": true,
+          "signer": false,
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "lstStateList",
+          "writable": true,
+          "signer": false,
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "rebalanceRecord",
+          "writable": true,
+          "signer": false,
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "outLstMint",
+          "writable": false,
+          "signer": false,
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "inpLstMint",
+          "writable": false,
+          "signer": false,
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "outPoolReserves",
+          "writable": true,
+          "signer": false,
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "inpPoolReserves",
+          "writable": true,
+          "signer": false,
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "withdrawTo",
+          "writable": true,
+          "signer": false,
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "instructions",
+          "writable": false,
+          "signer": false,
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "systemProgram",
+          "writable": false,
+          "signer": false,
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "outLstTokenProgram",
+          "writable": false,
+          "signer": false,
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "outCalcProgram",
+          "writable": false,
+          "signer": false,
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "outLstValueCalcAccs",
+          "type": "u8"
+        },
+        {
+          "name": "outLstIndex",
+          "type": "u32"
+        },
+        {
+          "name": "inpLstIndex",
+          "type": "u32"
+        },
+        {
+          "name": "amount",
+          "type": "u64"
+        },
+        {
+          "name": "minStartingOutLst",
+          "type": "u64"
+        },
+        {
+          "name": "maxStartingInpLst",
+          "type": "u64"
+        }
+      ],
+      "discriminant": {
+        "type": "u8",
+        "value": 19
+      }
+    },
+    {
+      "name": "endRebalance",
+      "docs": [
+        "Discriminator: 20.",
+        "Dynamic trailing CPI account groups are interleaved on chain as: inpCalcProgram, input calculator CPI accounts."
+      ],
+      "accounts": [
+        {
+          "name": "rebalanceAuth",
+          "writable": false,
+          "signer": true,
+          "isMut": false,
+          "isSigner": true
+        },
+        {
+          "name": "poolState",
+          "writable": true,
+          "signer": false,
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "lstStateList",
+          "writable": true,
+          "signer": false,
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "rebalanceRecord",
+          "writable": true,
+          "signer": false,
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "inpLstMint",
+          "writable": false,
+          "signer": false,
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "inpPoolReserves",
+          "writable": false,
+          "signer": false,
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "inpCalcProgram",
+          "writable": false,
+          "signer": false,
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [],
+      "discriminant": {
+        "type": "u8",
+        "value": 20
+      }
+    },
+    {
+      "name": "setRebalAuth",
+      "docs": [
+        "Discriminator: 21."
+      ],
+      "accounts": [
+        {
+          "name": "signer",
+          "writable": false,
+          "signer": true,
+          "isMut": false,
+          "isSigner": true
+        },
+        {
+          "name": "new",
+          "writable": false,
+          "signer": false,
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "poolState",
+          "writable": true,
+          "signer": false,
+          "isMut": true,
+          "isSigner": false
+        }
+      ],
+      "args": [],
+      "discriminant": {
+        "type": "u8",
+        "value": 21
+      }
+    },
+    {
+      "name": "swapExactInV2",
+      "docs": [
+        "Discriminator: 23.",
+        "Dynamic trailing CPI account groups are interleaved on chain as: inpCalcProgram, inp calculator CPI accounts, outCalcProgram, out calculator CPI accounts, pricingProgram, pricing CPI accounts."
+      ],
+      "accounts": [
+        {
+          "name": "signer",
+          "writable": false,
+          "signer": true,
+          "isMut": false,
+          "isSigner": true
+        },
+        {
+          "name": "inpMint",
+          "writable": false,
+          "signer": false,
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "outMint",
+          "writable": false,
+          "signer": false,
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "inpAcc",
+          "writable": true,
+          "signer": false,
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "outAcc",
+          "writable": true,
+          "signer": false,
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "inpTokenProgram",
+          "writable": false,
+          "signer": false,
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "outTokenProgram",
+          "writable": false,
+          "signer": false,
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "poolState",
+          "writable": true,
+          "signer": false,
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "lstStateList",
+          "writable": true,
+          "signer": false,
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "inpPoolReserves",
+          "writable": true,
+          "signer": false,
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "outPoolReserves",
+          "writable": true,
+          "signer": false,
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "inpCalcProgram",
+          "writable": false,
+          "signer": false,
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "inpLstValueCalcAccs",
+          "type": "u8"
+        },
+        {
+          "name": "outLstValueCalcAccs",
+          "type": "u8"
+        },
+        {
+          "name": "inpLstIndex",
+          "type": "u32"
+        },
+        {
+          "name": "outLstIndex",
+          "type": "u32"
+        },
+        {
+          "name": "limit",
+          "type": "u64"
+        },
+        {
+          "name": "amount",
+          "type": "u64"
+        }
+      ],
+      "discriminant": {
+        "type": "u8",
+        "value": 23
+      }
+    },
+    {
+      "name": "swapExactOutV2",
+      "docs": [
+        "Discriminator: 24.",
+        "Dynamic trailing CPI account groups are interleaved on chain as: inpCalcProgram, inp calculator CPI accounts, outCalcProgram, out calculator CPI accounts, pricingProgram, pricing CPI accounts."
+      ],
+      "accounts": [
+        {
+          "name": "signer",
+          "writable": false,
+          "signer": true,
+          "isMut": false,
+          "isSigner": true
+        },
+        {
+          "name": "inpMint",
+          "writable": false,
+          "signer": false,
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "outMint",
+          "writable": false,
+          "signer": false,
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "inpAcc",
+          "writable": true,
+          "signer": false,
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "outAcc",
+          "writable": true,
+          "signer": false,
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "inpTokenProgram",
+          "writable": false,
+          "signer": false,
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "outTokenProgram",
+          "writable": false,
+          "signer": false,
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "poolState",
+          "writable": true,
+          "signer": false,
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "lstStateList",
+          "writable": true,
+          "signer": false,
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "inpPoolReserves",
+          "writable": true,
+          "signer": false,
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "outPoolReserves",
+          "writable": true,
+          "signer": false,
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "inpCalcProgram",
+          "writable": false,
+          "signer": false,
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "inpLstValueCalcAccs",
+          "type": "u8"
+        },
+        {
+          "name": "outLstValueCalcAccs",
+          "type": "u8"
+        },
+        {
+          "name": "inpLstIndex",
+          "type": "u32"
+        },
+        {
+          "name": "outLstIndex",
+          "type": "u32"
+        },
+        {
+          "name": "limit",
+          "type": "u64"
+        },
+        {
+          "name": "amount",
+          "type": "u64"
+        }
+      ],
+      "discriminant": {
+        "type": "u8",
+        "value": 24
+      }
+    },
+    {
+      "name": "withdrawProtocolFeesV2",
+      "docs": [
+        "Discriminator: 25."
+      ],
+      "accounts": [
+        {
+          "name": "poolState",
+          "writable": true,
+          "signer": false,
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "beneficiary",
+          "writable": false,
+          "signer": true,
+          "isMut": false,
+          "isSigner": true
+        },
+        {
+          "name": "withdrawTo",
+          "writable": true,
+          "signer": false,
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "infMint",
+          "writable": true,
+          "signer": false,
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "tokenProgram",
+          "writable": false,
+          "signer": false,
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [],
+      "discriminant": {
+        "type": "u8",
+        "value": 25
+      }
+    },
+    {
+      "name": "setRps",
+      "docs": [
+        "Discriminator: 26.",
+        "The rps argument is the raw UQ0F63-backed u64 stored on chain."
+      ],
+      "accounts": [
+        {
+          "name": "poolState",
+          "writable": true,
+          "signer": false,
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "rpsAuth",
+          "writable": false,
+          "signer": true,
+          "isMut": false,
+          "isSigner": true
+        }
+      ],
+      "args": [
+        {
+          "name": "rps",
+          "type": "u64"
+        }
+      ],
+      "discriminant": {
+        "type": "u8",
+        "value": 26
+      }
+    },
+    {
+      "name": "setRpsAuth",
+      "docs": [
+        "Discriminator: 27."
+      ],
+      "accounts": [
+        {
+          "name": "poolState",
+          "writable": true,
+          "signer": false,
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "signer",
+          "writable": false,
+          "signer": true,
+          "isMut": false,
+          "isSigner": true
+        },
+        {
+          "name": "newRpsAuth",
+          "writable": false,
+          "signer": false,
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [],
+      "discriminant": {
+        "type": "u8",
+        "value": 27
+      }
+    }
+  ],
+  "accounts": [
+    {
+      "name": "PoolStateV1",
+      "docs": [
+        "Legacy pool state layout stored at the poolState PDA before migration."
+      ],
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "totalSolValue",
+            "type": "u64"
+          },
+          {
+            "name": "tradingProtocolFeeBps",
+            "type": "u16"
+          },
+          {
+            "name": "lpProtocolFeeBps",
+            "type": "u16"
+          },
+          {
+            "name": "version",
+            "type": "u8"
+          },
+          {
+            "name": "isDisabled",
+            "type": "u8"
+          },
+          {
+            "name": "isRebalancing",
+            "type": "u8"
+          },
+          {
+            "name": "padding",
+            "type": {
+              "array": [
+                "u8",
+                1
+              ]
+            }
+          },
+          {
+            "name": "admin",
+            "type": "publicKey"
+          },
+          {
+            "name": "rebalanceAuthority",
+            "type": "publicKey"
+          },
+          {
+            "name": "protocolFeeBeneficiary",
+            "type": "publicKey"
+          },
+          {
+            "name": "pricingProgram",
+            "type": "publicKey"
+          },
+          {
+            "name": "lpTokenMint",
+            "type": "publicKey"
+          }
+        ]
+      }
+    },
+    {
+      "name": "PoolStateV2",
+      "docs": [
+        "Current pool state layout stored at the poolState PDA."
+      ],
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "totalSolValue",
+            "type": "u64"
+          },
+          {
+            "name": "protocolFeeNanos",
+            "type": "u32"
+          },
+          {
+            "name": "version",
+            "type": "u8"
+          },
+          {
+            "name": "isDisabled",
+            "type": "u8"
+          },
+          {
+            "name": "isRebalancing",
+            "type": "u8"
+          },
+          {
+            "name": "padding",
+            "type": {
+              "array": [
+                "u8",
+                1
+              ]
+            }
+          },
+          {
+            "name": "admin",
+            "type": "publicKey"
+          },
+          {
+            "name": "rebalanceAuthority",
+            "type": "publicKey"
+          },
+          {
+            "name": "protocolFeeBeneficiary",
+            "type": "publicKey"
+          },
+          {
+            "name": "pricingProgram",
+            "type": "publicKey"
+          },
+          {
+            "name": "lpTokenMint",
+            "type": "publicKey"
+          },
+          {
+            "name": "rpsAuthority",
+            "type": "publicKey"
+          },
+          {
+            "name": "rps",
+            "type": "u64"
+          },
+          {
+            "name": "withheldLamports",
+            "type": "u64"
+          },
+          {
+            "name": "protocolFeeLamports",
+            "type": "u64"
+          },
+          {
+            "name": "lastReleaseSlot",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "RebalanceRecord",
+      "docs": [
+        "Transient PDA account used between startRebalance and endRebalance."
+      ],
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "oldTotalSolValue",
+            "type": "u64"
+          },
+          {
+            "name": "inpLstIndex",
+            "type": "u32"
+          },
+          {
+            "name": "padding",
+            "type": {
+              "array": [
+                "u8",
+                4
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "types": [
+    {
+      "name": "LstState",
+      "docs": [
+        "Entry type stored inside the raw lstStateList packed list PDA."
+      ],
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "isInputDisabled",
+            "type": "u8"
+          },
+          {
+            "name": "poolReservesBump",
+            "type": "u8"
+          },
+          {
+            "name": "protocolFeeAccumulatorBump",
+            "type": "u8"
+          },
+          {
+            "name": "padding",
+            "type": {
+              "array": [
+                "u8",
+                5
+              ]
+            }
+          },
+          {
+            "name": "solValue",
+            "type": "u64"
+          },
+          {
+            "name": "mint",
+            "type": "publicKey"
+          },
+          {
+            "name": "solValueCalculator",
+            "type": "publicKey"
+          }
+        ]
+      }
+    }
+  ],
+  "errors": [
+    {
+      "code": 0,
+      "name": "InvalidPoolStateData",
+      "msg": "Invalid pool state data"
+    },
+    {
+      "code": 1,
+      "name": "InvalidLstStateListData",
+      "msg": "Invalid lst state list data"
+    },
+    {
+      "code": 2,
+      "name": "InvalidDisablePoolAuthorityListData",
+      "msg": "Invalid disable pool authority list data"
+    },
+    {
+      "code": 3,
+      "name": "InvalidRebalanceRecordData",
+      "msg": "Invalid rebalance record data"
+    },
+    {
+      "code": 4,
+      "name": "MathError",
+      "msg": "Math error"
+    },
+    {
+      "code": 5,
+      "name": "PoolRebalancing",
+      "msg": "Pool rebalancing"
+    },
+    {
+      "code": 6,
+      "name": "PoolDisabled",
+      "msg": "Pool disabled"
+    },
+    {
+      "code": 7,
+      "name": "PoolEnabled",
+      "msg": "Pool enabled"
+    },
+    {
+      "code": 8,
+      "name": "InvalidLstIndex",
+      "msg": "Invalid lst index"
+    },
+    {
+      "code": 9,
+      "name": "InvalidReserves",
+      "msg": "Invalid reserves"
+    },
+    {
+      "code": 10,
+      "name": "IncorrectSolValueCalculator",
+      "msg": "Incorrect SOL value calculator"
+    },
+    {
+      "code": 11,
+      "name": "FaultySolValueCalculator",
+      "msg": "Faulty SOL value calculator"
+    },
+    {
+      "code": 12,
+      "name": "IncorrectLstStateList",
+      "msg": "Incorrect lst state list"
+    },
+    {
+      "code": 13,
+      "name": "IncorrectPoolState",
+      "msg": "Incorrect pool state"
+    },
+    {
+      "code": 14,
+      "name": "LstInputDisabled",
+      "msg": "Lst input disabled"
+    },
+    {
+      "code": 15,
+      "name": "NoSucceedingEndRebalance",
+      "msg": "No succeeding end rebalance"
+    },
+    {
+      "code": 16,
+      "name": "IncorrectRebalanceRecord",
+      "msg": "Incorrect rebalance record"
+    },
+    {
+      "code": 17,
+      "name": "PoolNotRebalancing",
+      "msg": "Pool not rebalancing"
+    },
+    {
+      "code": 18,
+      "name": "PoolWouldLoseSolValue",
+      "msg": "Pool would lose SOL value"
+    },
+    {
+      "code": 19,
+      "name": "LstStillHasValue",
+      "msg": "Lst still has value"
+    },
+    {
+      "code": 20,
+      "name": "IncorrectPricingProgram",
+      "msg": "Incorrect pricing program"
+    },
+    {
+      "code": 21,
+      "name": "SlippageToleranceExceeded",
+      "msg": "Slippage tolerance exceeded"
+    },
+    {
+      "code": 22,
+      "name": "NotEnoughLiquidity",
+      "msg": "Not enough liquidity"
+    },
+    {
+      "code": 23,
+      "name": "IndexTooLarge",
+      "msg": "Index too large"
+    },
+    {
+      "code": 24,
+      "name": "InvalidDisablePoolAuthorityIndex",
+      "msg": "Invalid disable pool authority index"
+    },
+    {
+      "code": 25,
+      "name": "UnauthorizedDisablePoolAuthoritySigner",
+      "msg": "Unauthorized disable pool authority signer"
+    },
+    {
+      "code": 26,
+      "name": "InvalidDisablePoolAuthority",
+      "msg": "Invalid disable pool authority"
+    },
+    {
+      "code": 27,
+      "name": "UnauthorizedSetRebalanceAuthoritySigner",
+      "msg": "Unauthorized set rebalance authority signer"
+    },
+    {
+      "code": 28,
+      "name": "IncorrectDisablePoolAuthorityList",
+      "msg": "Incorrect disable pool authority list"
+    },
+    {
+      "code": 29,
+      "name": "FeeTooHigh",
+      "msg": "Fee too high"
+    },
+    {
+      "code": 30,
+      "name": "NotEnoughFees",
+      "msg": "Not enough fees"
+    },
+    {
+      "code": 31,
+      "name": "ZeroValue",
+      "msg": "Zero value"
+    },
+    {
+      "code": 32,
+      "name": "FaultyPricingProgram",
+      "msg": "Faulty pricing program"
+    },
+    {
+      "code": 33,
+      "name": "IncorrectLpMintInitialization",
+      "msg": "Incorrect LP mint initialization"
+    },
+    {
+      "code": 34,
+      "name": "DuplicateLst",
+      "msg": "Duplicate lst"
+    },
+    {
+      "code": 35,
+      "name": "SwapSameLst",
+      "msg": "Swap same lst"
+    },
+    {
+      "code": 36,
+      "name": "DuplicateDisablePoolAuthority",
+      "msg": "Duplicate disable pool authority"
+    },
+    {
+      "code": 37,
+      "name": "WrongPoolStateVers",
+      "msg": "Wrong pool state version"
+    },
+    {
+      "code": 38,
+      "name": "InvalidPoolStateDataV2",
+      "msg": "Invalid pool state data v2"
+    },
+    {
+      "code": 39,
+      "name": "TimeWentBackwards",
+      "msg": "Time went backwards"
+    },
+    {
+      "code": 40,
+      "name": "UnauthorizedSetRpsAuthoritySigner",
+      "msg": "Unauthorized set rps authority signer"
+    }
+  ]
+}

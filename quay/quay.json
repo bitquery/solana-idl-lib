@@ -1,0 +1,1552 @@
+{
+  "address": "QUayE6nexQWYNZAEqfN8FxoNwQDSu3CAzT2qq9J1ArG",
+  "metadata": {
+    "name": "quay",
+    "version": "0.2.0",
+    "spec": "0.1.0",
+    "description": "Quay Markets — Solana DEX with per-Strategy DSL pricing curves. Pinocchio-based program with hand-rolled sBPF dispatcher; this IDL was authored by hand from onchain/program/src/ + client/sdk/src/ to mirror the on-chain wire format. Account model: GlobalConfig (singleton) + MarketMaker (per-owner asset table) + Strategy (pricing curve bound to one asset pair) + Quotes (live quote feed).",
+    "repository": "https://github.com/Quay-Markets/quay-monorepo",
+    "origin": "shank",
+    "source": "Program Metadata account CW3wjfoek5sirEzMraCANei7RcqmYBYANMBbhjC5pp7t"
+  },
+  "instructions": [
+    {
+      "name": "init_global",
+      "docs": [
+        "Bootstrap the protocol. Signer becomes cfg.admin. Once per deployment."
+      ],
+      "accounts": [
+        {
+          "name": "global_config",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  103,
+                  108,
+                  111,
+                  98,
+                  97,
+                  108
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "payer",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [],
+      "discriminant": {
+        "type": "u8",
+        "value": 0
+      }
+    },
+    {
+      "name": "edit_platform_config",
+      "docs": [
+        "Admin edits halt flags, admin key, and the default protocol fee. `mask` selects which fields to write (bit 0 = swap_halted, bit 1 = protocol_halted, bit 2 = admin, bit 3 = default_protocol_fee_bps). Unselected fields are ignored."
+      ],
+      "accounts": [
+        {
+          "name": "global_config",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  103,
+                  108,
+                  111,
+                  98,
+                  97,
+                  108
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "admin",
+          "signer": true
+        }
+      ],
+      "args": [
+        {
+          "name": "mask",
+          "type": "u8"
+        },
+        {
+          "name": "swap_halted",
+          "type": "u8"
+        },
+        {
+          "name": "protocol_halted",
+          "type": "u8"
+        },
+        {
+          "name": "new_admin",
+          "type": "pubkey"
+        },
+        {
+          "name": "default_protocol_fee_bps",
+          "type": "u16"
+        }
+      ],
+      "discriminant": {
+        "type": "u8",
+        "value": 1
+      }
+    },
+    {
+      "name": "update_quotes",
+      "docs": [
+        "Owner overwrites the whole quote blob (964 raw bytes = 241 i32 LE entries). `batch_ts` is strictly increasing — a replayed or stale batch is rejected with StaleQuoteBatch. Hot path: handled by the hand-written sBPF entrypoint."
+      ],
+      "accounts": [
+        {
+          "name": "quotes",
+          "writable": true
+        },
+        {
+          "name": "owner",
+          "signer": true
+        }
+      ],
+      "args": [
+        {
+          "name": "batch_ts",
+          "type": "u64"
+        }
+      ],
+      "discriminant": {
+        "type": "u8",
+        "value": 4
+      }
+    },
+    {
+      "name": "init_quotes",
+      "docs": [
+        "Create a fresh keypair-backed Quotes account. The keypair signs for its own creation."
+      ],
+      "accounts": [
+        {
+          "name": "quotes",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "owner",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [],
+      "discriminant": {
+        "type": "u8",
+        "value": 5
+      }
+    },
+    {
+      "name": "close_quotes",
+      "docs": [
+        "Owner closes the quotes account and reclaims rent. Accounts are ordered [owner, quotes] so the update_quotes asm hot path's layout filter trampolines this to Rust."
+      ],
+      "accounts": [
+        {
+          "name": "owner",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "quotes",
+          "writable": true
+        }
+      ],
+      "args": [],
+      "discriminant": {
+        "type": "u8",
+        "value": 6
+      }
+    },
+    {
+      "name": "init_market_maker",
+      "docs": [
+        "Permissionless — anyone creates and pays for their own MarketMaker at PDA [\"mm\", owner] (the `owner` is the signer, so you can only create your own). Born frozen by both owner and admin: the admin must enable it via set_market_maker_admin and the owner via edit_market_maker_status before any swap can route against its strategies. A frozen/pending MM may still onboard strategies and deposits; only the halt kill switch blocks those."
+      ],
+      "accounts": [
+        {
+          "name": "market_maker",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  109,
+                  109
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "owner"
+              }
+            ]
+          }
+        },
+        {
+          "name": "owner",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [],
+      "discriminant": {
+        "type": "u8",
+        "value": 7
+      }
+    },
+    {
+      "name": "deposit_asset",
+      "docs": [
+        "Owner funds a vault. `asset_id == 0xFFFF` appends a fresh slot for `mint` and creates the vault token account; any other value tops up an existing slot."
+      ],
+      "accounts": [
+        {
+          "name": "global_config",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  103,
+                  108,
+                  111,
+                  98,
+                  97,
+                  108
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "market_maker",
+          "writable": true
+        },
+        {
+          "name": "vault",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  118,
+                  97,
+                  117,
+                  108,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "market_maker"
+              },
+              {
+                "kind": "account",
+                "path": "mint"
+              }
+            ]
+          }
+        },
+        {
+          "name": "owner_ata",
+          "writable": true
+        },
+        {
+          "name": "owner",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "mint"
+        },
+        {
+          "name": "token_program"
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "amount",
+          "type": "u64"
+        },
+        {
+          "name": "asset_id",
+          "type": "u16"
+        }
+      ],
+      "discriminant": {
+        "type": "u8",
+        "value": 8
+      }
+    },
+    {
+      "name": "withdraw_asset",
+      "docs": [
+        "Owner pulls inventory out. Amount is clamped to the asset slot's bookkept balance."
+      ],
+      "accounts": [
+        {
+          "name": "global_config",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  103,
+                  108,
+                  111,
+                  98,
+                  97,
+                  108
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "market_maker",
+          "writable": true
+        },
+        {
+          "name": "vault",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  118,
+                  97,
+                  117,
+                  108,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "market_maker"
+              },
+              {
+                "kind": "account",
+                "path": "mint"
+              }
+            ]
+          }
+        },
+        {
+          "name": "dest",
+          "writable": true
+        },
+        {
+          "name": "owner",
+          "signer": true
+        },
+        {
+          "name": "mint"
+        },
+        {
+          "name": "token_program"
+        }
+      ],
+      "args": [
+        {
+          "name": "amount",
+          "type": "u64"
+        },
+        {
+          "name": "asset_id",
+          "type": "u16"
+        }
+      ],
+      "discriminant": {
+        "type": "u8",
+        "value": 9
+      }
+    },
+    {
+      "name": "edit_market_maker_status",
+      "docs": [
+        "Owner toggles `frozen` on their MarketMaker. Does not touch `frozen_admin` or `halted_admin`."
+      ],
+      "accounts": [
+        {
+          "name": "market_maker",
+          "writable": true
+        },
+        {
+          "name": "owner",
+          "signer": true
+        }
+      ],
+      "args": [
+        {
+          "name": "frozen",
+          "type": "u8"
+        }
+      ],
+      "discriminant": {
+        "type": "u8",
+        "value": 10
+      }
+    },
+    {
+      "name": "set_market_maker_admin",
+      "docs": [
+        "Admin sets the MarketMaker's admin flags, selected by `mask` (bit 0 = frozen_admin, bit 1 = halted_admin, bit 2 = permissionless_strategies). frozen_admin stops trading + strategy creation (owner cannot clear it); halted_admin is a kill switch blocking every per-MM ix including deposits/withdrawals; permissionless_strategies = 1 lets owner-created strategies skip admin review (born unfrozen). Unselected fields are ignored. Mirrors edit_platform_config."
+      ],
+      "accounts": [
+        {
+          "name": "market_maker",
+          "writable": true
+        },
+        {
+          "name": "global_config",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  103,
+                  108,
+                  111,
+                  98,
+                  97,
+                  108
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "admin",
+          "signer": true
+        }
+      ],
+      "args": [
+        {
+          "name": "mask",
+          "type": "u8"
+        },
+        {
+          "name": "frozen_admin",
+          "type": "u8"
+        },
+        {
+          "name": "halted_admin",
+          "type": "u8"
+        },
+        {
+          "name": "permissionless_strategies",
+          "type": "u8"
+        }
+      ],
+      "discriminant": {
+        "type": "u8",
+        "value": 11
+      }
+    },
+    {
+      "name": "withdraw_protocol_fees",
+      "docs": [
+        "Admin sweeps one asset slot's accrued protocol fees to `dest`. Zeroes the slot's `protocol_fee_amount` only after the transfer succeeds."
+      ],
+      "accounts": [
+        {
+          "name": "global_config",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  103,
+                  108,
+                  111,
+                  98,
+                  97,
+                  108
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "market_maker",
+          "writable": true
+        },
+        {
+          "name": "vault",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  118,
+                  97,
+                  117,
+                  108,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "market_maker"
+              },
+              {
+                "kind": "account",
+                "path": "mint"
+              }
+            ]
+          }
+        },
+        {
+          "name": "dest",
+          "writable": true
+        },
+        {
+          "name": "admin",
+          "signer": true
+        },
+        {
+          "name": "mint"
+        },
+        {
+          "name": "token_program"
+        }
+      ],
+      "args": [
+        {
+          "name": "asset_id",
+          "type": "u16"
+        }
+      ],
+      "discriminant": {
+        "type": "u8",
+        "value": 13
+      }
+    },
+    {
+      "name": "init_strategy",
+      "docs": [
+        "The MarketMaker `owner` creates and pays for its own Strategy; the MarketMaker must be live (not frozen or halted). Born frozen by the owner (reviews bytecode, then unfreezes via edit_strategy_status), and also `frozen_admin` unless the MarketMaker has permissionless_strategies set — in which case the admin must validate and unfreeze it. The protocol fee is stamped from GlobalConfig.default_protocol_fee_bps, not chosen by the owner (admin may override per-strategy via edit_strategy_fees). `base_id`/`quote_id` index into the MarketMaker's asset table; the strategy is bound to that pair for life. `base_mint`/`quote_mint` are validated against that table and exist so instruction parsers can read the pair off the creation ix without an account load. `quotes_account` is optional and may be bound later via update_strategy_quotes. `price_probe_base`/`price_probe_quote` are per-side input-atom sizes off-chain routers use to probe the price curve; the program stores them verbatim (both must be non-zero — a 0 is rejected) and they are updatable later via set_price_probe."
+      ],
+      "accounts": [
+        {
+          "name": "strategy",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  115,
+                  116,
+                  114,
+                  97,
+                  116,
+                  101,
+                  103,
+                  121
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "owner"
+              },
+              {
+                "kind": "arg",
+                "path": "id"
+              }
+            ]
+          }
+        },
+        {
+          "name": "market_maker"
+        },
+        {
+          "name": "global_config",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  103,
+                  108,
+                  111,
+                  98,
+                  97,
+                  108
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "owner",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        },
+        {
+          "name": "base_mint"
+        },
+        {
+          "name": "quote_mint"
+        },
+        {
+          "name": "quotes_account",
+          "optional": true
+        }
+      ],
+      "args": [
+        {
+          "name": "id",
+          "type": "u8"
+        },
+        {
+          "name": "base_id",
+          "type": "u16"
+        },
+        {
+          "name": "quote_id",
+          "type": "u16"
+        },
+        {
+          "name": "bytecode_len",
+          "type": "u32"
+        },
+        {
+          "name": "userspace_len",
+          "type": "u32"
+        },
+        {
+          "name": "price_probe_base",
+          "type": "u64"
+        },
+        {
+          "name": "price_probe_quote",
+          "type": "u64"
+        }
+      ],
+      "discriminant": {
+        "type": "u8",
+        "value": 16
+      }
+    },
+    {
+      "name": "update_strategy_bytecode",
+      "docs": [
+        "Owner replaces the strategy's curve bytecode. Re-stamps `dsl_version` to the current VM version. The handler resizes the account and shifts the userspace tail if the new length differs."
+      ],
+      "accounts": [
+        {
+          "name": "strategy",
+          "writable": true
+        },
+        {
+          "name": "global_config",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  103,
+                  108,
+                  111,
+                  98,
+                  97,
+                  108
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "owner",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "bytecode_len",
+          "type": "u32"
+        }
+      ],
+      "discriminant": {
+        "type": "u8",
+        "value": 17
+      }
+    },
+    {
+      "name": "resize_userspace",
+      "docs": [
+        "Owner grows or shrinks the userspace tail. Userspace is the account tail (after the bytecode), so the resize is a no-shift realloc; growth zero-initialises the new bytes."
+      ],
+      "accounts": [
+        {
+          "name": "strategy",
+          "writable": true
+        },
+        {
+          "name": "owner",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "new_userspace_len",
+          "type": "u32"
+        }
+      ],
+      "discriminant": {
+        "type": "u8",
+        "value": 18
+      }
+    },
+    {
+      "name": "set_userspace",
+      "docs": [
+        "Owner partial-write into userspace at `offset`. Bounds-checked: `offset + bytes.len() <= userspace_len`."
+      ],
+      "accounts": [
+        {
+          "name": "strategy",
+          "writable": true
+        },
+        {
+          "name": "owner",
+          "signer": true
+        }
+      ],
+      "args": [
+        {
+          "name": "offset",
+          "type": "u32"
+        }
+      ],
+      "discriminant": {
+        "type": "u8",
+        "value": 19
+      }
+    },
+    {
+      "name": "update_strategy_quotes",
+      "docs": [
+        "Owner rebinds the strategy's quotes_account to a new Quotes account."
+      ],
+      "accounts": [
+        {
+          "name": "strategy",
+          "writable": true
+        },
+        {
+          "name": "quotes_account"
+        },
+        {
+          "name": "owner",
+          "signer": true
+        }
+      ],
+      "args": [],
+      "discriminant": {
+        "type": "u8",
+        "value": 20
+      }
+    },
+    {
+      "name": "edit_strategy_status",
+      "docs": [
+        "Toggle `frozen` (owner-signed) or `frozen_admin` (admin-signed) on a Strategy. The handler reads the signer and picks the right field — strategy.owner sets `frozen`; cfg.admin sets `frozen_admin`."
+      ],
+      "accounts": [
+        {
+          "name": "strategy",
+          "writable": true
+        },
+        {
+          "name": "global_config",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  103,
+                  108,
+                  111,
+                  98,
+                  97,
+                  108
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "signer",
+          "signer": true
+        }
+      ],
+      "args": [
+        {
+          "name": "mode",
+          "type": "u8"
+        }
+      ],
+      "discriminant": {
+        "type": "u8",
+        "value": 21
+      }
+    },
+    {
+      "name": "edit_strategy_fees",
+      "docs": [
+        "Admin sets `protocol_fee_bps` on a Strategy. Rejected when > 10_000. A fee increase auto-sets `mm.frozen = 1` (owner-clearable via edit_market_maker_status) — the owner must re-acknowledge the new cut before any swap pays it. Decreases and no-ops leave `mm.frozen` alone. `mm` must be the canonical `[\"mm\", strategy.owner]` PDA; the program validates the binding."
+      ],
+      "accounts": [
+        {
+          "name": "strategy",
+          "writable": true
+        },
+        {
+          "name": "market_maker",
+          "writable": true
+        },
+        {
+          "name": "global_config",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  103,
+                  108,
+                  111,
+                  98,
+                  97,
+                  108
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "admin",
+          "signer": true
+        }
+      ],
+      "args": [
+        {
+          "name": "protocol_fee_bps",
+          "type": "u16"
+        }
+      ],
+      "discriminant": {
+        "type": "u8",
+        "value": 22
+      }
+    },
+    {
+      "name": "set_strategy_routing",
+      "docs": [
+        "Set the aggregator-routing bitmask `routing_flags` on a Strategy (bit0 = Titan, bit1 = Jupiter, bits2-7 reserved; 0 = not routed, the born default). Admin-only for now: the signer must equal cfg.admin. The program stores the byte verbatim but does NOT gate swaps on it: it cannot prove which aggregator initiated an agg_swap, so each off-chain adapter reads this byte and surfaces the strategy only when its own bit is set."
+      ],
+      "accounts": [
+        {
+          "name": "strategy",
+          "writable": true
+        },
+        {
+          "name": "global_config",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  103,
+                  108,
+                  111,
+                  98,
+                  97,
+                  108
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "admin",
+          "signer": true
+        }
+      ],
+      "args": [
+        {
+          "name": "routing_flags",
+          "type": "u8"
+        }
+      ],
+      "discriminant": {
+        "type": "u8",
+        "value": 23
+      }
+    },
+    {
+      "name": "set_price_probe",
+      "docs": [
+        "Set the per-side price-probe sizes (`price_probe_base`, `price_probe_quote`) on a Strategy. Owner-only: the signer must equal strategy.owner. These are per-side input-atom sizes off-chain routers use to probe the price curve; the program stores them verbatim (both must be non-zero — a 0 is rejected) and does NOT act on them, mirroring routing_flags. Allowed while the strategy is admin-frozen (admin freeze gates trading only, not owner edits)."
+      ],
+      "accounts": [
+        {
+          "name": "strategy",
+          "writable": true
+        },
+        {
+          "name": "owner",
+          "signer": true
+        }
+      ],
+      "args": [
+        {
+          "name": "price_probe_base",
+          "type": "u64"
+        },
+        {
+          "name": "price_probe_quote",
+          "type": "u64"
+        }
+      ],
+      "discriminant": {
+        "type": "u8",
+        "value": 24
+      }
+    },
+    {
+      "name": "swap",
+      "docs": [
+        "Single-strategy taker swap. The taker signs the IN transfer; the MarketMaker PDA signs the OUT transfer. `side`: 0 = SELL_BASE (taker gives base, gets quote), 1 = BUY_BASE. Slippage check: out_to_taker >= min_amount_out. The Instructions sysvar is required at index 11 so the program can gather VM TxContext before token program accounts. Input-derived protocol fee: fee = amount_in * strategy.protocol_fee_bps / 10_000 (IN-token atoms) is skimmed from the input before pricing; the curve runs once on the net input (amount_in - fee) and returns amount_out directly (no price scaling). The fee accrues on the IN-side asset's protocol_fee_amount."
+      ],
+      "accounts": [
+        {
+          "name": "global_config",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  103,
+                  108,
+                  111,
+                  98,
+                  97,
+                  108
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "strategy",
+          "writable": true
+        },
+        {
+          "name": "market_maker",
+          "writable": true
+        },
+        {
+          "name": "quotes"
+        },
+        {
+          "name": "vault_in",
+          "writable": true
+        },
+        {
+          "name": "vault_out",
+          "writable": true
+        },
+        {
+          "name": "taker_ata_in",
+          "writable": true
+        },
+        {
+          "name": "taker_ata_out",
+          "writable": true
+        },
+        {
+          "name": "taker",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "mint_in"
+        },
+        {
+          "name": "mint_out"
+        },
+        {
+          "name": "instructions_sysvar",
+          "address": "Sysvar1nstructions1111111111111111111111111"
+        },
+        {
+          "name": "token_program"
+        }
+      ],
+      "args": [
+        {
+          "name": "amount_in",
+          "type": "u64"
+        },
+        {
+          "name": "min_amount_out",
+          "type": "u64"
+        },
+        {
+          "name": "side",
+          "type": "u8"
+        }
+      ],
+      "discriminant": {
+        "type": "u8",
+        "value": 32
+      }
+    },
+    {
+      "name": "agg_swap",
+      "docs": [
+        "Best-of-N taker swap across `AGG_N = 5` candidate strategies on the same (base_mint, quote_mint) pair. The program prices every candidate (tolerant — bad candidates are skipped, not failed), picks the highest out_to_taker, then settles the winner using the same execute path as `swap`. Ineligible candidate slots can be padded with empty pubkeys. Account layout: 6 fixed accounts (cfg, taker, taker_atas, mints) + 5 blocks of 5 per-candidate accounts (strategy, mm, quotes, vault_base, vault_quote) + Instructions sysvar + trailing token program(s)."
+      ],
+      "accounts": [
+        {
+          "name": "global_config",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  103,
+                  108,
+                  111,
+                  98,
+                  97,
+                  108
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "taker",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "taker_ata_base",
+          "writable": true
+        },
+        {
+          "name": "taker_ata_quote",
+          "writable": true
+        },
+        {
+          "name": "base_mint"
+        },
+        {
+          "name": "quote_mint"
+        },
+        {
+          "name": "strategy_0",
+          "writable": true
+        },
+        {
+          "name": "strategy_1",
+          "writable": true
+        },
+        {
+          "name": "strategy_2",
+          "writable": true
+        },
+        {
+          "name": "strategy_3",
+          "writable": true
+        },
+        {
+          "name": "strategy_4",
+          "writable": true
+        },
+        {
+          "name": "market_maker_0",
+          "writable": true
+        },
+        {
+          "name": "market_maker_1",
+          "writable": true
+        },
+        {
+          "name": "market_maker_2",
+          "writable": true
+        },
+        {
+          "name": "market_maker_3",
+          "writable": true
+        },
+        {
+          "name": "market_maker_4",
+          "writable": true
+        },
+        {
+          "name": "quotes_0"
+        },
+        {
+          "name": "quotes_1"
+        },
+        {
+          "name": "quotes_2"
+        },
+        {
+          "name": "quotes_3"
+        },
+        {
+          "name": "quotes_4"
+        },
+        {
+          "name": "vault_base_0",
+          "writable": true
+        },
+        {
+          "name": "vault_base_1",
+          "writable": true
+        },
+        {
+          "name": "vault_base_2",
+          "writable": true
+        },
+        {
+          "name": "vault_base_3",
+          "writable": true
+        },
+        {
+          "name": "vault_base_4",
+          "writable": true
+        },
+        {
+          "name": "vault_quote_0",
+          "writable": true
+        },
+        {
+          "name": "vault_quote_1",
+          "writable": true
+        },
+        {
+          "name": "vault_quote_2",
+          "writable": true
+        },
+        {
+          "name": "vault_quote_3",
+          "writable": true
+        },
+        {
+          "name": "vault_quote_4",
+          "writable": true
+        },
+        {
+          "name": "instructions_sysvar",
+          "address": "Sysvar1nstructions1111111111111111111111111"
+        },
+        {
+          "name": "token_program"
+        }
+      ],
+      "args": [
+        {
+          "name": "amount_in",
+          "type": "u64"
+        },
+        {
+          "name": "min_amount_out",
+          "type": "u64"
+        },
+        {
+          "name": "side",
+          "type": "u8"
+        }
+      ],
+      "discriminant": {
+        "type": "u8",
+        "value": 33
+      }
+    }
+  ],
+  "accounts": [
+    {
+      "name": "GlobalConfig",
+      "discriminator": [
+        1
+      ]
+    },
+    {
+      "name": "Quotes",
+      "discriminator": [
+        2
+      ]
+    },
+    {
+      "name": "Strategy",
+      "discriminator": [
+        3
+      ]
+    },
+    {
+      "name": "MarketMaker",
+      "discriminator": [
+        4
+      ]
+    }
+  ],
+  "types": [
+    {
+      "name": "GlobalConfig",
+      "docs": [
+        "Singleton platform config at PDA [\"global\"]. 128 bytes."
+      ],
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "discriminator",
+            "type": "u8"
+          },
+          {
+            "name": "schema_version",
+            "type": "u8"
+          },
+          {
+            "name": "swap_halted",
+            "type": "u8"
+          },
+          {
+            "name": "protocol_halted",
+            "type": "u8"
+          },
+          {
+            "name": "default_protocol_fee_bps",
+            "type": "u16"
+          },
+          {
+            "name": "_pad",
+            "type": {
+              "array": [
+                "u8",
+                2
+              ]
+            }
+          },
+          {
+            "name": "admin",
+            "type": "pubkey"
+          },
+          {
+            "name": "_reserved_a",
+            "type": {
+              "array": [
+                "u8",
+                64
+              ]
+            }
+          },
+          {
+            "name": "_reserved_b",
+            "type": {
+              "array": [
+                "u8",
+                24
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "QuotesHeader",
+      "docs": [
+        "Header of a Quotes account, followed in account data by the 964-byte quote blob (241 LE i32 entries). Total account size = 1028 bytes — pinned for the update_quotes asm hot path."
+      ],
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "discriminator",
+            "type": "u8"
+          },
+          {
+            "name": "schema_version",
+            "type": "u8"
+          },
+          {
+            "name": "_pad",
+            "type": {
+              "array": [
+                "u8",
+                6
+              ]
+            }
+          },
+          {
+            "name": "owner",
+            "type": "pubkey"
+          },
+          {
+            "name": "updated_ts",
+            "type": "u64"
+          },
+          {
+            "name": "_reserved",
+            "type": {
+              "array": [
+                "u8",
+                16
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "StrategyHeader",
+      "docs": [
+        "Header of a Strategy account at PDA [\"strategy\", owner, id]. Followed by [bytecode][userspace]. SIZE = 192."
+      ],
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "discriminator",
+            "type": "u8"
+          },
+          {
+            "name": "schema_version",
+            "type": "u8"
+          },
+          {
+            "name": "dsl_version",
+            "type": "u8"
+          },
+          {
+            "name": "bump",
+            "type": "u8"
+          },
+          {
+            "name": "frozen_admin",
+            "type": "u8"
+          },
+          {
+            "name": "frozen",
+            "type": "u8"
+          },
+          {
+            "name": "_pad",
+            "type": {
+              "array": [
+                "u8",
+                2
+              ]
+            }
+          },
+          {
+            "name": "owner",
+            "type": "pubkey"
+          },
+          {
+            "name": "base_mint",
+            "type": "pubkey"
+          },
+          {
+            "name": "quote_mint",
+            "type": "pubkey"
+          },
+          {
+            "name": "quotes_account",
+            "type": "pubkey"
+          },
+          {
+            "name": "base_id",
+            "type": "u16"
+          },
+          {
+            "name": "quote_id",
+            "type": "u16"
+          },
+          {
+            "name": "protocol_fee_bps",
+            "type": "u16"
+          },
+          {
+            "name": "_pad2",
+            "type": "u16"
+          },
+          {
+            "name": "bytecode_len",
+            "type": "u32"
+          },
+          {
+            "name": "userspace_len",
+            "type": "u32"
+          },
+          {
+            "name": "last_update_slot",
+            "type": "u64"
+          },
+          {
+            "name": "routing_flags",
+            "type": "u8"
+          },
+          {
+            "name": "price_probe_base",
+            "type": "u64"
+          },
+          {
+            "name": "price_probe_quote",
+            "type": "u64"
+          },
+          {
+            "name": "_reserved",
+            "type": {
+              "array": [
+                "u8",
+                79
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "MarketMakerHeader",
+      "docs": [
+        "Header of a MarketMaker account at PDA [\"mm\", owner]. Followed by [AssetEntry; asset_count] — the asset table is append-only. SIZE = 64."
+      ],
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "discriminator",
+            "type": "u8"
+          },
+          {
+            "name": "bump",
+            "type": "u8"
+          },
+          {
+            "name": "frozen_admin",
+            "type": "u8"
+          },
+          {
+            "name": "halted_admin",
+            "type": "u8"
+          },
+          {
+            "name": "frozen",
+            "type": "u8"
+          },
+          {
+            "name": "_pad",
+            "type": {
+              "array": [
+                "u8",
+                3
+              ]
+            }
+          },
+          {
+            "name": "owner",
+            "type": "pubkey"
+          },
+          {
+            "name": "asset_count",
+            "type": "u32"
+          },
+          {
+            "name": "permissionless_strategies",
+            "type": "u8"
+          },
+          {
+            "name": "_reserved",
+            "type": {
+              "array": [
+                "u8",
+                19
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "AssetEntry",
+      "docs": [
+        "One row of a MarketMaker asset table. SIZE = 48."
+      ],
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "mint",
+            "type": "pubkey"
+          },
+          {
+            "name": "amount",
+            "type": "u64"
+          },
+          {
+            "name": "protocol_fee_amount",
+            "type": "u64"
+          }
+        ]
+      }
+    }
+  ]
+}
