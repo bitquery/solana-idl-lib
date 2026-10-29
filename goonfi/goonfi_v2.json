@@ -81,6 +81,104 @@
         "type": "u8",
         "value": 1
       }
+    },
+    {
+      "name": "swapWithSig",
+      "accounts": [
+        {
+          "name": "user",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "market",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "userTokenAccountA",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "userTokenAccountB",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "poolTokenAccountA",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "poolTokenAccountB",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "mintA",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "mintB",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "account1",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "account2",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "sysvarInstructions",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "tokenProgramA",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "tokenProgramB",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "voteAccount",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "account3",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "isBid",
+          "type": "bool"
+        },
+        {
+          "name": "amountIn",
+          "type": "u64"
+        },
+        {
+          "name": "minAmountOut",
+          "type": "u64"
+        }
+      ],
+      "discriminant": {
+        "type": "u8",
+        "value": 14
+      }
     }
   ],
   "metadata": {
