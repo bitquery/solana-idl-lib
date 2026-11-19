@@ -1,0 +1,4541 @@
+{
+    "address": "darkr3FB87qAZmgLwKov6Hk9Yiah5UT4rUYu8Zhthw1",
+    "metadata": {
+      "name": "darklake",
+      "version": "0.1.1",
+      "spec": "0.1.0",
+      "description": "Darklake"
+    },
+    "docs": [
+      "# Darklake DEX - Two-Step Confidential Trading Protocol",
+      "",
+      "Darklake implements a decentralized exchange with blind slippage transactions using a two-step trading process.",
+      "This design ensures privacy while maintaining economic security through time-bound commitments and zero-knowledge proofs.",
+      "",
+      "## Trading Flow Overview",
+      "",
+      "### Step 1: Swap (Resource Reservation)",
+      "Each trade begins with a `swap` instruction that:",
+      "- Reserves pool resources for the trade",
+      "- Locks the user's input tokens in the pool",
+      "- Requires a WSOL deposit as economic security",
+      "- Creates a commitment to the minimum output amount using circom compatible [Poseidon hash](https://www.npmjs.com/package/circomlibjs/v/0.1.7)",
+      "",
+      "The commitment is a Poseidon hash of the minimum output amount with a random salt.",
+      "This commitment preserves privacy while allowing later verification of trade conditions.",
+      "",
+      "### Step 2: Finalization (Settle/Cancel/Slash)",
+      "After the swap, the trade must be finalized within a deadline using one of three methods:",
+      "",
+      "#### Settle (Success Path)",
+      "- Called when minimum output (groth16 proof) and deadline are satisfied. Proof is generated using [snarkjs](https://github.com/darklakefi/snarkjs).",
+      "- Pool takes the locked input tokens",
+      "- User receives output tokens and WSOL deposit back",
+      "- Pool releases locked reserves",
+      "",
+      "#### Cancel (Failure Path)",
+      "- Called when minimum output requirement is violated (groth16) and deadline is satisfied",
+      "- User receives original locked tokens back plus WSOL deposit",
+      "- Pool releases locked reserves",
+      "",
+      "#### Slash (Timeout Path)",
+      "- Called when deadline has passed without finalization (cancel or settle)",
+      "- Caller receives the trader's WSOL deposit as reward",
+      "- Original locked tokens are returned to the trader",
+      "- Pool releases locked reserves",
+      "",
+      "## Zero-Knowledge Proofs",
+      "",
+      "Both `settle` and `cancel` require Groth16 zero-knowledge proofs to verify. Settle circuit proves",
+      "minimum output was below the output, while cancel circuit proves minimum output was above the output.",
+      "",
+      "## Access Control",
+      "",
+      "- `settle`/`cancel`/`slash` can be called by anyone, and if necessary can generate the required proofs",
+      "- Economic incentives ensure proper behavior (WSOL deposits and rewards)",
+      "",
+      "## Example Usage (TypeScript)",
+      "",
+      "```typescript",
+      "import { Connection, PublicKey } from '@solana/web3.js';",
+      "import { Program, AnchorProvider } from '@coral-xyz/anchor';",
+      "import { poseidon } from 'circomlibjs';",
+      "import { groth16 } from 'snarkjs';",
+      "",
+      "// Swap: Reserve resources and lock tokens",
+      "const poseidon = await circomlibjs.buildPoseidon();",
+      "",
+      "// Poseidon expects inputs as BigInts",
+      "const inputs = [bigInt(minOut), bigInt(salt)];",
+      "",
+      "// Generate the Poseidon commitment",
+      "const minOutCommitment = poseidon(inputs);",
+      "await program.methods",
+      ".swap(amountIn, isSwapXToY, minOutCommitment)",
+      ".accounts({ /* accounts */ })",
+      ".rpc();",
+      "",
+      "// Settle: Complete successful trade with ZK proof",
+      "const proof = await groth16.fullProve(inputs, wasmPath, zkeyPath);",
+      "await program.methods",
+      ".settle(proof.proof.a, proof.proof.b, proof.proof.c, publicInputs)",
+      ".accounts({ /* accounts */ })",
+      ".rpc();",
+      "```"
+    ],
+    "instructions": [
+      {
+        "name": "add_liquidity",
+        "docs": [
+          "# Add Liquidity",
+          "Adds liquidity to an existing pool.",
+          "",
+          "This function allows users to provide additional liquidity to an existing pool.",
+          "The user specifies the desired amount of LP tokens to receive and maximum amounts",
+          "of tokens they are willing to provide. The actual amounts will be calculated based",
+          "on the current pool state and price.",
+          "",
+          "# Arguments",
+          "",
+          "* `ctx` - The context containing all required accounts for adding liquidity",
+          "* `amount_lp` - The desired amount of LP tokens to receive",
+          "* `max_amount_x` - The maximum amount of token X the user is willing to provide",
+          "* `max_amount_y` - The maximum amount of token Y the user is willing to provide",
+          "",
+          "# Returns",
+          "",
+          "Returns `Ok(())` on successful liquidity addition, or an error if the operation fails.",
+          "",
+          "# Errors",
+          "",
+          "This function will return an error if:",
+          "- The pool does not exist or is not properly initialized",
+          "- The user does not have sufficient token balances",
+          "- The calculated amounts exceed the maximum amounts specified",
+          "- The liquidity addition would result in an invalid pool state"
+        ],
+        "discriminator": [
+          181,
+          157,
+          89,
+          67,
+          143,
+          182,
+          52,
+          72
+        ],
+        "accounts": [
+          {
+            "name": "user",
+            "writable": true,
+            "signer": true
+          },
+          {
+            "name": "token_mint_x"
+          },
+          {
+            "name": "token_mint_y"
+          },
+          {
+            "name": "token_mint_lp",
+            "writable": true,
+            "pda": {
+              "seeds": [
+                {
+                  "kind": "const",
+                  "value": [
+                    108,
+                    112
+                  ]
+                },
+                {
+                  "kind": "account",
+                  "path": "pool"
+                }
+              ]
+            }
+          },
+          {
+            "name": "pool",
+            "writable": true,
+            "pda": {
+              "seeds": [
+                {
+                  "kind": "const",
+                  "value": [
+                    112,
+                    111,
+                    111,
+                    108
+                  ]
+                },
+                {
+                  "kind": "account",
+                  "path": "amm_config"
+                },
+                {
+                  "kind": "account",
+                  "path": "token_mint_x"
+                },
+                {
+                  "kind": "account",
+                  "path": "token_mint_y"
+                }
+              ]
+            }
+          },
+          {
+            "name": "amm_config",
+            "pda": {
+              "seeds": [
+                {
+                  "kind": "const",
+                  "value": [
+                    97,
+                    109,
+                    109,
+                    95,
+                    99,
+                    111,
+                    110,
+                    102,
+                    105,
+                    103
+                  ]
+                },
+                {
+                  "kind": "const",
+                  "value": [
+                    0,
+                    0,
+                    0,
+                    0
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "name": "authority",
+            "pda": {
+              "seeds": [
+                {
+                  "kind": "const",
+                  "value": [
+                    97,
+                    117,
+                    116,
+                    104,
+                    111,
+                    114,
+                    105,
+                    116,
+                    121
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "name": "user_token_account_x",
+            "writable": true,
+            "pda": {
+              "seeds": [
+                {
+                  "kind": "account",
+                  "path": "user"
+                },
+                {
+                  "kind": "account",
+                  "path": "token_mint_x_program"
+                },
+                {
+                  "kind": "account",
+                  "path": "token_mint_x"
+                }
+              ],
+              "program": {
+                "kind": "const",
+                "value": [
+                  140,
+                  151,
+                  37,
+                  143,
+                  78,
+                  36,
+                  137,
+                  241,
+                  187,
+                  61,
+                  16,
+                  41,
+                  20,
+                  142,
+                  13,
+                  131,
+                  11,
+                  90,
+                  19,
+                  153,
+                  218,
+                  255,
+                  16,
+                  132,
+                  4,
+                  142,
+                  123,
+                  216,
+                  219,
+                  233,
+                  248,
+                  89
+                ]
+              }
+            }
+          },
+          {
+            "name": "user_token_account_y",
+            "writable": true,
+            "pda": {
+              "seeds": [
+                {
+                  "kind": "account",
+                  "path": "user"
+                },
+                {
+                  "kind": "account",
+                  "path": "token_mint_y_program"
+                },
+                {
+                  "kind": "account",
+                  "path": "token_mint_y"
+                }
+              ],
+              "program": {
+                "kind": "const",
+                "value": [
+                  140,
+                  151,
+                  37,
+                  143,
+                  78,
+                  36,
+                  137,
+                  241,
+                  187,
+                  61,
+                  16,
+                  41,
+                  20,
+                  142,
+                  13,
+                  131,
+                  11,
+                  90,
+                  19,
+                  153,
+                  218,
+                  255,
+                  16,
+                  132,
+                  4,
+                  142,
+                  123,
+                  216,
+                  219,
+                  233,
+                  248,
+                  89
+                ]
+              }
+            }
+          },
+          {
+            "name": "user_token_account_lp",
+            "writable": true,
+            "pda": {
+              "seeds": [
+                {
+                  "kind": "account",
+                  "path": "user"
+                },
+                {
+                  "kind": "account",
+                  "path": "token_program"
+                },
+                {
+                  "kind": "account",
+                  "path": "token_mint_lp"
+                }
+              ],
+              "program": {
+                "kind": "account",
+                "path": "associated_token_program"
+              }
+            }
+          },
+          {
+            "name": "pool_token_reserve_x",
+            "writable": true
+          },
+          {
+            "name": "pool_token_reserve_y",
+            "writable": true
+          },
+          {
+            "name": "associated_token_program",
+            "address": "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL"
+          },
+          {
+            "name": "system_program",
+            "address": "11111111111111111111111111111111"
+          },
+          {
+            "name": "token_mint_x_program"
+          },
+          {
+            "name": "token_mint_y_program"
+          },
+          {
+            "name": "token_program",
+            "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+          }
+        ],
+        "args": [
+          {
+            "name": "amount_lp",
+            "type": "u64"
+          },
+          {
+            "name": "max_amount_x",
+            "type": "u64"
+          },
+          {
+            "name": "max_amount_y",
+            "type": "u64"
+          },
+          {
+            "name": "ref_code",
+            "type": {
+              "option": {
+                "array": [
+                  "u8",
+                  20
+                ]
+              }
+            }
+          },
+          {
+            "name": "label",
+            "type": {
+              "option": {
+                "array": [
+                  "u8",
+                  21
+                ]
+              }
+            }
+          }
+        ]
+      },
+      {
+        "name": "cancel",
+        "docs": [
+          "# Cancel",
+          "Cancels a confidential swap using zero-knowledge proof verification.",
+          "",
+          "This function allows users to cancel a previously initiated swap by providing a",
+          "zero-knowledge (groth16) proof that demonstrates the cancellation is valid. This maintains",
+          "privacy while ensuring only legitimate cancellations are processed.",
+          "",
+          "Groth16 proof is generated using [snarkjs](https://github.com/darklakefi/snarkjs).",
+          "Curve: bn128, wasm and final zkey files are contained within this repo cancel-circuits.",
+          "",
+          "# Arguments",
+          "",
+          "* `ctx` - The context containing all required accounts for cancellation",
+          "* `proof_a` - The first component of the Groth16 zero-knowledge proof (64 bytes)",
+          "* `proof_b` - The second component of the Groth16 zero-knowledge proof (128 bytes)",
+          "* `proof_c` - The third component of the Groth16 zero-knowledge proof (64 bytes)",
+          "* `public_inputs` - Array of two 32-byte public inputs for the proof verification",
+          "It contains real output amount and the commitment to the minimum output amount, made during the swap.",
+          "",
+          "# Returns",
+          "",
+          "Returns `Ok(())` on successful cancellation, or an error if the operation fails.",
+          "",
+          "# Errors",
+          "",
+          "This function will return an error if:",
+          "- The zero-knowledge proof verification fails",
+          "- The public inputs are invalid or inconsistent",
+          "- The swap has already been settled or cancelled",
+          "- The cancellation deadline has passed",
+          "- The cancellation would violate pool invariants"
+        ],
+        "discriminator": [
+          232,
+          219,
+          223,
+          41,
+          219,
+          236,
+          220,
+          190
+        ],
+        "accounts": [
+          {
+            "name": "caller",
+            "writable": true,
+            "signer": true
+          },
+          {
+            "name": "order_owner",
+            "writable": true
+          },
+          {
+            "name": "token_mint_x"
+          },
+          {
+            "name": "token_mint_y"
+          },
+          {
+            "name": "token_mint_wsol"
+          },
+          {
+            "name": "pool",
+            "writable": true,
+            "pda": {
+              "seeds": [
+                {
+                  "kind": "const",
+                  "value": [
+                    112,
+                    111,
+                    111,
+                    108
+                  ]
+                },
+                {
+                  "kind": "account",
+                  "path": "amm_config"
+                },
+                {
+                  "kind": "account",
+                  "path": "token_mint_x"
+                },
+                {
+                  "kind": "account",
+                  "path": "token_mint_y"
+                }
+              ]
+            }
+          },
+          {
+            "name": "authority",
+            "pda": {
+              "seeds": [
+                {
+                  "kind": "const",
+                  "value": [
+                    97,
+                    117,
+                    116,
+                    104,
+                    111,
+                    114,
+                    105,
+                    116,
+                    121
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "name": "pool_token_reserve_x",
+            "writable": true
+          },
+          {
+            "name": "pool_token_reserve_y",
+            "writable": true
+          },
+          {
+            "name": "pool_wsol_reserve",
+            "writable": true,
+            "pda": {
+              "seeds": [
+                {
+                  "kind": "const",
+                  "value": [
+                    112,
+                    111,
+                    111,
+                    108,
+                    95,
+                    119,
+                    115,
+                    111,
+                    108,
+                    95,
+                    114,
+                    101,
+                    115,
+                    101,
+                    114,
+                    118,
+                    101
+                  ]
+                },
+                {
+                  "kind": "account",
+                  "path": "pool"
+                }
+              ]
+            }
+          },
+          {
+            "name": "amm_config",
+            "pda": {
+              "seeds": [
+                {
+                  "kind": "const",
+                  "value": [
+                    97,
+                    109,
+                    109,
+                    95,
+                    99,
+                    111,
+                    110,
+                    102,
+                    105,
+                    103
+                  ]
+                },
+                {
+                  "kind": "const",
+                  "value": [
+                    0,
+                    0,
+                    0,
+                    0
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "name": "user_token_account_x",
+            "writable": true,
+            "pda": {
+              "seeds": [
+                {
+                  "kind": "account",
+                  "path": "order_owner"
+                },
+                {
+                  "kind": "account",
+                  "path": "token_mint_x_program"
+                },
+                {
+                  "kind": "account",
+                  "path": "token_mint_x"
+                }
+              ],
+              "program": {
+                "kind": "account",
+                "path": "associated_token_program"
+              }
+            }
+          },
+          {
+            "name": "user_token_account_y",
+            "writable": true,
+            "pda": {
+              "seeds": [
+                {
+                  "kind": "account",
+                  "path": "order_owner"
+                },
+                {
+                  "kind": "account",
+                  "path": "token_mint_y_program"
+                },
+                {
+                  "kind": "account",
+                  "path": "token_mint_y"
+                }
+              ],
+              "program": {
+                "kind": "account",
+                "path": "associated_token_program"
+              }
+            }
+          },
+          {
+            "name": "user_token_account_wsol",
+            "writable": true,
+            "pda": {
+              "seeds": [
+                {
+                  "kind": "account",
+                  "path": "order_owner"
+                },
+                {
+                  "kind": "account",
+                  "path": "token_program"
+                },
+                {
+                  "kind": "account",
+                  "path": "token_mint_wsol"
+                }
+              ],
+              "program": {
+                "kind": "account",
+                "path": "associated_token_program"
+              }
+            }
+          },
+          {
+            "name": "caller_token_account_wsol",
+            "writable": true,
+            "pda": {
+              "seeds": [
+                {
+                  "kind": "account",
+                  "path": "caller"
+                },
+                {
+                  "kind": "account",
+                  "path": "token_program"
+                },
+                {
+                  "kind": "account",
+                  "path": "token_mint_wsol"
+                }
+              ],
+              "program": {
+                "kind": "account",
+                "path": "associated_token_program"
+              }
+            }
+          },
+          {
+            "name": "order",
+            "writable": true,
+            "pda": {
+              "seeds": [
+                {
+                  "kind": "const",
+                  "value": [
+                    111,
+                    114,
+                    100,
+                    101,
+                    114
+                  ]
+                },
+                {
+                  "kind": "account",
+                  "path": "pool"
+                },
+                {
+                  "kind": "account",
+                  "path": "order_owner"
+                }
+              ]
+            }
+          },
+          {
+            "name": "system_program",
+            "address": "11111111111111111111111111111111"
+          },
+          {
+            "name": "associated_token_program",
+            "address": "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL"
+          },
+          {
+            "name": "token_mint_x_program"
+          },
+          {
+            "name": "token_mint_y_program"
+          },
+          {
+            "name": "token_program",
+            "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+          }
+        ],
+        "args": [
+          {
+            "name": "proof_a",
+            "type": {
+              "array": [
+                "u8",
+                64
+              ]
+            }
+          },
+          {
+            "name": "proof_b",
+            "type": {
+              "array": [
+                "u8",
+                128
+              ]
+            }
+          },
+          {
+            "name": "proof_c",
+            "type": {
+              "array": [
+                "u8",
+                64
+              ]
+            }
+          },
+          {
+            "name": "public_inputs",
+            "type": {
+              "array": [
+                {
+                  "array": [
+                    "u8",
+                    32
+                  ]
+                },
+                2
+              ]
+            }
+          },
+          {
+            "name": "label",
+            "type": {
+              "option": {
+                "array": [
+                  "u8",
+                  21
+                ]
+              }
+            }
+          }
+        ]
+      },
+      {
+        "name": "collect_protocol_fees",
+        "docs": [
+          "# Collect Protocol Fees",
+          "Collects accumulated protocol fees from pools.",
+          "",
+          "This administrative function allows authorized parties to collect protocol fees",
+          "that have accumulated across all pools. The caller specifies the amounts of each",
+          "token they wish to collect, and the function transfers those amounts to the",
+          "designated fee collection accounts.",
+          "",
+          "# Arguments",
+          "",
+          "* `ctx` - The context containing all required accounts for fee collection",
+          "* `amount_x_requested` - The amount of token X to collect",
+          "* `amount_y_requested` - The amount of token Y to collect",
+          "",
+          "# Returns",
+          "",
+          "Returns `Ok(())` on successful fee collection, or an error if the operation fails.",
+          "",
+          "# Errors",
+          "",
+          "This function will return an error if:",
+          "- The caller is not authorized to collect protocol fees",
+          "- The requested amounts exceed available protocol fees",
+          "- The fee collection accounts are not properly configured",
+          "- The transfer operations fail"
+        ],
+        "discriminator": [
+          22,
+          67,
+          23,
+          98,
+          150,
+          178,
+          70,
+          220
+        ],
+        "accounts": [
+          {
+            "name": "admin",
+            "docs": [
+              "Only admin or owner can collect fee now"
+            ],
+            "signer": true
+          },
+          {
+            "name": "authority",
+            "pda": {
+              "seeds": [
+                {
+                  "kind": "const",
+                  "value": [
+                    97,
+                    117,
+                    116,
+                    104,
+                    111,
+                    114,
+                    105,
+                    116,
+                    121
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "name": "pool",
+            "docs": [
+              "Pool state stores accumulated protocol fee amount"
+            ],
+            "writable": true,
+            "pda": {
+              "seeds": [
+                {
+                  "kind": "const",
+                  "value": [
+                    112,
+                    111,
+                    111,
+                    108
+                  ]
+                },
+                {
+                  "kind": "account",
+                  "path": "amm_config"
+                },
+                {
+                  "kind": "account",
+                  "path": "token_mint_x"
+                },
+                {
+                  "kind": "account",
+                  "path": "token_mint_y"
+                }
+              ]
+            }
+          },
+          {
+            "name": "amm_config",
+            "docs": [
+              "Amm config account stores owner"
+            ]
+          },
+          {
+            "name": "pool_token_reserve_x",
+            "docs": [
+              "The address that holds pool tokens for token_x"
+            ],
+            "writable": true
+          },
+          {
+            "name": "pool_token_reserve_y",
+            "docs": [
+              "The address that holds pool tokens for token_y"
+            ],
+            "writable": true
+          },
+          {
+            "name": "token_mint_x",
+            "docs": [
+              "The mint of token_x vault"
+            ]
+          },
+          {
+            "name": "token_mint_y",
+            "docs": [
+              "The mint of token_y vault"
+            ]
+          },
+          {
+            "name": "to_token_x",
+            "docs": [
+              "The address that receives the collected token_x protocol fees"
+            ],
+            "writable": true
+          },
+          {
+            "name": "to_token_y",
+            "docs": [
+              "The address that receives the collected token_y protocol fees"
+            ],
+            "writable": true
+          },
+          {
+            "name": "token_mint_x_program"
+          },
+          {
+            "name": "token_mint_y_program"
+          }
+        ],
+        "args": [
+          {
+            "name": "amount_x_requested",
+            "type": "u64"
+          },
+          {
+            "name": "amount_y_requested",
+            "type": "u64"
+          }
+        ]
+      },
+      {
+        "name": "create_amm_config",
+        "docs": [
+          "# Create AMM Configuration",
+          "Creates a new AMM (Automated Market Maker) configuration (one time).",
+          "",
+          "This administrative function creates a new configuration for the AMM that defines",
+          "various parameters such as fee rates, pool creation fees, and operational settings.",
+          "Only authorized administrators can call this function.",
+          "",
+          "# Arguments",
+          "",
+          "* `ctx` - The context containing all required accounts for AMM configuration creation",
+          "* `trade_fee_rate` - The fee rate for trades (must be <= MAX_PERCENTAGE)",
+          "* `protocol_fee_rate` - The protocol fee rate (must be <= MAX_PERCENTAGE)",
+          "* `create_pool_fee` - The fee charged for creating new pools",
+          "* `create_pool_fee_vault` - The vault account that receives pool creation fees",
+          "* `wsol_trade_deposit` - The required deposit amount for WSOL trades",
+          "* `deadline_slot_duration` - The duration (in slots) for transaction deadlines",
+          "* `halted` - Whether the AMM is currently halted",
+          "",
+          "# Returns",
+          "",
+          "Returns `Ok(())` on successful configuration creation, or an error if the operation fails.",
+          "",
+          "# Errors",
+          "",
+          "This function will return an error if:",
+          "- Any fee rate exceeds MAX_PERCENTAGE",
+          "- The create_pool_fee_vault is the default pubkey",
+          "- The caller is not authorized to create AMM configurations (only admin can do this)",
+          "- The configuration accounts are not properly set up"
+        ],
+        "discriminator": [
+          137,
+          52,
+          237,
+          212,
+          215,
+          117,
+          108,
+          104
+        ],
+        "accounts": [
+          {
+            "name": "admin",
+            "docs": [
+              "Address to be set as protocol owner."
+            ],
+            "writable": true,
+            "signer": true,
+            "address": "43RPeUeQ1c4eAqvAYiS43wVfr81PjfWSteTxyHx49kMr"
+          },
+          {
+            "name": "amm_config",
+            "docs": [
+              "Initialize config state account to store protocol owner address and fee rates."
+            ],
+            "writable": true,
+            "pda": {
+              "seeds": [
+                {
+                  "kind": "const",
+                  "value": [
+                    97,
+                    109,
+                    109,
+                    95,
+                    99,
+                    111,
+                    110,
+                    102,
+                    105,
+                    103
+                  ]
+                },
+                {
+                  "kind": "const",
+                  "value": [
+                    0,
+                    0,
+                    0,
+                    0
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "name": "system_program",
+            "address": "11111111111111111111111111111111"
+          }
+        ],
+        "args": [
+          {
+            "name": "trade_fee_rate",
+            "type": "u64"
+          },
+          {
+            "name": "protocol_fee_rate",
+            "type": "u64"
+          },
+          {
+            "name": "create_pool_fee",
+            "type": "u64"
+          },
+          {
+            "name": "wsol_trade_deposit",
+            "type": "u64"
+          },
+          {
+            "name": "deadline_slot_duration",
+            "type": "u64"
+          },
+          {
+            "name": "ratio_change_tolerance_rate",
+            "type": "u64"
+          },
+          {
+            "name": "halted",
+            "type": "bool"
+          }
+        ]
+      },
+      {
+        "name": "initialize_pool",
+        "docs": [
+          "# Initialize Pool",
+          "Initializes a new liquidity pool for trading between two tokens.",
+          "",
+          "This function creates a new pool with initial liquidity provided by the caller.",
+          "The pool will be initialized with the specified amounts of token X and token Y,",
+          "and LP tokens will be minted to represent the initial liquidity position.",
+          "",
+          "# Arguments",
+          "",
+          "* `ctx` - The context containing all required accounts for pool initialization",
+          "* `amount_x` - The initial amount of token X to add to the pool",
+          "* `amount_y` - The initial amount of token Y to add to the pool",
+          "",
+          "# Returns",
+          "",
+          "Returns `Ok(())` on successful pool initialization, or an error if the operation fails.",
+          "",
+          "# Errors",
+          "",
+          "This function will return an error if:",
+          "- Any of the required accounts are missing or invalid",
+          "- The amounts provided are zero or invalid",
+          "- The pool has already been initialized",
+          "- The token accounts are not properly configured"
+        ],
+        "discriminator": [
+          95,
+          180,
+          10,
+          172,
+          84,
+          174,
+          232,
+          40
+        ],
+        "accounts": [
+          {
+            "name": "user",
+            "writable": true,
+            "signer": true
+          },
+          {
+            "name": "pool",
+            "writable": true,
+            "pda": {
+              "seeds": [
+                {
+                  "kind": "const",
+                  "value": [
+                    112,
+                    111,
+                    111,
+                    108
+                  ]
+                },
+                {
+                  "kind": "account",
+                  "path": "amm_config"
+                },
+                {
+                  "kind": "account",
+                  "path": "token_mint_x"
+                },
+                {
+                  "kind": "account",
+                  "path": "token_mint_y"
+                }
+              ]
+            }
+          },
+          {
+            "name": "authority",
+            "pda": {
+              "seeds": [
+                {
+                  "kind": "const",
+                  "value": [
+                    97,
+                    117,
+                    116,
+                    104,
+                    111,
+                    114,
+                    105,
+                    116,
+                    121
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "name": "amm_config",
+            "pda": {
+              "seeds": [
+                {
+                  "kind": "const",
+                  "value": [
+                    97,
+                    109,
+                    109,
+                    95,
+                    99,
+                    111,
+                    110,
+                    102,
+                    105,
+                    103
+                  ]
+                },
+                {
+                  "kind": "const",
+                  "value": [
+                    0,
+                    0,
+                    0,
+                    0
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "name": "token_mint_x"
+          },
+          {
+            "name": "token_mint_y"
+          },
+          {
+            "name": "token_mint_wsol",
+            "address": "So11111111111111111111111111111111111111112"
+          },
+          {
+            "name": "token_mint_lp",
+            "writable": true,
+            "pda": {
+              "seeds": [
+                {
+                  "kind": "const",
+                  "value": [
+                    108,
+                    112
+                  ]
+                },
+                {
+                  "kind": "account",
+                  "path": "pool"
+                }
+              ]
+            }
+          },
+          {
+            "name": "metadata_account",
+            "writable": true,
+            "pda": {
+              "seeds": [
+                {
+                  "kind": "const",
+                  "value": [
+                    109,
+                    101,
+                    116,
+                    97,
+                    100,
+                    97,
+                    116,
+                    97
+                  ]
+                },
+                {
+                  "kind": "const",
+                  "value": [
+                    11,
+                    112,
+                    101,
+                    177,
+                    227,
+                    209,
+                    124,
+                    69,
+                    56,
+                    157,
+                    82,
+                    127,
+                    107,
+                    4,
+                    195,
+                    205,
+                    88,
+                    184,
+                    108,
+                    115,
+                    26,
+                    160,
+                    253,
+                    181,
+                    73,
+                    182,
+                    209,
+                    188,
+                    3,
+                    248,
+                    41,
+                    70
+                  ]
+                },
+                {
+                  "kind": "account",
+                  "path": "token_mint_lp"
+                }
+              ],
+              "program": {
+                "kind": "const",
+                "value": [
+                  11,
+                  112,
+                  101,
+                  177,
+                  227,
+                  209,
+                  124,
+                  69,
+                  56,
+                  157,
+                  82,
+                  127,
+                  107,
+                  4,
+                  195,
+                  205,
+                  88,
+                  184,
+                  108,
+                  115,
+                  26,
+                  160,
+                  253,
+                  181,
+                  73,
+                  182,
+                  209,
+                  188,
+                  3,
+                  248,
+                  41,
+                  70
+                ]
+              }
+            }
+          },
+          {
+            "name": "metadata_account_x",
+            "pda": {
+              "seeds": [
+                {
+                  "kind": "const",
+                  "value": [
+                    109,
+                    101,
+                    116,
+                    97,
+                    100,
+                    97,
+                    116,
+                    97
+                  ]
+                },
+                {
+                  "kind": "const",
+                  "value": [
+                    11,
+                    112,
+                    101,
+                    177,
+                    227,
+                    209,
+                    124,
+                    69,
+                    56,
+                    157,
+                    82,
+                    127,
+                    107,
+                    4,
+                    195,
+                    205,
+                    88,
+                    184,
+                    108,
+                    115,
+                    26,
+                    160,
+                    253,
+                    181,
+                    73,
+                    182,
+                    209,
+                    188,
+                    3,
+                    248,
+                    41,
+                    70
+                  ]
+                },
+                {
+                  "kind": "account",
+                  "path": "token_mint_x"
+                }
+              ],
+              "program": {
+                "kind": "const",
+                "value": [
+                  11,
+                  112,
+                  101,
+                  177,
+                  227,
+                  209,
+                  124,
+                  69,
+                  56,
+                  157,
+                  82,
+                  127,
+                  107,
+                  4,
+                  195,
+                  205,
+                  88,
+                  184,
+                  108,
+                  115,
+                  26,
+                  160,
+                  253,
+                  181,
+                  73,
+                  182,
+                  209,
+                  188,
+                  3,
+                  248,
+                  41,
+                  70
+                ]
+              }
+            }
+          },
+          {
+            "name": "metadata_account_y",
+            "pda": {
+              "seeds": [
+                {
+                  "kind": "const",
+                  "value": [
+                    109,
+                    101,
+                    116,
+                    97,
+                    100,
+                    97,
+                    116,
+                    97
+                  ]
+                },
+                {
+                  "kind": "const",
+                  "value": [
+                    11,
+                    112,
+                    101,
+                    177,
+                    227,
+                    209,
+                    124,
+                    69,
+                    56,
+                    157,
+                    82,
+                    127,
+                    107,
+                    4,
+                    195,
+                    205,
+                    88,
+                    184,
+                    108,
+                    115,
+                    26,
+                    160,
+                    253,
+                    181,
+                    73,
+                    182,
+                    209,
+                    188,
+                    3,
+                    248,
+                    41,
+                    70
+                  ]
+                },
+                {
+                  "kind": "account",
+                  "path": "token_mint_y"
+                }
+              ],
+              "program": {
+                "kind": "const",
+                "value": [
+                  11,
+                  112,
+                  101,
+                  177,
+                  227,
+                  209,
+                  124,
+                  69,
+                  56,
+                  157,
+                  82,
+                  127,
+                  107,
+                  4,
+                  195,
+                  205,
+                  88,
+                  184,
+                  108,
+                  115,
+                  26,
+                  160,
+                  253,
+                  181,
+                  73,
+                  182,
+                  209,
+                  188,
+                  3,
+                  248,
+                  41,
+                  70
+                ]
+              }
+            }
+          },
+          {
+            "name": "user_token_account_x",
+            "writable": true,
+            "pda": {
+              "seeds": [
+                {
+                  "kind": "account",
+                  "path": "user"
+                },
+                {
+                  "kind": "account",
+                  "path": "token_mint_x_program"
+                },
+                {
+                  "kind": "account",
+                  "path": "token_mint_x"
+                }
+              ],
+              "program": {
+                "kind": "const",
+                "value": [
+                  140,
+                  151,
+                  37,
+                  143,
+                  78,
+                  36,
+                  137,
+                  241,
+                  187,
+                  61,
+                  16,
+                  41,
+                  20,
+                  142,
+                  13,
+                  131,
+                  11,
+                  90,
+                  19,
+                  153,
+                  218,
+                  255,
+                  16,
+                  132,
+                  4,
+                  142,
+                  123,
+                  216,
+                  219,
+                  233,
+                  248,
+                  89
+                ]
+              }
+            }
+          },
+          {
+            "name": "user_token_account_y",
+            "writable": true,
+            "pda": {
+              "seeds": [
+                {
+                  "kind": "account",
+                  "path": "user"
+                },
+                {
+                  "kind": "account",
+                  "path": "token_mint_y_program"
+                },
+                {
+                  "kind": "account",
+                  "path": "token_mint_y"
+                }
+              ],
+              "program": {
+                "kind": "const",
+                "value": [
+                  140,
+                  151,
+                  37,
+                  143,
+                  78,
+                  36,
+                  137,
+                  241,
+                  187,
+                  61,
+                  16,
+                  41,
+                  20,
+                  142,
+                  13,
+                  131,
+                  11,
+                  90,
+                  19,
+                  153,
+                  218,
+                  255,
+                  16,
+                  132,
+                  4,
+                  142,
+                  123,
+                  216,
+                  219,
+                  233,
+                  248,
+                  89
+                ]
+              }
+            }
+          },
+          {
+            "name": "user_token_account_lp",
+            "writable": true
+          },
+          {
+            "name": "pool_token_reserve_x",
+            "writable": true,
+            "pda": {
+              "seeds": [
+                {
+                  "kind": "const",
+                  "value": [
+                    112,
+                    111,
+                    111,
+                    108,
+                    95,
+                    114,
+                    101,
+                    115,
+                    101,
+                    114,
+                    118,
+                    101
+                  ]
+                },
+                {
+                  "kind": "account",
+                  "path": "pool"
+                },
+                {
+                  "kind": "account",
+                  "path": "token_mint_x"
+                }
+              ]
+            }
+          },
+          {
+            "name": "pool_token_reserve_y",
+            "writable": true,
+            "pda": {
+              "seeds": [
+                {
+                  "kind": "const",
+                  "value": [
+                    112,
+                    111,
+                    111,
+                    108,
+                    95,
+                    114,
+                    101,
+                    115,
+                    101,
+                    114,
+                    118,
+                    101
+                  ]
+                },
+                {
+                  "kind": "account",
+                  "path": "pool"
+                },
+                {
+                  "kind": "account",
+                  "path": "token_mint_y"
+                }
+              ]
+            }
+          },
+          {
+            "name": "pool_wsol_reserve",
+            "writable": true,
+            "pda": {
+              "seeds": [
+                {
+                  "kind": "const",
+                  "value": [
+                    112,
+                    111,
+                    111,
+                    108,
+                    95,
+                    119,
+                    115,
+                    111,
+                    108,
+                    95,
+                    114,
+                    101,
+                    115,
+                    101,
+                    114,
+                    118,
+                    101
+                  ]
+                },
+                {
+                  "kind": "account",
+                  "path": "pool"
+                }
+              ]
+            }
+          },
+          {
+            "name": "create_pool_fee_vault",
+            "writable": true,
+            "address": "HNQdnRgtnsgcx7E836nZ1JwrQstWBEJMnRVy8doY366A"
+          },
+          {
+            "name": "mpl_program",
+            "address": "metaqbxxUerdq28cj1RbAWkYQm3ybzjb6a8bt518x1s"
+          },
+          {
+            "name": "system_program",
+            "address": "11111111111111111111111111111111"
+          },
+          {
+            "name": "rent",
+            "address": "SysvarRent111111111111111111111111111111111"
+          },
+          {
+            "name": "associated_token_program",
+            "address": "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL"
+          },
+          {
+            "name": "token_mint_x_program"
+          },
+          {
+            "name": "token_mint_y_program"
+          },
+          {
+            "name": "token_program",
+            "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+          }
+        ],
+        "args": [
+          {
+            "name": "amount_x",
+            "type": "u64"
+          },
+          {
+            "name": "amount_y",
+            "type": "u64"
+          },
+          {
+            "name": "label",
+            "type": {
+              "option": {
+                "array": [
+                  "u8",
+                  21
+                ]
+              }
+            }
+          }
+        ]
+      },
+      {
+        "name": "remove_liquidity",
+        "docs": [
+          "# Remove Liquidity",
+          "Removes liquidity from an existing pool.",
+          "",
+          "This function allows liquidity providers to remove their liquidity from the pool",
+          "and receive back their proportional share of the underlying tokens. The user specifies",
+          "the amount of LP tokens to burn and minimum amounts of tokens they expect to receive.",
+          "",
+          "The liquidity can only be removed if the pool has enough non-locked reserves.",
+          "",
+          "# Arguments",
+          "",
+          "* `ctx` - The context containing all required accounts for removing liquidity",
+          "* `amount_lp` - The amount of LP tokens to burn",
+          "* `min_receive_x` - The minimum amount of token X the user expects to receive",
+          "* `min_receive_y` - The minimum amount of token Y the user expects to receive",
+          "",
+          "# Returns",
+          "",
+          "Returns `Ok(())` on successful liquidity removal, or an error if the operation fails.",
+          "",
+          "# Errors",
+          "",
+          "This function will return an error if:",
+          "- The user does not have sufficient LP tokens",
+          "- The calculated amounts are below the minimum amounts specified",
+          "- The pool state is invalid or the operation would break invariants"
+        ],
+        "discriminator": [
+          80,
+          85,
+          209,
+          72,
+          24,
+          206,
+          177,
+          108
+        ],
+        "accounts": [
+          {
+            "name": "user",
+            "writable": true,
+            "signer": true
+          },
+          {
+            "name": "token_mint_x"
+          },
+          {
+            "name": "token_mint_y"
+          },
+          {
+            "name": "amm_config",
+            "pda": {
+              "seeds": [
+                {
+                  "kind": "const",
+                  "value": [
+                    97,
+                    109,
+                    109,
+                    95,
+                    99,
+                    111,
+                    110,
+                    102,
+                    105,
+                    103
+                  ]
+                },
+                {
+                  "kind": "const",
+                  "value": [
+                    0,
+                    0,
+                    0,
+                    0
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "name": "token_mint_lp",
+            "writable": true,
+            "pda": {
+              "seeds": [
+                {
+                  "kind": "const",
+                  "value": [
+                    108,
+                    112
+                  ]
+                },
+                {
+                  "kind": "account",
+                  "path": "pool"
+                }
+              ]
+            }
+          },
+          {
+            "name": "pool",
+            "writable": true,
+            "pda": {
+              "seeds": [
+                {
+                  "kind": "const",
+                  "value": [
+                    112,
+                    111,
+                    111,
+                    108
+                  ]
+                },
+                {
+                  "kind": "account",
+                  "path": "amm_config"
+                },
+                {
+                  "kind": "account",
+                  "path": "token_mint_x"
+                },
+                {
+                  "kind": "account",
+                  "path": "token_mint_y"
+                }
+              ]
+            }
+          },
+          {
+            "name": "authority",
+            "pda": {
+              "seeds": [
+                {
+                  "kind": "const",
+                  "value": [
+                    97,
+                    117,
+                    116,
+                    104,
+                    111,
+                    114,
+                    105,
+                    116,
+                    121
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "name": "user_token_account_x",
+            "writable": true,
+            "pda": {
+              "seeds": [
+                {
+                  "kind": "account",
+                  "path": "user"
+                },
+                {
+                  "kind": "account",
+                  "path": "token_mint_x_program"
+                },
+                {
+                  "kind": "account",
+                  "path": "token_mint_x"
+                }
+              ],
+              "program": {
+                "kind": "const",
+                "value": [
+                  140,
+                  151,
+                  37,
+                  143,
+                  78,
+                  36,
+                  137,
+                  241,
+                  187,
+                  61,
+                  16,
+                  41,
+                  20,
+                  142,
+                  13,
+                  131,
+                  11,
+                  90,
+                  19,
+                  153,
+                  218,
+                  255,
+                  16,
+                  132,
+                  4,
+                  142,
+                  123,
+                  216,
+                  219,
+                  233,
+                  248,
+                  89
+                ]
+              }
+            }
+          },
+          {
+            "name": "user_token_account_y",
+            "writable": true,
+            "pda": {
+              "seeds": [
+                {
+                  "kind": "account",
+                  "path": "user"
+                },
+                {
+                  "kind": "account",
+                  "path": "token_mint_y_program"
+                },
+                {
+                  "kind": "account",
+                  "path": "token_mint_y"
+                }
+              ],
+              "program": {
+                "kind": "const",
+                "value": [
+                  140,
+                  151,
+                  37,
+                  143,
+                  78,
+                  36,
+                  137,
+                  241,
+                  187,
+                  61,
+                  16,
+                  41,
+                  20,
+                  142,
+                  13,
+                  131,
+                  11,
+                  90,
+                  19,
+                  153,
+                  218,
+                  255,
+                  16,
+                  132,
+                  4,
+                  142,
+                  123,
+                  216,
+                  219,
+                  233,
+                  248,
+                  89
+                ]
+              }
+            }
+          },
+          {
+            "name": "user_token_account_lp",
+            "writable": true,
+            "pda": {
+              "seeds": [
+                {
+                  "kind": "account",
+                  "path": "user"
+                },
+                {
+                  "kind": "account",
+                  "path": "token_program"
+                },
+                {
+                  "kind": "account",
+                  "path": "token_mint_lp"
+                }
+              ],
+              "program": {
+                "kind": "const",
+                "value": [
+                  140,
+                  151,
+                  37,
+                  143,
+                  78,
+                  36,
+                  137,
+                  241,
+                  187,
+                  61,
+                  16,
+                  41,
+                  20,
+                  142,
+                  13,
+                  131,
+                  11,
+                  90,
+                  19,
+                  153,
+                  218,
+                  255,
+                  16,
+                  132,
+                  4,
+                  142,
+                  123,
+                  216,
+                  219,
+                  233,
+                  248,
+                  89
+                ]
+              }
+            }
+          },
+          {
+            "name": "pool_token_reserve_x",
+            "writable": true
+          },
+          {
+            "name": "pool_token_reserve_y",
+            "writable": true
+          },
+          {
+            "name": "associated_token_program",
+            "address": "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL"
+          },
+          {
+            "name": "system_program",
+            "address": "11111111111111111111111111111111"
+          },
+          {
+            "name": "token_mint_x_program"
+          },
+          {
+            "name": "token_mint_y_program"
+          },
+          {
+            "name": "token_program",
+            "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+          }
+        ],
+        "args": [
+          {
+            "name": "amount_lp",
+            "type": "u64"
+          },
+          {
+            "name": "min_receive_x",
+            "type": "u64"
+          },
+          {
+            "name": "min_receive_y",
+            "type": "u64"
+          },
+          {
+            "name": "label",
+            "type": {
+              "option": {
+                "array": [
+                  "u8",
+                  21
+                ]
+              }
+            }
+          }
+        ]
+      },
+      {
+        "name": "settle",
+        "docs": [
+          "# Settle",
+          "Settles a confidential swap using zero-knowledge proof verification.",
+          "",
+          "This function finalizes a previously initiated swap by verifying a zero-knowledge (groth16)",
+          "proof that demonstrates the swap was executed correctly while maintaining privacy. The proof",
+          "components and public inputs are provided to verify the swap's validity.",
+          "",
+          "Groth16 proof is generated using [snarkjs](https://github.com/darklakefi/snarkjs).",
+          "Curve: bn128, wasm and final zkey files are contained within this repo settle-circuits.",
+          "",
+          "# Arguments",
+          "",
+          "* `ctx` - The context containing all required accounts for settlement",
+          "* `proof_a` - The first component of the Groth16 zero-knowledge proof (64 bytes)",
+          "* `proof_b` - The second component of the Groth16 zero-knowledge proof (128 bytes)",
+          "* `proof_c` - The third component of the Groth16 zero-knowledge proof (64 bytes)",
+          "* `public_inputs` - Array of two 32-byte public inputs for the proof verification.",
+          "It contains real output amount and the commitment to the minimum output amount, made during the swap.",
+          "",
+          "# Returns",
+          "",
+          "Returns `Ok(())` on successful settlement, or an error if the operation fails.",
+          "",
+          "# Errors",
+          "",
+          "This function will return an error if:",
+          "- The zero-knowledge proof verification fails",
+          "- The public inputs are invalid or inconsistent",
+          "- The settlement would violate pool invariants",
+          "- The settlement deadline has passed",
+          "- The swap has already been settled or cancelled"
+        ],
+        "discriminator": [
+          175,
+          42,
+          185,
+          87,
+          144,
+          131,
+          102,
+          212
+        ],
+        "accounts": [
+          {
+            "name": "caller",
+            "writable": true,
+            "signer": true
+          },
+          {
+            "name": "order_owner",
+            "writable": true
+          },
+          {
+            "name": "token_mint_x"
+          },
+          {
+            "name": "token_mint_y"
+          },
+          {
+            "name": "token_mint_wsol",
+            "address": "So11111111111111111111111111111111111111112"
+          },
+          {
+            "name": "pool",
+            "writable": true,
+            "pda": {
+              "seeds": [
+                {
+                  "kind": "const",
+                  "value": [
+                    112,
+                    111,
+                    111,
+                    108
+                  ]
+                },
+                {
+                  "kind": "account",
+                  "path": "amm_config"
+                },
+                {
+                  "kind": "account",
+                  "path": "token_mint_x"
+                },
+                {
+                  "kind": "account",
+                  "path": "token_mint_y"
+                }
+              ]
+            }
+          },
+          {
+            "name": "authority",
+            "pda": {
+              "seeds": [
+                {
+                  "kind": "const",
+                  "value": [
+                    97,
+                    117,
+                    116,
+                    104,
+                    111,
+                    114,
+                    105,
+                    116,
+                    121
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "name": "pool_token_reserve_x",
+            "writable": true
+          },
+          {
+            "name": "pool_token_reserve_y",
+            "writable": true
+          },
+          {
+            "name": "pool_wsol_reserve",
+            "writable": true,
+            "pda": {
+              "seeds": [
+                {
+                  "kind": "const",
+                  "value": [
+                    112,
+                    111,
+                    111,
+                    108,
+                    95,
+                    119,
+                    115,
+                    111,
+                    108,
+                    95,
+                    114,
+                    101,
+                    115,
+                    101,
+                    114,
+                    118,
+                    101
+                  ]
+                },
+                {
+                  "kind": "account",
+                  "path": "pool"
+                }
+              ]
+            }
+          },
+          {
+            "name": "amm_config",
+            "pda": {
+              "seeds": [
+                {
+                  "kind": "const",
+                  "value": [
+                    97,
+                    109,
+                    109,
+                    95,
+                    99,
+                    111,
+                    110,
+                    102,
+                    105,
+                    103
+                  ]
+                },
+                {
+                  "kind": "const",
+                  "value": [
+                    0,
+                    0,
+                    0,
+                    0
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "name": "user_token_account_x",
+            "writable": true,
+            "pda": {
+              "seeds": [
+                {
+                  "kind": "account",
+                  "path": "order_owner"
+                },
+                {
+                  "kind": "account",
+                  "path": "token_mint_x_program"
+                },
+                {
+                  "kind": "account",
+                  "path": "token_mint_x"
+                }
+              ],
+              "program": {
+                "kind": "account",
+                "path": "associated_token_program"
+              }
+            }
+          },
+          {
+            "name": "user_token_account_y",
+            "writable": true,
+            "pda": {
+              "seeds": [
+                {
+                  "kind": "account",
+                  "path": "order_owner"
+                },
+                {
+                  "kind": "account",
+                  "path": "token_mint_y_program"
+                },
+                {
+                  "kind": "account",
+                  "path": "token_mint_y"
+                }
+              ],
+              "program": {
+                "kind": "account",
+                "path": "associated_token_program"
+              }
+            }
+          },
+          {
+            "name": "user_token_account_wsol",
+            "writable": true,
+            "pda": {
+              "seeds": [
+                {
+                  "kind": "account",
+                  "path": "order_owner"
+                },
+                {
+                  "kind": "account",
+                  "path": "token_program"
+                },
+                {
+                  "kind": "account",
+                  "path": "token_mint_wsol"
+                }
+              ],
+              "program": {
+                "kind": "account",
+                "path": "associated_token_program"
+              }
+            }
+          },
+          {
+            "name": "caller_token_account_wsol",
+            "writable": true,
+            "pda": {
+              "seeds": [
+                {
+                  "kind": "account",
+                  "path": "caller"
+                },
+                {
+                  "kind": "account",
+                  "path": "token_program"
+                },
+                {
+                  "kind": "account",
+                  "path": "token_mint_wsol"
+                }
+              ],
+              "program": {
+                "kind": "account",
+                "path": "associated_token_program"
+              }
+            }
+          },
+          {
+            "name": "order",
+            "writable": true,
+            "pda": {
+              "seeds": [
+                {
+                  "kind": "const",
+                  "value": [
+                    111,
+                    114,
+                    100,
+                    101,
+                    114
+                  ]
+                },
+                {
+                  "kind": "account",
+                  "path": "pool"
+                },
+                {
+                  "kind": "account",
+                  "path": "order_owner"
+                }
+              ]
+            }
+          },
+          {
+            "name": "order_token_account_wsol",
+            "writable": true,
+            "pda": {
+              "seeds": [
+                {
+                  "kind": "const",
+                  "value": [
+                    111,
+                    114,
+                    100,
+                    101,
+                    114,
+                    95,
+                    119,
+                    115,
+                    111,
+                    108
+                  ]
+                },
+                {
+                  "kind": "account",
+                  "path": "pool"
+                },
+                {
+                  "kind": "account",
+                  "path": "order_owner"
+                }
+              ]
+            }
+          },
+          {
+            "name": "system_program",
+            "address": "11111111111111111111111111111111"
+          },
+          {
+            "name": "associated_token_program",
+            "address": "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL"
+          },
+          {
+            "name": "token_mint_x_program"
+          },
+          {
+            "name": "token_mint_y_program"
+          },
+          {
+            "name": "token_program",
+            "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+          }
+        ],
+        "args": [
+          {
+            "name": "proof_a",
+            "type": {
+              "array": [
+                "u8",
+                64
+              ]
+            }
+          },
+          {
+            "name": "proof_b",
+            "type": {
+              "array": [
+                "u8",
+                128
+              ]
+            }
+          },
+          {
+            "name": "proof_c",
+            "type": {
+              "array": [
+                "u8",
+                64
+              ]
+            }
+          },
+          {
+            "name": "public_inputs",
+            "type": {
+              "array": [
+                {
+                  "array": [
+                    "u8",
+                    32
+                  ]
+                },
+                2
+              ]
+            }
+          },
+          {
+            "name": "unwrap_wsol",
+            "type": "bool"
+          },
+          {
+            "name": "ref_code",
+            "type": {
+              "option": {
+                "array": [
+                  "u8",
+                  20
+                ]
+              }
+            }
+          },
+          {
+            "name": "label",
+            "type": {
+              "option": {
+                "array": [
+                  "u8",
+                  21
+                ]
+              }
+            }
+          }
+        ]
+      },
+      {
+        "name": "slash",
+        "docs": [
+          "# Slash",
+          "Executes a slash operation to penalize malicious behavior.",
+          "",
+          "This function allows anyone to slash (confiscate) funds from users who",
+          "have failed to finalize the swap in time (deadline). The method slashes",
+          "the WSOL deposit made during the swap. Tokens are returned to the original",
+          "swapper.",
+          "",
+          "# Arguments",
+          "",
+          "* `ctx` - The context containing all required accounts for the slash operation",
+          "",
+          "# Returns",
+          "",
+          "Returns `Ok(())` on successful slash execution, or an error if the operation fails.",
+          "",
+          "# Errors",
+          "",
+          "This function will return an error if:",
+          "- The slash operation would violate pool invariants",
+          "- The target accounts are not properly configured",
+          "- The caller doesn't have a WSOL token account"
+        ],
+        "discriminator": [
+          204,
+          141,
+          18,
+          161,
+          8,
+          177,
+          92,
+          142
+        ],
+        "accounts": [
+          {
+            "name": "caller",
+            "writable": true,
+            "signer": true
+          },
+          {
+            "name": "order_owner",
+            "writable": true
+          },
+          {
+            "name": "token_mint_x"
+          },
+          {
+            "name": "token_mint_y"
+          },
+          {
+            "name": "token_mint_wsol",
+            "address": "So11111111111111111111111111111111111111112"
+          },
+          {
+            "name": "pool",
+            "writable": true,
+            "pda": {
+              "seeds": [
+                {
+                  "kind": "const",
+                  "value": [
+                    112,
+                    111,
+                    111,
+                    108
+                  ]
+                },
+                {
+                  "kind": "account",
+                  "path": "amm_config"
+                },
+                {
+                  "kind": "account",
+                  "path": "token_mint_x"
+                },
+                {
+                  "kind": "account",
+                  "path": "token_mint_y"
+                }
+              ]
+            }
+          },
+          {
+            "name": "authority",
+            "pda": {
+              "seeds": [
+                {
+                  "kind": "const",
+                  "value": [
+                    97,
+                    117,
+                    116,
+                    104,
+                    111,
+                    114,
+                    105,
+                    116,
+                    121
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "name": "pool_token_reserve_x",
+            "writable": true
+          },
+          {
+            "name": "pool_token_reserve_y",
+            "writable": true
+          },
+          {
+            "name": "pool_wsol_reserve",
+            "writable": true,
+            "pda": {
+              "seeds": [
+                {
+                  "kind": "const",
+                  "value": [
+                    112,
+                    111,
+                    111,
+                    108,
+                    95,
+                    119,
+                    115,
+                    111,
+                    108,
+                    95,
+                    114,
+                    101,
+                    115,
+                    101,
+                    114,
+                    118,
+                    101
+                  ]
+                },
+                {
+                  "kind": "account",
+                  "path": "pool"
+                }
+              ]
+            }
+          },
+          {
+            "name": "amm_config",
+            "pda": {
+              "seeds": [
+                {
+                  "kind": "const",
+                  "value": [
+                    97,
+                    109,
+                    109,
+                    95,
+                    99,
+                    111,
+                    110,
+                    102,
+                    105,
+                    103
+                  ]
+                },
+                {
+                  "kind": "const",
+                  "value": [
+                    0,
+                    0,
+                    0,
+                    0
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "name": "user_token_account_x",
+            "writable": true,
+            "pda": {
+              "seeds": [
+                {
+                  "kind": "account",
+                  "path": "order_owner"
+                },
+                {
+                  "kind": "account",
+                  "path": "token_mint_x_program"
+                },
+                {
+                  "kind": "account",
+                  "path": "token_mint_x"
+                }
+              ],
+              "program": {
+                "kind": "account",
+                "path": "associated_token_program"
+              }
+            }
+          },
+          {
+            "name": "user_token_account_y",
+            "writable": true,
+            "pda": {
+              "seeds": [
+                {
+                  "kind": "account",
+                  "path": "order_owner"
+                },
+                {
+                  "kind": "account",
+                  "path": "token_mint_y_program"
+                },
+                {
+                  "kind": "account",
+                  "path": "token_mint_y"
+                }
+              ],
+              "program": {
+                "kind": "account",
+                "path": "associated_token_program"
+              }
+            }
+          },
+          {
+            "name": "caller_token_account_wsol",
+            "writable": true,
+            "pda": {
+              "seeds": [
+                {
+                  "kind": "account",
+                  "path": "caller"
+                },
+                {
+                  "kind": "account",
+                  "path": "token_program"
+                },
+                {
+                  "kind": "account",
+                  "path": "token_mint_wsol"
+                }
+              ],
+              "program": {
+                "kind": "account",
+                "path": "associated_token_program"
+              }
+            }
+          },
+          {
+            "name": "order",
+            "writable": true,
+            "pda": {
+              "seeds": [
+                {
+                  "kind": "const",
+                  "value": [
+                    111,
+                    114,
+                    100,
+                    101,
+                    114
+                  ]
+                },
+                {
+                  "kind": "account",
+                  "path": "pool"
+                },
+                {
+                  "kind": "account",
+                  "path": "order_owner"
+                }
+              ]
+            }
+          },
+          {
+            "name": "system_program",
+            "address": "11111111111111111111111111111111"
+          },
+          {
+            "name": "associated_token_program",
+            "address": "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL"
+          },
+          {
+            "name": "token_mint_x_program"
+          },
+          {
+            "name": "token_mint_y_program"
+          },
+          {
+            "name": "token_program",
+            "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+          }
+        ],
+        "args": [
+          {
+            "name": "label",
+            "type": {
+              "option": {
+                "array": [
+                  "u8",
+                  21
+                ]
+              }
+            }
+          }
+        ]
+      },
+      {
+        "name": "swap",
+        "docs": [
+          "# Swap",
+          "Performs a confidential swap between tokens in the pool.",
+          "",
+          "This function executes a swap operation while maintaining confidentiality of the",
+          "trade details. The swap direction is determined by the `is_swap_x_to_y` parameter,",
+          "and the minimum output amount is specified as a commitment `c_min` to preserve privacy.",
+          "Commitment is a poseidon hash of the minimum output amount with a random salt",
+          "(poseidon hash function has to match circom implementation parameters).",
+          "",
+          "Poseidon hash can be generated using [circomlibjs](https://www.npmjs.com/package/circomlibjs/v/0.1.7).",
+          "",
+          "# Arguments",
+          "",
+          "* `ctx` - The context containing all required accounts for the swap",
+          "* `amount_in` - The amount of input tokens to swap",
+          "* `is_swap_x_to_y` - If true, swap token X for token Y; if false, swap token Y for token X",
+          "* `c_min` - A 32-byte commitment representing the minimum output amount (for privacy)",
+          "",
+          "# Returns",
+          "",
+          "Returns `Ok(())` on successful swap execution, or an error if the operation fails.",
+          "",
+          "# Errors",
+          "",
+          "This function will return an error if:",
+          "- The user does not have sufficient input tokens",
+          "- The swap would result in slippage beyond acceptable limits",
+          "- The pool does not have sufficient liquidity",
+          "- The swap violates pool invariants"
+        ],
+        "discriminator": [
+          248,
+          198,
+          158,
+          145,
+          225,
+          117,
+          135,
+          200
+        ],
+        "accounts": [
+          {
+            "name": "user",
+            "writable": true,
+            "signer": true
+          },
+          {
+            "name": "token_mint_x"
+          },
+          {
+            "name": "token_mint_y"
+          },
+          {
+            "name": "token_mint_wsol",
+            "address": "So11111111111111111111111111111111111111112"
+          },
+          {
+            "name": "pool",
+            "writable": true,
+            "pda": {
+              "seeds": [
+                {
+                  "kind": "const",
+                  "value": [
+                    112,
+                    111,
+                    111,
+                    108
+                  ]
+                },
+                {
+                  "kind": "account",
+                  "path": "amm_config"
+                },
+                {
+                  "kind": "account",
+                  "path": "token_mint_x"
+                },
+                {
+                  "kind": "account",
+                  "path": "token_mint_y"
+                }
+              ]
+            }
+          },
+          {
+            "name": "authority",
+            "pda": {
+              "seeds": [
+                {
+                  "kind": "const",
+                  "value": [
+                    97,
+                    117,
+                    116,
+                    104,
+                    111,
+                    114,
+                    105,
+                    116,
+                    121
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "name": "amm_config",
+            "pda": {
+              "seeds": [
+                {
+                  "kind": "const",
+                  "value": [
+                    97,
+                    109,
+                    109,
+                    95,
+                    99,
+                    111,
+                    110,
+                    102,
+                    105,
+                    103
+                  ]
+                },
+                {
+                  "kind": "const",
+                  "value": [
+                    0,
+                    0,
+                    0,
+                    0
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "name": "user_token_account_x",
+            "writable": true,
+            "pda": {
+              "seeds": [
+                {
+                  "kind": "account",
+                  "path": "user"
+                },
+                {
+                  "kind": "account",
+                  "path": "token_mint_x_program"
+                },
+                {
+                  "kind": "account",
+                  "path": "token_mint_x"
+                }
+              ],
+              "program": {
+                "kind": "account",
+                "path": "associated_token_program"
+              }
+            }
+          },
+          {
+            "name": "user_token_account_y",
+            "writable": true,
+            "pda": {
+              "seeds": [
+                {
+                  "kind": "account",
+                  "path": "user"
+                },
+                {
+                  "kind": "account",
+                  "path": "token_mint_y_program"
+                },
+                {
+                  "kind": "account",
+                  "path": "token_mint_y"
+                }
+              ],
+              "program": {
+                "kind": "account",
+                "path": "associated_token_program"
+              }
+            }
+          },
+          {
+            "name": "user_token_account_wsol",
+            "writable": true,
+            "pda": {
+              "seeds": [
+                {
+                  "kind": "account",
+                  "path": "user"
+                },
+                {
+                  "kind": "account",
+                  "path": "token_program"
+                },
+                {
+                  "kind": "account",
+                  "path": "token_mint_wsol"
+                }
+              ],
+              "program": {
+                "kind": "account",
+                "path": "associated_token_program"
+              }
+            }
+          },
+          {
+            "name": "pool_token_reserve_x",
+            "writable": true
+          },
+          {
+            "name": "pool_token_reserve_y",
+            "writable": true
+          },
+          {
+            "name": "pool_wsol_reserve",
+            "writable": true,
+            "pda": {
+              "seeds": [
+                {
+                  "kind": "const",
+                  "value": [
+                    112,
+                    111,
+                    111,
+                    108,
+                    95,
+                    119,
+                    115,
+                    111,
+                    108,
+                    95,
+                    114,
+                    101,
+                    115,
+                    101,
+                    114,
+                    118,
+                    101
+                  ]
+                },
+                {
+                  "kind": "account",
+                  "path": "pool"
+                }
+              ]
+            }
+          },
+          {
+            "name": "order",
+            "writable": true,
+            "pda": {
+              "seeds": [
+                {
+                  "kind": "const",
+                  "value": [
+                    111,
+                    114,
+                    100,
+                    101,
+                    114
+                  ]
+                },
+                {
+                  "kind": "account",
+                  "path": "pool"
+                },
+                {
+                  "kind": "account",
+                  "path": "user"
+                }
+              ]
+            }
+          },
+          {
+            "name": "associated_token_program",
+            "address": "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL"
+          },
+          {
+            "name": "system_program",
+            "address": "11111111111111111111111111111111"
+          },
+          {
+            "name": "token_mint_x_program"
+          },
+          {
+            "name": "token_mint_y_program"
+          },
+          {
+            "name": "token_program",
+            "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+          }
+        ],
+        "args": [
+          {
+            "name": "amount_in",
+            "type": "u64"
+          },
+          {
+            "name": "is_swap_x_to_y",
+            "type": "bool"
+          },
+          {
+            "name": "c_min",
+            "type": {
+              "array": [
+                "u8",
+                32
+              ]
+            }
+          },
+          {
+            "name": "label",
+            "type": {
+              "option": {
+                "array": [
+                  "u8",
+                  21
+                ]
+              }
+            }
+          }
+        ]
+      },
+      {
+        "name": "update_amm_config",
+        "docs": [
+          "# Update AMM Configuration",
+          "Updates an existing AMM configuration parameter.",
+          "",
+          "This administrative function allows authorized parties to update specific parameters",
+          "of an existing AMM configuration. The parameter to update is specified by a numeric",
+          "identifier, and the new value is provided.",
+          "",
+          "# Arguments",
+          "",
+          "* `ctx` - The context containing all required accounts for AMM configuration update",
+          "* `param` - The parameter identifier to update (u8)",
+          "* `value` - The new value for the specified parameter",
+          "",
+          "# Returns",
+          "",
+          "Returns `Ok(())` on successful configuration update, or an error if the operation fails.",
+          "",
+          "# Errors",
+          "",
+          "This function will return an error if:",
+          "- The caller is not authorized to update AMM configurations",
+          "- The parameter identifier is invalid",
+          "- The new value violates constraints or invariants",
+          "- The configuration does not exist"
+        ],
+        "discriminator": [
+          49,
+          60,
+          174,
+          136,
+          154,
+          28,
+          116,
+          200
+        ],
+        "accounts": [
+          {
+            "name": "admin",
+            "docs": [
+              "The config admin"
+            ],
+            "signer": true,
+            "address": "43RPeUeQ1c4eAqvAYiS43wVfr81PjfWSteTxyHx49kMr"
+          },
+          {
+            "name": "amm_config",
+            "docs": [
+              "Config account to be changed"
+            ],
+            "writable": true,
+            "pda": {
+              "seeds": [
+                {
+                  "kind": "const",
+                  "value": [
+                    97,
+                    109,
+                    109,
+                    95,
+                    99,
+                    111,
+                    110,
+                    102,
+                    105,
+                    103
+                  ]
+                },
+                {
+                  "kind": "const",
+                  "value": [
+                    0,
+                    0,
+                    0,
+                    0
+                  ]
+                }
+              ]
+            }
+          }
+        ],
+        "args": [
+          {
+            "name": "param",
+            "type": "u8"
+          },
+          {
+            "name": "value",
+            "type": "u64"
+          }
+        ]
+      }
+    ],
+    "accounts": [
+      {
+        "name": "AmmConfig",
+        "discriminator": [
+          218,
+          244,
+          33,
+          104,
+          203,
+          203,
+          43,
+          111
+        ]
+      },
+      {
+        "name": "Order",
+        "discriminator": [
+          134,
+          173,
+          223,
+          185,
+          77,
+          86,
+          28,
+          51
+        ]
+      },
+      {
+        "name": "Pool",
+        "discriminator": [
+          241,
+          154,
+          109,
+          4,
+          17,
+          177,
+          109,
+          188
+        ]
+      }
+    ],
+    "events": [
+      {
+        "name": "AddLiquidity",
+        "discriminator": [
+          31,
+          94,
+          125,
+          90,
+          227,
+          52,
+          61,
+          186
+        ]
+      },
+      {
+        "name": "Cancel",
+        "discriminator": [
+          196,
+          40,
+          17,
+          225,
+          87,
+          58,
+          126,
+          44
+        ]
+      },
+      {
+        "name": "InitializePool",
+        "discriminator": [
+          145,
+          104,
+          208,
+          79,
+          8,
+          159,
+          145,
+          240
+        ]
+      },
+      {
+        "name": "RemoveLiquidity",
+        "discriminator": [
+          116,
+          244,
+          97,
+          232,
+          103,
+          31,
+          152,
+          58
+        ]
+      },
+      {
+        "name": "Settle",
+        "discriminator": [
+          172,
+          88,
+          86,
+          73,
+          227,
+          209,
+          204,
+          56
+        ]
+      },
+      {
+        "name": "Slash",
+        "discriminator": [
+          157,
+          91,
+          23,
+          33,
+          129,
+          182,
+          68,
+          120
+        ]
+      },
+      {
+        "name": "Swap",
+        "discriminator": [
+          81,
+          108,
+          227,
+          190,
+          205,
+          208,
+          10,
+          196
+        ]
+      }
+    ],
+    "errors": [
+      {
+        "code": 6000,
+        "name": "InvalidInput",
+        "msg": "Invalid input"
+      },
+      {
+        "code": 6001,
+        "name": "InvalidProof",
+        "msg": "Invalid proof"
+      },
+      {
+        "code": 6002,
+        "name": "InvalidTokenMint",
+        "msg": "Invalid token mint"
+      },
+      {
+        "code": 6003,
+        "name": "TooFewTokensSupplied",
+        "msg": "Invalid deposit, too few tokens"
+      },
+      {
+        "code": 6004,
+        "name": "ReceivedZeroTokens",
+        "msg": "Pool received X or Y token quantity is 0"
+      },
+      {
+        "code": 6005,
+        "name": "SlippageExceeded",
+        "msg": "Slippage tolerance exceeded"
+      },
+      {
+        "code": 6006,
+        "name": "MathOverflow",
+        "msg": "Math overflow"
+      },
+      {
+        "code": 6007,
+        "name": "MathUnderflow",
+        "msg": "Math underflow"
+      },
+      {
+        "code": 6008,
+        "name": "InvalidGroth16Verifier",
+        "msg": "Unable to create Groth16Verifier"
+      },
+      {
+        "code": 6009,
+        "name": "InvalidTokenOrder",
+        "msg": "Invalid token order"
+      },
+      {
+        "code": 6010,
+        "name": "InvalidSwapAmount",
+        "msg": "Invalid swap amount"
+      },
+      {
+        "code": 6011,
+        "name": "InvalidLpMint",
+        "msg": "Invalid LP mint"
+      },
+      {
+        "code": 6012,
+        "name": "InvalidMetadataAccount",
+        "msg": "Invalid metadata account"
+      },
+      {
+        "code": 6013,
+        "name": "PublicSignalAndPoolReserveMismatch",
+        "msg": "Pool reserve and public signals mismatch"
+      },
+      {
+        "code": 6014,
+        "name": "PoolInputAmountMismatch",
+        "msg": "Proof input not equal to pool input"
+      },
+      {
+        "code": 6015,
+        "name": "PoolOutputAmountTooLow",
+        "msg": "Proof amount received exceeds pool output"
+      },
+      {
+        "code": 6016,
+        "name": "InvalidPublicSignals",
+        "msg": "Unable to parse public signals"
+      },
+      {
+        "code": 6017,
+        "name": "LpMintAlreadyInitialized",
+        "msg": "LP mint already initialized"
+      },
+      {
+        "code": 6018,
+        "name": "LiquidityTooLow",
+        "msg": "Liquidity too low"
+      },
+      {
+        "code": 6019,
+        "name": "TransferFeeCalculateNotMatch",
+        "msg": "Invalid transfer calculation"
+      },
+      {
+        "code": 6020,
+        "name": "ConfigAlreadyExists",
+        "msg": "Config is already initialized"
+      },
+      {
+        "code": 6021,
+        "name": "InvalidAdmin",
+        "msg": "Invalid admin address"
+      },
+      {
+        "code": 6022,
+        "name": "InsufficientSolBalance",
+        "msg": "Insufficient SOL balance for WSOL deposit"
+      },
+      {
+        "code": 6023,
+        "name": "OrderExpired",
+        "msg": "Order expired"
+      },
+      {
+        "code": 6024,
+        "name": "OrderStillValid",
+        "msg": "Order still valid"
+      },
+      {
+        "code": 6025,
+        "name": "AmmHalted",
+        "msg": "AMM is halted"
+      },
+      {
+        "code": 6026,
+        "name": "OrderDataMismatch",
+        "msg": "Order data doesn't match"
+      },
+      {
+        "code": 6027,
+        "name": "OrderAlreadyExists",
+        "msg": "Order already exists"
+      },
+      {
+        "code": 6028,
+        "name": "ZeroTokenOutput",
+        "msg": "Liquidity tokens did not yield any pair tokens"
+      },
+      {
+        "code": 6029,
+        "name": "OutputIsZero",
+        "msg": "Output is zero"
+      },
+      {
+        "code": 6030,
+        "name": "InvalidAssociatedTokenProgram",
+        "msg": "Invalid associated token program"
+      },
+      {
+        "code": 6031,
+        "name": "UserTokenAccountXUninitialized",
+        "msg": "User token account X is uninitialized"
+      },
+      {
+        "code": 6032,
+        "name": "UserTokenAccountYUninitialized",
+        "msg": "User token account Y is uninitialized"
+      },
+      {
+        "code": 6033,
+        "name": "CallerTokenAccountWSolUninitialized",
+        "msg": "Caller token account WSOL is uninitialized"
+      }
+    ],
+    "types": [
+      {
+        "name": "AddLiquidity",
+        "type": {
+          "kind": "struct",
+          "fields": [
+            {
+              "name": "supplier",
+              "type": "pubkey"
+            },
+            {
+              "name": "max_amount_x",
+              "type": "u64"
+            },
+            {
+              "name": "max_amount_y",
+              "type": "u64"
+            },
+            {
+              "name": "transfer_in_x",
+              "type": "u64"
+            },
+            {
+              "name": "transfer_in_y",
+              "type": "u64"
+            },
+            {
+              "name": "liquidity_minted",
+              "type": "u64"
+            },
+            {
+              "name": "user_token_lp_balance",
+              "type": "u64"
+            },
+            {
+              "name": "new_reserve_x",
+              "type": "u64"
+            },
+            {
+              "name": "new_reserve_y",
+              "type": "u64"
+            },
+            {
+              "name": "available_reserve_x",
+              "type": "u64"
+            },
+            {
+              "name": "available_reserve_y",
+              "type": "u64"
+            },
+            {
+              "name": "token_mint_lp",
+              "type": "pubkey"
+            },
+            {
+              "name": "token_mint_x",
+              "type": "pubkey"
+            },
+            {
+              "name": "token_mint_y",
+              "type": "pubkey"
+            },
+            {
+              "name": "ref_code",
+              "type": "string"
+            },
+            {
+              "name": "label",
+              "type": "string"
+            }
+          ]
+        }
+      },
+      {
+        "name": "AmmConfig",
+        "type": {
+          "kind": "struct",
+          "fields": [
+            {
+              "name": "trade_fee_rate",
+              "type": "u64"
+            },
+            {
+              "name": "create_pool_fee",
+              "type": "u64"
+            },
+            {
+              "name": "protocol_fee_rate",
+              "type": "u64"
+            },
+            {
+              "name": "wsol_trade_deposit",
+              "type": "u64"
+            },
+            {
+              "name": "deadline_slot_duration",
+              "type": "u64"
+            },
+            {
+              "name": "ratio_change_tolerance_rate",
+              "type": "u64"
+            },
+            {
+              "name": "bump",
+              "type": "u8"
+            },
+            {
+              "name": "halted",
+              "type": "bool"
+            },
+            {
+              "name": "padding",
+              "docs": [
+                "padding"
+              ],
+              "type": {
+                "array": [
+                  "u64",
+                  16
+                ]
+              }
+            }
+          ]
+        }
+      },
+      {
+        "name": "Cancel",
+        "type": {
+          "kind": "struct",
+          "fields": [
+            {
+              "name": "caller",
+              "type": "pubkey"
+            },
+            {
+              "name": "trader",
+              "type": "pubkey"
+            },
+            {
+              "name": "direction",
+              "type": "u8"
+            },
+            {
+              "name": "deadline",
+              "type": "u64"
+            },
+            {
+              "name": "protocol_fee",
+              "type": "u64"
+            },
+            {
+              "name": "amount_in",
+              "type": "u64"
+            },
+            {
+              "name": "amount_out",
+              "type": "u64"
+            },
+            {
+              "name": "wsol_to_order_owner",
+              "type": "u64"
+            },
+            {
+              "name": "wsol_to_caller",
+              "type": "u64"
+            },
+            {
+              "name": "sol_to_caller",
+              "type": "u64"
+            },
+            {
+              "name": "actual_amount_in",
+              "type": "u64"
+            },
+            {
+              "name": "new_reserve_x",
+              "type": "u64"
+            },
+            {
+              "name": "new_reserve_y",
+              "type": "u64"
+            },
+            {
+              "name": "available_reserve_x",
+              "type": "u64"
+            },
+            {
+              "name": "available_reserve_y",
+              "type": "u64"
+            },
+            {
+              "name": "locked_x",
+              "type": "u64"
+            },
+            {
+              "name": "locked_y",
+              "type": "u64"
+            },
+            {
+              "name": "user_locked_x",
+              "type": "u64"
+            },
+            {
+              "name": "user_locked_y",
+              "type": "u64"
+            },
+            {
+              "name": "protocol_fee_x",
+              "type": "u64"
+            },
+            {
+              "name": "protocol_fee_y",
+              "type": "u64"
+            },
+            {
+              "name": "user_token_account_x",
+              "type": "pubkey"
+            },
+            {
+              "name": "user_token_account_y",
+              "type": "pubkey"
+            },
+            {
+              "name": "token_mint_lp",
+              "type": "pubkey"
+            },
+            {
+              "name": "token_mint_x",
+              "type": "pubkey"
+            },
+            {
+              "name": "token_mint_y",
+              "type": "pubkey"
+            },
+            {
+              "name": "label",
+              "type": "string"
+            }
+          ]
+        }
+      },
+      {
+        "name": "InitializePool",
+        "type": {
+          "kind": "struct",
+          "fields": [
+            {
+              "name": "trader",
+              "type": "pubkey"
+            },
+            {
+              "name": "liquidity_minted",
+              "type": "u64"
+            },
+            {
+              "name": "sol_create_pool_fee",
+              "type": "u64"
+            },
+            {
+              "name": "new_reserve_x",
+              "type": "u64"
+            },
+            {
+              "name": "new_reserve_y",
+              "type": "u64"
+            },
+            {
+              "name": "token_mint_x",
+              "type": "pubkey"
+            },
+            {
+              "name": "token_mint_y",
+              "type": "pubkey"
+            },
+            {
+              "name": "token_mint_lp",
+              "type": "pubkey"
+            },
+            {
+              "name": "label",
+              "type": "string"
+            }
+          ]
+        }
+      },
+      {
+        "name": "Order",
+        "type": {
+          "kind": "struct",
+          "fields": [
+            {
+              "name": "trader",
+              "type": "pubkey"
+            },
+            {
+              "name": "token_mint_x",
+              "type": "pubkey"
+            },
+            {
+              "name": "token_mint_y",
+              "type": "pubkey"
+            },
+            {
+              "name": "actual_in",
+              "type": "u64"
+            },
+            {
+              "name": "exchange_in",
+              "type": "u64"
+            },
+            {
+              "name": "actual_out",
+              "type": "u64"
+            },
+            {
+              "name": "from_to_lock",
+              "type": "u64"
+            },
+            {
+              "name": "d_in",
+              "type": "u64"
+            },
+            {
+              "name": "d_out",
+              "type": "u64"
+            },
+            {
+              "name": "deadline",
+              "type": "u64"
+            },
+            {
+              "name": "protocol_fee",
+              "type": "u64"
+            },
+            {
+              "name": "wsol_deposit",
+              "type": "u64"
+            },
+            {
+              "name": "c_min",
+              "type": {
+                "array": [
+                  "u8",
+                  32
+                ]
+              }
+            },
+            {
+              "name": "is_x_to_y",
+              "type": "bool"
+            },
+            {
+              "name": "bump",
+              "type": "u8"
+            },
+            {
+              "name": "padding",
+              "type": {
+                "array": [
+                  "u64",
+                  4
+                ]
+              }
+            }
+          ]
+        }
+      },
+      {
+        "name": "Pool",
+        "type": {
+          "kind": "struct",
+          "fields": [
+            {
+              "name": "creator",
+              "type": "pubkey"
+            },
+            {
+              "name": "amm_config",
+              "type": "pubkey"
+            },
+            {
+              "name": "token_mint_x",
+              "type": "pubkey"
+            },
+            {
+              "name": "token_mint_y",
+              "type": "pubkey"
+            },
+            {
+              "name": "reserve_x",
+              "type": "pubkey"
+            },
+            {
+              "name": "reserve_y",
+              "type": "pubkey"
+            },
+            {
+              "name": "token_lp_supply",
+              "type": "u64"
+            },
+            {
+              "name": "protocol_fee_x",
+              "type": "u64"
+            },
+            {
+              "name": "protocol_fee_y",
+              "type": "u64"
+            },
+            {
+              "name": "locked_x",
+              "type": "u64"
+            },
+            {
+              "name": "locked_y",
+              "type": "u64"
+            },
+            {
+              "name": "user_locked_x",
+              "type": "u64"
+            },
+            {
+              "name": "user_locked_y",
+              "type": "u64"
+            },
+            {
+              "name": "bump",
+              "type": "u8"
+            },
+            {
+              "name": "padding",
+              "type": {
+                "array": [
+                  "u64",
+                  4
+                ]
+              }
+            }
+          ]
+        }
+      },
+      {
+        "name": "RemoveLiquidity",
+        "type": {
+          "kind": "struct",
+          "fields": [
+            {
+              "name": "supplier",
+              "type": "pubkey"
+            },
+            {
+              "name": "min_amount_x",
+              "type": "u64"
+            },
+            {
+              "name": "min_amount_y",
+              "type": "u64"
+            },
+            {
+              "name": "transfer_out_x",
+              "type": "u64"
+            },
+            {
+              "name": "transfer_out_y",
+              "type": "u64"
+            },
+            {
+              "name": "liquidity_burned",
+              "type": "u64"
+            },
+            {
+              "name": "user_token_lp_balance",
+              "type": "u64"
+            },
+            {
+              "name": "new_reserve_x",
+              "type": "u64"
+            },
+            {
+              "name": "new_reserve_y",
+              "type": "u64"
+            },
+            {
+              "name": "available_reserve_x",
+              "type": "u64"
+            },
+            {
+              "name": "available_reserve_y",
+              "type": "u64"
+            },
+            {
+              "name": "token_mint_lp",
+              "type": "pubkey"
+            },
+            {
+              "name": "token_mint_x",
+              "type": "pubkey"
+            },
+            {
+              "name": "token_mint_y",
+              "type": "pubkey"
+            },
+            {
+              "name": "label",
+              "type": "string"
+            }
+          ]
+        }
+      },
+      {
+        "name": "Settle",
+        "type": {
+          "kind": "struct",
+          "fields": [
+            {
+              "name": "caller",
+              "type": "pubkey"
+            },
+            {
+              "name": "trader",
+              "type": "pubkey"
+            },
+            {
+              "name": "direction",
+              "type": "u8"
+            },
+            {
+              "name": "deadline",
+              "type": "u64"
+            },
+            {
+              "name": "protocol_fee",
+              "type": "u64"
+            },
+            {
+              "name": "amount_in",
+              "type": "u64"
+            },
+            {
+              "name": "amount_out",
+              "type": "u64"
+            },
+            {
+              "name": "actual_amount_in",
+              "type": "u64"
+            },
+            {
+              "name": "wsol_to_trader",
+              "type": "u64"
+            },
+            {
+              "name": "wsol_to_caller",
+              "type": "u64"
+            },
+            {
+              "name": "sol_to_trader",
+              "type": "u64"
+            },
+            {
+              "name": "actual_amount_out",
+              "type": "u64"
+            },
+            {
+              "name": "new_reserve_x",
+              "type": "u64"
+            },
+            {
+              "name": "new_reserve_y",
+              "type": "u64"
+            },
+            {
+              "name": "available_reserve_x",
+              "type": "u64"
+            },
+            {
+              "name": "available_reserve_y",
+              "type": "u64"
+            },
+            {
+              "name": "locked_x",
+              "type": "u64"
+            },
+            {
+              "name": "locked_y",
+              "type": "u64"
+            },
+            {
+              "name": "user_locked_x",
+              "type": "u64"
+            },
+            {
+              "name": "user_locked_y",
+              "type": "u64"
+            },
+            {
+              "name": "protocol_fee_x",
+              "type": "u64"
+            },
+            {
+              "name": "protocol_fee_y",
+              "type": "u64"
+            },
+            {
+              "name": "user_token_account_x",
+              "type": "pubkey"
+            },
+            {
+              "name": "user_token_account_y",
+              "type": "pubkey"
+            },
+            {
+              "name": "token_mint_lp",
+              "type": "pubkey"
+            },
+            {
+              "name": "token_mint_x",
+              "type": "pubkey"
+            },
+            {
+              "name": "token_mint_y",
+              "type": "pubkey"
+            },
+            {
+              "name": "ref_code",
+              "type": "string"
+            },
+            {
+              "name": "label",
+              "type": "string"
+            }
+          ]
+        }
+      },
+      {
+        "name": "Slash",
+        "type": {
+          "kind": "struct",
+          "fields": [
+            {
+              "name": "caller",
+              "type": "pubkey"
+            },
+            {
+              "name": "trader",
+              "type": "pubkey"
+            },
+            {
+              "name": "direction",
+              "type": "u8"
+            },
+            {
+              "name": "deadline",
+              "type": "u64"
+            },
+            {
+              "name": "protocol_fee",
+              "type": "u64"
+            },
+            {
+              "name": "amount_in",
+              "type": "u64"
+            },
+            {
+              "name": "amount_out",
+              "type": "u64"
+            },
+            {
+              "name": "wsol_to_trader",
+              "type": "u64"
+            },
+            {
+              "name": "wsol_to_caller",
+              "type": "u64"
+            },
+            {
+              "name": "sol_to_caller",
+              "type": "u64"
+            },
+            {
+              "name": "actual_amount_in",
+              "type": "u64"
+            },
+            {
+              "name": "new_reserve_x",
+              "type": "u64"
+            },
+            {
+              "name": "new_reserve_y",
+              "type": "u64"
+            },
+            {
+              "name": "available_reserve_x",
+              "type": "u64"
+            },
+            {
+              "name": "available_reserve_y",
+              "type": "u64"
+            },
+            {
+              "name": "locked_x",
+              "type": "u64"
+            },
+            {
+              "name": "locked_y",
+              "type": "u64"
+            },
+            {
+              "name": "user_locked_x",
+              "type": "u64"
+            },
+            {
+              "name": "user_locked_y",
+              "type": "u64"
+            },
+            {
+              "name": "protocol_fee_x",
+              "type": "u64"
+            },
+            {
+              "name": "protocol_fee_y",
+              "type": "u64"
+            },
+            {
+              "name": "user_token_account_x",
+              "type": "pubkey"
+            },
+            {
+              "name": "user_token_account_y",
+              "type": "pubkey"
+            },
+            {
+              "name": "token_mint_lp",
+              "type": "pubkey"
+            },
+            {
+              "name": "token_mint_x",
+              "type": "pubkey"
+            },
+            {
+              "name": "token_mint_y",
+              "type": "pubkey"
+            },
+            {
+              "name": "label",
+              "type": "string"
+            }
+          ]
+        }
+      },
+      {
+        "name": "Swap",
+        "type": {
+          "kind": "struct",
+          "fields": [
+            {
+              "name": "trader",
+              "type": "pubkey"
+            },
+            {
+              "name": "direction",
+              "type": "u8"
+            },
+            {
+              "name": "deadline",
+              "type": "u64"
+            },
+            {
+              "name": "trade_fee",
+              "type": "u64"
+            },
+            {
+              "name": "protocol_fee",
+              "type": "u64"
+            },
+            {
+              "name": "amount_in",
+              "type": "u64"
+            },
+            {
+              "name": "amount_out",
+              "type": "u64"
+            },
+            {
+              "name": "actual_amount_in",
+              "type": "u64"
+            },
+            {
+              "name": "wsol_deposit",
+              "type": "u64"
+            },
+            {
+              "name": "actual_amount_out",
+              "type": "u64"
+            },
+            {
+              "name": "new_reserve_x",
+              "type": "u64"
+            },
+            {
+              "name": "new_reserve_y",
+              "type": "u64"
+            },
+            {
+              "name": "available_reserve_x",
+              "type": "u64"
+            },
+            {
+              "name": "available_reserve_y",
+              "type": "u64"
+            },
+            {
+              "name": "locked_x",
+              "type": "u64"
+            },
+            {
+              "name": "locked_y",
+              "type": "u64"
+            },
+            {
+              "name": "user_locked_x",
+              "type": "u64"
+            },
+            {
+              "name": "user_locked_y",
+              "type": "u64"
+            },
+            {
+              "name": "protocol_fee_x",
+              "type": "u64"
+            },
+            {
+              "name": "protocol_fee_y",
+              "type": "u64"
+            },
+            {
+              "name": "user_token_account_x",
+              "type": "pubkey"
+            },
+            {
+              "name": "user_token_account_y",
+              "type": "pubkey"
+            },
+            {
+              "name": "token_mint_lp",
+              "type": "pubkey"
+            },
+            {
+              "name": "token_mint_x",
+              "type": "pubkey"
+            },
+            {
+              "name": "token_mint_y",
+              "type": "pubkey"
+            },
+            {
+              "name": "label",
+              "type": "string"
+            }
+          ]
+        }
+      }
+    ]
+}
